@@ -1,0 +1,8 @@
+{
+  "name": "Public ShobdoSetu - Interactive Vocabulary Learning Platform",
+  "description": "A modern, interactive English vocabulary learning platform with lessons, 3D flashcards, quizzes, and spaced repetition with authentic Bengali translations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

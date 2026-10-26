@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="180" fill="none" stroke="rgba(52, 211, 153, 0.2)" stroke-width="4" />
+  <!-- Botanical Leaf Icon -->
+  <path d="M256 120 C180 180 160 270 200 350 C220 390 256 410 256 410 C256 410 292 390 312 350 C352 270 332 180 256 120 Z" fill="url(#accentGrad)" />
+  <path d="M256 160 L256 380" stroke="#064e3b" stroke-width="6" stroke-linecap="round" />
+  <path d="M256 220 Q220 200 200 220" stroke="#064e3b" stroke-width="5" stroke-linecap="round" fill="none" />
+  <path d="M256 260 Q292 240 312 260" stroke="#064e3b" stroke-width="5" stroke-linecap="round" fill="none" />
+  <path d="M256 300 Q220 280 205 300" stroke="#064e3b" stroke-width="5" stroke-linecap="round" fill="none" />
+</svg>
