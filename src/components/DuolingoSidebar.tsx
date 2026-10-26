@@ -44,10 +44,10 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
           className="flex items-center gap-3 px-3 py-4 mb-4 cursor-pointer text-left w-full hover:opacity-90"
         >
           <div className="w-10 h-10 rounded-2xl bg-[#58cc02] border-b-4 border-[#46a302] text-white flex items-center justify-center font-black text-xl shadow-xs">
-            শ
+            ব
           </div>
           <span className="font-black text-2xl tracking-tight text-[#58cc02] lowercase">
-            shobdosetu
+            bonolota
           </span>
         </button>
 

@@ -367,6 +367,8 @@ adminRouter.post('/licenses/:id/reset-binding', requireAdminAuth, async (req: Au
     const updated = await storage.updateLicense(id, {
       browserBound: false,
       currentSessionHash: undefined,
+      deviceInfo: undefined,
+      clientIp: undefined,
     });
 
     await storage.addAuditLog({

@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
 // Pepper fallback for local development if not yet set in environment
-const DEFAULT_PEPPER = 'shobdosetu_default_local_dev_pepper_do_not_use_in_prod';
+const DEFAULT_PEPPER = 'bonolota_default_local_dev_pepper_do_not_use_in_prod';
 
 export function getLicensePepper(): string {
   return process.env.LICENSE_PEPPER || DEFAULT_PEPPER;
@@ -9,7 +9,7 @@ export function getLicensePepper(): string {
 
 /**
  * Generate a cryptographically strong, user-friendly license key
- * Format: SHOBDO-XXXX-XXXX-XXXX
+ * Format: BONOLOTA-XXXX-XXXX-XXXX
  * Uses unambiguous characters (excluding 0, O, 1, I, L)
  */
 export function generateAccessKey(): string {
@@ -28,12 +28,12 @@ export function generateAccessKey(): string {
   const block2 = getRandomBlock(4);
   const block3 = getRandomBlock(4);
 
-  return `SHOBDO-${block1}-${block2}-${block3}`;
+  return `BONOLOTA-${block1}-${block2}-${block3}`;
 }
 
 /**
  * Mask a license key for safe display in table / admin logs
- * Example: SHOBDO-7K9A-M4W2-X8P1 -> SHOBDO-7K9A-****-****
+ * Example: BONOLOTA-7K9A-M4W2-X8P1 -> BONOLOTA-7K9A-****-****
  */
 export function maskKey(key: string): string {
   const parts = key.trim().toUpperCase().split('-');
@@ -110,4 +110,30 @@ export function generateSessionToken(): string {
  */
 export function hashSessionToken(token: string): string {
   return crypto.createHash('sha256').update(token).digest('hex');
+}
+
+/**
+ * Parses user-agent header into a concise, readable browser and device string
+ */
+export function parseUserAgent(ua?: string): string {
+  if (!ua) return 'অজানা ব্রাউজার';
+  let browser = 'Browser';
+  let os = 'Device';
+
+  // Detect OS
+  if (/iphone|ipad|ipod/i.test(ua)) os = 'iPhone / iOS';
+  else if (/android/i.test(ua)) os = 'Android Phone';
+  else if (/windows/i.test(ua)) os = 'Windows PC';
+  else if (/macintosh|mac os x/i.test(ua)) os = 'MacBook / macOS';
+  else if (/linux/i.test(ua)) os = 'Linux';
+
+  // Detect Browser
+  if (/samsungbrowser/i.test(ua)) browser = 'Samsung Internet';
+  else if (/edg/i.test(ua)) browser = 'Edge';
+  else if (/chrome|crios/i.test(ua)) browser = 'Chrome';
+  else if (/firefox|fxios/i.test(ua)) browser = 'Firefox';
+  else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = 'Safari';
+  else if (/opera|opr/i.test(ua)) browser = 'Opera';
+
+  return `${browser} on ${os}`;
 }

@@ -2,11 +2,11 @@ import { WordProgress, QuizHistoryItem, UserSettings, LearningStats } from '../d
 import { getAllWords } from '../data/units';
 
 const STORAGE_KEYS = {
-  PROGRESS: 'shobdosetu_progress_v1',
-  SETTINGS: 'shobdosetu_settings_v1',
-  QUIZ_HISTORY: 'shobdosetu_quizzes_v1',
-  LESSON_PROGRESS: 'shobdosetu_lesson_v1',
-  STREAK_DATES: 'shobdosetu_streak_dates_v1',
+  PROGRESS: 'bonolota_progress_v1',
+  SETTINGS: 'bonolota_settings_v1',
+  QUIZ_HISTORY: 'bonolota_quizzes_v1',
+  LESSON_PROGRESS: 'bonolota_lesson_v1',
+  STREAK_DATES: 'bonolota_streak_dates_v1',
   USER_NOTES: 'bonolota_user_notes_v1',
 };
 
@@ -22,7 +22,8 @@ const DEFAULT_SETTINGS: UserSettings = {
 function safeGetItem<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') return fallback;
   try {
-    const item = localStorage.getItem(key);
+    const legacyKey = key.replace('bonolota_', 'shobdosetu_');
+    const item = localStorage.getItem(key) || localStorage.getItem(legacyKey);
     return item ? JSON.parse(item) : fallback;
   } catch {
     return fallback;
@@ -261,7 +262,7 @@ export const storage = {
     if (!loaded) {
       return { ...DEFAULT_SETTINGS };
     }
-    const hasExplicitSound = safeGetItem<boolean | null>('shobdosetu_sound_explicit_v2', null);
+    const hasExplicitSound = safeGetItem<boolean | null>('bonolota_sound_explicit_v2', null) ?? safeGetItem<boolean | null>('shobdosetu_sound_explicit_v2', null);
     const soundEnabled = hasExplicitSound !== null ? !!loaded.soundEnabled : true;
     const hapticsEnabled = loaded.hapticsEnabled !== undefined ? !!loaded.hapticsEnabled : true;
     return {
@@ -274,7 +275,7 @@ export const storage = {
 
   saveSettings(updates: Partial<UserSettings>): UserSettings {
     if ('soundEnabled' in updates) {
-      safeSetItem('shobdosetu_sound_explicit_v2', true);
+      safeSetItem('bonolota_sound_explicit_v2', true);
     }
     const current = this.getSettings();
     const merged = { ...current, ...updates };

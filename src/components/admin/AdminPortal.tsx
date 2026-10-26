@@ -404,7 +404,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
           </div>
           <div>
             <h1 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-              <span>ShobdoSetu Licensing Vault</span>
+              <span>Bonolota Licensing Vault</span>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-indigo-950 border border-indigo-700/60 text-indigo-300">
                 PROD
               </span>
@@ -593,7 +593,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                         <div>
                           <p className="font-mono font-bold text-slate-200">{lic.keyMasked}</p>
                           <p className="text-[11px] text-slate-400 mt-0.5">
-                            {lic.customerNote || 'কোনো নোট নেই'} • {lic.durationDays} দিন
+                            {lic.customerNote || 'নোট নেই'} • {lic.durationDays} দিন
+                            {lic.deviceInfo ? ` • 🌐 ${lic.deviceInfo}` : ''}
                           </p>
                         </div>
                         <div className="text-right">
@@ -852,15 +853,21 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                                   <span className="inline-flex items-center gap-1 text-teal-400 font-semibold text-[11px]">
                                     <Smartphone className="w-3.5 h-3.5" /> Bound
                                   </span>
+                                  {lic.deviceInfo && (
+                                    <p className="text-[11px] font-bold text-slate-200 mt-0.5 flex items-center gap-1">
+                                      <span>🌐</span>
+                                      <span>{lic.deviceInfo}</span>
+                                    </p>
+                                  )}
                                   {lic.activatedAt && (
-                                    <p className="text-[10px] text-slate-500">
-                                      {new Date(lic.activatedAt).toLocaleDateString()}
+                                    <p className="text-[10px] text-slate-500 mt-0.5">
+                                      যুক্ত: {new Date(lic.activatedAt).toLocaleDateString()}
                                     </p>
                                   )}
                                 </div>
                               ) : (
                                 <span className="inline-flex items-center gap-1 text-slate-500 text-[11px]">
-                                  Unbound (অ্যাক্টিভেট হয়নি)
+                                  Unbound (লগইন হয়নি)
                                 </span>
                               )}
                             </td>

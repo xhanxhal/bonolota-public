@@ -4,7 +4,8 @@ import {
   hashLicenseKey, 
   generateSessionToken, 
   hashSessionToken,
-  normalizeKey 
+  normalizeKey,
+  parseUserAgent
 } from '../crypto';
 import { 
   USER_COOKIE_NAME, 
@@ -128,12 +129,17 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
     const sessionHash = hashSessionToken(sessionToken);
     const ttlSeconds = Math.max(60, Math.floor((license.expiresAt - now) / 1000));
 
+    const rawUserAgent = req.headers['user-agent'] as string | undefined;
+    const deviceInfo = parseUserAgent(rawUserAgent);
+
     // Atomically claim the license binding
     const updated = await storage.updateLicense(license.id, {
       browserBound: true,
       currentSessionHash: sessionHash,
       activatedAt: license.activatedAt || now,
       lastActiveAt: now,
+      deviceInfo,
+      clientIp,
     });
 
     if (!updated) {

@@ -45,14 +45,32 @@ export default function App() {
   const auth = useLicenseAuth();
   const [isAdminSlugMatched, setIsAdminSlugMatched] = useState<boolean | null>(null);
 
-  // Check if current URL matches the private admin slug
+  // Check if current URL matches the private admin slug across pathname, search, and hash
   useEffect(() => {
-    const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '');
-    if (rawPath.startsWith('x-')) {
+    // 1. Path candidate (e.g. /x-admin-arifa, /x-admin-arifa/)
+    const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+
+    // 2. Search query candidate (e.g. ?x-admin-arifa, ?admin=x-admin-arifa, ?slug=x-admin-arifa)
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchVal = (
+      searchParams.get('admin') ||
+      searchParams.get('slug') ||
+      searchParams.get('key') ||
+      window.location.search.replace(/^\?/, '')
+    ).replace(/^\/+|\/+$/g, '').toLowerCase();
+
+    // 3. Hash candidate (e.g. #x-admin-arifa, #/x-admin-arifa)
+    const hashVal = window.location.hash.replace(/^#\/?/, '').replace(/^\/+|\/+$/g, '').toLowerCase();
+
+    const candidate = [rawPath, searchVal, hashVal].find(
+      s => s.startsWith('x-') || s === 'admin'
+    );
+
+    if (candidate) {
       fetch('/api/system/verify-admin-slug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: rawPath }),
+        body: JSON.stringify({ slug: candidate }),
       })
         .then(res => res.json())
         .then(data => {
@@ -65,6 +83,24 @@ export default function App() {
       setIsAdminSlugMatched(false);
     }
   }, []);
+
+  const handleVerifyAdminSlug = async (slug: string): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/system/verify-admin-slug', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      });
+      const data = await res.json();
+      if (data.valid) {
+        setIsAdminSlugMatched(true);
+        return true;
+      }
+    } catch {
+      // Ignore
+    }
+    return false;
+  };
 
   const [currentTab, setCurrentTab] = useState<NavTab>('home');
   const [settings, setSettings] = useState<UserSettings>(() => storage.getSettings());
@@ -163,7 +199,14 @@ export default function App() {
 
   // Admin Route Handling (Completely hidden from public UI navigation)
   if (isAdminSlugMatched === true) {
-    return <AdminPortal onExitAdmin={() => { window.location.href = '/'; }} />;
+    return (
+      <AdminPortal
+        onExitAdmin={() => {
+          setIsAdminSlugMatched(false);
+          window.history.replaceState({}, '', '/');
+        }}
+      />
+    );
   }
 
   // Waiting for admin slug check if on potential admin path
@@ -181,7 +224,7 @@ export default function App() {
       <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 dark:bg-[#0b1120]">
         <div className="flex flex-col items-center gap-3 font-bangla">
           <div className="w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs font-semibold text-slate-500">শব্দসেতু ভেরিফাই করা হচ্ছে...</p>
+          <p className="text-xs font-semibold text-slate-500">বনলতা ভেরিফাই করা হচ্ছে...</p>
         </div>
       </div>
     );
@@ -192,6 +235,7 @@ export default function App() {
     return (
       <AccessKeyScreen
         onActivate={auth.activateKey}
+        onVerifyAdminSlug={handleVerifyAdminSlug}
         isLoading={auth.isLoading}
         errorMessage={auth.error}
       />

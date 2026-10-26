@@ -24,10 +24,10 @@ export const DuolingoTopBar: React.FC<DuolingoTopBarProps> = ({
       {/* Brand logo for mobile */}
       <div className="flex items-center gap-2 lg:hidden">
         <div className="w-8 h-8 rounded-xl bg-[#58cc02] text-white flex items-center justify-center font-black text-base shadow-sm">
-          শ
+          ব
         </div>
         <span className="font-extrabold text-lg text-[#58cc02] tracking-tight">
-          shobdosetu
+          bonolota
         </span>
       </div>
 

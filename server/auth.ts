@@ -3,8 +3,8 @@ import { storage } from './storage';
 import { hashSessionToken } from './crypto';
 import { LicenseRecord, UserSessionData, AdminSessionData } from './types';
 
-export const USER_COOKIE_NAME = 'shobdo_user_session';
-export const ADMIN_COOKIE_NAME = 'shobdo_admin_session';
+export const USER_COOKIE_NAME = 'bonolota_user_session';
+export const ADMIN_COOKIE_NAME = 'bonolota_admin_session';
 
 export interface AuthenticatedUserRequest extends Request {
   license?: LicenseRecord;

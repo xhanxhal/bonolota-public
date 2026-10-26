@@ -1,5 +1,5 @@
 /**
- * Comprehensive Automated Test Suite for ShobdoSetu Licensing System
+ * Comprehensive Automated Test Suite for Bonolota Licensing System
  * Tests all 20 requirements specified in Part 12
  */
 
@@ -31,7 +31,7 @@ function assert(condition: boolean, testName: string, detail?: string) {
 
 async function runTests() {
   console.log('\n============================================================');
-  console.log('🧪 Starting ShobdoSetu Licensing System Automated Tests');
+  console.log('🧪 Starting Bonolota Licensing System Automated Tests');
   console.log('============================================================\n');
 
   // Test 1 & 2: License Generation & Fixed Expiry at Creation Time

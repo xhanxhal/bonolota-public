@@ -1,4 +1,4 @@
-# 🔐 ShobdoSetu / Bonolota — Access-Key Licensing & Admin Setup Guide
+# 🔐 Bonolota (বনলতা) — Access-Key Licensing & Admin Setup Guide
 
 Your system is configured and connected to your **Upstash Redis** database (**`bonolota-db`**). You do **NOT** need to generate or configure any password hashes.
 
@@ -38,7 +38,7 @@ In your Vercel Dashboard (**Project → Settings → Environment Variables**), y
    - Select subscription duration (30 days, 90 days, 180 days, 365 days, or custom days).
    - Add a note (e.g. `Tanvir - 017xxxxxxxx - bKash TrxID #8A92B1`).
    - Click **"অ্যাক্সেস কি জেনারেট করুন"**.
-5. **Copy & Send**: Click **"কপি করুন"** to copy the generated key (`SHOBDO-XXXX-XXXX-XXXX`) and send it to your customer.
+5. **Copy & Send**: Click **"কপি করুন"** to copy the generated key (`BONOLOTA-XXXX-XXXX-XXXX`) and send it to your customer.
 6. **Customer Activates**:
    - The customer visits your website home page, pastes their key into the activation box, and clicks **"অ্যাক্টিভেট করে প্রবেশ করুন"**.
    - All 50 units and 1,000 words unlock immediately!

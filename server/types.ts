@@ -1,6 +1,6 @@
 export interface LicenseRecord {
   id: string; // e.g. "lic_1792430000_a1b2c3"
-  keyMasked: string; // e.g. "SHOBDO-7K9A-****-****"
+  keyMasked: string; // e.g. "BONOLOTA-7K9A-****-****"
   keyHash: string; // SHA-256 HMAC of the plaintext key
   status: 'active' | 'suspended' | 'revoked';
   createdAt: number; // Server UTC ms
@@ -11,6 +11,8 @@ export interface LicenseRecord {
   currentSessionHash?: string;
   lastActiveAt?: number;
   customerNote?: string; // Optional note: buyer name, WhatsApp number, transaction ID
+  deviceInfo?: string; // e.g. "Chrome (Windows)" or "Safari (iOS)"
+  clientIp?: string;
 }
 
 export interface UserSessionData {

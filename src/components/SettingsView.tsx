@@ -129,7 +129,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                মাস্কড কি: <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{licenseInfo?.keyMasked || 'SHOBDO-****-****'}</span>
+                মাস্কড কি: <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{licenseInfo?.keyMasked || 'BONOLOTA-****-****'}</span>
                 {licenseInfo?.expiresAt && ` • মেয়াদ শেষ: ${new Date(licenseInfo.expiresAt).toLocaleDateString()}`}
               </p>
             </div>

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * ShobdoSetu Admin Security Credentials Generator
+ * Bonolota Admin Security Credentials Generator
  * 
  * Usage:
  *   node scripts/generate_admin_hash.js "YourStrongPassword"
@@ -27,10 +27,10 @@ const passwordHash = `pbkdf2:${iterations}:${salt}:${hash}`;
 // 2. Generate cryptographically random secrets
 const adminSessionSecret = crypto.randomBytes(32).toString('hex');
 const licensePepper = crypto.randomBytes(32).toString('hex');
-const adminRouteSecret = `x-vault-${crypto.randomBytes(12).toString('hex')}`;
+const adminRouteSecret = `x-admin-${crypto.randomBytes(8).toString('hex')}`;
 
 console.log('\n============================================================');
-console.log('🔐 ShobdoSetu / Bonolota Security Credentials Generated');
+console.log('🔐 Bonolota Security Credentials Generated');
 console.log('============================================================\n');
 console.log('Copy these environment variables into your Vercel Project Settings:');
 console.log('(Settings → Environment Variables → Add)\n');

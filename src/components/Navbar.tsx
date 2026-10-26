@@ -85,11 +85,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => handleTabClick('home')}
             className="flex items-center gap-2.5 text-left cursor-pointer shrink-0"
           >
-            <div className="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-sm">
-              শ
+            <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-lg shadow-sm">
+              ব
             </div>
             <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white whitespace-nowrap">
-              ShobdoSetu
+              Bonolota
             </span>
           </button>
 
