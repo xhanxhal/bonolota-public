@@ -19,23 +19,11 @@ import { LicenseRecord } from '../types';
 
 export const adminRouter = Router();
 
-// Fallback password for initial setup if ADMIN_PASSWORD_HASH is not yet configured in .env
-// We provide clear instructions to override this via Vercel / .env
-const DEFAULT_INITIAL_ADMIN_PASS = 'ShobdoSetuAdmin#2026';
-let cachedDefaultHash: string | null = null;
-
-function getTargetPasswordHash(): string {
-  if (process.env.ADMIN_PASSWORD_HASH) {
-    return process.env.ADMIN_PASSWORD_HASH;
-  }
-  if (!cachedDefaultHash) {
-    cachedDefaultHash = hashPassword(DEFAULT_INITIAL_ADMIN_PASS);
-  }
-  return cachedDefaultHash;
-}
+// Admin Password & Secret Route Configuration
+const DEFAULT_ADMIN_PASS = process.env.ADMIN_PASSWORD || 'Chanchal11@@';
 
 export function getAdminRouteSecret(): string {
-  return process.env.ADMIN_ROUTE_SECRET || 'x-vault-8f92b7c4a1e3';
+  return process.env.ADMIN_ROUTE_SECRET || 'x-admin-arifa';
 }
 
 /**
@@ -105,8 +93,12 @@ adminRouter.post('/login', async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    const targetHash = getTargetPasswordHash();
-    const isValid = verifyPassword(password, targetHash);
+    let isValid = false;
+    if (password === DEFAULT_ADMIN_PASS) {
+      isValid = true;
+    } else if (process.env.ADMIN_PASSWORD_HASH && verifyPassword(password, process.env.ADMIN_PASSWORD_HASH)) {
+      isValid = true;
+    }
 
     if (!isValid) {
       await storage.addAuditLog({

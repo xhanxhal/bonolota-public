@@ -27,13 +27,11 @@ interface SettingsViewProps {
   onUpdateSettings: (newSettings: UserSettings) => void;
   licenseInfo?: {
     isAuthenticated: boolean;
-    isDemoMode: boolean;
     daysLeft?: number;
     expiresAt?: number;
     keyMasked?: string;
   };
   onLogout?: () => void;
-  onExitDemo?: () => void;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({
@@ -41,7 +39,6 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onUpdateSettings,
   licenseInfo,
   onLogout,
-  onExitDemo,
 }) => {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [cacheMeta, setCacheMeta] = useState<OfflineCacheMetadata | null>(() => offlineDatabaseCache.getMetadata());
@@ -126,46 +123,24 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white">সাবস্ক্রিপশন ও লাইসেন্স স্ট্যাটাস</h3>
-                {licenseInfo?.isAuthenticated ? (
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    সক্রিয় ({licenseInfo.daysLeft !== undefined ? `${licenseInfo.daysLeft} দিন বাকি` : 'Active'})
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
-                    ডেমো মোড (ট্রায়াল)
-                  </span>
-                )}
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  সক্রিয় ({licenseInfo?.daysLeft !== undefined ? `${licenseInfo.daysLeft} দিন বাকি` : 'Active'})
+                </span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                {licenseInfo?.isAuthenticated ? (
-                  <>
-                    মাস্কড কি: <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{licenseInfo.keyMasked || 'SHOBDO-****-****'}</span>
-                    {licenseInfo.expiresAt && ` • মেয়াদ শেষ: ${new Date(licenseInfo.expiresAt).toLocaleDateString()}`}
-                  </>
-                ) : (
-                  'সম্পূর্ণ ৫০টি ইউনিট ও ১,০০০+ শব্দ আনলক করতে আপনার লাইসেন্স কি অ্যাক্টিভেট করুন।'
-                )}
+                মাস্কড কি: <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{licenseInfo?.keyMasked || 'SHOBDO-****-****'}</span>
+                {licenseInfo?.expiresAt && ` • মেয়াদ শেষ: ${new Date(licenseInfo.expiresAt).toLocaleDateString()}`}
               </p>
             </div>
 
-            {licenseInfo?.isAuthenticated ? (
-              <button
-                type="button"
-                onClick={onLogout}
-                className="px-3.5 py-1.5 rounded-xl border border-rose-300 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 text-rose-700 dark:text-rose-300 text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-start sm:self-auto"
-              >
-                লগআউট ও ডিসকানেক্ট
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={onExitDemo}
-                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-start sm:self-auto shadow-sm"
-              >
-                অ্যাক্সেস কি দিন
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={onLogout}
+              className="px-3.5 py-1.5 rounded-xl border border-rose-300 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 text-rose-700 dark:text-rose-300 text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-start sm:self-auto"
+            >
+              লগআউট ও ডিসকানেক্ট
+            </button>
           </div>
         </div>
 

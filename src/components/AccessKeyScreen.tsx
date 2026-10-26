@@ -18,14 +18,12 @@ import { haptics } from '../utils/haptics';
 
 interface AccessKeyScreenProps {
   onActivate: (key: string) => Promise<{ success: boolean; message?: string }>;
-  onExploreDemo: () => void;
   isLoading: boolean;
   errorMessage?: string | null;
 }
 
 export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
   onActivate,
-  onExploreDemo,
   isLoading,
   errorMessage,
 }) => {
@@ -172,85 +170,47 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
             </button>
           </form>
 
-          {/* Divider */}
-          <div className="my-6 border-t border-slate-200/70 dark:border-slate-800/80 relative">
-            <span className="absolute left-1/2 -top-2.5 -translate-x-1/2 bg-white dark:bg-[#111827] px-3 text-xs text-slate-600 dark:text-slate-300 font-medium">
-              অথবা
-            </span>
-          </div>
-
-          {/* Action Row: Free Sample Demo & Purchase Instructions */}
-          <div className="space-y-3 relative z-10">
-            {/* Free Sample Demo Button */}
-            <button
-              type="button"
-              onClick={() => {
-                haptics.tap();
-                onExploreDemo();
-              }}
-              className="w-full py-3 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer group"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                  <Eye className="w-4 h-4" />
-                </div>
-                <span>ইউনিট ১ ডেমো দেখুন (বিনামূল্যে ট্রায়াল)</span>
-              </div>
-              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-
-            {/* How to Buy / Contact Collapsible */}
-            <div className="pt-1">
-              <button
-                type="button"
-                onClick={() => {
-                  haptics.tap();
-                  setShowHowToBuy(!showHowToBuy);
-                }}
-                className="w-full text-center text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:underline flex items-center justify-center gap-1.5 cursor-pointer py-1"
-              >
-                <HelpCircle className="w-3.5 h-3.5" />
+          {/* Purchase / Contact Instructions */}
+          <div className="mt-6 pt-5 border-t border-slate-200/70 dark:border-slate-800/80 relative z-10 space-y-3">
+            <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-xs sm:text-sm text-slate-700 dark:text-slate-300 space-y-3">
+              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-bold">
+                <HelpCircle className="w-4 h-4 text-emerald-600" />
                 <span>কীভাবে অ্যাক্সেস কি পাবেন বা সাবস্ক্রিপশন কিনবেন?</span>
-              </button>
+              </div>
+              <p className="font-medium leading-relaxed text-xs">
+                শব্দসেতুর ১,০০০+ শব্দ ও ৫০টি প্রিমিয়াম ইউনিটের ফুল অ্যাক্সেস পেতে সরাসরি যোগাযোগ করে একটি ইউনিক অ্যাক্সেস কি সংগ্রহ করুন:
+              </p>
 
-              {showHowToBuy && (
-                <div className="mt-3 p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-xs sm:text-sm text-slate-700 dark:text-slate-300 space-y-3 animate-fadeIn">
-                  <p className="font-medium leading-relaxed">
-                    শব্দসেতুর ১,০০০+ শব্দ ও ৫০টি প্রিমিয়াম ইউনিটের ফুল অ্যাক্সেস পেতে সরাসরি যোগাযোগ করে একটি ইউনিক অ্যাক্সেস কি সংগ্রহ করতে পারেন:
-                  </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <a
+                  href="https://wa.me/?text=Hello!+I+want+to+purchase+an+access+key+for+ShobdoSetu+vocabulary+platform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow transition-all cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>হোয়াটসঅ্যাপে যোগাযোগ</span>
+                </a>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                    <a
-                      href="https://wa.me/?text=Hello!+I+want+to+purchase+an+access+key+for+ShobdoSetu+vocabulary+platform"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow transition-all cursor-pointer"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      <span>হোয়াটসঅ্যাপে যোগাযোগ</span>
-                    </a>
+                <a
+                  href="https://t.me"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow transition-all cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>টেলিগ্রামে যোগাযোগ</span>
+                </a>
+              </div>
 
-                    <a
-                      href="https://t.me"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow transition-all cursor-pointer"
-                    >
-                      <Send className="w-4 h-4" />
-                      <span>টেলিগ্রামে যোগাযোগ</span>
-                    </a>
-                  </div>
-
-                  <div className="pt-2 border-t border-emerald-200/50 dark:border-emerald-800/30 text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
-                    <div className="flex items-start gap-1.5">
-                      <Laptop2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>১টি অ্যাক্সেস কি একটি ব্রাউজারের সাথে নিরাপদে সংযুক্ত থাকে। ব্রাউজার বা ফোন পরিবর্তন করলে অ্যাডমিনকে জানিয়ে নতুন ব্রাউজারে সক্রিয় করতে পারেন।</span>
-                    </div>
-                  </div>
+              <div className="pt-2 border-t border-emerald-200/50 dark:border-emerald-800/30 text-[11px] text-slate-600 dark:text-slate-300">
+                <div className="flex items-start gap-1.5">
+                  <Laptop2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                  <span>১টি অ্যাক্সেস কি একটি ব্রাউজারের সাথে নিরাপদে সংযুক্ত থাকে। ব্রাউজার বা ফোন পরিবর্তন করলে অ্যাডমিনকে জানিয়ে নতুন ব্রাউজারে রিসেট করে নিতে পারেন।</span>
                 </div>
-              )}
             </div>
           </div>
+        </div>
         </div>
 
         {/* Footer info notice */}

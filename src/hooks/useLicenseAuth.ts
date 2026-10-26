@@ -5,7 +5,6 @@ import { setAuthorizedUnits } from '../data/units';
 export interface LicenseSessionState {
   isLoading: boolean;
   isAuthenticated: boolean;
-  isDemoMode: boolean;
   expiresAt?: number;
   daysLeft?: number;
   keyMasked?: string;
@@ -16,7 +15,6 @@ export function useLicenseAuth() {
   const [state, setState] = useState<LicenseSessionState>({
     isLoading: true,
     isAuthenticated: false,
-    isDemoMode: false,
     error: null,
   });
 
@@ -52,7 +50,6 @@ export function useLicenseAuth() {
         setState({
           isLoading: false,
           isAuthenticated: true,
-          isDemoMode: false,
           expiresAt: data.expiresAt,
           daysLeft: data.daysLeft,
           keyMasked: data.keyMasked,
@@ -60,20 +57,20 @@ export function useLicenseAuth() {
         });
       } else {
         // Not authenticated
-        setState(prev => ({
-          ...prev,
+        setState({
           isLoading: false,
           isAuthenticated: false,
           expiresAt: undefined,
           daysLeft: undefined,
-        }));
+          error: null,
+        });
       }
     } catch {
-      setState(prev => ({
-        ...prev,
+      setState({
         isLoading: false,
         isAuthenticated: false,
-      }));
+        error: null,
+      });
     }
   }, [loadUnitsFromApi]);
 
@@ -100,7 +97,6 @@ export function useLicenseAuth() {
         setState({
           isLoading: false,
           isAuthenticated: true,
-          isDemoMode: false,
           expiresAt: data.expiresAt,
           daysLeft: data.daysLeft,
           error: null,
@@ -115,7 +111,7 @@ export function useLicenseAuth() {
         }));
         return { success: false, message: errMessage };
       }
-    } catch (err) {
+    } catch {
       const errMessage = 'সার্ভারের সাথে সংযোগ স্থাপন করা সম্ভব হচ্ছে না। অনুগ্রহ করে ইন্টারনেট সংযোগ চেক করুন।';
       setState(prev => ({
         ...prev,
@@ -136,27 +132,12 @@ export function useLicenseAuth() {
       // Ignore
     }
     offlineDatabaseCache.clear();
-    setAuthorizedUnits([]); // reset to demo Unit 1
+    setAuthorizedUnits([]);
     setState({
       isLoading: false,
       isAuthenticated: false,
-      isDemoMode: false,
       error: null,
     });
-  };
-
-  const enableDemoMode = () => {
-    setState(prev => ({
-      ...prev,
-      isDemoMode: true,
-    }));
-  };
-
-  const exitDemoMode = () => {
-    setState(prev => ({
-      ...prev,
-      isDemoMode: false,
-    }));
   };
 
   return {
@@ -164,7 +145,5 @@ export function useLicenseAuth() {
     activateKey,
     logout,
     checkSession,
-    enableDemoMode,
-    exitDemoMode,
   };
 }

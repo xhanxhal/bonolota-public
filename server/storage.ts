@@ -1,9 +1,9 @@
 import { Redis } from '@upstash/redis';
 import { LicenseRecord, UserSessionData, AdminSessionData, AuditLogEntry, AdminOverviewStats } from './types';
 
-// Detect whether Upstash credentials exist
-const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
-const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+// Upstash Redis configuration for bonolota-db
+const upstashUrl = process.env.UPSTASH_REDIS_REST_URL || 'https://unique-sunbeam-240324.upstash.io';
+const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN || 'gQAAAAAAA6rEAAIgcDIyMWQ1OGQ2YzE1NTc0Y2FkODVjZDFkZDcxYmZhOWViZg';
 
 const isUpstashConfigured = Boolean(upstashUrl && upstashToken && upstashUrl.startsWith('http'));
 

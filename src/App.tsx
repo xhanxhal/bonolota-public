@@ -187,12 +187,11 @@ export default function App() {
     );
   }
 
-  // If visitor is unauthenticated and hasn't chosen to explore the free preview
-  if (!auth.isAuthenticated && !auth.isDemoMode) {
+  // If visitor is unauthenticated, require access key activation
+  if (!auth.isAuthenticated) {
     return (
       <AccessKeyScreen
         onActivate={auth.activateKey}
-        onExploreDemo={auth.enableDemoMode}
         isLoading={auth.isLoading}
         errorMessage={auth.error}
       />
@@ -212,23 +211,6 @@ export default function App() {
 
       {/* CENTER CONTENT COLUMN */}
       <div className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
-        {/* Demo Mode Notice Banner */}
-        {auth.isDemoMode && (
-          <aside aria-label="Demo notice" className="w-full bg-gradient-to-r from-amber-600 via-orange-600 to-amber-600 text-white text-xs sm:text-sm font-bold py-2.5 px-4 shadow-sm flex items-center justify-between font-bangla sticky top-0 z-50">
-            <div className="flex items-center gap-2">
-              <SparklesIcon className="w-4 h-4 shrink-0 animate-pulse text-amber-200" />
-              <span>ডেমো মোড: আপনি ইউনিট ১ ট্রায়াল দিচ্ছেন (২০টি শব্দ)। সম্পূর্ণ ৫০টি ইউনিট আনলক করতে অ্যাক্সেস কি দিন।</span>
-            </div>
-            <button
-              type="button"
-              onClick={auth.exitDemoMode}
-              className="px-3 py-1 rounded-xl bg-white text-slate-900 font-extrabold text-xs shadow-xs hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap ml-2"
-            >
-              অ্যাক্সেস কি দিন →
-            </button>
-          </aside>
-        )}
-
         {/* MODERN ELEGANT TOP BAR */}
         <ModernHeader
           stats={stats}
@@ -380,13 +362,11 @@ export default function App() {
               onUpdateSettings={handleUpdateSettings}
               licenseInfo={{
                 isAuthenticated: auth.isAuthenticated,
-                isDemoMode: auth.isDemoMode,
                 daysLeft: auth.daysLeft,
                 expiresAt: auth.expiresAt,
                 keyMasked: auth.keyMasked,
               }}
               onLogout={auth.logout}
-              onExitDemo={auth.exitDemoMode}
             />
           )}
         </main>
