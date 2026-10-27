@@ -184,16 +184,34 @@ adminRouter.post('/logout', async (req: Request, res: Response): Promise<void> =
 /**
  * Admin: Overview Stats
  * GET /api/admin/overview
+ * GET /api/admin/stats
  */
-adminRouter.get('/overview', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+const handleOverviewStats = async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
     const stats = await storage.getOverviewStats();
-    res.json({ ok: true, stats });
+    res.json({
+      ok: true,
+      stats,
+      total: stats.total,
+      totalLicenses: stats.total,
+      active: stats.active,
+      activated: stats.activated,
+      unactivated: stats.unactivated,
+      expired: stats.expired,
+      suspended: stats.suspended,
+      revoked: stats.revoked,
+      boundCount: stats.activated,
+      unboundCount: stats.unactivated,
+      recentlyActivated: stats.recentlyActivated || [],
+    });
   } catch (error) {
     console.error('[admin/overview] Error:', error);
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to fetch overview stats.' });
   }
-});
+};
+
+adminRouter.get('/overview', requireAdminAuth, handleOverviewStats);
+adminRouter.get('/stats', requireAdminAuth, handleOverviewStats);
 
 /**
  * Admin: Create New Access Key License
@@ -496,6 +514,43 @@ adminRouter.post('/licenses/:id/revoke', requireAdminAuth, async (req: Authentic
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to revoke license.' });
   }
 });
+/**
+ * Admin: Permanently Delete License
+ * DELETE /api/admin/licenses/:id
+ * POST /api/admin/licenses/:id/delete
+ */
+const handleDeleteLicense = async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const license = await storage.getLicenseById(id);
+    if (!license) {
+      res.status(404).json({ ok: false, error: 'NOT_FOUND', message: 'License not found.' });
+      return;
+    }
+
+    if (license.currentSessionHash) {
+      await storage.deleteUserSession(license.currentSessionHash);
+    }
+
+    const deleted = await storage.deleteLicense(id);
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'delete_license',
+      licenseId: id,
+      details: `Permanently deleted license ${license.keyMasked} from database.`,
+    });
+
+    res.json({ ok: true, deleted, message: 'License permanently deleted from database.' });
+  } catch (error) {
+    console.error('[admin/licenses/delete] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to delete license.' });
+  }
+};
+
+adminRouter.delete('/licenses/:id', requireAdminAuth, handleDeleteLicense);
+adminRouter.post('/licenses/:id/delete', requireAdminAuth, handleDeleteLicense);
 
 /**
  * Admin: Audit Logs

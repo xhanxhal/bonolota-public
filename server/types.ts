@@ -32,7 +32,7 @@ export interface AdminSessionData {
 export interface AuditLogEntry {
   id: string;
   timestamp: number;
-  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'admin_login' | 'admin_failed_login';
+  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'admin_login' | 'admin_failed_login';
   licenseId?: string;
   details: string;
   ip?: string;
@@ -40,6 +40,7 @@ export interface AuditLogEntry {
 
 export interface AdminOverviewStats {
   total: number;
+  totalLicenses?: number;
   active: number;
   activated: number;
   unactivated: number;

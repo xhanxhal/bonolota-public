@@ -22,6 +22,16 @@ export async function createExpressApp() {
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
 
+  // Secret admin portal route mapping
+  app.get('/x-admin-arifa', (_req, res) => {
+    res.sendFile(path.resolve('public/x-admin-arifa.html'));
+  });
+
+  // Block old /admin or /admin.html access to prevent unauthorized discovery
+  app.all(['/admin', '/admin.html'], (_req, res) => {
+    res.status(404).send('Not Found');
+  });
+
   // Mount backend API routes
   app.use('/api', apiRouter);
 
