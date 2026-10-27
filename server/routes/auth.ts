@@ -22,7 +22,7 @@ export const authRouter = Router();
  */
 authRouter.post('/activate', async (req: Request, res: Response): Promise<void> => {
   try {
-    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.socket.remoteAddress || 'unknown';
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.socket?.remoteAddress || req.ip || 'unknown';
     
     // Rate limit: 10 activation attempts per 15 minutes per IP
     const rateCheck = await storage.checkRateLimit(`activate:${clientIp}`, 10, 15 * 60);

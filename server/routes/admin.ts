@@ -66,7 +66,7 @@ adminRouter.get('/session', async (req: Request, res: Response): Promise<void> =
  */
 adminRouter.post('/login', async (req: Request, res: Response): Promise<void> => {
   try {
-    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.socket.remoteAddress || 'unknown';
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.socket?.remoteAddress || req.ip || 'unknown';
 
     // Rate limit: 5 login attempts per 15 minutes per IP to resist brute force
     const rateCheck = await storage.checkRateLimit(`adminlogin:${clientIp}`, 5, 15 * 60);

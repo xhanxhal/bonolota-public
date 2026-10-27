@@ -30571,7 +30571,7 @@ async function requireAdminAuth(req, res, next) {
 var authRouter = (0, import_express.Router)();
 authRouter.post("/activate", async (req, res) => {
   try {
-    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress || "unknown";
+    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket?.remoteAddress || req.ip || "unknown";
     const rateCheck = await storage.checkRateLimit(`activate:${clientIp}`, 10, 15 * 60);
     if (!rateCheck.allowed) {
       res.status(429).json({
@@ -30799,7 +30799,7 @@ adminRouter.get("/session", async (req, res) => {
 });
 adminRouter.post("/login", async (req, res) => {
   try {
-    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress || "unknown";
+    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket?.remoteAddress || req.ip || "unknown";
     const rateCheck = await storage.checkRateLimit(`adminlogin:${clientIp}`, 5, 15 * 60);
     if (!rateCheck.allowed) {
       await storage.addAuditLog({
