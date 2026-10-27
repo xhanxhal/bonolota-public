@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="bn" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bonolota Licensing Vault - Private Admin Portal</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <!-- Tailwind CSS CDN for self-contained standalone execution -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- ==================== LOGIN VIEW ==================== -->
+  <div id="loginView" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-md">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center text-2xl font-bold mb-3 shadow-lg shadow-indigo-600/20">
+          🔐
+        </div>
+        <h1 class="text-xl font-extrabold text-white tracking-tight">Bonolota Licensing Vault</h1>
+        <p class="text-xs text-slate-400 mt-1">প্রাইভেট অ্যাডমিনিস্ট্রেশন ও লাইসেন্স কন্ট্রোল প্যানেল</p>
+      </div>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">অ্যাডমিন পাসওয়ার্ড:</label>
+          <input
+            id="passwordInput"
+            type="password"
+            placeholder="••••••••••••"
+            required
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-600 text-sm focus:outline-none focus:border-indigo-500 font-mono tracking-wider"
+          />
+        </div>
+
+        <div id="loginError" class="hidden p-3 rounded-xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-xs font-semibold"></div>
+
+        <button
+          id="loginBtn"
+          type="submit"
+          class="w-full py-3 px-4 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-indigo-600/30 text-sm"
+        >
+          লগইন করুন →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD VIEW ==================== -->
+  <div id="dashboardView" class="hidden min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-emerald-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
+          ব
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span>Bonolota Licensing Vault</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-indigo-950 border border-indigo-700/60 text-indigo-300">
+              PROD
+            </span>
+          </h1>
+          <div class="text-[11px] text-emerald-400 font-medium">Upstash Redis Connected</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          onclick="loadData()"
+          class="px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 cursor-pointer transition-colors"
+        >
+          🔄 রিফ্রেশ
+        </button>
+        <button
+          onclick="handleLogout()"
+          class="px-3 py-1.5 rounded-xl border border-rose-800/60 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-semibold cursor-pointer transition-colors"
+        >
+          লগআউট
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-2 border-b border-slate-800 pb-3">
+        <button id="tabOverviewBtn" onclick="switchTab('overview')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white cursor-pointer">
+          📊 ড্যাশবোর্ড ওভারভিউ
+        </button>
+        <button id="tabCreateBtn" onclick="switchTab('create')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 cursor-pointer">
+          ➕ নতুন কি তৈরি করুন
+        </button>
+        <button id="tabLicensesBtn" onclick="switchTab('licenses')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 cursor-pointer">
+          📋 লাইসেন্স তালিকা ও ডিভাইস
+        </button>
+      </div>
+
+      <!-- Action Notification Banner -->
+      <div id="actionBanner" class="hidden p-3.5 rounded-2xl text-xs sm:text-sm font-semibold"></div>
+
+      <!-- TAB 1: OVERVIEW -->
+      <div id="tabOverview" class="space-y-6">
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <span class="text-[11px] font-medium text-slate-400">মোট কি</span>
+            <p id="kpiTotal" class="text-2xl font-bold text-white mt-1">0</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900 border border-emerald-900/40">
+            <span class="text-[11px] font-medium text-emerald-400">সক্রিয় (Active)</span>
+            <p id="kpiActive" class="text-2xl font-bold text-emerald-300 mt-1">0</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900 border border-teal-900/40">
+            <span class="text-[11px] font-medium text-teal-400">লগইন হয়েছে (Bound)</span>
+            <p id="kpiBound" class="text-2xl font-bold text-teal-300 mt-1">0</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900 border border-amber-900/40">
+            <span class="text-[11px] font-medium text-amber-400">অব্যবহৃত (Unbound)</span>
+            <p id="kpiUnbound" class="text-2xl font-bold text-amber-300 mt-1">0</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <span class="text-[11px] font-medium text-slate-400">মেয়াদোত্তীর্ণ</span>
+            <p id="kpiExpired" class="text-2xl font-bold text-slate-300 mt-1">0</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900 border border-rose-900/40">
+            <span class="text-[11px] font-medium text-rose-400">বাতিল/স্থগিত</span>
+            <p id="kpiRevoked" class="text-2xl font-bold text-rose-300 mt-1">0</p>
+          </div>
+        </div>
+
+        <!-- Quick Generator Banner -->
+        <div class="p-6 rounded-3xl bg-gradient-to-r from-indigo-950/70 to-slate-900 border border-indigo-800/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h3 class="text-base font-bold text-white">গ্রাহক টাকা পাঠিয়েছে? দ্রুত কি জেনারেট করুন</h3>
+            <p class="text-xs text-slate-400 mt-1">৩০, ৯০, ১৮০, ৩৬৫ দিন বা যেকোনো কাস্টম মেয়াদের কি তৈরি করে গ্রাহককে পাঠিয়ে দিন।</p>
+          </div>
+          <button onclick="switchTab('create')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-xs text-white shadow-lg cursor-pointer whitespace-nowrap">
+            ➕ কি তৈরি করুন
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 2: CREATE KEY -->
+      <div id="tabCreate" class="hidden">
+        <div class="max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+          <h2 class="text-lg font-bold text-white mb-2">নতুন গ্রাহকের জন্য কি তৈরি করুন</h2>
+          <p class="text-xs text-slate-400 mb-6">মেয়াদ নির্বাচন করুন এবং কাস্টমারের নাম/নম্বর লিখে কি জেনারেট করুন।</p>
+
+          <!-- Generated Key Reveal Box -->
+          <div id="generatedKeyBox" class="hidden mb-6 p-5 rounded-2xl bg-emerald-950/80 border-2 border-emerald-500/80 shadow-xl">
+            <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider block mb-2">🎉 নতুন অ্যাক্সেস কি সফলভাবে তৈরি হয়েছে!</span>
+            <div class="flex items-center justify-between gap-3 bg-black/50 p-3 rounded-xl border border-emerald-700/50">
+              <span id="generatedKeyText" class="font-mono font-bold text-lg sm:text-xl text-emerald-200 tracking-wider"></span>
+              <button onclick="copyGeneratedKey()" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs cursor-pointer">
+                📋 কপি করুন
+              </button>
+            </div>
+            <p class="text-[11px] text-emerald-400/90 mt-2">
+              ⚠️ এটি সুরক্ষিত ও আনহ্যাশড কি। এখনই কপি করে কাস্টমারকে পাঠিয়ে দিন।
+            </p>
+          </div>
+
+          <form id="createKeyForm" class="space-y-5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-2">মেয়াদ নির্বাচন করুন:</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <button type="button" onclick="setDuration(30)" class="duration-btn py-2.5 px-3 rounded-xl text-xs font-bold border border-indigo-600 bg-indigo-600 text-white text-center cursor-pointer" data-days="30">৩০ দিন</button>
+                <button type="button" onclick="setDuration(90)" class="duration-btn py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-700 bg-slate-950 text-slate-300 hover:text-white text-center cursor-pointer" data-days="90">৯০ দিন</button>
+                <button type="button" onclick="setDuration(180)" class="duration-btn py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-700 bg-slate-950 text-slate-300 hover:text-white text-center cursor-pointer" data-days="180">১৮০ দিন</button>
+                <button type="button" onclick="setDuration(365)" class="duration-btn py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-700 bg-slate-950 text-slate-300 hover:text-white text-center cursor-pointer" data-days="365">৩৬৫ দিন</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">কাস্টমার নোট (নাম, মোবাইল নম্বর, bKash TrxID):</label>
+              <input
+                id="customerNoteInput"
+                type="text"
+                placeholder="যেমন: Tanvir - 017xxxxxxxx - bKash TrxID #8A92B1"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-600 text-xs focus:outline-none focus:border-indigo-500"
+              />
+            </div>
+
+            <button
+              id="submitCreateBtn"
+              type="submit"
+              class="w-full py-3 px-4 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-indigo-600/30 text-sm"
+            >
+              ➕ অ্যাক্সেস কি জেনারেট করুন
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 3: LICENSES TABLE -->
+      <div id="tabLicenses" class="hidden space-y-4">
+        <!-- Search -->
+        <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between gap-3">
+          <input
+            id="searchInput"
+            type="text"
+            oninput="renderLicenses()"
+            placeholder="নোট বা কি দিয়ে খুঁজুন..."
+            class="w-full sm:w-80 px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+
+        <!-- Table Container -->
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-950/80 text-[11px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th class="py-3 px-4">অ্যাক্সেস কি ও নোট</th>
+                  <th class="py-3 px-4">স্ট্যাটাস</th>
+                  <th class="py-3 px-4">ডিভাইস / ব্রাউজার বাইন্ডিং</th>
+                  <th class="py-3 px-4">মেয়াদ</th>
+                  <th class="py-3 px-4 text-right">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="licensesTbody" class="divide-y divide-slate-800/60 font-sans">
+                <tr><td colspan="5" class="py-8 text-center text-slate-500">লোড করা হচ্ছে...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    let currentDuration = 30;
+    let allLicenses = [];
+
+    // Session check on load
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/admin/session', { credentials: 'include' });
+        const data = await res.json();
+        if (data.authenticated) {
+          showDashboard();
+        } else {
+          showLogin();
+        }
+      } catch {
+        showLogin();
+      }
+    });
+
+    function showLogin() {
+      document.getElementById('loginView').classList.remove('hidden');
+      document.getElementById('dashboardView').classList.add('hidden');
+    }
+
+    function showDashboard() {
+      document.getElementById('loginView').classList.add('hidden');
+      document.getElementById('dashboardView').classList.remove('hidden');
+      loadData();
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('passwordInput').value;
+      const errBox = document.getElementById('loginError');
+      const btn = document.getElementById('loginBtn');
+
+      errBox.classList.add('hidden');
+      btn.disabled = true;
+      btn.innerText = 'যাচাই করা হচ্ছে...';
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ password })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          showDashboard();
+        } else {
+          errBox.innerText = data.message || 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।';
+          errBox.classList.remove('hidden');
+        }
+      } catch {
+        errBox.innerText = 'সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি।';
+        errBox.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'লগইন করুন →';
+      }
+    });
+
+    async function handleLogout() {
+      try {
+        await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+      } catch {}
+      showLogin();
+    }
+
+    function switchTab(tab) {
+      ['overview', 'create', 'licenses'].forEach(t => {
+        document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.add('hidden');
+        document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}Btn`).className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 cursor-pointer';
+      });
+      document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.remove('hidden');
+      document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}Btn`).className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white cursor-pointer';
+    }
+
+    function setDuration(days) {
+      currentDuration = days;
+      document.querySelectorAll('.duration-btn').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-days'), 10) === days) {
+          btn.className = 'duration-btn py-2.5 px-3 rounded-xl text-xs font-bold border border-indigo-600 bg-indigo-600 text-white text-center cursor-pointer';
+        } else {
+          btn.className = 'duration-btn py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-700 bg-slate-950 text-slate-300 hover:text-white text-center cursor-pointer';
+        }
+      });
+    }
+
+    async function loadData() {
+      try {
+        const statsRes = await fetch('/api/admin/stats', { credentials: 'include' });
+        if (statsRes.ok) {
+          const stats = await statsRes.json();
+          document.getElementById('kpiTotal').innerText = stats.totalLicenses || 0;
+          document.getElementById('kpiActive').innerText = stats.active || 0;
+          document.getElementById('kpiBound').innerText = stats.activated || 0;
+          document.getElementById('kpiUnbound').innerText = stats.unactivated || 0;
+          document.getElementById('kpiExpired').innerText = stats.expired || 0;
+          document.getElementById('kpiRevoked').innerText = (stats.revoked || 0) + (stats.suspended || 0);
+        }
+
+        const licRes = await fetch('/api/admin/licenses', { credentials: 'include' });
+        if (licRes.ok) {
+          const licData = await licRes.json();
+          allLicenses = licData.licenses || [];
+          renderLicenses();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    document.getElementById('createKeyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const customerNote = document.getElementById('customerNoteInput').value.trim();
+      const btn = document.getElementById('submitCreateBtn');
+      btn.disabled = true;
+      btn.innerText = 'জেনারেট হচ্ছে...';
+
+      try {
+        const res = await fetch('/api/admin/licenses/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ durationDays: currentDuration, customerNote })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          document.getElementById('generatedKeyText').innerText = data.plaintextKey;
+          document.getElementById('generatedKeyBox').classList.remove('hidden');
+          document.getElementById('customerNoteInput').value = '';
+          loadData();
+        } else {
+          alert(data.message || 'Error creating key');
+        }
+      } catch {
+        alert('Server error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '➕ অ্যাক্সেস কি জেনারেট করুন';
+      }
+    });
+
+    function copyGeneratedKey() {
+      const key = document.getElementById('generatedKeyText').innerText;
+      navigator.clipboard.writeText(key);
+      alert('অ্যাক্সেস কি কপি করা হয়েছে!');
+    }
+
+    function renderLicenses() {
+      const q = (document.getElementById('searchInput').value || '').toLowerCase();
+      const filtered = allLicenses.filter(l => 
+        (l.keyMasked || '').toLowerCase().includes(q) ||
+        (l.customerNote || '').toLowerCase().includes(q) ||
+        (l.deviceInfo || '').toLowerCase().includes(q)
+      );
+
+      const tbody = document.getElementById('licensesTbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-500">কোনো লাইসেন্স পাওয়া যায়নি।</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(lic => {
+        const now = Date.now();
+        const isExpired = lic.expiresAt < now;
+        const daysLeft = Math.max(0, Math.ceil((lic.expiresAt - now) / (1000 * 60 * 60 * 24)));
+
+        return `
+          <tr class="hover:bg-slate-800/40 transition-colors">
+            <td class="py-3 px-4">
+              <span class="font-mono font-bold text-white text-xs">${lic.keyMasked}</span>
+              <p class="text-[11px] text-slate-400 mt-0.5">${lic.customerNote || 'নোট নেই'} • ${lic.durationDays} দিন</p>
+            </td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                lic.status === 'revoked' ? 'bg-rose-950 text-rose-300 border border-rose-800' :
+                isExpired ? 'bg-slate-800 text-slate-400' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'
+              }">
+                ${lic.status === 'revoked' ? 'Revoked' : isExpired ? 'Expired' : 'Active'}
+              </span>
+            </td>
+            <td class="py-3 px-4">
+              ${lic.browserBound ? `
+                <div class="text-teal-400 font-semibold text-[11px] flex items-center gap-1">
+                  <span>📱 Bound</span>
+                </div>
+                ${lic.deviceInfo ? `<p class="text-[11px] font-bold text-slate-200 mt-0.5">🌐 ${lic.deviceInfo}</p>` : ''}
+              ` : `
+                <span class="text-slate-500 text-[11px]">Unbound (লগইন হয়নি)</span>
+              `}
+            </td>
+            <td class="py-3 px-4">
+              <span class="${isExpired ? 'text-rose-400' : 'text-emerald-400'} font-semibold text-[11px]">
+                ${isExpired ? 'মেয়াদ শেষ' : `${daysLeft} দিন বাকি`}
+              </span>
+              <p class="text-[10px] text-slate-500">${new Date(lic.expiresAt).toLocaleDateString()}</p>
+            </td>
+            <td class="py-3 px-4 text-right space-x-1.5">
+              ${lic.browserBound ? `
+                <button onclick="resetBinding('${lic.id}', '${lic.keyMasked}')" class="px-2 py-1 rounded bg-teal-950 hover:bg-teal-900 border border-teal-800 text-teal-300 text-[10px] font-bold cursor-pointer">
+                  রিসেট
+                </button>
+              ` : ''}
+              <button onclick="extendLicense('${lic.id}', 30)" class="px-2 py-1 rounded bg-indigo-950 hover:bg-indigo-900 border border-indigo-800 text-indigo-300 text-[10px] font-bold cursor-pointer">
+                +৩০ দিন
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function resetBinding(id, masked) {
+      if (!confirm(`"${masked}" এর ব্রাউজার বাইন্ডিং রিসেট করতে চান? গ্রাহক নতুন ফোনে লগইন করতে পারবেন।`)) return;
+      try {
+        const res = await fetch(`/api/admin/licenses/${id}/reset-binding`, { method: 'POST', credentials: 'include' });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          alert('ব্রাউজার রিসেট সফল হয়েছে!');
+          loadData();
+        } else {
+          alert(data.message || 'Reset failed');
+        }
+      } catch {
+        alert('Server error');
+      }
+    }
+
+    async function extendLicense(id, days) {
+      try {
+        const res = await fetch(`/api/admin/licenses/${id}/extend`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ days })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          alert(`মেয়াদ +${days} দিন বাড়ানো হয়েছে!`);
+          loadData();
+        } else {
+          alert(data.message || 'Extend failed');
+        }
+      } catch {
+        alert('Server error');
+      }
+    }
+  </script>
+</body>
+</html>

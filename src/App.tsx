@@ -38,70 +38,10 @@ import { OfflineIndicator } from './components/OfflineIndicator';
 import { haptics } from './utils/haptics';
 import { useLicenseAuth } from './hooks/useLicenseAuth';
 import { AccessKeyScreen } from './components/AccessKeyScreen';
-import { AdminPortal } from './components/admin/AdminPortal';
 import { Sparkles as SparklesIcon } from 'lucide-react';
 
 export default function App() {
   const auth = useLicenseAuth();
-  const [isAdminSlugMatched, setIsAdminSlugMatched] = useState<boolean | null>(null);
-
-  // Check if current URL matches the private admin slug across pathname, search, and hash
-  useEffect(() => {
-    // 1. Path candidate (e.g. /x-admin-arifa, /x-admin-arifa/)
-    const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
-
-    // 2. Search query candidate (e.g. ?x-admin-arifa, ?admin=x-admin-arifa, ?slug=x-admin-arifa)
-    const searchParams = new URLSearchParams(window.location.search);
-    const searchVal = (
-      searchParams.get('admin') ||
-      searchParams.get('slug') ||
-      searchParams.get('key') ||
-      window.location.search.replace(/^\?/, '')
-    ).replace(/^\/+|\/+$/g, '').toLowerCase();
-
-    // 3. Hash candidate (e.g. #x-admin-arifa, #/x-admin-arifa)
-    const hashVal = window.location.hash.replace(/^#\/?/, '').replace(/^\/+|\/+$/g, '').toLowerCase();
-
-    const candidate = [rawPath, searchVal, hashVal].find(
-      s => s.startsWith('x-') || s === 'admin'
-    );
-
-    if (candidate) {
-      fetch('/api/system/verify-admin-slug', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: candidate }),
-      })
-        .then(res => res.json())
-        .then(data => {
-          setIsAdminSlugMatched(Boolean(data.valid));
-        })
-        .catch(() => {
-          setIsAdminSlugMatched(false);
-        });
-    } else {
-      setIsAdminSlugMatched(false);
-    }
-  }, []);
-
-  const handleVerifyAdminSlug = async (slug: string): Promise<boolean> => {
-    try {
-      const res = await fetch('/api/system/verify-admin-slug', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug }),
-      });
-      const data = await res.json();
-      if (data.valid) {
-        setIsAdminSlugMatched(true);
-        return true;
-      }
-    } catch {
-      // Ignore
-    }
-    return false;
-  };
-
   const [currentTab, setCurrentTab] = useState<NavTab>('home');
   const [settings, setSettings] = useState<UserSettings>(() => storage.getSettings());
   const [stats, setStats] = useState<LearningStats>(() => storage.getLearningStats());
@@ -197,27 +137,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Admin Route Handling (Completely hidden from public UI navigation)
-  if (isAdminSlugMatched === true) {
-    return (
-      <AdminPortal
-        onExitAdmin={() => {
-          setIsAdminSlugMatched(false);
-          window.history.replaceState({}, '', '/');
-        }}
-      />
-    );
-  }
-
-  // Waiting for admin slug check if on potential admin path
-  if (isAdminSlugMatched === null && window.location.pathname.replace(/^\/+|\/+$/g, '').startsWith('x-')) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-slate-950 text-slate-400">
-        <div className="w-8 h-8 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
   // Session authentication loading state
   if (auth.isLoading) {
     return (
@@ -235,7 +154,6 @@ export default function App() {
     return (
       <AccessKeyScreen
         onActivate={auth.activateKey}
-        onVerifyAdminSlug={handleVerifyAdminSlug}
         isLoading={auth.isLoading}
         errorMessage={auth.error}
       />

@@ -12,31 +12,24 @@ import {
   Eye, 
   Loader2, 
   Clipboard, 
-  Laptop2,
-  Lock,
-  X
+  Laptop2
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
 
 interface AccessKeyScreenProps {
   onActivate: (key: string) => Promise<{ success: boolean; message?: string }>;
-  onVerifyAdminSlug?: (slug: string) => Promise<boolean>;
   isLoading: boolean;
   errorMessage?: string | null;
 }
 
 export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
   onActivate,
-  onVerifyAdminSlug,
   isLoading,
   errorMessage,
 }) => {
   const [accessKey, setAccessKey] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [adminModalOpen, setAdminModalOpen] = useState(false);
-  const [adminSlugInput, setAdminSlugInput] = useState('');
-  const [adminSlugError, setAdminSlugError] = useState<string | null>(null);
   const [showHowToBuy, setShowHowToBuy] = useState(false);
 
   // Auto-format key with dashes as user types (e.g. BONOLOTA-XXXX-XXXX-XXXX)
@@ -67,19 +60,6 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
       return;
     }
 
-    // Check if user entered the secret admin slug into the access key box!
-    const candidateSlug = cleanKey.replace(/^[\/#\?]+|[\/#\?]+$/g, '').toLowerCase();
-    if (onVerifyAdminSlug && (candidateSlug.startsWith('x-') || candidateSlug === 'admin' || candidateSlug === 'x-admin-arifa')) {
-      setIsSubmitting(true);
-      setLocalError(null);
-      haptics.tap();
-      const isVerified = await onVerifyAdminSlug(candidateSlug);
-      setIsSubmitting(false);
-      if (isVerified) {
-        return; // App immediately renders the AdminPortal!
-      }
-    }
-
     if (cleanKey.length < 8) {
       setLocalError('অ্যাক্সেস কি-টি অসম্পূর্ণ বা ফরম্যাট সঠিক নয়।');
       return;
@@ -94,23 +74,6 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
 
     if (!res.success) {
       setLocalError(res.message || 'অ্যাক্টিভেশন ব্যর্থ হয়েছে।');
-    }
-  };
-
-  const handleAdminSlugSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!adminSlugInput.trim() || !onVerifyAdminSlug) return;
-
-    setIsSubmitting(true);
-    setAdminSlugError(null);
-    const candidate = adminSlugInput.trim().replace(/^[\/#\?]+|[\/#\?]+$/g, '').toLowerCase();
-    const isVerified = await onVerifyAdminSlug(candidate);
-    setIsSubmitting(false);
-
-    if (isVerified) {
-      setAdminModalOpen(false);
-    } else {
-      setAdminSlugError('ভুল অ্যাডমিন স্লাগ। অ্যাক্সেস অনুমোদিত নয়।');
     }
   };
 
@@ -250,66 +213,11 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
         </div>
         </div>
 
-        {/* Footer info notice with subtle admin trigger */}
-        <div className="text-center mt-5 text-xs text-slate-500 dark:text-slate-400 flex flex-col items-center gap-1.5">
+        {/* Footer info notice */}
+        <div className="text-center mt-5 text-xs text-slate-500 dark:text-slate-400">
           <p>সুরক্ষিত লাইসেন্সিং সিস্টেম • Bonolota</p>
-          <button
-            type="button"
-            onClick={() => setAdminModalOpen(true)}
-            className="opacity-40 hover:opacity-100 transition-opacity p-1 cursor-pointer inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-          >
-            <Lock className="w-3 h-3" />
-            <span>অ্যাডমিন পোর্টাল</span>
-          </button>
         </div>
       </div>
-
-      {/* Secret Admin Slug Modal */}
-      {adminModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-bangla animate-fadeIn">
-          <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 shadow-2xl text-white relative">
-            <button
-              type="button"
-              onClick={() => { setAdminModalOpen(false); setAdminSlugError(null); }}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center mb-3">
-              <Lock className="w-5 h-5" />
-            </div>
-
-            <h3 className="text-base font-bold text-white">অ্যাডমিন পোর্টালে প্রবেশ</h3>
-            <p className="text-xs text-slate-400 mt-1 mb-4">
-              আপনার গোপন অ্যাডমিন স্লাগ প্রদান করুন (যেমন: <code className="font-mono text-indigo-300">x-admin-arifa</code>)
-            </p>
-
-            <form onSubmit={handleAdminSlugSubmit} className="space-y-3">
-              <input
-                type="text"
-                value={adminSlugInput}
-                onChange={(e) => { setAdminSlugInput(e.target.value); setAdminSlugError(null); }}
-                placeholder="x-admin-arifa"
-                autoFocus
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:border-indigo-500"
-              />
-
-              {adminSlugError && (
-                <p className="text-xs text-rose-400 font-semibold">{adminSlugError}</p>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSubmitting || !adminSlugInput.trim()}
-                className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 transition-all cursor-pointer text-xs"
-              >
-                {isSubmitting ? 'যাচাই করা হচ্ছে...' : 'পোর্টালে প্রবেশ করুন →'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
