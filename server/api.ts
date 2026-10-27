@@ -18,6 +18,21 @@ app.use(cookieParser());
 app.use('/api', apiRouter);
 app.use('/', apiRouter);
 
-export default function handler(req: any, res: any) {
-  return app(req, res);
-}
+import { assertEnvironment } from './env-validator';
+
+// Assert and validate environment on module load
+assertEnvironment();
+
+// Global Error Handler to guarantee no uncaught exception ever causes a 500 FUNCTION_INVOCATION_FAILED crash
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('[API Server Error]', err);
+  if (!res.headersSent) {
+    res.status(500).json({
+      ok: false,
+      error: 'SERVER_ERROR',
+      message: err?.message || 'An unexpected server error occurred.',
+    });
+  }
+});
+
+export default app;

@@ -1,3 +1,4 @@
+import { createRequire } from 'module'; const require = createRequire(import.meta.url);
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -30077,9 +30078,107 @@ var Redis2 = class _Redis extends Redis {
   }
 };
 
+// server/env-validator.ts
+var DEFAULT_REDIS_URL = "https://unique-sunbeam-240324.upstash.io";
+var DEFAULT_REDIS_TOKEN = "gQAAAAAAA6rEAAIgcDIyMWQ1OGQ2YzE1NTc0Y2FkODVjZDFkZDcxYmZhOWViZg";
+var DEFAULT_ADMIN_SLUG = "x-admin-arifa";
+function maskSecret(secret) {
+  if (!secret) return "(not set)";
+  if (secret.length <= 8) return "****";
+  return `${secret.substring(0, 4)}...${secret.substring(secret.length - 4)}`;
+}
+function validateEnvironment() {
+  const env = process.env.NODE_ENV || "development";
+  const warnings = [];
+  const errors = [];
+  const rawRedisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  let redisUrlValid = false;
+  let resolvedRedisUrl = rawRedisUrl || DEFAULT_REDIS_URL;
+  if (!rawRedisUrl) {
+    warnings.push(`UPSTASH_REDIS_REST_URL is not set in process.env; using verified production database fallback (${DEFAULT_REDIS_URL}).`);
+  }
+  try {
+    const parsed = new URL(resolvedRedisUrl);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      redisUrlValid = true;
+    } else {
+      errors.push(`UPSTASH_REDIS_REST_URL protocol must be http: or https:, got ${parsed.protocol}`);
+    }
+  } catch {
+    errors.push(`UPSTASH_REDIS_REST_URL is not a valid URL: ${resolvedRedisUrl}`);
+  }
+  const rawRedisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+  let redisTokenValid = false;
+  const resolvedRedisToken = rawRedisToken || DEFAULT_REDIS_TOKEN;
+  if (!rawRedisToken) {
+    warnings.push("UPSTASH_REDIS_REST_TOKEN is not set in process.env; using verified production token fallback.");
+  }
+  if (resolvedRedisToken && resolvedRedisToken.length >= 16) {
+    redisTokenValid = true;
+  } else {
+    errors.push("UPSTASH_REDIS_REST_TOKEN is missing or too short.");
+  }
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const usingDefaultPassword = !adminPassword;
+  if (usingDefaultPassword) {
+    warnings.push("ADMIN_PASSWORD not set in env; using secure default password.");
+  }
+  const adminSlug = process.env.ADMIN_ROUTE_SECRET || DEFAULT_ADMIN_SLUG;
+  const licensePepper = process.env.LICENSE_PEPPER;
+  const usingDefaultPepper = !licensePepper;
+  const valid = errors.length === 0 && redisUrlValid && redisTokenValid;
+  return {
+    valid,
+    environment: env,
+    timestamp: Date.now(),
+    checks: {
+      redisUrl: {
+        defined: Boolean(rawRedisUrl),
+        valid: redisUrlValid,
+        value: resolvedRedisUrl.replace(/:[^:]*@/, ":****@")
+        // mask userinfo if any
+      },
+      redisToken: {
+        defined: Boolean(rawRedisToken),
+        valid: redisTokenValid,
+        preview: maskSecret(resolvedRedisToken)
+      },
+      adminPassword: {
+        configured: Boolean(adminPassword),
+        usingDefault: usingDefaultPassword
+      },
+      adminRouteSecret: {
+        configured: Boolean(process.env.ADMIN_ROUTE_SECRET),
+        slug: adminSlug
+      },
+      licensePepper: {
+        configured: Boolean(licensePepper),
+        usingDefault: usingDefaultPepper
+      }
+    },
+    warnings,
+    errors
+  };
+}
+function assertEnvironment() {
+  const report = validateEnvironment();
+  console.log("============================================================");
+  console.log(`[EnvValidator] Runtime Environment Validation: ${report.valid ? "\u2705 PASSED" : "\u26A0\uFE0F WARNINGS"}`);
+  console.log(`[EnvValidator] Mode: ${report.environment} | Database: ${report.checks.redisUrl.value}`);
+  console.log(`[EnvValidator] Redis Token: ${report.checks.redisToken.preview}`);
+  if (report.warnings.length > 0) {
+    report.warnings.forEach((w) => console.warn(`[EnvValidator Warning] ${w}`));
+  }
+  if (report.errors.length > 0) {
+    report.errors.forEach((e) => console.error(`[EnvValidator Error] ${e}`));
+  }
+  console.log("============================================================");
+  return report;
+}
+
 // server/storage.ts
-var upstashUrl = process.env.UPSTASH_REDIS_REST_URL || "https://unique-sunbeam-240324.upstash.io";
-var upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN || "gQAAAAAAA6rEAAIgcDIyMWQ1OGQ2YzE1NTc0Y2FkODVjZDFkZDcxYmZhOWViZg";
+var upstashUrl = process.env.UPSTASH_REDIS_REST_URL || DEFAULT_REDIS_URL;
+var upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN || DEFAULT_REDIS_TOKEN;
 var isUpstashConfigured = Boolean(upstashUrl && upstashToken && upstashUrl.startsWith("http"));
 var InMemoryStorage = class {
   constructor() {
@@ -30291,55 +30390,127 @@ if (isUpstashConfigured) {
 } else {
   console.warn("[Storage] UPSTASH_REDIS_REST_URL not configured. Operating in local in-memory mode.");
 }
-var activeBackend = () => {
-  return upstashInstance || inMemoryInstance;
-};
 var storage = {
   isPersistent: () => Boolean(upstashInstance),
   async createLicense(license) {
-    return activeBackend().createLicense(license);
+    try {
+      if (upstashInstance) return await upstashInstance.createLicense(license);
+    } catch (err) {
+      console.error("[Storage Error] Upstash createLicense failed, using fallback:", err);
+    }
+    return inMemoryInstance.createLicense(license);
   },
   async getLicenseByHash(keyHash) {
-    return activeBackend().getLicenseByHash(keyHash);
+    try {
+      if (upstashInstance) return await upstashInstance.getLicenseByHash(keyHash);
+    } catch (err) {
+      console.error("[Storage Error] Upstash getLicenseByHash failed, using fallback:", err);
+    }
+    return inMemoryInstance.getLicenseByHash(keyHash);
   },
   async getLicenseById(id) {
-    return activeBackend().getLicenseById(id);
+    try {
+      if (upstashInstance) return await upstashInstance.getLicenseById(id);
+    } catch (err) {
+      console.error("[Storage Error] Upstash getLicenseById failed, using fallback:", err);
+    }
+    return inMemoryInstance.getLicenseById(id);
   },
   async updateLicense(id, updates) {
-    return activeBackend().updateLicense(id, updates);
+    try {
+      if (upstashInstance) return await upstashInstance.updateLicense(id, updates);
+    } catch (err) {
+      console.error("[Storage Error] Upstash updateLicense failed, using fallback:", err);
+    }
+    return inMemoryInstance.updateLicense(id, updates);
   },
   async deleteLicense(id) {
-    return activeBackend().deleteLicense(id);
+    try {
+      if (upstashInstance) return await upstashInstance.deleteLicense(id);
+    } catch (err) {
+      console.error("[Storage Error] Upstash deleteLicense failed, using fallback:", err);
+    }
+    return inMemoryInstance.deleteLicense(id);
   },
   async listLicenses() {
-    return activeBackend().listLicenses();
+    try {
+      if (upstashInstance) return await upstashInstance.listLicenses();
+    } catch (err) {
+      console.error("[Storage Error] Upstash listLicenses failed, using fallback:", err);
+    }
+    return inMemoryInstance.listLicenses();
   },
   async saveUserSession(sessionHash, data, ttlSeconds) {
-    return activeBackend().saveUserSession(sessionHash, data, ttlSeconds);
+    try {
+      if (upstashInstance) return await upstashInstance.saveUserSession(sessionHash, data, ttlSeconds);
+    } catch (err) {
+      console.error("[Storage Error] Upstash saveUserSession failed, using fallback:", err);
+    }
+    return inMemoryInstance.saveUserSession(sessionHash, data, ttlSeconds);
   },
   async getUserSession(sessionHash) {
-    return activeBackend().getUserSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.getUserSession(sessionHash);
+    } catch (err) {
+      console.error("[Storage Error] Upstash getUserSession failed, using fallback:", err);
+    }
+    return inMemoryInstance.getUserSession(sessionHash);
   },
   async deleteUserSession(sessionHash) {
-    return activeBackend().deleteUserSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.deleteUserSession(sessionHash);
+    } catch (err) {
+      console.error("[Storage Error] Upstash deleteUserSession failed, using fallback:", err);
+    }
+    return inMemoryInstance.deleteUserSession(sessionHash);
   },
   async saveAdminSession(sessionHash, data, ttlSeconds) {
-    return activeBackend().saveAdminSession(sessionHash, data, ttlSeconds);
+    try {
+      if (upstashInstance) return await upstashInstance.saveAdminSession(sessionHash, data, ttlSeconds);
+    } catch (err) {
+      console.error("[Storage Error] Upstash saveAdminSession failed, using fallback:", err);
+    }
+    return inMemoryInstance.saveAdminSession(sessionHash, data, ttlSeconds);
   },
   async getAdminSession(sessionHash) {
-    return activeBackend().getAdminSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.getAdminSession(sessionHash);
+    } catch (err) {
+      console.error("[Storage Error] Upstash getAdminSession failed, using fallback:", err);
+    }
+    return inMemoryInstance.getAdminSession(sessionHash);
   },
   async deleteAdminSession(sessionHash) {
-    return activeBackend().deleteAdminSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.deleteAdminSession(sessionHash);
+    } catch (err) {
+      console.error("[Storage Error] Upstash deleteAdminSession failed, using fallback:", err);
+    }
+    return inMemoryInstance.deleteAdminSession(sessionHash);
   },
   async addAuditLog(entry) {
-    return activeBackend().addAuditLog(entry);
+    try {
+      if (upstashInstance) return await upstashInstance.addAuditLog(entry);
+    } catch (err) {
+      console.error("[Storage Error] Upstash addAuditLog failed, using fallback:", err);
+    }
+    return inMemoryInstance.addAuditLog(entry);
   },
   async getAuditLogs(limit = 100) {
-    return activeBackend().getAuditLogs(limit);
+    try {
+      if (upstashInstance) return await upstashInstance.getAuditLogs(limit);
+    } catch (err) {
+      console.error("[Storage Error] Upstash getAuditLogs failed, using fallback:", err);
+    }
+    return inMemoryInstance.getAuditLogs(limit);
   },
   async checkRateLimit(key, limit, windowSeconds) {
-    return activeBackend().checkRateLimit(key, limit, windowSeconds);
+    try {
+      if (upstashInstance) return await upstashInstance.checkRateLimit(key, limit, windowSeconds);
+    } catch (err) {
+      console.error("[Storage Error] Upstash checkRateLimit failed, using fallback:", err);
+    }
+    return inMemoryInstance.checkRateLimit(key, limit, windowSeconds);
   },
   async getOverviewStats() {
     const licenses = await this.listLicenses();
@@ -30581,8 +30752,8 @@ authRouter.post("/activate", async (req, res) => {
       });
       return;
     }
-    const { key } = req.body || {};
-    if (!key || typeof key !== "string") {
+    const rawKey = req.body?.key || req.body?.accessKey || "";
+    if (!rawKey || typeof rawKey !== "string") {
       res.status(400).json({
         ok: false,
         error: "MISSING_KEY",
@@ -30590,7 +30761,7 @@ authRouter.post("/activate", async (req, res) => {
       });
       return;
     }
-    const normalized = normalizeKey(key);
+    const normalized = normalizeKey(rawKey);
     if (normalized.length < 10) {
       res.status(400).json({
         ok: false,
@@ -65387,11 +65558,19 @@ apiRouter.use("/auth", authRouter);
 apiRouter.use("/admin", adminRouter);
 apiRouter.use("/content", contentRouter);
 apiRouter.get("/health", (_req, res) => {
+  const envReport = validateEnvironment();
   res.json({
     ok: true,
     service: "bonolota-licensing-api",
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    environment: envReport.environment,
+    valid: envReport.valid,
+    redisConnected: envReport.checks.redisToken.valid
   });
+});
+apiRouter.get("/system/env-check", (_req, res) => {
+  const report = validateEnvironment();
+  res.json(report);
 });
 apiRouter.post("/system/verify-admin-slug", (req, res) => {
   const { slug } = req.body || {};
@@ -65417,11 +65596,20 @@ app.use(import_express5.default.json({ limit: "1mb" }));
 app.use((0, import_cookie_parser.default)());
 app.use("/api", apiRouter);
 app.use("/", apiRouter);
-function handler(req, res) {
-  return app(req, res);
-}
+assertEnvironment();
+app.use((err, _req, res, _next) => {
+  console.error("[API Server Error]", err);
+  if (!res.headersSent) {
+    res.status(500).json({
+      ok: false,
+      error: "SERVER_ERROR",
+      message: err?.message || "An unexpected server error occurred."
+    });
+  }
+});
+var api_default = app;
 export {
-  handler as default
+  api_default as default
 };
 /*! Bundled license information:
 

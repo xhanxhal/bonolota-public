@@ -35,8 +35,8 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const { key } = req.body || {};
-    if (!key || typeof key !== 'string') {
+    const rawKey = req.body?.key || req.body?.accessKey || '';
+    if (!rawKey || typeof rawKey !== 'string') {
       res.status(400).json({
         ok: false,
         error: 'MISSING_KEY',
@@ -45,7 +45,7 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const normalized = normalizeKey(key);
+    const normalized = normalizeKey(rawKey);
     // Basic format validation
     if (normalized.length < 10) {
       res.status(400).json({

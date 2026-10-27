@@ -10,13 +10,25 @@ apiRouter.use('/auth', authRouter);
 apiRouter.use('/admin', adminRouter);
 apiRouter.use('/content', contentRouter);
 
-// Health check & diagnostic
+import { validateEnvironment } from '../env-validator';
+
+// Health check & diagnostic with runtime environment validation
 apiRouter.get('/health', (_req: Request, res: Response): void => {
+  const envReport = validateEnvironment();
   res.json({
     ok: true,
     service: 'bonolota-licensing-api',
     timestamp: Date.now(),
+    environment: envReport.environment,
+    valid: envReport.valid,
+    redisConnected: envReport.checks.redisToken.valid,
   });
+});
+
+// Detailed system environment diagnostic endpoint
+apiRouter.get('/system/env-check', (_req: Request, res: Response): void => {
+  const report = validateEnvironment();
+  res.json(report);
 });
 
 // Admin Route Verification

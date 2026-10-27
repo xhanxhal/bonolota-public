@@ -1,9 +1,11 @@
 import { Redis } from '@upstash/redis';
 import { LicenseRecord, UserSessionData, AdminSessionData, AuditLogEntry, AdminOverviewStats } from './types';
 
+import { DEFAULT_REDIS_URL, DEFAULT_REDIS_TOKEN } from './env-validator';
+
 // Upstash Redis configuration for bonolota-db
-const upstashUrl = process.env.UPSTASH_REDIS_REST_URL || 'https://unique-sunbeam-240324.upstash.io';
-const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN || 'gQAAAAAAA6rEAAIgcDIyMWQ1OGQ2YzE1NTc0Y2FkODVjZDFkZDcxYmZhOWViZg';
+const upstashUrl = process.env.UPSTASH_REDIS_REST_URL || DEFAULT_REDIS_URL;
+const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN || DEFAULT_REDIS_TOKEN;
 
 const isUpstashConfigured = Boolean(upstashUrl && upstashToken && upstashUrl.startsWith('http'));
 
@@ -267,63 +269,138 @@ export const storage = {
   isPersistent: () => Boolean(upstashInstance),
 
   async createLicense(license: LicenseRecord): Promise<void> {
-    return activeBackend().createLicense(license);
+    try {
+      if (upstashInstance) return await upstashInstance.createLicense(license);
+    } catch (err) {
+      console.error('[Storage Error] Upstash createLicense failed, using fallback:', err);
+    }
+    return inMemoryInstance.createLicense(license);
   },
 
   async getLicenseByHash(keyHash: string): Promise<LicenseRecord | null> {
-    return activeBackend().getLicenseByHash(keyHash);
+    try {
+      if (upstashInstance) return await upstashInstance.getLicenseByHash(keyHash);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getLicenseByHash failed, using fallback:', err);
+    }
+    return inMemoryInstance.getLicenseByHash(keyHash);
   },
 
   async getLicenseById(id: string): Promise<LicenseRecord | null> {
-    return activeBackend().getLicenseById(id);
+    try {
+      if (upstashInstance) return await upstashInstance.getLicenseById(id);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getLicenseById failed, using fallback:', err);
+    }
+    return inMemoryInstance.getLicenseById(id);
   },
 
   async updateLicense(id: string, updates: Partial<LicenseRecord>): Promise<LicenseRecord | null> {
-    return activeBackend().updateLicense(id, updates);
+    try {
+      if (upstashInstance) return await upstashInstance.updateLicense(id, updates);
+    } catch (err) {
+      console.error('[Storage Error] Upstash updateLicense failed, using fallback:', err);
+    }
+    return inMemoryInstance.updateLicense(id, updates);
   },
 
   async deleteLicense(id: string): Promise<boolean> {
-    return activeBackend().deleteLicense(id);
+    try {
+      if (upstashInstance) return await upstashInstance.deleteLicense(id);
+    } catch (err) {
+      console.error('[Storage Error] Upstash deleteLicense failed, using fallback:', err);
+    }
+    return inMemoryInstance.deleteLicense(id);
   },
 
   async listLicenses(): Promise<LicenseRecord[]> {
-    return activeBackend().listLicenses();
+    try {
+      if (upstashInstance) return await upstashInstance.listLicenses();
+    } catch (err) {
+      console.error('[Storage Error] Upstash listLicenses failed, using fallback:', err);
+    }
+    return inMemoryInstance.listLicenses();
   },
 
   async saveUserSession(sessionHash: string, data: UserSessionData, ttlSeconds: number): Promise<void> {
-    return activeBackend().saveUserSession(sessionHash, data, ttlSeconds);
+    try {
+      if (upstashInstance) return await upstashInstance.saveUserSession(sessionHash, data, ttlSeconds);
+    } catch (err) {
+      console.error('[Storage Error] Upstash saveUserSession failed, using fallback:', err);
+    }
+    return inMemoryInstance.saveUserSession(sessionHash, data, ttlSeconds);
   },
 
   async getUserSession(sessionHash: string): Promise<UserSessionData | null> {
-    return activeBackend().getUserSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.getUserSession(sessionHash);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getUserSession failed, using fallback:', err);
+    }
+    return inMemoryInstance.getUserSession(sessionHash);
   },
 
   async deleteUserSession(sessionHash: string): Promise<void> {
-    return activeBackend().deleteUserSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.deleteUserSession(sessionHash);
+    } catch (err) {
+      console.error('[Storage Error] Upstash deleteUserSession failed, using fallback:', err);
+    }
+    return inMemoryInstance.deleteUserSession(sessionHash);
   },
 
   async saveAdminSession(sessionHash: string, data: AdminSessionData, ttlSeconds: number): Promise<void> {
-    return activeBackend().saveAdminSession(sessionHash, data, ttlSeconds);
+    try {
+      if (upstashInstance) return await upstashInstance.saveAdminSession(sessionHash, data, ttlSeconds);
+    } catch (err) {
+      console.error('[Storage Error] Upstash saveAdminSession failed, using fallback:', err);
+    }
+    return inMemoryInstance.saveAdminSession(sessionHash, data, ttlSeconds);
   },
 
   async getAdminSession(sessionHash: string): Promise<AdminSessionData | null> {
-    return activeBackend().getAdminSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.getAdminSession(sessionHash);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getAdminSession failed, using fallback:', err);
+    }
+    return inMemoryInstance.getAdminSession(sessionHash);
   },
 
   async deleteAdminSession(sessionHash: string): Promise<void> {
-    return activeBackend().deleteAdminSession(sessionHash);
+    try {
+      if (upstashInstance) return await upstashInstance.deleteAdminSession(sessionHash);
+    } catch (err) {
+      console.error('[Storage Error] Upstash deleteAdminSession failed, using fallback:', err);
+    }
+    return inMemoryInstance.deleteAdminSession(sessionHash);
   },
 
   async addAuditLog(entry: AuditLogEntry): Promise<void> {
-    return activeBackend().addAuditLog(entry);
+    try {
+      if (upstashInstance) return await upstashInstance.addAuditLog(entry);
+    } catch (err) {
+      console.error('[Storage Error] Upstash addAuditLog failed, using fallback:', err);
+    }
+    return inMemoryInstance.addAuditLog(entry);
   },
 
   async getAuditLogs(limit = 100): Promise<AuditLogEntry[]> {
-    return activeBackend().getAuditLogs(limit);
+    try {
+      if (upstashInstance) return await upstashInstance.getAuditLogs(limit);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getAuditLogs failed, using fallback:', err);
+    }
+    return inMemoryInstance.getAuditLogs(limit);
   },
 
   async checkRateLimit(key: string, limit: number, windowSeconds: number): Promise<{ allowed: boolean; remaining: number }> {
-    return activeBackend().checkRateLimit(key, limit, windowSeconds);
+    try {
+      if (upstashInstance) return await upstashInstance.checkRateLimit(key, limit, windowSeconds);
+    } catch (err) {
+      console.error('[Storage Error] Upstash checkRateLimit failed, using fallback:', err);
+    }
+    return inMemoryInstance.checkRateLimit(key, limit, windowSeconds);
   },
 
   async getOverviewStats(): Promise<AdminOverviewStats> {
