@@ -34,7 +34,9 @@ export async function requireCustomerAuth(
   next: NextFunction
 ): Promise<void> {
   try {
-    const rawToken = req.cookies?.[USER_COOKIE_NAME];
+    const authHeader = req.headers.authorization;
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
+    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken || req.headers['x-session-token'];
     if (!rawToken || typeof rawToken !== 'string') {
       res.status(401).json({ ok: false, error: 'NO_SESSION', message: 'No active session found. Please enter your access key.' });
       return;
@@ -121,7 +123,9 @@ export async function requireAdminAuth(
   next: NextFunction
 ): Promise<void> {
   try {
-    const rawToken = req.cookies?.[ADMIN_COOKIE_NAME];
+    const authHeader = req.headers.authorization;
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
+    const rawToken = req.cookies?.[ADMIN_COOKIE_NAME] || bearerToken || req.headers['x-admin-token'];
     if (!rawToken || typeof rawToken !== 'string') {
       res.status(401).json({ ok: false, error: 'ADMIN_UNAUTHORIZED', message: 'Admin authentication required.' });
       return;

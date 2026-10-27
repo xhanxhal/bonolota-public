@@ -149,6 +149,7 @@ adminRouter.post('/login', async (req: Request, res: Response): Promise<void> =>
 
     res.json({
       ok: true,
+      token: sessionToken,
       expiresAt,
       isInitialPasswordActive: !process.env.ADMIN_PASSWORD_HASH,
       isUsingFallbackStore: !storage.isPersistent(),

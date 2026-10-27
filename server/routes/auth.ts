@@ -181,8 +181,10 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
 
     res.json({
       ok: true,
+      sessionToken,
       expiresAt: license.expiresAt,
       daysLeft,
+      maskedKey: license.keyMasked,
       message: 'অভিনন্দন! আপনার অ্যাক্সেস কি সফলভাবে অ্যাক্টিভেট হয়েছে।',
     });
   } catch (error) {

@@ -30646,7 +30646,9 @@ function getCookieOptions() {
 }
 async function requireCustomerAuth(req, res, next) {
   try {
-    const rawToken = req.cookies?.[USER_COOKIE_NAME];
+    const authHeader = req.headers.authorization;
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null;
+    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken || req.headers["x-session-token"];
     if (!rawToken || typeof rawToken !== "string") {
       res.status(401).json({ ok: false, error: "NO_SESSION", message: "No active session found. Please enter your access key." });
       return;
@@ -30712,7 +30714,9 @@ async function requireCustomerAuth(req, res, next) {
 }
 async function requireAdminAuth(req, res, next) {
   try {
-    const rawToken = req.cookies?.[ADMIN_COOKIE_NAME];
+    const authHeader = req.headers.authorization;
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null;
+    const rawToken = req.cookies?.[ADMIN_COOKIE_NAME] || bearerToken || req.headers["x-admin-token"];
     if (!rawToken || typeof rawToken !== "string") {
       res.status(401).json({ ok: false, error: "ADMIN_UNAUTHORIZED", message: "Admin authentication required." });
       return;
@@ -30869,8 +30873,10 @@ authRouter.post("/activate", async (req, res) => {
     const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
     res.json({
       ok: true,
+      sessionToken,
       expiresAt: license.expiresAt,
       daysLeft,
+      maskedKey: license.keyMasked,
       message: "\u0985\u09AD\u09BF\u09A8\u09A8\u09CD\u09A6\u09A8! \u0986\u09AA\u09A8\u09BE\u09B0 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u0995\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u099F\u09BF\u09AD\u09C7\u099F \u09B9\u09DF\u09C7\u099B\u09C7\u0964"
     });
   } catch (error) {
@@ -31039,6 +31045,7 @@ adminRouter.post("/login", async (req, res) => {
     });
     res.json({
       ok: true,
+      token: sessionToken,
       expiresAt,
       isInitialPasswordActive: !process.env.ADMIN_PASSWORD_HASH,
       isUsingFallbackStore: !storage.isPersistent(),
