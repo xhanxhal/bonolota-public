@@ -3,6 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <script>
+      (function() {
+        // Transparently mock vite-hmr WebSocket in environments where HMR is disabled
+        const OriginalWebSocket = window.WebSocket;
+        if (OriginalWebSocket) {
+          window.WebSocket = function(url, protocols) {
+            if (protocols === 'vite-hmr' || (typeof url === 'string' && (url.includes('vite') || url.includes('hmr')))) {
+              return {
+                readyState: 1,
+                send: function() {},
+                close: function() {},
+                addEventListener: function() {},
+                removeEventListener: function() {},
+                dispatchEvent: function() { return false; },
+                onopen: null,
+                onmessage: null,
+                onerror: null,
+                onclose: null,
+              };
+            }
+            return new OriginalWebSocket(url, protocols);
+          };
+          window.WebSocket.prototype = OriginalWebSocket.prototype;
+          window.WebSocket.CONNECTING = OriginalWebSocket.CONNECTING;
+          window.WebSocket.OPEN = OriginalWebSocket.OPEN;
+          window.WebSocket.CLOSING = OriginalWebSocket.CLOSING;
+          window.WebSocket.CLOSED = OriginalWebSocket.CLOSED;
+        }
+
+        window.addEventListener('error', function(event) {
+          if (event && (
+            (event.message && (event.message.includes('WebSocket') || event.message.includes('vite'))) ||
+            (event.filename && event.filename.includes('@vite/client'))
+          )) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+      })();
+    </script>
     <title>Bonolota - Interactive Vocabulary Learning Platform</title>
     <meta name="description" content="Bonolota - A modern, interactive English vocabulary learning platform with lessons, 3D flashcards, quizzes, and spaced repetition with authentic Bengali translations." />
     <meta property="og:title" content="Bonolota - Interactive Vocabulary Learning Platform" />

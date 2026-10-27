@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { apiRouter } from '../server/routes';
+import { apiRouter } from './routes';
 
 const app = express();
 
@@ -14,11 +14,8 @@ app.use((_req, res, next) => {
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 
-// Mount the API router on both '/api' and '/'
-// This ensures that whether Vercel preserves '/api' in req.url or strips it,
-// all endpoints (/admin/*, /auth/*, /content/*) match successfully!
+// Mount on both '/api' and '/' so Vercel routes are always matched
 app.use('/api', apiRouter);
 app.use('/', apiRouter);
 
-// Export for Vercel Serverless Function
 export default app;

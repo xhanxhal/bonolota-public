@@ -285,15 +285,20 @@
           credentials: 'include',
           body: JSON.stringify({ password })
         });
-        const data = await res.json();
+        let data = {};
+        try {
+          data = await res.json();
+        } catch {
+          data = { message: `HTTP ${res.status}: সার্ভার সাড়া দেয়নি` };
+        }
         if (res.ok && data.ok) {
           showDashboard();
         } else {
           errBox.innerText = data.message || 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।';
           errBox.classList.remove('hidden');
         }
-      } catch {
-        errBox.innerText = 'সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি।';
+      } catch (err) {
+        errBox.innerText = 'সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (' + (err.message || 'নেটওয়ার্ক এরর') + ')।';
         errBox.classList.remove('hidden');
       } finally {
         btn.disabled = false;

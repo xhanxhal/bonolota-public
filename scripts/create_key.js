@@ -9,8 +9,8 @@
  *   node scripts/create_key.js 30 "Tanvir - 017xxxxxxxx - bKash TrxID #8A92B1"
  */
 
-import { storage } from '../server/storage.js';
-import { generateAccessKey, hashLicenseKey, maskKey } from '../server/crypto.js';
+import { storage } from '../server/storage';
+import { generateAccessKey, hashLicenseKey, maskKey } from '../server/crypto';
 
 async function main() {
   const args = process.argv.slice(2);
@@ -29,7 +29,7 @@ async function main() {
   const expiresAt = now + (days * 24 * 60 * 60 * 1000);
   const licenseId = `lic_${now}_${Math.random().toString(36).substring(2, 7)}`;
 
-  await storage.saveLicense({
+  await storage.createLicense({
     id: licenseId,
     keyMasked: masked,
     keyHash,
