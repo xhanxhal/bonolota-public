@@ -18,4 +18,6 @@ app.use(cookieParser());
 app.use('/api', apiRouter);
 app.use('/', apiRouter);
 
-export default app;
+export default function handler(req: any, res: any) {
+  return app(req, res);
+}

@@ -65417,9 +65417,11 @@ app.use(import_express5.default.json({ limit: "1mb" }));
 app.use((0, import_cookie_parser.default)());
 app.use("/api", apiRouter);
 app.use("/", apiRouter);
-var api_default = app;
+function handler(req, res) {
+  return app(req, res);
+}
 export {
-  api_default as default
+  handler as default
 };
 /*! Bundled license information:
 
