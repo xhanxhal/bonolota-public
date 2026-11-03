@@ -39,6 +39,9 @@ import { haptics } from './utils/haptics';
 import { useLicenseAuth } from './hooks/useLicenseAuth';
 import { AccessKeyScreen } from './components/AccessKeyScreen';
 import { Sparkles as SparklesIcon, AlertTriangle, RotateCcw } from 'lucide-react';
+import { useBroadcastAnnouncements } from './hooks/useBroadcastAnnouncements';
+import { BroadcastDrawer } from './components/BroadcastDrawer';
+import { BroadcastModal } from './components/BroadcastModal';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -122,6 +125,8 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
 function MainApp() {
   const auth = useLicenseAuth();
+  const broadcast = useBroadcastAnnouncements();
+  const [isBroadcastDrawerOpen, setIsBroadcastDrawerOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState<NavTab>('home');
   const [settings, setSettings] = useState<UserSettings>(() => storage.getSettings());
   const [stats, setStats] = useState<LearningStats>(() => storage.getLearningStats());
@@ -261,6 +266,8 @@ function MainApp() {
           onToggleTheme={handleToggleTheme}
           onSelectTab={setCurrentTab}
           currentTab={currentTab}
+          unreadAnnouncementsCount={broadcast.unreadCount}
+          onOpenAnnouncements={() => setIsBroadcastDrawerOpen(true)}
         />
 
         {/* MAIN BODY: Generous max-w-7xl width for multi-column grid layout */}
@@ -405,6 +412,7 @@ function MainApp() {
               licenseInfo={{
                 isAuthenticated: auth.isAuthenticated,
                 daysLeft: auth.daysLeft,
+                isLifetime: auth.isLifetime,
                 expiresAt: auth.expiresAt,
                 keyMasked: auth.keyMasked,
               }}
@@ -537,6 +545,35 @@ function MainApp() {
 
       {/* Global Offline Status Indicator */}
       <OfflineIndicator />
+
+      {/* Broadcast Announcements Notification Drawer */}
+      <BroadcastDrawer
+        isOpen={isBroadcastDrawerOpen}
+        onClose={() => setIsBroadcastDrawerOpen(false)}
+        announcements={broadcast.announcements}
+        unreadCount={broadcast.unreadCount}
+        onMarkAllAsRead={broadcast.markAllAsRead}
+        onMarkAsRead={broadcast.markAsRead}
+        onSelectTab={(tab) => {
+          setCurrentTab(tab);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        isPushSupported={broadcast.isPushSupported}
+        pushPermission={broadcast.pushPermission}
+        onRequestPushPermission={broadcast.requestPushPermission}
+      />
+
+      {/* Urgent High-Priority Broadcast Popup Modal */}
+      {broadcast.activePopup && (
+        <BroadcastModal
+          announcement={broadcast.activePopup}
+          onDismiss={broadcast.dismissPopup}
+          onNavigateTab={(tab) => {
+            setCurrentTab(tab);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
+      )}
     </div>
   );
 }

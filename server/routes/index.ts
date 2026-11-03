@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { authRouter } from './auth';
 import { adminRouter, getAdminRouteSecret } from './admin';
 import { contentRouter } from './content';
+import { broadcastRouter } from './broadcast';
 
 export const apiRouter = Router();
 
@@ -9,6 +10,7 @@ export const apiRouter = Router();
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/admin', adminRouter);
 apiRouter.use('/content', contentRouter);
+apiRouter.use('/broadcasts', broadcastRouter);
 
 import { validateEnvironment } from '../env-validator';
 

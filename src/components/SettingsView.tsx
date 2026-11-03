@@ -28,6 +28,7 @@ interface SettingsViewProps {
   licenseInfo?: {
     isAuthenticated: boolean;
     daysLeft?: number;
+    isLifetime?: boolean;
     expiresAt?: number;
     keyMasked?: string;
   };
@@ -123,14 +124,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white">সাবস্ক্রিপশন ও লাইসেন্স স্ট্যাটাস</h3>
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  সক্রিয় ({licenseInfo?.daysLeft !== undefined ? `${licenseInfo.daysLeft} দিন বাকি` : 'Active'})
+                <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md ${
+                  licenseInfo?.isLifetime
+                    ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 shadow-sm'
+                    : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${licenseInfo?.isLifetime ? 'bg-amber-500' : 'bg-emerald-500'} animate-pulse`} />
+                  {licenseInfo?.isLifetime ? '👑 আজীবন (Lifetime)' : licenseInfo?.daysLeft !== undefined ? `সক্রিয় (${licenseInfo.daysLeft} দিন বাকি)` : 'Active'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed font-sans">
                 মাস্কড কি: <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{licenseInfo?.keyMasked || 'BONOLOTA-****-****'}</span>
-                {licenseInfo?.expiresAt && ` • মেয়াদ শেষ: ${new Date(licenseInfo.expiresAt).toLocaleDateString()}`}
+                {licenseInfo?.isLifetime 
+                  ? ' • মেয়াদ: আজীবন (আনলিমিটেড লাইফটাইম অ্যাক্সেস)' 
+                  : licenseInfo?.expiresAt ? ` • মেয়াদ শেষ: ${new Date(licenseInfo.expiresAt).toLocaleDateString()}` : ''}
               </p>
             </div>
 

@@ -6,6 +6,7 @@ export interface LicenseRecord {
   createdAt: number; // Server UTC ms
   expiresAt: number; // Server UTC ms (fixed at creation time)
   durationDays: number;
+  isLifetime?: boolean;
   activatedAt?: number; // When first activated
   browserBound: boolean;
   currentSessionHash?: string;
@@ -29,10 +30,24 @@ export interface AdminSessionData {
   expiresAt: number;
 }
 
+export interface BroadcastAnnouncement {
+  id: string; // e.g. "anno_1792430000_a1b2c"
+  title: string;
+  message: string;
+  type: 'info' | 'urgent' | 'update' | 'promotion';
+  priority: 'normal' | 'high'; // high shows immediate modal popup to active users
+  actionUrl?: string; // internal tab (e.g. 'quiz', 'learn', 'stories') or external link
+  actionText?: string; // e.g. 'এখনই দেখুন'
+  createdAt: number;
+  expiresAt?: number;
+  active: boolean;
+  author?: string;
+}
+
 export interface AuditLogEntry {
   id: string;
   timestamp: number;
-  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'admin_login' | 'admin_failed_login';
+  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'admin_login' | 'admin_failed_login';
   licenseId?: string;
   details: string;
   ip?: string;

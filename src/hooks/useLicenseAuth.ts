@@ -7,8 +7,16 @@ export interface LicenseSessionState {
   isAuthenticated: boolean;
   expiresAt?: number;
   daysLeft?: number;
+  isLifetime?: boolean;
   keyMasked?: string;
   error?: string | null;
+}
+
+const USER_TOKEN_KEY = 'bonolota_user_token';
+
+function getAuthHeaders(): Record<string, string> {
+  const token = typeof window !== 'undefined' ? localStorage.getItem(USER_TOKEN_KEY) : null;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 export function useLicenseAuth() {
@@ -21,6 +29,7 @@ export function useLicenseAuth() {
   const loadUnitsFromApi = useCallback(async () => {
     try {
       const res = await fetch('/api/content/units', {
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
       if (res.ok) {
@@ -40,6 +49,7 @@ export function useLicenseAuth() {
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
       const res = await fetch('/api/auth/session', {
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
       const data = await res.json();
@@ -52,11 +62,13 @@ export function useLicenseAuth() {
           isAuthenticated: true,
           expiresAt: data.expiresAt,
           daysLeft: data.daysLeft,
+          isLifetime: Boolean(data.isLifetime || (data.daysLeft && data.daysLeft > 3650)),
           keyMasked: data.keyMasked,
           error: null,
         });
       } else {
         // Not authenticated
+        localStorage.removeItem(USER_TOKEN_KEY);
         setState({
           isLoading: false,
           isAuthenticated: false,
@@ -85,6 +97,7 @@ export function useLicenseAuth() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...getAuthHeaders(),
         },
         credentials: 'include',
         body: JSON.stringify({ key }),
@@ -93,12 +106,18 @@ export function useLicenseAuth() {
       const data = await res.json();
 
       if (res.ok && data.ok) {
+        const token = data.token || data.sessionToken;
+        if (token) {
+          localStorage.setItem(USER_TOKEN_KEY, token);
+        }
         await loadUnitsFromApi();
         setState({
           isLoading: false,
           isAuthenticated: true,
           expiresAt: data.expiresAt,
           daysLeft: data.daysLeft,
+          isLifetime: Boolean(data.isLifetime || (data.daysLeft && data.daysLeft > 3650)),
+          keyMasked: data.maskedKey,
           error: null,
         });
         return { success: true, message: data.message };
@@ -126,11 +145,13 @@ export function useLicenseAuth() {
     try {
       await fetch('/api/auth/logout', {
         method: 'POST',
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
     } catch {
       // Ignore
     }
+    localStorage.removeItem(USER_TOKEN_KEY);
     offlineDatabaseCache.clear();
     setAuthorizedUnits([]);
     setState({

@@ -177,15 +177,20 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
     };
     res.cookie(USER_COOKIE_NAME, sessionToken, cookieOptions);
 
-    const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
+    const isLifetime = Boolean(license.isLifetime || license.durationDays >= 36500);
+    const daysLeft = isLifetime ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
 
     res.json({
       ok: true,
+      token: sessionToken,
       sessionToken,
       expiresAt: license.expiresAt,
       daysLeft,
+      isLifetime,
       maskedKey: license.keyMasked,
-      message: 'অভিনন্দন! আপনার অ্যাক্সেস কি সফলভাবে অ্যাক্টিভেট হয়েছে।',
+      message: isLifetime 
+        ? 'অভিনন্দন! আপনার লাইফটাইম (আজীবন) অ্যাক্সেস কি সফলভাবে অ্যাক্টিভেট হয়েছে।' 
+        : 'অভিনন্দন! আপনার অ্যাক্সেস কি সফলভাবে অ্যাক্টিভেট হয়েছে।',
     });
   } catch (error) {
     console.error('[auth/activate] Error:', error);
@@ -196,10 +201,14 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
 /**
  * Customer: Check Current Session Status
  * GET /api/auth/session
+ * Supports both HttpOnly cookie and Bearer header for mobile/webview reliability
  */
 authRouter.get('/session', async (req: Request, res: Response): Promise<void> => {
   try {
-    const rawToken = req.cookies?.[USER_COOKIE_NAME];
+    const authHeader = req.headers['authorization'];
+    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
+    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken;
+
     if (!rawToken || typeof rawToken !== 'string') {
       res.json({ authenticated: false });
       return;
@@ -230,12 +239,14 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
+    const isLifetime = Boolean(license.isLifetime || license.durationDays >= 36500);
+    const daysLeft = isLifetime ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
 
     res.json({
       authenticated: true,
       expiresAt: license.expiresAt,
       daysLeft,
+      isLifetime,
       keyMasked: license.keyMasked,
       durationDays: license.durationDays,
     });
@@ -251,7 +262,10 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
  */
 authRouter.post('/logout', async (req: Request, res: Response): Promise<void> => {
   try {
-    const rawToken = req.cookies?.[USER_COOKIE_NAME];
+    const authHeader = req.headers['authorization'];
+    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
+    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken;
+
     if (rawToken && typeof rawToken === 'string') {
       const sessionHash = hashSessionToken(rawToken);
       await storage.deleteUserSession(sessionHash);

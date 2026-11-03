@@ -15,7 +15,8 @@ import {
   Award,
   BarChart2,
   ChevronRight,
-  Grid
+  Grid,
+  Bell
 } from 'lucide-react';
 import { UserSettings, LearningStats } from '../data/types';
 import { NavTab } from './Navbar';
@@ -29,6 +30,8 @@ interface ModernHeaderProps {
   onToggleTheme: () => void;
   onSelectTab: (tab: NavTab) => void;
   currentTab: NavTab;
+  unreadAnnouncementsCount?: number;
+  onOpenAnnouncements?: () => void;
 }
 
 export const ModernHeader: React.FC<ModernHeaderProps> = ({
@@ -38,6 +41,8 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   onToggleTheme,
   onSelectTab,
   currentTab,
+  unreadAnnouncementsCount = 0,
+  onOpenAnnouncements,
 }) => {
   const [showStatsPopup, setShowStatsPopup] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -384,6 +389,25 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             <span className="text-[10px] hidden sm:inline">ডার্ক</span>
           </button>
         </div>
+
+        {/* Broadcast Announcements Notification Bell */}
+        <button
+          type="button"
+          onClick={() => {
+            haptics.tap();
+            onOpenAnnouncements?.();
+          }}
+          aria-label="নোটিফিকেশন ও ঘোষণা"
+          title="নোটিফিকেশন ও ঘোষণা"
+          className="relative p-1.5 sm:p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-300 transition-all cursor-pointer shadow-xs shrink-0"
+        >
+          <Bell className="w-4 h-4" />
+          {unreadAnnouncementsCount > 0 && (
+            <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-rose-500 text-[9px] font-black text-white shadow-sm ring-2 ring-white dark:ring-slate-900 animate-pulse">
+              {unreadAnnouncementsCount > 9 ? '9+' : unreadAnnouncementsCount}
+            </span>
+          )}
+        </button>
 
         {/* ALL SECTIONS / EXPLORE BUTTON (Direct Full Page Navigation - No Popup) */}
         <div className="relative font-bangla shrink-0">

@@ -219,11 +219,12 @@ adminRouter.get('/stats', requireAdminAuth, handleOverviewStats);
  */
 adminRouter.post('/licenses/create', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
-    const { durationDays, customerNote } = req.body || {};
-    const days = parseInt(durationDays, 10);
+    const { durationDays, customerNote, isLifetime } = req.body || {};
+    const isLife = isLifetime === true || durationDays === 'lifetime' || durationDays === 36500;
+    let days = isLife ? 36500 : parseInt(durationDays, 10);
 
-    if (isNaN(days) || days <= 0 || days > 3650) {
-      res.status(400).json({ ok: false, error: 'INVALID_DURATION', message: 'Duration must be between 1 and 3650 days.' });
+    if (!isLife && (isNaN(days) || days <= 0 || days > 36500)) {
+      res.status(400).json({ ok: false, error: 'INVALID_DURATION', message: 'Duration must be between 1 and 36500 days, or lifetime.' });
       return;
     }
 
@@ -245,6 +246,7 @@ adminRouter.post('/licenses/create', requireAdminAuth, async (req: Authenticated
       createdAt: now,
       expiresAt,
       durationDays: days,
+      isLifetime: isLife,
       browserBound: false,
       customerNote: typeof customerNote === 'string' ? customerNote.trim().slice(0, 200) : undefined,
     };
@@ -257,13 +259,17 @@ adminRouter.post('/licenses/create', requireAdminAuth, async (req: Authenticated
       timestamp: now,
       action: 'create_license',
       licenseId,
-      details: `Created ${days}-day license (${masked}). Note: ${customerNote || 'None'}`,
+      details: isLife 
+        ? `Created Lifetime (আজীবন) license (${masked}). Note: ${customerNote || 'None'}`
+        : `Created ${days}-day license (${masked}). Note: ${customerNote || 'None'}`,
     });
 
     // Return the plaintextKey ONE-TIME ONLY so admin can copy and send to customer
     res.json({
       ok: true,
+      key: plaintextKey,
       plaintextKey,
+      isLifetime: isLife,
       license: newLicense,
       warning: 'Save this key now. Plaintext keys are not stored and cannot be recovered once you leave this screen.',
     });
@@ -324,10 +330,11 @@ adminRouter.get('/licenses', requireAdminAuth, async (req: AuthenticatedAdminReq
 adminRouter.post('/licenses/:id/extend', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { additionalDays } = req.body || {};
-    const days = parseInt(additionalDays, 10);
+    const { additionalDays, days: altDays, isLifetime } = req.body || {};
+    const isLife = isLifetime === true || additionalDays === 'lifetime' || altDays === 'lifetime';
+    const days = isLife ? 36500 : parseInt(additionalDays || altDays, 10);
 
-    if (isNaN(days) || days <= 0 || days > 3650) {
+    if (!isLife && (isNaN(days) || days <= 0 || days > 36500)) {
       res.status(400).json({ ok: false, error: 'INVALID_DAYS', message: 'Invalid extension days.' });
       return;
     }
@@ -341,11 +348,12 @@ adminRouter.post('/licenses/:id/extend', requireAdminAuth, async (req: Authentic
     const now = Date.now();
     // If already expired, extend from now; if still active, extend from current expiresAt
     const baseTimestamp = license.expiresAt > now ? license.expiresAt : now;
-    const newExpiresAt = baseTimestamp + days * 24 * 60 * 60 * 1000;
+    const newExpiresAt = isLife ? now + 36500 * 24 * 60 * 60 * 1000 : baseTimestamp + days * 24 * 60 * 60 * 1000;
 
     const updated = await storage.updateLicense(id, {
       expiresAt: newExpiresAt,
-      durationDays: license.durationDays + days,
+      durationDays: isLife ? 36500 : license.durationDays + days,
+      isLifetime: isLife || license.isLifetime,
       // If was expired and now extended, restore active status if not explicitly revoked
       status: license.status === 'revoked' ? 'revoked' : 'active',
     });
@@ -353,15 +361,55 @@ adminRouter.post('/licenses/:id/extend', requireAdminAuth, async (req: Authentic
     await storage.addAuditLog({
       id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: now,
-      action: 'extend_license',
+      action: isLife ? 'make_lifetime' : 'extend_license',
       licenseId: id,
-      details: `Extended license ${license.keyMasked} by ${days} days. New expiry: ${new Date(newExpiresAt).toISOString()}`,
+      details: isLife
+        ? `Converted license ${license.keyMasked} to Lifetime (আজীবন).`
+        : `Extended license ${license.keyMasked} by ${days} days. New expiry: ${new Date(newExpiresAt).toISOString()}`,
     });
 
-    res.json({ ok: true, license: updated });
+    res.json({ ok: true, license: updated, message: isLife ? 'লাইসেন্স সফলভাবে আজীবন (Lifetime) করা হয়েছে!' : `মেয়াদ সফলভাবে +${days} দিন বাড়ানো হয়েছে!` });
   } catch (error) {
     console.error('[admin/licenses/extend] Error:', error);
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to extend license.' });
+  }
+});
+
+/**
+ * Admin: Upgrade license directly to Lifetime
+ * POST /api/admin/licenses/:id/make-lifetime
+ */
+adminRouter.post('/licenses/:id/make-lifetime', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const license = await storage.getLicenseById(id);
+    if (!license) {
+      res.status(404).json({ ok: false, error: 'NOT_FOUND', message: 'License not found.' });
+      return;
+    }
+
+    const now = Date.now();
+    const newExpiresAt = now + 36500 * 24 * 60 * 60 * 1000;
+
+    const updated = await storage.updateLicense(id, {
+      expiresAt: newExpiresAt,
+      durationDays: 36500,
+      isLifetime: true,
+      status: license.status === 'revoked' ? 'revoked' : 'active',
+    });
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: now,
+      action: 'make_lifetime',
+      licenseId: id,
+      details: `Upgraded license ${license.keyMasked} to Lifetime (আজীবন).`,
+    });
+
+    res.json({ ok: true, license: updated, message: 'লাইসেন্স সফলভাবে আজীবন (Lifetime) করা হয়েছে!' });
+  } catch (error) {
+    console.error('[admin/licenses/make-lifetime] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to upgrade to lifetime.' });
   }
 });
 

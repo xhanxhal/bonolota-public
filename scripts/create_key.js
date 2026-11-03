@@ -14,11 +14,13 @@ import { generateAccessKey, hashLicenseKey, maskKey } from '../server/crypto';
 
 async function main() {
   const args = process.argv.slice(2);
-  const days = parseInt(args[0] || '30', 10);
-  const note = args[1] || 'Created via CLI';
+  const rawArg = (args[0] || '30').toLowerCase();
+  const isLife = rawArg === 'lifetime' || rawArg === 'life' || rawArg === 'forever' || rawArg === '0';
+  const days = isLife ? 36500 : parseInt(rawArg, 10);
+  const note = args[1] || (isLife ? 'Lifetime Access' : 'Created via CLI');
 
-  if (isNaN(days) || days <= 0) {
-    console.error('❌ Please provide a valid number of days (e.g. 30, 90, 180, 365)');
+  if (!isLife && (isNaN(days) || days <= 0)) {
+    console.error('❌ Please provide a valid number of days (e.g. 30, 90, 180, 365, or "lifetime")');
     process.exit(1);
   }
 
@@ -37,6 +39,7 @@ async function main() {
     createdAt: now,
     expiresAt,
     durationDays: days,
+    isLifetime: isLife,
     browserBound: false,
     customerNote: note,
   });
@@ -45,8 +48,8 @@ async function main() {
   console.log('🎉 BONOLOTA ACCESS KEY GENERATED SUCCESSFULLY');
   console.log('============================================================\n');
   console.log(`🔑 Key (Send to Customer): \x1b[32m\x1b[1m${plaintextKey}\x1b[0m`);
-  console.log(`⏱️ Duration: ${days} Days`);
-  console.log(`📅 Expires At: ${new Date(expiresAt).toLocaleDateString()}`);
+  console.log(`⏱️ Duration: ${isLife ? '👑 আজীবন (Lifetime Access)' : `${days} Days`}`);
+  console.log(`📅 Expires At: ${isLife ? '👑 আজীবন (Lifetime Access - Unlimited)' : new Date(expiresAt).toLocaleDateString()}`);
   console.log(`📝 Customer Note: ${note}`);
   console.log('\n============================================================\n');
   process.exit(0);

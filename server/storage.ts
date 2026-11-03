@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { LicenseRecord, UserSessionData, AdminSessionData, AuditLogEntry, AdminOverviewStats } from './types';
+import { LicenseRecord, UserSessionData, AdminSessionData, AuditLogEntry, AdminOverviewStats, BroadcastAnnouncement } from './types';
 
 import { DEFAULT_REDIS_URL, DEFAULT_REDIS_TOKEN } from './env-validator';
 
@@ -17,6 +17,7 @@ class InMemoryStorage {
   private adminSessions = new Map<string, { data: AdminSessionData; expiresAt: number }>();
   private auditLogs: AuditLogEntry[] = [];
   private rateLimits = new Map<string, { count: number; expiresAt: number }>();
+  private announcements = new Map<string, BroadcastAnnouncement>();
 
   async createLicense(license: LicenseRecord): Promise<void> {
     this.licenses.set(license.id, { ...license });
@@ -116,6 +117,33 @@ class InMemoryStorage {
     }
     item.count++;
     return { allowed: true, remaining: limit - item.count };
+  }
+
+  async createAnnouncement(announcement: BroadcastAnnouncement): Promise<void> {
+    this.announcements.set(announcement.id, { ...announcement });
+  }
+
+  async getAnnouncementById(id: string): Promise<BroadcastAnnouncement | null> {
+    const item = this.announcements.get(id);
+    return item ? { ...item } : null;
+  }
+
+  async listAnnouncements(includeInactive = false): Promise<BroadcastAnnouncement[]> {
+    const all = Array.from(this.announcements.values());
+    const filtered = includeInactive ? all : all.filter(a => a.active);
+    return filtered.sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  async deleteAnnouncement(id: string): Promise<boolean> {
+    return this.announcements.delete(id);
+  }
+
+  async toggleAnnouncement(id: string, active: boolean): Promise<BroadcastAnnouncement | null> {
+    const item = this.announcements.get(id);
+    if (!item) return null;
+    item.active = active;
+    this.announcements.set(id, { ...item });
+    return { ...item };
   }
 }
 
@@ -243,6 +271,56 @@ class UpstashStorage {
       return { allowed: false, remaining: 0 };
     }
     return { allowed: true, remaining: limit - count };
+  }
+
+  async createAnnouncement(announcement: BroadcastAnnouncement): Promise<void> {
+    const pipeline = this.redis.pipeline();
+    pipeline.set(`anno:${announcement.id}`, JSON.stringify(announcement));
+    pipeline.sadd('anno:all_ids', announcement.id);
+    await pipeline.exec();
+  }
+
+  async getAnnouncementById(id: string): Promise<BroadcastAnnouncement | null> {
+    const raw = await this.redis.get<string | BroadcastAnnouncement>(`anno:${id}`);
+    if (!raw) return null;
+    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+  }
+
+  async listAnnouncements(includeInactive = false): Promise<BroadcastAnnouncement[]> {
+    const ids = await this.redis.smembers('anno:all_ids');
+    if (!ids || ids.length === 0) return [];
+    const keys = ids.map(id => `anno:${id}`);
+    const records = await this.redis.mget<Array<string | BroadcastAnnouncement>>(...keys);
+    const results: BroadcastAnnouncement[] = [];
+    for (const item of records) {
+      if (item) {
+        try {
+          const parsed = typeof item === 'string' ? JSON.parse(item) : item;
+          if (includeInactive || parsed.active) {
+            results.push(parsed);
+          }
+        } catch {
+          // ignore malformed
+        }
+      }
+    }
+    return results.sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  async deleteAnnouncement(id: string): Promise<boolean> {
+    const pipeline = this.redis.pipeline();
+    pipeline.del(`anno:${id}`);
+    pipeline.srem('anno:all_ids', id);
+    await pipeline.exec();
+    return true;
+  }
+
+  async toggleAnnouncement(id: string, active: boolean): Promise<BroadcastAnnouncement | null> {
+    const item = await this.getAnnouncementById(id);
+    if (!item) return null;
+    item.active = active;
+    await this.redis.set(`anno:${id}`, JSON.stringify(item));
+    return item;
   }
 }
 
@@ -447,5 +525,50 @@ export const storage = {
       recentlyActivated,
       isUsingFallbackStore: !upstashInstance,
     };
+  },
+
+  async createAnnouncement(announcement: BroadcastAnnouncement): Promise<void> {
+    try {
+      if (upstashInstance) return await upstashInstance.createAnnouncement(announcement);
+    } catch (err) {
+      console.error('[Storage Error] Upstash createAnnouncement failed, using fallback:', err);
+    }
+    return inMemoryInstance.createAnnouncement(announcement);
+  },
+
+  async getAnnouncementById(id: string): Promise<BroadcastAnnouncement | null> {
+    try {
+      if (upstashInstance) return await upstashInstance.getAnnouncementById(id);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getAnnouncementById failed, using fallback:', err);
+    }
+    return inMemoryInstance.getAnnouncementById(id);
+  },
+
+  async listAnnouncements(includeInactive = false): Promise<BroadcastAnnouncement[]> {
+    try {
+      if (upstashInstance) return await upstashInstance.listAnnouncements(includeInactive);
+    } catch (err) {
+      console.error('[Storage Error] Upstash listAnnouncements failed, using fallback:', err);
+    }
+    return inMemoryInstance.listAnnouncements(includeInactive);
+  },
+
+  async deleteAnnouncement(id: string): Promise<boolean> {
+    try {
+      if (upstashInstance) return await upstashInstance.deleteAnnouncement(id);
+    } catch (err) {
+      console.error('[Storage Error] Upstash deleteAnnouncement failed, using fallback:', err);
+    }
+    return inMemoryInstance.deleteAnnouncement(id);
+  },
+
+  async toggleAnnouncement(id: string, active: boolean): Promise<BroadcastAnnouncement | null> {
+    try {
+      if (upstashInstance) return await upstashInstance.toggleAnnouncement(id, active);
+    } catch (err) {
+      console.error('[Storage Error] Upstash toggleAnnouncement failed, using fallback:', err);
+    }
+    return inMemoryInstance.toggleAnnouncement(id, active);
   },
 };
