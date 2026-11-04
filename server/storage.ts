@@ -159,6 +159,9 @@ class UpstashStorage {
   }
 
   async createLicense(license: LicenseRecord): Promise<void> {
+    if (!license.id) {
+      license.id = `lic_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    }
     const pipeline = this.redis.pipeline();
     pipeline.set(`lic:${license.id}`, JSON.stringify(license));
     pipeline.set(`lichash:${license.keyHash}`, license.id);
@@ -182,7 +185,12 @@ class UpstashStorage {
     const existing = await this.getLicenseById(id);
     if (!existing) return null;
     const updated = { ...existing, ...updates };
-    await this.redis.set(`lic:${id}`, JSON.stringify(updated));
+    const pipeline = this.redis.pipeline();
+    pipeline.set(`lic:${id}`, JSON.stringify(updated));
+    if (updates.keyHash && updates.keyHash !== existing.keyHash) {
+      pipeline.set(`lichash:${updates.keyHash}`, id);
+    }
+    await pipeline.exec();
     return updated;
   }
 

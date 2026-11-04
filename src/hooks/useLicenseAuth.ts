@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { offlineDatabaseCache } from '../utils/offlineDatabaseCache';
 import { setAuthorizedUnits } from '../data/units';
+import { getClientDeviceId } from '../utils/deviceFingerprint';
+import { storage } from '../utils/storage';
 
 export interface LicenseSessionState {
   isLoading: boolean;
@@ -9,6 +11,8 @@ export interface LicenseSessionState {
   daysLeft?: number;
   isLifetime?: boolean;
   keyMasked?: string;
+  keyPlaintext?: string;
+  customerName?: string;
   error?: string | null;
 }
 
@@ -16,7 +20,11 @@ const USER_TOKEN_KEY = 'bonolota_user_token';
 
 function getAuthHeaders(): Record<string, string> {
   const token = typeof window !== 'undefined' ? localStorage.getItem(USER_TOKEN_KEY) : null;
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  const deviceId = getClientDeviceId();
+  return {
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    'x-device-id': deviceId,
+  };
 }
 
 export function useLicenseAuth() {
@@ -45,6 +53,23 @@ export function useLicenseAuth() {
     return false;
   }, []);
 
+  const syncProgressToServer = useCallback(async () => {
+    try {
+      const stats = storage.getLearningStats();
+      await fetch('/api/auth/sync-progress', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...getAuthHeaders(),
+        },
+        credentials: 'include',
+        body: JSON.stringify(stats),
+      });
+    } catch {
+      // Ignore network errors
+    }
+  }, []);
+
   const checkSession = useCallback(async () => {
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
@@ -57,6 +82,9 @@ export function useLicenseAuth() {
       if (data.authenticated) {
         // Load units from API
         await loadUnitsFromApi();
+        if (data.keyPlaintext || data.keyMasked) {
+          localStorage.setItem('bonolota_user_key', data.keyPlaintext || data.keyMasked);
+        }
         setState({
           isLoading: false,
           isAuthenticated: true,
@@ -64,11 +92,16 @@ export function useLicenseAuth() {
           daysLeft: data.daysLeft,
           isLifetime: Boolean(data.isLifetime || (data.daysLeft && data.daysLeft > 3650)),
           keyMasked: data.keyMasked,
+          keyPlaintext: data.keyPlaintext,
+          customerName: data.customerName,
           error: null,
         });
+        // Sync streak and learning stats to server
+        syncProgressToServer();
       } else {
         // Not authenticated
         localStorage.removeItem(USER_TOKEN_KEY);
+        localStorage.removeItem('bonolota_user_key');
         setState({
           isLoading: false,
           isAuthenticated: false,
@@ -84,13 +117,13 @@ export function useLicenseAuth() {
         error: null,
       });
     }
-  }, [loadUnitsFromApi]);
+  }, [loadUnitsFromApi, syncProgressToServer]);
 
   useEffect(() => {
     checkSession();
   }, [checkSession]);
 
-  const activateKey = async (key: string): Promise<{ success: boolean; message?: string }> => {
+  const activateKey = async (key: string, name?: string): Promise<{ success: boolean; message?: string }> => {
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
       const res = await fetch('/api/auth/activate', {
@@ -100,7 +133,7 @@ export function useLicenseAuth() {
           ...getAuthHeaders(),
         },
         credentials: 'include',
-        body: JSON.stringify({ key }),
+        body: JSON.stringify({ key, name, deviceId: getClientDeviceId() }),
       });
 
       const data = await res.json();
@@ -110,6 +143,7 @@ export function useLicenseAuth() {
         if (token) {
           localStorage.setItem(USER_TOKEN_KEY, token);
         }
+        localStorage.setItem('bonolota_user_key', data.keyPlaintext || data.maskedKey || key);
         await loadUnitsFromApi();
         setState({
           isLoading: false,
@@ -118,6 +152,8 @@ export function useLicenseAuth() {
           daysLeft: data.daysLeft,
           isLifetime: Boolean(data.isLifetime || (data.daysLeft && data.daysLeft > 3650)),
           keyMasked: data.maskedKey,
+          keyPlaintext: data.keyPlaintext,
+          customerName: data.customerName || name,
           error: null,
         });
         return { success: true, message: data.message };
@@ -166,5 +202,6 @@ export function useLicenseAuth() {
     activateKey,
     logout,
     checkSession,
+    syncProgressToServer,
   };
 }

@@ -45,6 +45,8 @@ export default defineConfig(() => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          globIgnores: ['**/x-admin-arifa.html'],
+          navigateFallbackDenylist: [/^\/api/, /^\/x-admin-arifa/],
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

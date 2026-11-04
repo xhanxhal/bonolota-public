@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
-// Pepper fallback for local development if not yet set in environment
-const DEFAULT_PEPPER = 'bonolota_default_local_dev_pepper_do_not_use_in_prod';
+// Unified Cryptographic Pepper fallback matching production environment
+const DEFAULT_PEPPER = 'bonolota_sec_vault_pepper_prod_salt_2026';
 
 export function getLicensePepper(): string {
   return process.env.LICENSE_PEPPER || DEFAULT_PEPPER;
@@ -44,18 +44,59 @@ export function maskKey(key: string): string {
 }
 
 /**
- * Normalize access key (uppercase, remove extra spaces)
+ * Normalize access key (uppercase, remove extra spaces, smart formatting)
+ * Handles:
+ * - BONOLOTA-XXXX-XXXX-XXXX
+ * - bonolota-xxxx-xxxx-xxxx
+ * - XXXX-XXXX-XXXX (auto adds BONOLOTA-)
+ * - BONOLOTAXXXXXXXXXXXX (auto formats with dashes)
+ * - XXXXXXXXXXXX (auto adds prefix and dashes)
+ * - Quotes, zero-width chars, spaces
  */
 export function normalizeKey(key: string): string {
-  return key.trim().toUpperCase().replace(/\s+/g, '');
+  if (!key || typeof key !== 'string') return '';
+  
+  // Remove quotes, zero-width characters, invisible symbols, and whitespace
+  let cleaned = key.trim().toUpperCase()
+    .replace(/["'“”‘’`]/g, '')
+    .replace(/[\s\u200B-\u200D\uFEFF]+/g, '');
+
+  // If already standard format: BONOLOTA-XXXX-XXXX-XXXX
+  if (/^BONOLOTA-[A-Z0-9*]{4}-[A-Z0-9*]{4}-[A-Z0-9*]{4}$/.test(cleaned)) {
+    return cleaned;
+  }
+
+  // Handle case where user entered without BONOLOTA- prefix e.g. 4ZS7-8X2M-9K7P
+  if (/^[A-Z0-9*]{4}-[A-Z0-9*]{4}-[A-Z0-9*]{4}$/.test(cleaned)) {
+    return `BONOLOTA-${cleaned}`;
+  }
+
+  // Handle underscore/dot separators e.g. BONOLOTA_4ZS7_8X2M_9K7P
+  const dashReplaced = cleaned.replace(/[_.]/g, '-');
+  if (/^BONOLOTA-[A-Z0-9*]{4}-[A-Z0-9*]{4}-[A-Z0-9*]{4}$/.test(dashReplaced)) {
+    return dashReplaced;
+  }
+
+  // Handle stripped dashes: BONOLOTAXXXXXXXXXXXX (20 characters)
+  const noDash = cleaned.replace(/[-_.]/g, '');
+  if (noDash.startsWith('BONOLOTA') && noDash.length === 20) {
+    return `BONOLOTA-${noDash.slice(8, 12)}-${noDash.slice(12, 16)}-${noDash.slice(16, 20)}`;
+  }
+
+  // Handle raw 12 characters without prefix or dashes: XXXXXXXXXXXX
+  if (noDash.length === 12 && !noDash.startsWith('BONOLOTA')) {
+    return `BONOLOTA-${noDash.slice(0, 4)}-${noDash.slice(4, 8)}-${noDash.slice(8, 12)}`;
+  }
+
+  return cleaned;
 }
 
 /**
  * Hash a license key using HMAC-SHA256 with pepper
  */
-export function hashLicenseKey(key: string): string {
+export function hashLicenseKey(key: string, customPepper?: string): string {
   const normalized = normalizeKey(key);
-  const pepper = getLicensePepper();
+  const pepper = customPepper || getLicensePepper();
   return crypto.createHmac('sha256', pepper).update(normalized).digest('hex');
 }
 
@@ -106,10 +147,14 @@ export function generateSessionToken(): string {
 }
 
 /**
- * Hash a session token before storing in Redis
+ * Hash a session token before storing in Redis.
+ * Strictly validates string type and limits token length to avoid crashes or DoS.
  */
 export function hashSessionToken(token: string): string {
-  return crypto.createHash('sha256').update(token).digest('hex');
+  if (!token || typeof token !== 'string') return '';
+  const sanitized = token.trim().slice(0, 512);
+  if (sanitized.length < 16) return '';
+  return crypto.createHash('sha256').update(sanitized).digest('hex');
 }
 
 /**

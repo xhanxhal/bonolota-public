@@ -33,8 +33,6 @@ import { ExploreSectionsView } from './components/ExploreSectionsView';
 import { VocabWord, UserSettings, LearningStats } from './data/types';
 import { getAllWords } from './data/units';
 import { storage } from './utils/storage';
-import { offlineDatabaseCache } from './utils/offlineDatabaseCache';
-import { OfflineIndicator } from './components/OfflineIndicator';
 import { haptics } from './utils/haptics';
 import { useLicenseAuth } from './hooks/useLicenseAuth';
 import { AccessKeyScreen } from './components/AccessKeyScreen';
@@ -144,15 +142,25 @@ function MainApp() {
   const [selectedLessonUnitId, setSelectedLessonUnitId] = useState<number>(1);
   const [selectedQuizUnitId, setSelectedQuizUnitId] = useState<number>(1);
 
-  // Initialize local offline database cache
-  useEffect(() => {
-    offlineDatabaseCache.init();
-  }, []);
 
-  // Refresh stats whenever user navigates tabs or studies
+  // Refresh stats and sync progress with server whenever user navigates tabs or studies
   useEffect(() => {
-    setStats(storage.getLearningStats());
-  }, [currentTab]);
+    const freshStats = storage.getLearningStats();
+    setStats(freshStats);
+
+    if (auth.isAuthenticated) {
+      auth.syncProgressToServer();
+    }
+  }, [currentTab, auth.isAuthenticated]);
+
+  // Periodic progress sync (every 60 seconds) while student is studying
+  useEffect(() => {
+    if (!auth.isAuthenticated) return;
+    const interval = setInterval(() => {
+      auth.syncProgressToServer();
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [auth.isAuthenticated]);
 
   // Sync theme with DOM (both class and data-theme attribute)
   useEffect(() => {
@@ -543,9 +551,6 @@ function MainApp() {
         </button>
       </nav>
 
-      {/* Global Offline Status Indicator */}
-      <OfflineIndicator />
-
       {/* Broadcast Announcements Notification Drawer */}
       <BroadcastDrawer
         isOpen={isBroadcastDrawerOpen}
@@ -554,6 +559,8 @@ function MainApp() {
         unreadCount={broadcast.unreadCount}
         onMarkAllAsRead={broadcast.markAllAsRead}
         onMarkAsRead={broadcast.markAsRead}
+        onDeleteAnnouncement={broadcast.deleteAnnouncement}
+        onClearAll={broadcast.clearAllAnnouncements}
         onSelectTab={(tab) => {
           setCurrentTab(tab);
           window.scrollTo({ top: 0, behavior: 'smooth' });

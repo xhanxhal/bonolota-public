@@ -108,13 +108,13 @@ export const ExploreSectionsView: React.FC<ExploreSectionsViewProps> = ({
     },
     {
       id: 'stories',
-      title: 'গল্পে শব্দ (Story)',
-      subtitle: 'Stories with Vocabulary',
-      description: 'বাস্তবধর্মী ছোট গল্পের প্রতিটি লাইনে ব্যবহৃত শব্দের পাঠ।',
+      title: 'ভোকাবুলারি স্টোরিজ (৫০টি সম্পূর্ণ ইউনিট)',
+      subtitle: 'Stories with Vocabulary & Audio',
+      description: '৫০টি বাস্তবধর্মী গল্পের মাধ্যমে ১,৮৫০টি শব্দের পাঠ, বাংলা অনুবাদ, অডিও ও ফ্ল্যাশ কার্ড ড্রিল।',
       icon: BookOpen,
       category: 'advanced',
-      badge: 'কনটেক্সট মোড',
-      tagline: 'পড়ুন ও শিখুন'
+      badge: '৫০টি ইউনিট',
+      tagline: 'পড়ুন ও শুনুন'
     },
     {
       id: 'thematic-clusters',

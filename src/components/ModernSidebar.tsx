@@ -60,7 +60,7 @@ export const ModernSidebar: React.FC<ModernSidebarProps> = ({
     { id: 'confusing-words', labelBn: 'Confusing Words', icon: Scale },
     { id: 'odd-one-out', labelBn: 'Odd One Out কুইজ', icon: HelpCircle },
     { id: 'sentence-completion', labelBn: 'শূন্যস্থান পূরণ', icon: FileText },
-    { id: 'stories', labelBn: 'গল্পে শব্দ (Context)', icon: BookOpen },
+    { id: 'stories', labelBn: 'ভোকাবুলারি স্টোরিজ', icon: BookOpen, badge: '৫০ ইউনিট' },
     { id: 'thematic-clusters', labelBn: 'থিমেটিক ক্লাস্টার', icon: Sparkles },
     { id: 'card-generator', labelBn: 'স্টাডি কার্ড মেকার', icon: Share2 },
     { id: 'cheat-sheet', labelBn: 'প্রিন্ট শিট / PDF', icon: Printer },

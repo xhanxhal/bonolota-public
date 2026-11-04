@@ -18,14 +18,27 @@ import {
   Database, 
   Eye, 
   EyeOff, 
-  History, 
   PlusCircle, 
   Smartphone, 
   UserCheck, 
   UserX, 
-  Lock 
+  Lock,
+  Megaphone,
+  Edit2,
+  User,
+  Trash2,
+  Send,
+  Bell,
+  History,
+  X,
+  Flame,
+  Award,
+  BookOpen,
+  Target,
+  Sparkles,
+  Trophy
 } from 'lucide-react';
-import { LicenseRecord, AuditLogEntry, AdminOverviewStats } from '../../../server/types';
+import { LicenseRecord, AuditLogEntry, AdminOverviewStats, BroadcastAnnouncement } from '../../../server/types';
 import { haptics } from '../../utils/haptics';
 
 interface AdminPortalProps {
@@ -40,19 +53,40 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Dashboard Data
-  const [activeTab, setActiveTab] = useState<'overview' | 'generate' | 'licenses' | 'audit'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'generate' | 'licenses' | 'audit' | 'broadcast'>('overview');
   const [stats, setStats] = useState<AdminOverviewStats | null>(null);
   const [licenses, setLicenses] = useState<LicenseRecord[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
+  const [broadcasts, setBroadcasts] = useState<BroadcastAnnouncement[]>([]);
+  const [connectedClients, setConnectedClients] = useState<number>(0);
   const [isLoadingData, setIsLoadingData] = useState(false);
 
   // Key Generation State
   const [selectedDuration, setSelectedDuration] = useState<number>(30);
   const [customDays, setCustomDays] = useState<string>('30');
   const [customerNote, setCustomerNote] = useState('');
+  const [customerNameInput, setCustomerNameInput] = useState('');
   const [generatedKey, setGeneratedKey] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Customer Name Inline Edit in Licenses Table
+  const [editingCustomerLicId, setEditingCustomerLicId] = useState<string | null>(null);
+  const [editingCustomerName, setEditingCustomerName] = useState('');
+
+  // Broadcast Form State
+  const [broadcastTitle, setBroadcastTitle] = useState('');
+  const [broadcastMessage, setBroadcastMessage] = useState('');
+  const [broadcastType, setBroadcastType] = useState<'info' | 'urgent' | 'update' | 'promotion'>('info');
+  const [broadcastPriority, setBroadcastPriority] = useState<'normal' | 'high'>('high');
+  const [broadcastTargetMode, setBroadcastTargetMode] = useState<'all' | 'specific'>('all');
+  const [broadcastTargetKey, setBroadcastTargetKey] = useState('');
+  const [broadcastDisplayStyle, setBroadcastDisplayStyle] = useState<'toast' | 'center_modal'>('center_modal');
+  const [broadcastDismissMode, setBroadcastDismissMode] = useState<'permanent' | '5s' | 'custom'>('permanent');
+  const [broadcastCustomSeconds, setBroadcastCustomSeconds] = useState('5');
+  const [broadcastActionUrl, setBroadcastActionUrl] = useState('');
+  const [broadcastActionText, setBroadcastActionText] = useState('View Details →');
+  const [isSendingBroadcast, setIsSendingBroadcast] = useState(false);
 
   // License Filter & Search
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -62,6 +96,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
   // Modal for extending duration
   const [extendingLicense, setExtendingLicense] = useState<LicenseRecord | null>(null);
   const [extendDays, setExtendDays] = useState<number>(30);
+
+  // Modal for viewing student learning progress & streaks
+  const [selectedProgressLicense, setSelectedProgressLicense] = useState<LicenseRecord | null>(null);
 
   // Check admin session on mount
   const checkAdminSession = useCallback(async () => {
@@ -84,10 +121,11 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
   const loadDashboardData = async () => {
     setIsLoadingData(true);
     try {
-      const [statsRes, licRes, auditRes] = await Promise.all([
+      const [statsRes, licRes, auditRes, broadcastRes] = await Promise.all([
         fetch('/api/admin/overview', { credentials: 'include' }),
         fetch('/api/admin/licenses', { credentials: 'include' }),
         fetch('/api/admin/audit', { credentials: 'include' }),
+        fetch('/api/broadcasts/admin/list', { credentials: 'include' }),
       ]);
 
       if (statsRes.ok) {
@@ -101,6 +139,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
       if (auditRes.ok) {
         const auditData = await auditRes.json();
         setAuditLogs(auditData.logs || []);
+      }
+      if (broadcastRes.ok) {
+        const bData = await broadcastRes.json();
+        setBroadcasts(bData.announcements || []);
+        if (typeof bData.connectedClients === 'number') {
+          setConnectedClients(bData.connectedClients);
+        }
       }
     } catch (e) {
       console.error('Failed to load admin data:', e);
@@ -171,6 +216,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
         credentials: 'include',
         body: JSON.stringify({
           durationDays: duration,
+          customerName: customerNameInput.trim() || undefined,
           customerNote: customerNote.trim() || undefined,
         }),
       });
@@ -178,6 +224,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
       const data = await res.json();
       if (res.ok && data.ok) {
         setGeneratedKey(data.plaintextKey);
+        setCustomerNameInput('');
         setCustomerNote('');
         loadDashboardData();
       } else {
@@ -187,6 +234,113 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
       setActionMessage({ type: 'error', text: 'সার্ভার এরর।' });
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  const handleSaveCustomerName = async (licenseId: string) => {
+    haptics.tap();
+    try {
+      const res = await fetch(`/api/admin/licenses/${licenseId}/name`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ customerName: editingCustomerName.trim() }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setActionMessage({ type: 'success', text: 'শিক্ষার্থীর নাম সফলভাবে আপডেট করা হয়েছে।' });
+        setEditingCustomerLicId(null);
+        setEditingCustomerName('');
+        loadDashboardData();
+      } else {
+        setActionMessage({ type: 'error', text: data.message || 'নাম আপডেট করা যায়নি।' });
+      }
+    } catch {
+      setActionMessage({ type: 'error', text: 'সার্ভার এরর।' });
+    }
+  };
+
+  const handleSendBroadcast = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!broadcastTitle.trim() || !broadcastMessage.trim()) {
+      setActionMessage({ type: 'error', text: 'শিরোনাম ও মেসেজ উভয়ই পূরণ করুন।' });
+      return;
+    }
+
+    if (broadcastTargetMode === 'specific' && !broadcastTargetKey.trim()) {
+      setActionMessage({ type: 'error', text: 'টার্গেট কি নির্বাচন করুন।' });
+      return;
+    }
+
+    setIsSendingBroadcast(true);
+    setActionMessage(null);
+    haptics.tap();
+
+    let autoDismissSec: number | undefined = undefined;
+    if (broadcastDismissMode === '5s') {
+      autoDismissSec = 5;
+    } else if (broadcastDismissMode === 'custom') {
+      const parsed = parseInt(broadcastCustomSeconds, 10);
+      autoDismissSec = isNaN(parsed) || parsed <= 0 ? 5 : parsed;
+    }
+
+    try {
+      const res = await fetch('/api/broadcasts/admin/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          title: broadcastTitle.trim(),
+          message: broadcastMessage.trim(),
+          type: broadcastType,
+          priority: broadcastPriority,
+          targetKey: broadcastTargetMode === 'specific' ? broadcastTargetKey.trim() : undefined,
+          displayStyle: broadcastDisplayStyle,
+          autoDismissSeconds: autoDismissSec,
+          actionUrl: broadcastActionUrl.trim() || undefined,
+          actionText: broadcastActionText.trim() || undefined,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setActionMessage({ 
+          type: 'success', 
+          text: broadcastTargetMode === 'specific' 
+            ? 'নির্দিষ্ট গ্রাহকের ব্রাউজারে নোটিফিকেশন পাঠানো হয়েছে!' 
+            : 'সকল শিক্ষার্থীর স্ক্রিনে নোটিফিকেশন সফলভাবে ব্রডকাস্ট হয়েছে!' 
+        });
+        setBroadcastTitle('');
+        setBroadcastMessage('');
+        setBroadcastActionUrl('');
+        loadDashboardData();
+      } else {
+        setActionMessage({ type: 'error', text: data.message || 'নোটিফিকেশন পাঠানো যায়নি।' });
+      }
+    } catch {
+      setActionMessage({ type: 'error', text: 'সার্ভারে সংযোগ ব্যর্থ হয়েছে।' });
+    } finally {
+      setIsSendingBroadcast(false);
+    }
+  };
+
+  const handleDeleteBroadcast = async (id: string, title: string) => {
+    if (!window.confirm(`আপনি কি "${title}" নোটিফিকেশনটি মুছে ফেলতে চান?`)) return;
+    haptics.tap();
+    try {
+      const res = await fetch(`/api/broadcasts/admin/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setActionMessage({ type: 'success', text: 'নোটিফিকেশন মুছে ফেলা হয়েছে।' });
+        loadDashboardData();
+      } else {
+        setActionMessage({ type: 'error', text: data.message || 'মুছে ফেলা যায়নি।' });
+      }
+    } catch {
+      setActionMessage({ type: 'error', text: 'সার্ভার এরর।' });
     }
   };
 
@@ -295,6 +449,59 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
     }
   };
 
+  // Aggregated student learning progress & streak summary
+  const learningSummary = React.useMemo(() => {
+    let activeStreaks = 0;
+    let maxStreak = 0;
+    let totalStudied = 0;
+    let totalMastered = 0;
+    let totalQuizzes = 0;
+    let accuracySum = 0;
+    let accuracyCount = 0;
+
+    licenses.forEach((lic) => {
+      if (lic.progress) {
+        if (lic.progress.learningStreak > 0) {
+          activeStreaks += 1;
+          if (lic.progress.learningStreak > maxStreak) {
+            maxStreak = lic.progress.learningStreak;
+          }
+        }
+        totalStudied += lic.progress.wordsStudied || 0;
+        totalMastered += lic.progress.wordsMastered || 0;
+        totalQuizzes += lic.progress.quizzesTaken || 0;
+        if (lic.progress.quizzesTaken > 0 && typeof lic.progress.quizAccuracy === 'number') {
+          accuracySum += lic.progress.quizAccuracy;
+          accuracyCount += 1;
+        }
+      }
+    });
+
+    const avgAccuracy = accuracyCount > 0 ? Math.round(accuracySum / accuracyCount) : 0;
+
+    // Top learners sorted by streak first, then mastered words, then words studied
+    const topLearners = [...licenses]
+      .filter((lic) => lic.progress && (lic.progress.learningStreak > 0 || lic.progress.wordsStudied > 0))
+      .sort((a, b) => {
+        const streakDiff = (b.progress?.learningStreak || 0) - (a.progress?.learningStreak || 0);
+        if (streakDiff !== 0) return streakDiff;
+        const masterDiff = (b.progress?.wordsMastered || 0) - (a.progress?.wordsMastered || 0);
+        if (masterDiff !== 0) return masterDiff;
+        return (b.progress?.wordsStudied || 0) - (a.progress?.wordsStudied || 0);
+      })
+      .slice(0, 5);
+
+    return {
+      activeStreaks,
+      maxStreak,
+      totalStudied,
+      totalMastered,
+      totalQuizzes,
+      avgAccuracy,
+      topLearners,
+    };
+  }, [licenses]);
+
   // Filtered Licenses
   const filteredLicenses = licenses.filter(lic => {
     const now = Date.now();
@@ -308,6 +515,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
       matchesStatus = lic.browserBound && lic.status === 'active' && now <= lic.expiresAt;
     } else if (statusFilter === 'unbound') {
       matchesStatus = !lic.browserBound && lic.status === 'active' && now <= lic.expiresAt;
+    } else if (statusFilter === 'streak') {
+      matchesStatus = Boolean(lic.progress && lic.progress.learningStreak > 0);
     } else if (statusFilter === 'suspended') {
       matchesStatus = lic.status === 'suspended';
     } else if (statusFilter === 'revoked') {
@@ -317,7 +526,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
     const q = searchQuery.trim().toLowerCase();
     const matchesSearch = !q || 
       lic.keyMasked.toLowerCase().includes(q) ||
+      (lic.plaintextKey && lic.plaintextKey.toLowerCase().includes(q)) ||
       lic.id.toLowerCase().includes(q) ||
+      (lic.customerName && lic.customerName.toLowerCase().includes(q)) ||
       (lic.customerNote && lic.customerNote.toLowerCase().includes(q));
 
     return matchesStatus && matchesSearch;
@@ -512,6 +723,19 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
             <History className="w-4 h-4" />
             <span>অডিট লগ</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('broadcast')}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'broadcast'
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <Megaphone className="w-4 h-4" />
+            <span>নোটিফিকেশন ও ব্রডকাস্ট ({broadcasts.length})</span>
+          </button>
         </div>
 
         {/* TAB 1: OVERVIEW */}
@@ -604,6 +828,153 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                           <p className="text-[10px] text-slate-500 mt-1">
                             {lic.activatedAt ? new Date(lic.activatedAt).toLocaleDateString() : ''}
                           </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Learning Progress & Streaks Analytics Section */}
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center">
+                    <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white flex items-center gap-2">
+                      <span>শিক্ষার্থীদের লার্নিং প্রগ্রেস ও স্ট্রিক ইনসাইটস</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800">
+                        LIVE
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-400">সকল সক্রিয় শিক্ষার্থীর লাইভ পড়া, কুইজ ও স্ট্রিক মেট্রিক</p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStatusFilter('streak');
+                    setActiveTab('licenses');
+                  }}
+                  className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer"
+                >
+                  <span>স্ট্রিকধারী সকল শিক্ষার্থী ({learningSummary.activeStreaks}) →</span>
+                </button>
+              </div>
+
+              {/* Learning KPI Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-950/40 to-slate-900 border border-amber-800/40">
+                  <div className="flex items-center justify-between text-amber-400 mb-2">
+                    <span className="text-xs font-bold flex items-center gap-1.5">
+                      <Flame className="w-4 h-4 fill-amber-400" />
+                      মোট সক্রিয় স্ট্রিকধারী
+                    </span>
+                    <span className="text-[10px] bg-amber-500/20 px-2 py-0.5 rounded-full text-amber-300 font-mono">
+                      সর্বোচ্চ {learningSummary.maxStreak} দিন
+                    </span>
+                  </div>
+                  <p className="text-2xl font-black text-white">{learningSummary.activeStreaks} <span className="text-xs font-normal text-slate-400">জন শিক্ষার্থী</span></p>
+                  <p className="text-[11px] text-slate-400 mt-1">ধারাবাহিকভাবে প্রতিদিন ভোকাবুলারি চর্চা করছেন</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-950/40 to-slate-900 border border-indigo-800/40">
+                  <div className="flex items-center justify-between text-indigo-400 mb-2">
+                    <span className="text-xs font-bold flex items-center gap-1.5">
+                      <BookOpen className="w-4 h-4" />
+                      মোট পঠিত শব্দ
+                    </span>
+                    <span className="text-[10px] bg-indigo-500/20 px-2 py-0.5 rounded-full text-indigo-300 font-mono">
+                      Cumulative
+                    </span>
+                  </div>
+                  <p className="text-2xl font-black text-white">{learningSummary.totalStudied.toLocaleString()} <span className="text-xs font-normal text-slate-400">টি শব্দ</span></p>
+                  <p className="text-[11px] text-slate-400 mt-1">শিক্ষার্থীরা মোট এতবার শব্দ পড়েছেন ও অনুশীলন করেছেন</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-950/40 to-slate-900 border border-emerald-800/40">
+                  <div className="flex items-center justify-between text-emerald-400 mb-2">
+                    <span className="text-xs font-bold flex items-center gap-1.5">
+                      <Award className="w-4 h-4" />
+                      সম্পূর্ণ আয়ত্তকৃত শব্দ
+                    </span>
+                    <span className="text-[10px] bg-emerald-500/20 px-2 py-0.5 rounded-full text-emerald-300 font-mono">
+                      গড় একুরেসি {learningSummary.avgAccuracy}%
+                    </span>
+                  </div>
+                  <p className="text-2xl font-black text-white">{learningSummary.totalMastered.toLocaleString()} <span className="text-xs font-normal text-slate-400">টি মাস্টার্ড</span></p>
+                  <p className="text-[11px] text-slate-400 mt-1">মোট কুইজ দেওয়া হয়েছে {learningSummary.totalQuizzes} টি</p>
+                </div>
+              </div>
+
+              {/* Top Learners Leaderboard */}
+              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-amber-400" />
+                    <span>টপ লার্নার ও স্ট্রিক লিডারবোর্ড (Top 5 Learners)</span>
+                  </h4>
+                  <span className="text-xs text-slate-400 font-mono">র‍্যাংক স্ট্রিক ও আয়ত্ত অনুযায়ী</span>
+                </div>
+
+                {learningSummary.topLearners.length === 0 ? (
+                  <p className="text-xs text-slate-500 py-6 text-center">এখনো কোনো শিক্ষার্থীর পড়াশোনার ডেটা সিঙ্ক হয়নি।</p>
+                ) : (
+                  <div className="space-y-2">
+                    {learningSummary.topLearners.map((learner, idx) => (
+                      <div
+                        key={learner.id}
+                        className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
+                            idx === 0
+                              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                              : idx === 1
+                              ? 'bg-slate-300/20 text-slate-200 border border-slate-400/30'
+                              : idx === 2
+                              ? 'bg-amber-700/20 text-amber-600 border border-amber-700/30'
+                              : 'bg-slate-800 text-slate-400'
+                          }`}>
+                            #{idx + 1}
+                          </div>
+
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-white text-sm">
+                                {learner.customerName || 'বেনামী শিক্ষার্থী'}
+                              </span>
+                              <span className="text-[11px] font-mono text-slate-400">
+                                ({learner.keyMasked})
+                              </span>
+                            </div>
+                            <div className="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5">
+                              <span>📖 {learner.progress?.wordsStudied || 0} শব্দ পড়া</span>
+                              <span>•</span>
+                              <span className="text-emerald-400 font-semibold">🏆 {learner.progress?.wordsMastered || 0} আয়ত্ত</span>
+                              <span>•</span>
+                              <span>🎯 {learner.progress?.quizAccuracy || 0}% কুইজ</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 self-end sm:self-auto">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-950 text-amber-300 border border-amber-800 flex items-center gap-1">
+                            <Flame className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                            <span>{learner.progress?.learningStreak || 0} দিন স্ট্রিক</span>
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() => setSelectedProgressLicense(learner)}
+                            className="px-2.5 py-1 rounded-xl bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-800 text-indigo-300 text-xs font-semibold cursor-pointer transition-colors"
+                          >
+                            বিবরণ
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -709,6 +1080,24 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                 </div>
 
                 <div>
+                  <label htmlFor="customerNameInput" className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5 text-indigo-400" />
+                    <span>শিক্ষার্থীর নাম (ঐচ্ছিক)</span>
+                  </label>
+                  <input
+                    id="customerNameInput"
+                    type="text"
+                    value={customerNameInput}
+                    onChange={(e) => setCustomerNameInput(e.target.value)}
+                    placeholder="e.g. তানভীর হাসান (শিক্ষার্থী চাইলে লগইনেও দিতে পারে)"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-500"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    এখানে নাম ফাঁকা রাখলে শিক্ষার্থী লগইনের সময় নিজে নাম লিখতে পারবে। পরবর্তীতে আপনি যেকোনো সময় সংশোধন করতে পারবেন।
+                  </p>
+                </div>
+
+                <div>
                   <label htmlFor="customerNoteInput" className="block text-xs font-semibold text-slate-300 mb-1.5">
                     গ্রাহক রেফারেন্স বা পেমেন্ট নোট (ঐচ্ছিক)
                   </label>
@@ -721,7 +1110,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                     className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-500"
                   />
                   <p className="text-[11px] text-slate-500 mt-1">
-                    ভবিষ্যতে গ্রাহককে চিহ্নিত করার জন্য নাম, মোবাইল নম্বর বা পেমেন্ট ট্রানজেকশন আইডি লিখতে পারেন।
+                    ভবিষ্যতে গ্রাহককে চিহ্নিত করার জন্য মোবাইল নম্বর বা পেমেন্ট ট্রানজেকশন আইডি লিখতে পারেন।
                   </p>
                 </div>
 
@@ -769,6 +1158,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                 {[
                   { id: 'all', label: 'সব' },
                   { id: 'active', label: 'সক্রিয়' },
+                  { id: 'streak', label: '🔥 স্ট্রিকধারী' },
                   { id: 'bound', label: 'Bound' },
                   { id: 'unbound', label: 'Unbound' },
                   { id: 'expired', label: 'মেয়াদোত্তীর্ণ' },
@@ -802,9 +1192,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                   <table className="w-full text-left text-xs">
                     <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
                       <tr>
-                        <th className="py-3 px-4">মাস্কড কি & নোট</th>
+                        <th className="py-3 px-4">অ্যাক্সেস কি ও শিক্ষার্থী</th>
                         <th className="py-3 px-4">স্ট্যাটাস</th>
                         <th className="py-3 px-4">ব্রাউজার বাইন্ডিং</th>
+                        <th className="py-3 px-4">লার্নিং প্রগ্রেস ও স্ট্রিক</th>
                         <th className="py-3 px-4">মেয়াদোত্তীর্ণের তারিখ</th>
                         <th className="py-3 px-4">সর্বশেষ সক্রিয়</th>
                         <th className="py-3 px-4 text-right">অ্যাকশন</th>
@@ -818,9 +1209,80 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
 
                         return (
                           <tr key={lic.id} className="hover:bg-slate-800/40 transition-colors">
-                            {/* Key & Note */}
+                            {/* Key & Student Name & Note */}
                             <td className="py-3.5 px-4">
-                              <p className="font-mono font-bold text-white text-sm">{lic.keyMasked}</p>
+                              <div className="flex items-center gap-2">
+                                <span className="font-mono font-bold text-white text-sm select-all">
+                                  {lic.plaintextKey || lic.keyMasked}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    haptics.tap();
+                                    navigator.clipboard.writeText(lic.plaintextKey || lic.keyMasked);
+                                    setActionMessage({ type: 'success', text: `কি কপি করা হয়েছে (${lic.keyMasked})` });
+                                  }}
+                                  title="সম্পূর্ণ কি কপি করুন"
+                                  className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                                >
+                                  <Copy className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+
+                              {/* Student Name */}
+                              <div className="mt-1 flex items-center gap-1.5">
+                                <User className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                                {editingCustomerLicId === lic.id ? (
+                                  <div className="flex items-center gap-1">
+                                    <input
+                                      type="text"
+                                      value={editingCustomerName}
+                                      onChange={(e) => setEditingCustomerName(e.target.value)}
+                                      placeholder="শিক্ষার্থীর নাম..."
+                                      className="px-2 py-0.5 rounded-lg bg-slate-950 border border-indigo-500 text-white text-xs w-36 focus:outline-none"
+                                      autoFocus
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => handleSaveCustomerName(lic.id)}
+                                      className="p-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer"
+                                      title="সংরক্ষণ করুন"
+                                    >
+                                      <Check className="w-3 h-3" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setEditingCustomerLicId(null)}
+                                      className="p-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer"
+                                      title="বাতিল"
+                                    >
+                                      <X className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-1.5 group">
+                                    <span className="text-xs font-semibold text-slate-200">
+                                      {lic.customerName ? (
+                                        lic.customerName
+                                      ) : (
+                                        <span className="text-slate-500 italic font-normal">নাম দেওয়া হয়নি</span>
+                                      )}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setEditingCustomerLicId(lic.id);
+                                        setEditingCustomerName(lic.customerName || '');
+                                      }}
+                                      className="p-0.5 opacity-60 group-hover:opacity-100 text-slate-400 hover:text-indigo-400 transition-opacity cursor-pointer"
+                                      title="নাম সংশোধন বা যোগ করুন"
+                                    >
+                                      <Edit2 className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+
                               <p className="text-[11px] text-slate-400 mt-0.5">{lic.customerNote || 'নোট নেই'}</p>
                               <p className="text-[10px] text-slate-500 font-mono">{lic.id}</p>
                             </td>
@@ -869,6 +1331,52 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                                 <span className="inline-flex items-center gap-1 text-slate-500 text-[11px]">
                                   Unbound (লগইন হয়নি)
                                 </span>
+                              )}
+                            </td>
+
+                            {/* Learning Progress & Streak */}
+                            <td className="py-3.5 px-4">
+                              {lic.progress ? (
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-1.5 flex-wrap">
+                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                                      lic.progress.learningStreak > 0 
+                                        ? 'bg-amber-950/90 text-amber-300 border border-amber-700/80' 
+                                        : 'bg-slate-800 text-slate-400 border border-slate-700'
+                                    }`}>
+                                      <Flame className={`w-3.5 h-3.5 ${lic.progress.learningStreak > 0 ? 'text-amber-400 fill-amber-400' : 'text-slate-500'}`} />
+                                      <span>{lic.progress.learningStreak} দিন স্ট্রিক</span>
+                                    </span>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => setSelectedProgressLicense(lic)}
+                                      className="text-[10px] text-indigo-400 hover:text-indigo-300 underline cursor-pointer"
+                                      title="সম্পূর্ণ অগ্রগতি বিবরণ দেখুন"
+                                    >
+                                      বিস্তারিত
+                                    </button>
+                                  </div>
+
+                                  <div className="text-[11px] text-slate-300 flex items-center gap-1.5 flex-wrap">
+                                    <span>📖 {lic.progress.wordsStudied || 0} পঠিত</span>
+                                    <span className="text-slate-600">•</span>
+                                    <span className="text-emerald-400 font-semibold">🏆 {lic.progress.wordsMastered || 0} আয়ত্ত</span>
+                                  </div>
+
+                                  <div className="text-[10px] text-slate-400">
+                                    <span>🎯 কুইজ: {lic.progress.quizAccuracy ?? 0}% ({lic.progress.quizzesTaken || 0} টেস্ট)</span>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="space-y-0.5">
+                                  <span className="inline-flex items-center gap-1 text-slate-500 text-[11px] italic">
+                                    — শুরু করেনি
+                                  </span>
+                                  {lic.browserBound && (
+                                    <p className="text-[10px] text-slate-500">লগইন হয়েছে, পড়া শুরু হয়নি</p>
+                                  )}
+                                </div>
                               )}
                             </td>
 
@@ -988,6 +1496,351 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
             )}
           </div>
         )}
+
+        {/* TAB 5: BROADCAST & NOTIFICATIONS */}
+        {activeTab === 'broadcast' && (
+          <div className="space-y-6">
+            {/* Top Info Banner */}
+            <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2 text-indigo-200">
+                <Megaphone className="w-4 h-4 text-indigo-400 shrink-0" />
+                <span>
+                  রিয়েল-টাইম নোটিফিকেশন সেন্টার: এখান থেকে সরাসরি শিক্ষার্থীদের ব্রাউজারে পপআপ বা মিনি অ্যালার্ট পাঠাতে পারবেন।
+                </span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 font-mono text-[11px] shrink-0">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>অনলাইন ক্লায়েন্ট: {connectedClients}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              {/* Broadcast Creation Form */}
+              <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                  <Send className="w-4 h-4 text-indigo-400" />
+                  <span>নতুন নোটিফিকেশন পাঠান</span>
+                </h3>
+
+                <form onSubmit={handleSendBroadcast} className="space-y-4 text-xs">
+                  {/* Target Audience */}
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1.5">
+                      টার্গেট প্রাপক (Audience)
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBroadcastTargetMode('all');
+                          setBroadcastTargetKey('');
+                        }}
+                        className={`py-2 px-3 rounded-xl border font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                          broadcastTargetMode === 'all'
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <Users className="w-3.5 h-3.5" />
+                        <span>👥 সকল শিক্ষার্থী (All)</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setBroadcastTargetMode('specific')}
+                        className={`py-2 px-3 rounded-xl border font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                          broadcastTargetMode === 'specific'
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <UserCheck className="w-3.5 h-3.5" />
+                        <span>🎯 নির্দিষ্ট কি / ব্রাউজার</span>
+                      </button>
+                    </div>
+
+                    {broadcastTargetMode === 'specific' && (
+                      <div className="mt-2.5 space-y-1">
+                        <label className="block text-[11px] text-slate-400">
+                          গ্রাহকের লাইসেন্স কি নির্বাচন করুন:
+                        </label>
+                        <select
+                          value={broadcastTargetKey}
+                          onChange={(e) => setBroadcastTargetKey(e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs font-mono focus:outline-none focus:border-indigo-500"
+                        >
+                          <option value="">-- যেকোনো একটি লাইসেন্স সিলেক্ট করুন --</option>
+                          {licenses
+                            .filter((lic) => lic.status === 'active')
+                            .map((lic) => (
+                              <option key={lic.id} value={lic.plaintextKey || lic.keyMasked}>
+                                {lic.customerName ? `[${lic.customerName}] ` : ''}
+                                {lic.plaintextKey || lic.keyMasked}
+                                {lic.customerNote ? ` (${lic.customerNote})` : ''}
+                              </option>
+                            ))}
+                        </select>
+                        <p className="text-[10px] text-indigo-300">
+                          শুধুমাত্র এই কি দিয়ে লগইন থাকা ব্রাউজারেই এই নোটিফিকেশনটি পপআপ হবে।
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Display Style (Center Modal vs Mini Alert Toast) */}
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1.5">
+                      প্রদর্শন ধরন (Display Style)
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setBroadcastDisplayStyle('center_modal')}
+                        className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                          broadcastDisplayStyle === 'center_modal'
+                            ? 'bg-indigo-950/70 border-indigo-500 text-white ring-1 ring-indigo-500'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center gap-1.5 font-bold text-white mb-0.5">
+                          <Bell className="w-3.5 h-3.5 text-amber-400" />
+                          <span>মাঝখানে নোটিফিকেশন (Center Modal)</span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 leading-tight">
+                          ডিসপ্লের ঠিক মাঝখানে থ্রি-ডি বেল ব্যাজ ও অ্যাকশন বাটন সহ প্রিমিয়াম কার্ড।
+                        </p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setBroadcastDisplayStyle('toast')}
+                        className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                          broadcastDisplayStyle === 'toast'
+                            ? 'bg-indigo-950/70 border-indigo-500 text-white ring-1 ring-indigo-500'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center gap-1.5 font-bold text-white mb-0.5">
+                          <AlertTriangle className="w-3.5 h-3.5 text-orange-400" />
+                          <span>মিনি শর্ট অ্যালার্ট (Mini Toast)</span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 leading-tight">
+                          স্ক্রিনের উপরে বা কোণায় ছোট রাউন্ডেড পিল আকারে কুইক নোটিশ।
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Auto-Dismiss Timer */}
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1.5">
+                      স্থায়িত্ব ও অটো-ক্লোজ টাইমার (Duration)
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setBroadcastDismissMode('permanent')}
+                        className={`py-2 px-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
+                          broadcastDismissMode === 'permanent'
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        ♾️ স্থায়ী (ইউজার ক্রস করবে)
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setBroadcastDismissMode('5s')}
+                        className={`py-2 px-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
+                          broadcastDismissMode === '5s'
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        ⏱️ ৫ সেকেন্ডে চলে যাবে
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setBroadcastDismissMode('custom')}
+                        className={`py-2 px-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
+                          broadcastDismissMode === 'custom'
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
+                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        ⚙️ কাস্টম সেকেন্ড
+                      </button>
+                    </div>
+
+                    {broadcastDismissMode === 'custom' && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className="text-[11px] text-slate-400">কত সেকেন্ড পর গায়েব হবে:</span>
+                        <input
+                          type="number"
+                          min="1"
+                          max="120"
+                          value={broadcastCustomSeconds}
+                          onChange={(e) => setBroadcastCustomSeconds(e.target.value)}
+                          className="w-24 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs text-center"
+                        />
+                        <span className="text-[11px] text-slate-400">সেকেন্ড</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Title & Message */}
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1">
+                      নোটিফিকেশন শিরোনাম (Title)
+                    </label>
+                    <input
+                      type="text"
+                      value={broadcastTitle}
+                      onChange={(e) => setBroadcastTitle(e.target.value)}
+                      placeholder="e.g. 1 New Notification অথবা Must have A-Z!"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-indigo-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1">
+                      মেসেজ বা বিস্তারিত বার্তা (Message)
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={broadcastMessage}
+                      onChange={(e) => setBroadcastMessage(e.target.value)}
+                      placeholder="e.g. গুরুত্বপূর্ণ নোটিশ বা স্পেশাল আপডেট..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-indigo-500 resize-none"
+                    />
+                  </div>
+
+                  {/* Action Button Details (especially for Center Modal) */}
+                  {broadcastDisplayStyle === 'center_modal' && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div>
+                        <label className="block font-semibold text-slate-300 mb-1 text-[11px]">
+                          বাটন টেক্সট (Button Text)
+                        </label>
+                        <input
+                          type="text"
+                          value={broadcastActionText}
+                          onChange={(e) => setBroadcastActionText(e.target.value)}
+                          placeholder="View Details →"
+                          className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-semibold text-slate-300 mb-1 text-[11px]">
+                          বাটন লিংক (ঐচ্ছিক URL)
+                        </label>
+                        <input
+                          type="text"
+                          value={broadcastActionUrl}
+                          onChange={(e) => setBroadcastActionUrl(e.target.value)}
+                          placeholder="e.g. https://... অথবা #story"
+                          className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs font-mono"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isSendingBroadcast}
+                    className="w-full py-3 px-4 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-600/30 text-xs mt-2"
+                  >
+                    {isSendingBroadcast ? (
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
+                    <span>নোটিফিকেশন সম্প্রচার (Send Broadcast)</span>
+                  </button>
+                </form>
+              </div>
+
+              {/* Broadcasts History List */}
+              <div className="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col">
+                <h3 className="text-base font-bold text-white mb-4 flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <History className="w-4 h-4 text-indigo-400" />
+                    <span>পাঠানো নোটিফিকেশন সমূহ</span>
+                  </span>
+                  <span className="text-xs text-slate-400 font-normal">
+                    মোট: {broadcasts.length}
+                  </span>
+                </h3>
+
+                {broadcasts.length === 0 ? (
+                  <div className="py-12 text-center text-slate-500 text-xs">
+                    এখনো কোনো নোটিফিকেশন পাঠানো হয়নি।
+                  </div>
+                ) : (
+                  <div className="space-y-3 overflow-y-auto max-h-[600px] pr-1">
+                    {broadcasts.map((b) => (
+                      <div
+                        key={b.id}
+                        className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs relative group"
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <h4 className="font-bold text-white text-xs leading-snug">{b.title}</h4>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteBroadcast(b.id, b.title)}
+                            title="মুছে ফেলুন"
+                            className="p-1 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-950/40 transition-colors cursor-pointer shrink-0"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <p className="text-slate-300 text-[11px] leading-relaxed mb-2 line-clamp-3">
+                          {b.message}
+                        </p>
+
+                        <div className="flex items-center gap-1.5 flex-wrap text-[10px]">
+                          {/* Target Tag */}
+                          <span
+                            className={`px-2 py-0.5 rounded-full font-semibold ${
+                              b.targetKey
+                                ? 'bg-amber-950 text-amber-300 border border-amber-800'
+                                : 'bg-indigo-950 text-indigo-300 border border-indigo-800'
+                            }`}
+                          >
+                            {b.targetKey ? `🎯 কি: ${b.targetKey}` : '👥 All Students'}
+                          </span>
+
+                          {/* Style Tag */}
+                          <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                            {b.displayStyle === 'toast' ? '⚠️ Mini Toast' : '🔔 Center Modal'}
+                          </span>
+
+                          {/* Auto dismiss tag */}
+                          {b.autoDismissSeconds ? (
+                            <span className="px-2 py-0.5 rounded-full bg-teal-950 text-teal-300 border border-teal-800">
+                              ⏱️ {b.autoDismissSeconds}s Auto-close
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded-full bg-slate-900 text-slate-400">
+                              স্থায়ী
+                            </span>
+                          )}
+
+                          <span className="text-slate-500 ml-auto font-mono text-[9px]">
+                            {new Date(b.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Modal: Extend License Duration */}
@@ -1042,6 +1895,160 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: STUDENT PROGRESS & STREAK DETAILS */}
+      {selectedProgressLicense && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl relative animate-scaleUp font-sans">
+            <button
+              type="button"
+              onClick={() => setSelectedProgressLicense(null)}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Modal Header */}
+            <div className="flex items-center gap-3 mb-5 pr-8">
+              <div className="w-11 h-11 rounded-2xl bg-amber-500/15 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0">
+                <Flame className="w-6 h-6 fill-amber-400 text-amber-400" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-base sm:text-lg font-bold text-white truncate">
+                  {selectedProgressLicense.customerName || 'বেনামী শিক্ষার্থী'}
+                </h3>
+                <p className="text-xs text-slate-400 font-mono truncate">
+                  {selectedProgressLicense.plaintextKey || selectedProgressLicense.keyMasked}
+                  {selectedProgressLicense.deviceInfo ? ` • 🌐 ${selectedProgressLicense.deviceInfo}` : ''}
+                </p>
+              </div>
+            </div>
+
+            {/* Streak Highlight Card */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-950/70 via-orange-950/50 to-slate-950 border border-amber-700/60 mb-5 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+                  ধারাবাহিক স্ট্রিক (Daily Streak)
+                </span>
+                <p className="text-2xl sm:text-3xl font-black text-white mt-0.5 flex items-center gap-2">
+                  <span>🔥 {selectedProgressLicense.progress?.learningStreak || 0}</span>
+                  <span className="text-sm font-semibold text-amber-200">দিন একনাগাড়ে</span>
+                </p>
+                <p className="text-[11px] text-slate-400 mt-1">
+                  {(selectedProgressLicense.progress?.learningStreak || 0) > 0
+                    ? 'শিক্ষার্থী নিয়মিত প্রতিদিন ভোকাবুলারি চর্চা ধরে রাখছেন'
+                    : 'এখনও দৈনিক স্ট্রিক শুরু হয়নি'}
+                </p>
+              </div>
+
+              <div className="text-right shrink-0">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  {selectedProgressLicense.progress?.lastStudyDate ? `পড়া হয়েছে` : `নতুন`}
+                </span>
+              </div>
+            </div>
+
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-5 text-xs">
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[11px] block">মোট পঠিত শব্দ</span>
+                <span className="text-lg font-black text-white mt-0.5 block">
+                  📖 {selectedProgressLicense.progress?.wordsStudied || 0}
+                </span>
+                <span className="text-[10px] text-slate-500">শব্দ পাঠ করা হয়েছে</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[11px] block">অনুশীলনকৃত শব্দ</span>
+                <span className="text-lg font-black text-teal-300 mt-0.5 block">
+                  ⚡ {selectedProgressLicense.progress?.wordsPracticed || 0}
+                </span>
+                <span className="text-[10px] text-slate-500">বার প্র্যাকটিস হয়েছে</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[11px] block">সম্পূর্ণ আয়ত্ত</span>
+                <span className="text-lg font-black text-emerald-300 mt-0.5 block">
+                  🏆 {selectedProgressLicense.progress?.wordsMastered || 0}
+                </span>
+                <span className="text-[10px] text-slate-500">মাস্টার্ড শব্দ</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[11px] block">রিভিশন প্রয়োজন</span>
+                <span className="text-lg font-black text-rose-300 mt-0.5 block">
+                  🔄 {selectedProgressLicense.progress?.needsRevisionCount || 0}
+                </span>
+                <span className="text-[10px] text-slate-500">কঠিন বা ভুল শব্দ</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[11px] block">পছন্দের শব্দ (Stars)</span>
+                <span className="text-lg font-black text-amber-300 mt-0.5 block">
+                  ⭐ {selectedProgressLicense.progress?.favoritesCount || 0}
+                </span>
+                <span className="text-[10px] text-slate-500">বুকমার্ক করা</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[11px] block">মোট কুইজ দেওয়া</span>
+                <span className="text-lg font-black text-indigo-300 mt-0.5 block">
+                  📝 {selectedProgressLicense.progress?.quizzesTaken || 0}
+                </span>
+                <span className="text-[10px] text-slate-500">টি সম্পন্ন টেস্ট</span>
+              </div>
+            </div>
+
+            {/* Quiz Accuracy Bar */}
+            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 mb-5">
+              <div className="flex items-center justify-between text-xs mb-1.5">
+                <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+                  <Target className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>কুইজ একুরেসি হার (Accuracy Rate)</span>
+                </span>
+                <span className="font-mono font-bold text-white text-sm">
+                  {selectedProgressLicense.progress?.quizAccuracy ?? 0}%
+                </span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-indigo-500 via-teal-500 to-emerald-400 transition-all duration-500"
+                  style={{ width: `${Math.min(100, Math.max(0, selectedProgressLicense.progress?.quizAccuracy || 0))}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Footer Timestamps */}
+            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500">
+              <div>
+                <span>সর্বশেষ অধ্যয়ন: </span>
+                <span className="text-slate-300 font-medium">
+                  {selectedProgressLicense.progress?.lastStudyDate
+                    ? selectedProgressLicense.progress.lastStudyDate
+                    : 'কোনো তারিখ নেই'}
+                </span>
+              </div>
+              <div>
+                <span>সার্ভারে সিঙ্ক: </span>
+                <span className="text-slate-300 font-medium">
+                  {selectedProgressLicense.lastActiveAt
+                    ? new Date(selectedProgressLicense.lastActiveAt).toLocaleString()
+                    : 'এখনও সিঙ্ক হয়নি'}
+                </span>
+              </div>
+            </div>
+
+            {/* Modal Close Button */}
+            <button
+              type="button"
+              onClick={() => setSelectedProgressLicense(null)}
+              className="mt-5 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold cursor-pointer transition-colors"
+            >
+              বন্ধ করুন
+            </button>
           </div>
         </div>
       )}

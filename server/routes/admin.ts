@@ -39,10 +39,16 @@ adminRouter.get('/session', async (req: Request, res: Response): Promise<void> =
     }
 
     const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
+      res.json({ authenticated: false, isInitialPasswordActive: !process.env.ADMIN_PASSWORD_HASH });
+      return;
+    }
+
     const sessionData = await storage.getAdminSession(sessionHash);
 
     if (!sessionData || Date.now() > sessionData.expiresAt) {
-      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false, isInitialPasswordActive: !process.env.ADMIN_PASSWORD_HASH });
       return;
     }
@@ -143,7 +149,7 @@ adminRouter.post('/login', async (req: Request, res: Response): Promise<void> =>
 
     // Set HttpOnly Admin Cookie
     res.cookie(ADMIN_COOKIE_NAME, sessionToken, {
-      ...getCookieOptions(),
+      ...getCookieOptions(req),
       maxAge: ttlSeconds * 1000,
     });
 
@@ -170,13 +176,15 @@ adminRouter.post('/logout', async (req: Request, res: Response): Promise<void> =
     const rawToken = req.cookies?.[ADMIN_COOKIE_NAME];
     if (rawToken && typeof rawToken === 'string') {
       const sessionHash = hashSessionToken(rawToken);
-      await storage.deleteAdminSession(sessionHash);
+      if (sessionHash) {
+        await storage.deleteAdminSession(sessionHash);
+      }
     }
-    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true, message: 'Admin logged out.' });
   } catch (error) {
     console.error('[admin/logout] Error:', error);
-    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true });
   }
 });
@@ -219,7 +227,7 @@ adminRouter.get('/stats', requireAdminAuth, handleOverviewStats);
  */
 adminRouter.post('/licenses/create', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
-    const { durationDays, customerNote, isLifetime } = req.body || {};
+    const { durationDays, customerNote, customerName, isLifetime } = req.body || {};
     const isLife = isLifetime === true || durationDays === 'lifetime' || durationDays === 36500;
     let days = isLife ? 36500 : parseInt(durationDays, 10);
 
@@ -241,6 +249,7 @@ adminRouter.post('/licenses/create', requireAdminAuth, async (req: Authenticated
     const newLicense: LicenseRecord = {
       id: licenseId,
       keyMasked: masked,
+      plaintextKey, // Store plaintext key so admin can view, copy, and send anytime
       keyHash,
       status: 'active',
       createdAt: now,
@@ -248,10 +257,11 @@ adminRouter.post('/licenses/create', requireAdminAuth, async (req: Authenticated
       durationDays: days,
       isLifetime: isLife,
       browserBound: false,
+      customerName: typeof customerName === 'string' ? customerName.trim().slice(0, 100) : undefined,
       customerNote: typeof customerNote === 'string' ? customerNote.trim().slice(0, 200) : undefined,
     };
 
-    // Store in Redis (Stores hash, NEVER plaintext key)
+    // Store in Redis
     await storage.createLicense(newLicense);
 
     await storage.addAuditLog({
@@ -312,6 +322,7 @@ adminRouter.get('/licenses', requireAdminAuth, async (req: AuthenticatedAdminReq
       filtered = filtered.filter(l => 
         l.id.toLowerCase().includes(q) ||
         l.keyMasked.toLowerCase().includes(q) ||
+        (l.plaintextKey && l.plaintextKey.toLowerCase().includes(q)) ||
         (l.customerNote && l.customerNote.toLowerCase().includes(q))
       );
     }
@@ -433,6 +444,8 @@ adminRouter.post('/licenses/:id/reset-binding', requireAdminAuth, async (req: Au
 
     const updated = await storage.updateLicense(id, {
       browserBound: false,
+      boundDeviceId: undefined,
+      boundUserAgent: undefined,
       currentSessionHash: undefined,
       deviceInfo: undefined,
       clientIp: undefined,
@@ -599,6 +612,43 @@ const handleDeleteLicense = async (req: AuthenticatedAdminRequest, res: Response
 
 adminRouter.delete('/licenses/:id', requireAdminAuth, handleDeleteLicense);
 adminRouter.post('/licenses/:id/delete', requireAdminAuth, handleDeleteLicense);
+
+/**
+ * Admin: Update Customer Name on License
+ * PATCH /api/admin/licenses/:id/name
+ * POST /api/admin/licenses/:id/name
+ */
+const handleUpdateCustomerName = async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { name, customerName } = req.body || {};
+    const newName = typeof customerName === 'string' ? customerName.trim() : (typeof name === 'string' ? name.trim() : '');
+
+    const license = await storage.getLicenseById(id);
+    if (!license) {
+      res.status(404).json({ ok: false, error: 'NOT_FOUND', message: 'License not found.' });
+      return;
+    }
+
+    const updated = await storage.updateLicense(id, { customerName: newName });
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'update_customer_name',
+      licenseId: id,
+      details: `Updated customer name for ${license.keyMasked} to "${newName}".`,
+    });
+
+    res.json({ ok: true, license: updated, message: 'গ্রাহকের নাম সফলভাবে আপডেট করা হয়েছে।' });
+  } catch (error) {
+    console.error('[admin/licenses/name] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to update customer name.' });
+  }
+};
+
+adminRouter.patch('/licenses/:id/name', requireAdminAuth, handleUpdateCustomerName);
+adminRouter.post('/licenses/:id/name', requireAdminAuth, handleUpdateCustomerName);
 
 /**
  * Admin: Audit Logs

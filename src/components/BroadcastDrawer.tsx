@@ -9,7 +9,8 @@ import {
   Tag, 
   Megaphone,
   CheckCircle2,
-  BellRing
+  BellRing,
+  Trash2
 } from 'lucide-react';
 import { BroadcastAnnouncement } from '../hooks/useBroadcastAnnouncements';
 import { NavTab } from './Navbar';
@@ -21,6 +22,8 @@ interface BroadcastDrawerProps {
   unreadCount: number;
   onMarkAllAsRead: () => void;
   onMarkAsRead: (id: string) => void;
+  onDeleteAnnouncement: (id: string) => void;
+  onClearAll: () => void;
   onSelectTab: (tab: NavTab) => void;
   isPushSupported: boolean;
   pushPermission: NotificationPermission;
@@ -34,6 +37,8 @@ export const BroadcastDrawer: React.FC<BroadcastDrawerProps> = ({
   unreadCount,
   onMarkAllAsRead,
   onMarkAsRead,
+  onDeleteAnnouncement,
+  onClearAll,
   onSelectTab,
   isPushSupported,
   pushPermission,
@@ -143,17 +148,29 @@ export const BroadcastDrawer: React.FC<BroadcastDrawerProps> = ({
             </div>
           )}
 
-          {/* Drawer Subheader: Mark All as Read */}
-          {announcements.length > 0 && unreadCount > 0 && (
-            <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800/60 flex justify-end">
+          {/* Drawer Subheader: Mark All as Read & Clear All */}
+          {announcements.length > 0 && (
+            <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
               <button
                 type="button"
-                onClick={onMarkAllAsRead}
-                className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 cursor-pointer"
+                onClick={onClearAll}
+                className="font-semibold text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 flex items-center gap-1 cursor-pointer transition-colors"
+                title="সব নোটিফিকেশন মুছে ফেলুন"
               >
-                <CheckCheck className="w-3.5 h-3.5" />
-                <span>সবগুলো পঠিত মার্ক করুন</span>
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>সব মুছে ফেলুন</span>
               </button>
+
+              {unreadCount > 0 && (
+                <button
+                  type="button"
+                  onClick={onMarkAllAsRead}
+                  className="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <CheckCheck className="w-3.5 h-3.5" />
+                  <span>সবগুলো পঠিত মার্ক করুন</span>
+                </button>
+              )}
             </div>
           )}
 
@@ -182,12 +199,26 @@ export const BroadcastDrawer: React.FC<BroadcastDrawerProps> = ({
                         <span>{meta.tag}</span>
                       </span>
 
-                      <span className="text-[10px] text-slate-400 font-mono">
-                        {new Date(item.createdAt).toLocaleDateString('bn-BD', {
-                          day: 'numeric',
-                          month: 'short',
-                        })}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-slate-400 font-mono">
+                          {new Date(item.createdAt).toLocaleDateString('bn-BD', {
+                            day: 'numeric',
+                            month: 'short',
+                          })}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onDeleteAnnouncement(item.id);
+                          }}
+                          className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+                          title="মুছে ফেলুন"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
 
                     <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-snug">

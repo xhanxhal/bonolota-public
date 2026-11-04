@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bonolota Licensing Vault - Private Admin Portal</title>
   <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <!-- Tailwind CSS CDN for self-contained standalone execution -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -638,6 +641,53 @@
   </div>
 
   <script>
+    // 0. Force unregister any legacy service workers controlling this secret path
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        for (const reg of regs) {
+          reg.unregister();
+        }
+      }).catch(() => {});
+    }
+
+    // Defensive DOM helpers that never throw on null or undefined
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function safeSetText(id, val) {
+      try {
+        const el = document.getElementById(id);
+        if (el) el.innerText = (val !== undefined && val !== null) ? String(val) : '';
+      } catch (e) {
+        console.warn(`safeSetText failed for ${id}:`, e);
+      }
+    }
+
+    function safeSetHtml(id, html) {
+      try {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = (html !== undefined && html !== null) ? String(html) : '';
+      } catch (e) {
+        console.warn(`safeSetHtml failed for ${id}:`, e);
+      }
+    }
+
+    function safeGetValue(id, fallback = '') {
+      try {
+        const el = document.getElementById(id);
+        return el ? (el.value || fallback) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
     // State
     let allLicenses = [];
     let currentDuration = 30; // number or 'lifetime'
@@ -648,6 +698,7 @@
     // Toast Notification System
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
+      if (!container) return;
       const toast = document.createElement('div');
       
       const colors = {
@@ -719,30 +770,37 @@
     // Confirmation Modal System
     let pendingModalAction = null;
     function openModal({ title, desc, confirmText, isDanger = true, onConfirm }) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalDesc').innerText = desc;
+      safeSetText('modalTitle', title);
+      safeSetText('modalDesc', desc);
       const confirmBtn = document.getElementById('modalConfirmBtn');
-      confirmBtn.innerText = confirmText || 'নিশ্চিত করুন';
-      confirmBtn.className = isDanger 
-        ? 'px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs cursor-pointer shadow-lg shadow-rose-600/30 transition-all'
-        : 'px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs cursor-pointer shadow-lg shadow-indigo-600/30 transition-all';
+      if (confirmBtn) {
+        confirmBtn.innerText = confirmText || 'নিশ্চিত করুন';
+        confirmBtn.className = isDanger 
+          ? 'px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs cursor-pointer shadow-lg shadow-rose-600/30 transition-all'
+          : 'px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs cursor-pointer shadow-lg shadow-indigo-600/30 transition-all';
+      }
       
       pendingModalAction = onConfirm;
-      document.getElementById('confirmModal').classList.remove('hidden');
+      const modal = document.getElementById('confirmModal');
+      if (modal) modal.classList.remove('hidden');
     }
 
     function closeModal() {
-      document.getElementById('confirmModal').classList.add('hidden');
+      const modal = document.getElementById('confirmModal');
+      if (modal) modal.classList.add('hidden');
       pendingModalAction = null;
     }
 
-    document.getElementById('modalConfirmBtn').addEventListener('click', async () => {
-      if (pendingModalAction) {
-        const action = pendingModalAction;
-        closeModal();
-        await action();
-      }
-    });
+    const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+    if (modalConfirmBtn) {
+      modalConfirmBtn.addEventListener('click', async () => {
+        if (pendingModalAction) {
+          const action = pendingModalAction;
+          closeModal();
+          await action();
+        }
+      });
+    }
 
     // Boot check
     async function checkExistingSession() {
@@ -760,62 +818,78 @@
     }
 
     function showDashboard() {
-      document.getElementById('loginView').classList.add('hidden');
-      document.getElementById('dashboardView').classList.remove('hidden');
+      const loginView = document.getElementById('loginView');
+      if (loginView) loginView.classList.add('hidden');
+      const dashboardView = document.getElementById('dashboardView');
+      if (dashboardView) dashboardView.classList.remove('hidden');
       loadData();
     }
 
     function showLogin() {
-      document.getElementById('dashboardView').classList.add('hidden');
-      document.getElementById('loginView').classList.remove('hidden');
+      const dashboardView = document.getElementById('dashboardView');
+      if (dashboardView) dashboardView.classList.add('hidden');
+      const loginView = document.getElementById('loginView');
+      if (loginView) loginView.classList.remove('hidden');
     }
 
     // Login Form Handler
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const password = document.getElementById('passwordInput').value;
-      const errBox = document.getElementById('loginError');
-      const btn = document.getElementById('loginBtn');
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pwdInput = document.getElementById('passwordInput');
+        const password = pwdInput ? pwdInput.value : '';
+        const errBox = document.getElementById('loginError');
+        const btn = document.getElementById('loginBtn');
 
-      errBox.classList.add('hidden');
-      btn.disabled = true;
-      btn.innerText = 'যাচাই করা হচ্ছে...';
+        if (errBox) errBox.classList.add('hidden');
+        if (btn) {
+          btn.disabled = true;
+          btn.innerText = 'যাচাই করা হচ্ছে...';
+        }
 
-      try {
-        const res = await fetch('/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ password })
-        });
-
-        let data = {};
         try {
-          data = await res.json();
-        } catch {
-          data = { message: `HTTP ${res.status}: সার্ভার সাড়া দেয়নি` };
-        }
+          const res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ password })
+          });
 
-        if (res.ok && data.ok) {
-          if (data.token) {
-            authToken = data.token;
-            localStorage.setItem('bonolota_admin_token', data.token);
-            sessionStorage.setItem('bonolota_admin_token', data.token);
+          let data = {};
+          try {
+            data = await res.json();
+          } catch {
+            data = { message: `HTTP ${res.status}: সার্ভার সাড়া দেয়নি` };
           }
-          showToast('অ্যাডমিন ভল্টে স্বাগতম!', 'success');
-          showDashboard();
-        } else {
-          errBox.innerText = data.message || 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।';
-          errBox.classList.remove('hidden');
+
+          if (res.ok && data.ok) {
+            if (data.token) {
+              authToken = data.token;
+              localStorage.setItem('bonolota_admin_token', data.token);
+              sessionStorage.setItem('bonolota_admin_token', data.token);
+            }
+            showToast('অ্যাডমিন ভল্টে স্বাগতম!', 'success');
+            showDashboard();
+          } else {
+            if (errBox) {
+              errBox.innerText = data.message || 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।';
+              errBox.classList.remove('hidden');
+            }
+          }
+        } catch (err) {
+          if (errBox) {
+            errBox.innerText = 'সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (' + (err.message || 'নেটওয়ার্ক এরর') + ')।';
+            errBox.classList.remove('hidden');
+          }
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = 'লগইন করুন →';
+          }
         }
-      } catch (err) {
-        errBox.innerText = 'সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (' + (err.message || 'নেটওয়ার্ক এরর') + ')।';
-        errBox.classList.remove('hidden');
-      } finally {
-        btn.disabled = false;
-        btn.innerText = 'লগইন করুন →';
-      }
-    });
+      });
+    }
 
     // Logout
     async function handleLogout() {
@@ -910,11 +984,6 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
 ধন্যবাদ! আপনার ইংরেজি ভোকাবুলারি ও বিসিএস প্রস্তুতি সফল হোক!`;
     }
 
-    function safeSetText(id, val) {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    }
-
     // Load Overview & License Data
     async function loadData(manual = false) {
       const spinner = document.getElementById('refreshSpinner');
@@ -984,16 +1053,18 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
         const now = Date.now();
         const isLife = Boolean(lic.isLifetime || lic.durationDays >= 36500);
         const isExpired = !isLife && lic.expiresAt < now;
+        const fullKey = lic.plaintextKey || lic.keyMasked;
         return `
           <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 transition-colors">
             <div class="flex items-center gap-3">
               <span class="w-2 h-2 rounded-full ${lic.status === 'revoked' ? 'bg-rose-500' : isExpired ? 'bg-slate-500' : isLife ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'}"></span>
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="font-mono font-bold text-white text-xs">${lic.keyMasked}</span>
+                  <span class="font-mono font-bold text-indigo-300 text-xs bg-slate-950 px-2 py-0.5 rounded border border-indigo-900/40 select-all">${fullKey}</span>
+                  <button onclick="copyText('${fullKey}')" title="সম্পূর্ণ কি কপি করুন" class="text-slate-400 hover:text-white cursor-pointer text-xs">📋</button>
                   ${isLife ? '<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-950 text-amber-300 border border-amber-700">👑 Lifetime</span>' : ''}
                 </div>
-                <span class="text-[11px] text-slate-400 block">${lic.customerNote || 'নোট নেই'} • ${isLife ? 'আজীবন' : `${lic.durationDays} দিন`}</span>
+                <span class="text-[11px] text-slate-400 block mt-0.5">${lic.customerNote || 'নোট নেই'} • ${isLife ? 'আজীবন' : `${lic.durationDays} দিন`}</span>
               </div>
             </div>
             <div class="text-right">
@@ -1029,73 +1100,89 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
     }
 
     // Create Key Form Handler
-    document.getElementById('createKeyForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const customerNote = document.getElementById('customerNoteInput').value.trim();
-      const btn = document.getElementById('submitCreateBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<span>⏳ জেনারেট হচ্ছে...</span>';
+    const createKeyForm = document.getElementById('createKeyForm');
+    if (createKeyForm) {
+      createKeyForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const noteInput = document.getElementById('customerNoteInput');
+        const customerNote = (noteInput ? noteInput.value : '').trim();
+        const btn = document.getElementById('submitCreateBtn');
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = '<span>⏳ জেনারেট হচ্ছে...</span>';
+        }
 
-      try {
-        const payload = {
-          customerNote,
-          isLifetime: currentDuration === 'lifetime' || currentDuration === 36500,
-          durationDays: currentDuration === 'lifetime' ? 36500 : currentDuration
-        };
-
-        const res = await adminFetch('/api/admin/licenses/create', {
-          method: 'POST',
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-        if (res.ok && data.ok) {
-          lastGeneratedData = {
-            key: data.plaintextKey,
-            isLifetime: data.isLifetime,
-            durationDays: data.license?.durationDays || currentDuration,
-            customerNote: customerNote
+        try {
+          const payload = {
+            customerNote,
+            isLifetime: currentDuration === 'lifetime' || currentDuration === 36500,
+            durationDays: currentDuration === 'lifetime' ? 36500 : currentDuration
           };
 
-          document.getElementById('generatedKeyText').innerText = data.plaintextKey;
-          
-          const badgeEl = document.getElementById('generatedKeyBadge');
-          if (data.isLifetime) {
-            badgeEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600';
-            badgeEl.innerText = '👑 আজীবন (Lifetime)';
+          const res = await adminFetch('/api/admin/licenses/create', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json();
+          if (res.ok && data.ok) {
+            lastGeneratedData = {
+              key: data.plaintextKey,
+              isLifetime: data.isLifetime,
+              durationDays: data.license?.durationDays || currentDuration,
+              customerNote: customerNote
+            };
+
+            safeSetText('generatedKeyText', data.plaintextKey);
+            
+            const badgeEl = document.getElementById('generatedKeyBadge');
+            if (badgeEl) {
+              if (data.isLifetime) {
+                badgeEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600';
+                badgeEl.innerText = '👑 আজীবন (Lifetime)';
+              } else {
+                badgeEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
+                badgeEl.innerText = `${payload.durationDays} দিনের কি`;
+              }
+            }
+
+            // Build slip preview
+            const slipText = getCustomerSlipText(data.plaintextKey, data.isLifetime, payload.durationDays, customerNote);
+            safeSetText('slipPreviewBox', slipText);
+
+            const genBox = document.getElementById('generatedKeyBox');
+            if (genBox) genBox.classList.remove('hidden');
+            if (noteInput) noteInput.value = '';
+            
+            showToast(data.isLifetime ? '👑 নতুন আজীবন (Lifetime) অ্যাক্সেস কি তৈরি হয়েছে!' : 'নতুন অ্যাক্সেস কি সফলভাবে তৈরি হয়েছে!', 'success');
+            loadData();
           } else {
-            badgeEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
-            badgeEl.innerText = `${payload.durationDays} দিনের কি`;
+            showToast(data.message || 'কি তৈরিতে সমস্যা হয়েছে।', 'error');
           }
-
-          // Build slip preview
-          const slipText = getCustomerSlipText(data.plaintextKey, data.isLifetime, payload.durationDays, customerNote);
-          document.getElementById('slipPreviewBox').innerText = slipText;
-
-          document.getElementById('generatedKeyBox').classList.remove('hidden');
-          document.getElementById('customerNoteInput').value = '';
-          
-          showToast(data.isLifetime ? '👑 নতুন আজীবন (Lifetime) অ্যাক্সেস কি তৈরি হয়েছে!' : 'নতুন অ্যাক্সেস কি সফলভাবে তৈরি হয়েছে!', 'success');
-          loadData();
-        } else {
-          showToast(data.message || 'কি তৈরিতে সমস্যা হয়েছে।', 'error');
+        } catch (err) {
+          showToast('সার্ভার এরর: ' + err.message, 'error');
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<span>➕ অ্যাক্সেস কি জেনারেট করুন</span>';
+          }
         }
-      } catch (err) {
-        showToast('সার্ভার এরর: ' + err.message, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<span>➕ অ্যাক্সেস কি জেনারেট করুন</span>';
-      }
-    });
+      });
+    }
 
     function copyGeneratedKey() {
-      const key = document.getElementById('generatedKeyText').innerText;
-      navigator.clipboard.writeText(key);
+      const keyEl = document.getElementById('generatedKeyText');
+      const key = keyEl ? keyEl.innerText : '';
+      if (key) {
+        navigator.clipboard.writeText(key);
+      }
       const btn = document.getElementById('copyKeyBtn');
-      btn.innerHTML = '<span>✅ কি কপি হয়েছে!</span>';
-      setTimeout(() => {
-        btn.innerHTML = '<span>📋 শুধু কি কপি</span>';
-      }, 2000);
+      if (btn) {
+        btn.innerHTML = '<span>✅ কি কপি হয়েছে!</span>';
+        setTimeout(() => {
+          btn.innerHTML = '<span>📋 শুধু কি কপি</span>';
+        }, 2000);
+      }
       showToast('অ্যাক্সেস কি ক্লিপবোর্ডে কপি করা হয়েছে!', 'success');
     }
 
@@ -1121,9 +1208,20 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
       showToast(`কপি করা হয়েছে: ${txt}`, 'info');
     }
 
+    function copyCustomerSlipFor(licenseId) {
+      const lic = allLicenses.find(l => l.id === licenseId);
+      if (!lic) return;
+      const fullKey = lic.plaintextKey || lic.keyMasked;
+      const isLife = Boolean(lic.isLifetime || lic.durationDays >= 36500);
+      const slip = getCustomerSlipText(fullKey, isLife, lic.durationDays, lic.customerNote);
+      navigator.clipboard.writeText(slip);
+      showToast(`কাস্টমার স্লিপ কপি হয়েছে: ${fullKey}`, 'success');
+    }
+
     // Render Licenses Table
     function renderLicenses() {
-      const q = (document.getElementById('searchInput').value || '').toLowerCase();
+      const searchInput = document.getElementById('searchInput');
+      const q = (searchInput ? searchInput.value || '' : '').toLowerCase();
       const now = Date.now();
 
       const filtered = allLicenses.filter(lic => {
@@ -1140,18 +1238,19 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
 
         // Search Query
         if (q) {
-          const matchMasked = (lic.keyMasked || '').toLowerCase().includes(q);
+          const matchKey = (lic.plaintextKey || '').toLowerCase().includes(q) || (lic.keyMasked || '').toLowerCase().includes(q);
           const matchNote = (lic.customerNote || '').toLowerCase().includes(q);
           const matchDevice = (lic.deviceInfo || '').toLowerCase().includes(q);
           const matchId = (lic.id || '').toLowerCase().includes(q);
           const matchLifetime = isLife && ('lifetime'.includes(q) || 'আজীবন'.includes(q));
-          return matchMasked || matchNote || matchDevice || matchId || matchLifetime;
+          return matchKey || matchNote || matchDevice || matchId || matchLifetime;
         }
 
         return true;
       });
 
       const tbody = document.getElementById('licensesTbody');
+      if (!tbody) return;
       if (filtered.length === 0) {
         tbody.innerHTML = `
           <tr>
@@ -1167,6 +1266,7 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
         const isLife = Boolean(lic.isLifetime || lic.durationDays >= 36500);
         const isExpired = !isLife && lic.expiresAt < now;
         const daysLeft = isLife ? 99999 : Math.max(0, Math.ceil((lic.expiresAt - now) / (1000 * 60 * 60 * 24)));
+        const fullKey = lic.plaintextKey || lic.keyMasked;
 
         let statusBadge = '';
         if (lic.status === 'revoked') {
@@ -1183,13 +1283,20 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
 
         return `
           <tr class="hover:bg-slate-800/40 transition-colors">
-            <!-- Key & Note -->
+            <!-- Key & Note (Full key clearly visible) -->
             <td class="py-3 px-4">
-              <div class="flex items-center gap-1.5">
-                <span class="font-mono font-bold text-white text-xs">${lic.keyMasked}</span>
-                <button onclick="copyText('${lic.keyMasked}')" title="কপি করুন" class="text-slate-500 hover:text-slate-300 cursor-pointer text-xs">📋</button>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-mono font-bold text-indigo-300 text-xs sm:text-sm bg-slate-950 px-2 py-0.5 rounded-lg border border-indigo-900/50 select-all tracking-wide">
+                  ${fullKey}
+                </span>
+                <button onclick="copyText('${fullKey}')" title="সম্পূর্ণ কি কপি করুন" class="px-2 py-0.5 rounded bg-indigo-950 hover:bg-indigo-900 border border-indigo-800 text-indigo-300 text-[10px] font-bold cursor-pointer transition-colors flex items-center gap-1">
+                  📋 কপি
+                </button>
+                <button onclick="copyCustomerSlipFor('${lic.id}')" title="কাস্টমার স্লিপ কপি করুন (WhatsApp/SMS ready)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-medium cursor-pointer transition-colors flex items-center gap-1">
+                  💬 স্লিপ
+                </button>
               </div>
-              <p class="text-[11px] text-slate-400 mt-0.5 font-medium">
+              <p class="text-[11px] text-slate-400 mt-1 font-medium">
                 ${lic.customerNote || 'নোট নেই'} • 
                 <span class="${isLife ? 'text-amber-300 font-bold' : 'text-indigo-400'}">${isLife ? '👑 আজীবন (Lifetime)' : `${lic.durationDays} দিন`}</span>
               </p>
@@ -1223,13 +1330,13 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
             <!-- Management Actions -->
             <td class="py-3 px-4 text-right space-x-1 whitespace-nowrap">
               ${lic.browserBound ? `
-                <button onclick="confirmResetBinding('${lic.id}', '${lic.keyMasked}')" title="ব্রাউজার বাইন্ডিং রিসেট করুন" class="px-2 py-1 rounded-lg bg-teal-950 hover:bg-teal-900 border border-teal-800 text-teal-300 text-[10px] font-bold cursor-pointer transition-colors">
+                <button onclick="confirmResetBinding('${lic.id}', '${fullKey}')" title="ব্রাউজার বাইন্ডিং রিসেট করুন" class="px-2 py-1 rounded-lg bg-teal-950 hover:bg-teal-900 border border-teal-800 text-teal-300 text-[10px] font-bold cursor-pointer transition-colors">
                   🔄 রিসেট
                 </button>
               ` : ''}
 
               ${!isLife ? `
-                <button onclick="confirmMakeLifetime('${lic.id}', '${lic.keyMasked}')" title="আজীবন (Lifetime) লাইসেন্সে রূপান্তর করুন" class="px-2 py-1 rounded-lg bg-amber-950 hover:bg-amber-900 border border-amber-700 text-amber-300 text-[10px] font-bold cursor-pointer transition-colors">
+                <button onclick="confirmMakeLifetime('${lic.id}', '${fullKey}')" title="আজীবন (Lifetime) লাইসেন্সে রূপান্তর করুন" class="px-2 py-1 rounded-lg bg-amber-950 hover:bg-amber-900 border border-amber-700 text-amber-300 text-[10px] font-bold cursor-pointer transition-colors">
                   👑 আজীবন
                 </button>
                 <button onclick="confirmExtendLicense('${lic.id}', 30)" title="মেয়াদ ৩০ দিন বৃদ্ধি করুন" class="px-2 py-1 rounded-lg bg-indigo-950 hover:bg-indigo-900 border border-indigo-800 text-indigo-300 text-[10px] font-bold cursor-pointer transition-colors">
@@ -1248,7 +1355,7 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
               ` : ''}
 
               <!-- Permanent Delete Button -->
-              <button onclick="confirmDeleteLicense('${lic.id}', '${lic.keyMasked}')" title="স্থায়ীভাবে ডেটাবেস থেকে মুছে ফেলুন" class="px-2 py-1 rounded-lg bg-rose-950 hover:bg-rose-900 border border-rose-800 text-rose-300 text-[10px] font-bold cursor-pointer transition-colors">
+              <button onclick="confirmDeleteLicense('${lic.id}', '${fullKey}')" title="স্থায়ীভাবে ডেটাবেস থেকে মুছে ফেলুন" class="px-2 py-1 rounded-lg bg-rose-950 hover:bg-rose-900 border border-rose-800 text-rose-300 text-[10px] font-bold cursor-pointer transition-colors">
                 🗑️ মুছুন
               </button>
             </td>
@@ -1401,6 +1508,7 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
     // Load Audit Logs
     async function loadAuditLogs() {
       const tbody = document.getElementById('auditTbody');
+      if (!tbody) return;
       tbody.innerHTML = '<tr><td colspan="4" class="py-6 text-center text-slate-500">লগ রিফ্রেশ হচ্ছে...</td></tr>';
       try {
         const res = await adminFetch('/api/admin/audit');
@@ -1431,11 +1539,13 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
         showToast('ডাউনলোড করার মতো কোনো লাইসেন্স নেই।', 'info');
         return;
       }
-      const headers = ['ID', 'Masked Key', 'Duration', 'Is Lifetime', 'Status', 'Device Bound', 'Device Info', 'Customer Note', 'Created At', 'Expires At'];
+      const headers = ['ID', 'Full Access Key', 'Masked Key', 'Duration', 'Is Lifetime', 'Status', 'Device Bound', 'Device Info', 'Customer Note', 'Created At', 'Expires At'];
       const rows = allLicenses.map(l => {
         const isLife = Boolean(l.isLifetime || l.durationDays >= 36500);
+        const fullKey = l.plaintextKey || l.keyMasked;
         return [
           `"${l.id}"`,
+          `"${fullKey}"`,
           `"${l.keyMasked}"`,
           `"${isLife ? 'Lifetime (Unlimited)' : l.durationDays + ' days'}"`,
           `"${isLife ? 'Yes' : 'No'}"`,
@@ -1521,12 +1631,19 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
       const tmpl = broadcastTemplates[key];
       if (!tmpl) return;
 
-      document.getElementById('broadcastTitle').value = tmpl.title;
-      document.getElementById('broadcastType').value = tmpl.type;
-      document.getElementById('broadcastPriority').value = tmpl.priority;
-      document.getElementById('broadcastActionTab').value = tmpl.actionTab;
-      document.getElementById('broadcastActionText').value = tmpl.actionText;
-      document.getElementById('broadcastMessage').value = tmpl.message;
+      const titleEl = document.getElementById('broadcastTitle');
+      const typeEl = document.getElementById('broadcastType');
+      const priorityEl = document.getElementById('broadcastPriority');
+      const actionTabEl = document.getElementById('broadcastActionTab');
+      const actionTextEl = document.getElementById('broadcastActionText');
+      const messageEl = document.getElementById('broadcastMessage');
+
+      if (titleEl) titleEl.value = tmpl.title;
+      if (typeEl) typeEl.value = tmpl.type;
+      if (priorityEl) priorityEl.value = tmpl.priority;
+      if (actionTabEl) actionTabEl.value = tmpl.actionTab;
+      if (actionTextEl) actionTextEl.value = tmpl.actionText;
+      if (messageEl) messageEl.value = tmpl.message;
 
       handleActionTabChange();
       updateBroadcastPreview();
@@ -1534,28 +1651,29 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
     }
 
     function handleActionTabChange() {
-      const val = document.getElementById('broadcastActionTab').value;
+      const tabSelect = document.getElementById('broadcastActionTab');
+      const val = tabSelect ? tabSelect.value : '';
       const customContainer = document.getElementById('customUrlContainer');
       const actionTextInput = document.getElementById('broadcastActionText');
 
       if (val === 'custom') {
-        customContainer.classList.remove('hidden');
-        if (!actionTextInput.value) actionTextInput.value = 'ভিজিট করুন';
+        if (customContainer) customContainer.classList.remove('hidden');
+        if (actionTextInput && !actionTextInput.value) actionTextInput.value = 'ভিজিট করুন';
       } else if (val) {
-        customContainer.classList.add('hidden');
-        if (!actionTextInput.value) actionTextInput.value = 'এখনই দেখুন';
+        if (customContainer) customContainer.classList.add('hidden');
+        if (actionTextInput && !actionTextInput.value) actionTextInput.value = 'এখনই দেখুন';
       } else {
-        customContainer.classList.add('hidden');
+        if (customContainer) customContainer.classList.add('hidden');
       }
       updateBroadcastPreview();
     }
 
     function updateBroadcastPreview() {
-      const title = document.getElementById('broadcastTitle').value.trim() || 'শিরোনাম এখানে প্রদর্শিত হবে';
-      const msg = document.getElementById('broadcastMessage').value.trim() || 'বিস্তারিত বার্তার প্রিভিউ এখানে দেখা যাবে...';
-      const type = document.getElementById('broadcastType').value;
-      const tabVal = document.getElementById('broadcastActionTab').value;
-      const actionText = document.getElementById('broadcastActionText').value.trim() || 'এখনই দেখুন';
+      const title = (document.getElementById('broadcastTitle')?.value || '').trim() || 'শিরোনাম এখানে প্রদর্শিত হবে';
+      const msg = (document.getElementById('broadcastMessage')?.value || '').trim() || 'বিস্তারিত বার্তার প্রিভিউ এখানে দেখা যাবে...';
+      const type = document.getElementById('broadcastType')?.value || 'urgent';
+      const tabVal = document.getElementById('broadcastActionTab')?.value || '';
+      const actionText = (document.getElementById('broadcastActionText')?.value || '').trim() || 'এখনই দেখুন';
 
       const typeMeta = {
         urgent: { badge: 'bg-rose-500/10 text-rose-400 border-rose-500/20', text: '⚠️ জরুরি নোটিশ' },
@@ -1567,29 +1685,28 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
       const meta = typeMeta[type] || typeMeta.info;
 
       const badgeEl = document.getElementById('previewBadge');
-      badgeEl.className = `inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold border ${meta.badge}`;
-      badgeEl.innerText = meta.text;
+      if (badgeEl) {
+        badgeEl.className = `inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold border ${meta.badge}`;
+        badgeEl.innerText = meta.text;
+      }
 
-      document.getElementById('previewTitle').innerText = title;
-      document.getElementById('previewMessage').innerText = msg;
+      safeSetText('previewTitle', title);
+      safeSetText('previewMessage', msg);
 
       const btnContainer = document.getElementById('previewActionBtn');
       const btnText = document.getElementById('previewActionBtnText');
 
-      if (tabVal) {
+      if (tabVal && btnContainer) {
         btnContainer.classList.remove('hidden');
-        btnText.innerText = actionText;
-      } else {
+        if (btnText) btnText.innerText = actionText;
+      } else if (btnContainer) {
         btnContainer.classList.add('hidden');
       }
     }
 
     async function loadBroadcasts() {
       const container = document.getElementById('broadcastListContainer');
-      const countEl = document.getElementById('broadcastHistoryCount');
-      const liveClientsEl = document.getElementById('liveClientsCount');
-
-      container.innerHTML = '<div class="p-6 text-center text-slate-500 text-xs">লোড হচ্ছে...</div>';
+      if (container) container.innerHTML = '<div class="p-6 text-center text-slate-500 text-xs">লোড হচ্ছে...</div>';
 
       try {
         const res = await adminFetch('/api/broadcasts/admin/list');
@@ -1598,22 +1715,18 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
         const data = await res.json();
         allBroadcasts = data.announcements || [];
 
-        if (liveClientsEl) {
-          liveClientsEl.innerText = `${data.connectedClients || 0} জন`;
-        }
-
-        if (countEl) {
-          countEl.innerText = `${allBroadcasts.length}টি`;
-        }
+        safeSetText('liveClientsCount', `${data.connectedClients || 0} জন`);
+        safeSetText('broadcastHistoryCount', `${allBroadcasts.length}টি`);
 
         renderBroadcastList(allBroadcasts);
       } catch (err) {
-        container.innerHTML = `<div class="p-4 rounded-xl bg-rose-950/40 border border-rose-900 text-rose-300 text-xs text-center">তালিকা লোড করতে সমস্যা হয়েছে: ${err.message}</div>`;
+        if (container) container.innerHTML = `<div class="p-4 rounded-xl bg-rose-950/40 border border-rose-900 text-rose-300 text-xs text-center">তালিকা লোড করতে সমস্যা হয়েছে: ${err.message}</div>`;
       }
     }
 
     function renderBroadcastList(items) {
       const container = document.getElementById('broadcastListContainer');
+      if (!container) return;
       if (!items || items.length === 0) {
         container.innerHTML = `
           <div class="h-48 flex flex-col items-center justify-center text-center p-6 text-slate-400 bg-slate-950/60 rounded-2xl border border-slate-800">
@@ -1699,13 +1812,13 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
 
     async function handleSendBroadcast(e) {
       e.preventDefault();
-      const title = document.getElementById('broadcastTitle').value.trim();
-      const message = document.getElementById('broadcastMessage').value.trim();
-      const type = document.getElementById('broadcastType').value;
-      const priority = document.getElementById('broadcastPriority').value;
-      const actionTab = document.getElementById('broadcastActionTab').value;
-      const customUrl = document.getElementById('broadcastCustomUrl').value.trim();
-      const actionText = document.getElementById('broadcastActionText').value.trim();
+      const title = (document.getElementById('broadcastTitle')?.value || '').trim();
+      const message = (document.getElementById('broadcastMessage')?.value || '').trim();
+      const type = document.getElementById('broadcastType')?.value || 'urgent';
+      const priority = document.getElementById('broadcastPriority')?.value || 'normal';
+      const actionTab = document.getElementById('broadcastActionTab')?.value || '';
+      const customUrl = (document.getElementById('broadcastCustomUrl')?.value || '').trim();
+      const actionText = (document.getElementById('broadcastActionText')?.value || '').trim();
       const sendBtn = document.getElementById('sendBroadcastBtn');
 
       if (!title || !message) {
@@ -1720,8 +1833,10 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
         finalActionUrl = actionTab;
       }
 
-      sendBtn.disabled = true;
-      sendBtn.innerHTML = '<span>সম্প্রচার করা হচ্ছে...</span>';
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<span>সম্প্রচার করা হচ্ছে...</span>';
+      }
 
       try {
         const res = await adminFetch('/api/broadcasts/admin/create', {
@@ -1741,7 +1856,8 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
         if (res.ok && data.ok) {
           showToast(`ঘোষণা সফলভাবে সম্প্রচারিত হয়েছে! (লাইভ রিসিভার: ${data.recipientsConnected || 0} জন)`, 'success');
           // Reset form
-          document.getElementById('broadcastForm').reset();
+          const bForm = document.getElementById('broadcastForm');
+          if (bForm) bForm.reset();
           handleActionTabChange();
           updateBroadcastPreview();
           loadBroadcasts();
@@ -1751,16 +1867,20 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
       } catch (err) {
         showToast(`এরর: ${err.message}`, 'error');
       } finally {
-        sendBtn.disabled = false;
-        sendBtn.innerHTML = '<span>🚀 সকল শিক্ষার্থীর কাছে প্রচার করুন (Broadcast Now)</span>';
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<span>🚀 সকল শিক্ষার্থীর কাছে প্রচার করুন (Broadcast Now)</span>';
+        }
       }
     }
 
     function confirmDeleteBroadcast(id, title) {
-      openConfirmModal(
-        'অ্যানাউন্সমেন্ট মুছে ফেলতে চান?',
-        `"${title}" - এই ঘোষণাটি ডাটাবেজ এবং শিক্ষার্থীদের ডিভাইস থেকে সম্পূর্ণ মুছে যাবে।`,
-        async () => {
+      openModal({
+        title: 'অ্যানাউন্সমেন্ট মুছে ফেলতে চান?',
+        desc: `"${title}" - এই ঘোষণাটি ডাটাবেজ এবং শিক্ষার্থীদের ডিভাইস থেকে সম্পূর্ণ মুছে যাবে।`,
+        confirmText: '🗑️ হ্যাঁ, মুছুন',
+        isDanger: true,
+        onConfirm: async () => {
           try {
             const res = await adminFetch(`/api/broadcasts/admin/${id}`, { method: 'DELETE' });
             const data = await res.json();
@@ -1774,7 +1894,7 @@ ${note ? `📝 কাস্টমার রেফারেন্স: ${note}\n` 
             showToast(`এরর: ${err.message}`, 'error');
           }
         }
-      );
+      });
     }
 
     async function toggleBroadcast(id, currentActive) {

@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { storage } from '../storage';
+import { UserProgressSummary } from '../types';
 import { 
   hashLicenseKey, 
   generateSessionToken, 
@@ -57,7 +58,34 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
     }
 
     const keyHash = hashLicenseKey(normalized);
-    const license = await storage.getLicenseByHash(keyHash);
+    let license = await storage.getLicenseByHash(keyHash);
+
+    // If not found, try legacy dev pepper hash
+    if (!license) {
+      const legacyHash = hashLicenseKey(normalized, 'bonolota_default_local_dev_pepper_do_not_use_in_prod');
+      license = await storage.getLicenseByHash(legacyHash);
+      if (license) {
+        // Auto-heal Redis index to current production hash
+        storage.updateLicense(license.id, { keyHash }).catch(() => {});
+      }
+    }
+
+    // Comprehensive Fallback: Search all licenses by plaintextKey or keyMasked
+    if (!license) {
+      const all = await storage.listLicenses();
+      license = all.find(l => {
+        if (l.plaintextKey && normalizeKey(l.plaintextKey) === normalized) return true;
+        if (l.keyMasked && (normalizeKey(l.keyMasked) === normalized || l.keyMasked.toUpperCase() === rawKey.trim().toUpperCase())) return true;
+        const cleanRaw = rawKey.trim().toUpperCase();
+        if (cleanRaw.includes('*') && l.keyMasked && l.keyMasked.slice(0, 13) === cleanRaw.slice(0, 13)) return true;
+        return false;
+      }) || null;
+
+      if (license) {
+        // Auto-heal Redis index so subsequent queries are O(1)
+        storage.updateLicense(license.id, { keyHash }).catch(() => {});
+      }
+    }
 
     if (!license) {
       res.status(404).json({
@@ -98,28 +126,61 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    // Check single browser binding
+    // Check single browser / device binding
+    const incomingDeviceId = typeof req.body?.deviceId === 'string' && req.body.deviceId.trim().length >= 8
+      ? req.body.deviceId.trim().slice(0, 128)
+      : undefined;
+
     const existingCookieToken = req.cookies?.[USER_COOKIE_NAME];
-    const existingCookieHash = existingCookieToken ? hashSessionToken(existingCookieToken) : null;
+    const existingCookieHash = (typeof existingCookieToken === 'string' && existingCookieToken.length >= 16)
+      ? hashSessionToken(existingCookieToken)
+      : null;
+
+    const authHeader = req.headers['authorization'];
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ')
+      ? authHeader.substring(7).trim()
+      : null;
+    const existingBearerHash = (bearerToken && bearerToken.length >= 16)
+      ? hashSessionToken(bearerToken)
+      : null;
+
+    const incomingName = (typeof req.body?.name === 'string' && req.body.name.trim().length > 0)
+      ? req.body.name.trim().slice(0, 100)
+      : (typeof req.body?.customerName === 'string' && req.body.customerName.trim().length > 0 ? req.body.customerName.trim().slice(0, 100) : undefined);
 
     if (license.browserBound) {
-      // If the current browser already holds the active session for this license, re-authenticate smoothly
-      if (existingCookieHash && license.currentSessionHash === existingCookieHash) {
-        const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
+      // If the current browser already holds the active valid session for this license, re-authenticate smoothly
+      const isCurrentActiveSession = Boolean(
+        (existingCookieHash && license.currentSessionHash === existingCookieHash) ||
+        (existingBearerHash && license.currentSessionHash === existingBearerHash)
+      );
+
+      if (isCurrentActiveSession) {
+        if (incomingName && incomingName !== license.customerName) {
+          await storage.updateLicense(license.id, { customerName: incomingName });
+        }
+        const isLifetime = Boolean(license.isLifetime || license.durationDays >= 36500);
+        const daysLeft = isLifetime ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
         res.json({
           ok: true,
           expiresAt: license.expiresAt,
           daysLeft,
-          message: 'সেশন পুনরায় সক্রিয় করা হয়েছে।',
+          isLifetime,
+          maskedKey: license.keyMasked,
+          keyPlaintext: license.plaintextKey,
+          customerName: incomingName || license.customerName,
+          message: 'সেশন সক্রিয় রয়েছে।',
         });
         return;
       }
 
-      // Otherwise, another browser is already bound to this license!
+      // STRICT 1-BROWSER LOCK:
+      // The key is already bound to a browser.
+      // If the user reset their browser or changed phones, they must contact admin with their payment slip to reset binding.
       res.status(409).json({
         ok: false,
         error: 'ALREADY_BOUND',
-        message: 'এই অ্যাক্সেস কি-টি ইতিমধ্যে অন্য একটি ব্রাউজারে সংযুক্ত (Bound) রয়েছে। আপনি যদি ব্রাউজার বা ডিভাইস পরিবর্তন করে থাকেন, তবে অ্যাডমিনকে রিকোয়েস্ট করে ব্রাউজার বাইন্ডিং রিসেট করুন।',
+        message: 'এই অ্যাক্সেস কি-টি ইতিমধ্যে একটি ব্রাউজারে সংযুক্ত (Bound) রয়েছে। একটি কি শুধুমাত্র একটি ব্রাউজারে ব্যবহারযোগ্য। ব্রাউজার রিসেট বা ফোন পরিবর্তন করে থাকলে পূর্বের পেমেন্ট স্লিপ দেখিয়ে অ্যাডমিনের সাথে যোগাযোগ করে বাইন্ডিং রিসেট করে নিন।',
       });
       return;
     }
@@ -132,14 +193,16 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
     const rawUserAgent = req.headers['user-agent'] as string | undefined;
     const deviceInfo = parseUserAgent(rawUserAgent);
 
-    // Atomically claim the license binding
+    // Atomically claim the license binding for this browser
     const updated = await storage.updateLicense(license.id, {
       browserBound: true,
       currentSessionHash: sessionHash,
+      boundUserAgent: rawUserAgent,
       activatedAt: license.activatedAt || now,
       lastActiveAt: now,
       deviceInfo,
       clientIp,
+      ...(incomingName ? { customerName: incomingName } : {}),
     });
 
     if (!updated) {
@@ -172,7 +235,7 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
 
     // Set HttpOnly Secure Cookie
     const cookieOptions = {
-      ...getCookieOptions(),
+      ...getCookieOptions(req),
       maxAge: Math.max(0, license.expiresAt - now),
     };
     res.cookie(USER_COOKIE_NAME, sessionToken, cookieOptions);
@@ -200,14 +263,22 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
 
 /**
  * Customer: Check Current Session Status
- * GET /api/auth/session
+ * GET /api/auth/session & GET /api/auth/me
  * Supports both HttpOnly cookie and Bearer header for mobile/webview reliability
  */
-authRouter.get('/session', async (req: Request, res: Response): Promise<void> => {
+const handleCustomerSession = async (req: Request, res: Response): Promise<void> => {
   try {
     const authHeader = req.headers['authorization'];
-    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
-    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken;
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const headerToken = req.headers['x-session-token'];
+    const rawToken = (typeof cookieToken === 'string' && cookieToken.length >= 16)
+      ? cookieToken
+      : (bearerToken && bearerToken.length >= 16)
+        ? bearerToken
+        : (typeof headerToken === 'string' && headerToken.length >= 16)
+          ? headerToken
+          : null;
 
     if (!rawToken || typeof rawToken !== 'string') {
       res.json({ authenticated: false });
@@ -215,10 +286,16 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
     }
 
     const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
+      res.json({ authenticated: false });
+      return;
+    }
+
     const sessionData = await storage.getUserSession(sessionHash);
 
     if (!sessionData) {
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false });
       return;
     }
@@ -226,7 +303,7 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
     const now = Date.now();
     if (now > sessionData.expiresAt) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false, reason: 'EXPIRED' });
       return;
     }
@@ -234,7 +311,7 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
     const license = await storage.getLicenseById(sessionData.licenseId);
     if (!license || license.status !== 'active' || now > license.expiresAt || !license.browserBound || license.currentSessionHash !== sessionHash) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false, reason: 'INVALID_OR_REVOKED' });
       return;
     }
@@ -248,13 +325,18 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
       daysLeft,
       isLifetime,
       keyMasked: license.keyMasked,
+      keyPlaintext: license.plaintextKey,
+      customerName: license.customerName,
       durationDays: license.durationDays,
     });
   } catch (error) {
     console.error('[auth/session] Error:', error);
     res.json({ authenticated: false });
   }
-});
+};
+
+authRouter.get('/session', handleCustomerSession);
+authRouter.get('/me', handleCustomerSession);
 
 /**
  * Customer: Logout
@@ -263,18 +345,100 @@ authRouter.get('/session', async (req: Request, res: Response): Promise<void> =>
 authRouter.post('/logout', async (req: Request, res: Response): Promise<void> => {
   try {
     const authHeader = req.headers['authorization'];
-    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
-    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken;
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const rawToken = (typeof cookieToken === 'string' && cookieToken.length >= 16) ? cookieToken : bearerToken;
 
     if (rawToken && typeof rawToken === 'string') {
       const sessionHash = hashSessionToken(rawToken);
-      await storage.deleteUserSession(sessionHash);
+      if (sessionHash) {
+        await storage.deleteUserSession(sessionHash);
+      }
     }
-    res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true });
   } catch (error) {
     console.error('[auth/logout] Error:', error);
-    res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true });
   }
 });
+
+/**
+ * Customer: Sync Learning Progress & Streak
+ * POST /api/auth/sync-progress
+ */
+authRouter.post('/sync-progress', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const authHeader = req.headers['authorization'];
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const headerToken = req.headers['x-session-token'];
+    const rawToken = (typeof cookieToken === 'string' && cookieToken.length >= 16)
+      ? cookieToken
+      : (bearerToken && bearerToken.length >= 16)
+        ? bearerToken
+        : (typeof headerToken === 'string' && headerToken.length >= 16)
+          ? headerToken
+          : null;
+
+    if (!rawToken || typeof rawToken !== 'string') {
+      res.status(401).json({ ok: false, error: 'UNAUTHORIZED' });
+      return;
+    }
+
+    const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.status(401).json({ ok: false, error: 'INVALID_SESSION' });
+      return;
+    }
+
+    const sessionData = await storage.getUserSession(sessionHash);
+    if (!sessionData) {
+      res.status(401).json({ ok: false, error: 'SESSION_NOT_FOUND' });
+      return;
+    }
+
+    const license = await storage.getLicenseById(sessionData.licenseId);
+    if (!license || license.status !== 'active' || Date.now() > license.expiresAt) {
+      res.status(403).json({ ok: false, error: 'LICENSE_INACTIVE' });
+      return;
+    }
+
+    const { 
+      learningStreak = 0, 
+      lastStudyDate, 
+      wordsStudied = 0, 
+      wordsPracticed = 0, 
+      wordsMastered = 0, 
+      needsRevisionCount = 0,
+      favoritesCount = 0,
+      quizzesTaken = 0, 
+      quizAccuracy = 0 
+    } = req.body || {};
+
+    const progress: UserProgressSummary = {
+      learningStreak: Math.max(0, parseInt(learningStreak, 10) || 0),
+      lastStudyDate: typeof lastStudyDate === 'string' ? lastStudyDate : null,
+      wordsStudied: Math.max(0, parseInt(wordsStudied, 10) || 0),
+      wordsPracticed: Math.max(0, parseInt(wordsPracticed, 10) || 0),
+      wordsMastered: Math.max(0, parseInt(wordsMastered, 10) || 0),
+      needsRevisionCount: Math.max(0, parseInt(needsRevisionCount, 10) || 0),
+      favoritesCount: Math.max(0, parseInt(favoritesCount, 10) || 0),
+      quizzesTaken: Math.max(0, parseInt(quizzesTaken, 10) || 0),
+      quizAccuracy: Math.min(100, Math.max(0, parseInt(quizAccuracy, 10) || 0)),
+      lastSyncAt: Date.now(),
+    };
+
+    await storage.updateLicense(license.id, {
+      progress,
+      lastActiveAt: Date.now(),
+    });
+
+    res.json({ ok: true, progress });
+  } catch (error) {
+    console.error('[auth/sync-progress] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+

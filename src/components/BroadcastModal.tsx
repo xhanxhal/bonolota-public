@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Megaphone, 
   X, 
   ExternalLink, 
-  CheckCircle2, 
   AlertTriangle, 
   Sparkles, 
-  Tag 
+  Tag,
+  Bell,
+  Clock
 } from 'lucide-react';
 import { BroadcastAnnouncement } from '../hooks/useBroadcastAnnouncements';
 import { NavTab } from './Navbar';
@@ -22,38 +23,27 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
   onDismiss,
   onNavigateTab,
 }) => {
-  const typeConfigs = {
-    urgent: {
-      badgeBg: 'bg-rose-500/10 text-rose-500 border-rose-500/20',
-      headerBg: 'from-rose-500/20 via-rose-500/5 to-transparent',
-      icon: <AlertTriangle className="w-6 h-6 text-rose-500 animate-bounce" />,
-      tag: 'জরুরি নোটিশ',
-      btnColor: 'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 shadow-rose-950/40 text-white',
-    },
-    update: {
-      badgeBg: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-      headerBg: 'from-indigo-500/20 via-indigo-500/5 to-transparent',
-      icon: <Sparkles className="w-6 h-6 text-indigo-400 animate-pulse" />,
-      tag: 'নতুন আপডেট',
-      btnColor: 'bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-indigo-950/40 text-white',
-    },
-    promotion: {
-      badgeBg: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-      headerBg: 'from-amber-500/20 via-amber-500/5 to-transparent',
-      icon: <Tag className="w-6 h-6 text-amber-400" />,
-      tag: 'বিশেষ অফার',
-      btnColor: 'bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black shadow-amber-950/30',
-    },
-    info: {
-      badgeBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-      headerBg: 'from-emerald-500/20 via-emerald-500/5 to-transparent',
-      icon: <Megaphone className="w-6 h-6 text-emerald-400" />,
-      tag: 'সাধারণ নোটিশ',
-      btnColor: 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-emerald-950/40 text-white',
-    },
-  };
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(
+    announcement.autoDismissSeconds && announcement.autoDismissSeconds > 0
+      ? announcement.autoDismissSeconds
+      : null
+  );
 
-  const config = typeConfigs[announcement.type] || typeConfigs.info;
+  useEffect(() => {
+    if (secondsLeft === null || secondsLeft <= 0) return;
+    const timer = setInterval(() => {
+      setSecondsLeft(prev => {
+        if (prev === null || prev <= 1) {
+          clearInterval(timer);
+          onDismiss();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [secondsLeft, onDismiss]);
 
   const handleActionClick = () => {
     onDismiss();
@@ -66,73 +56,111 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
-      <div 
-        className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden relative font-bangla transition-all transform scale-100 animate-in zoom-in-95 duration-200"
-        role="dialog"
-        aria-modal="true"
+  const isToast = announcement.displayStyle === 'toast';
+
+  // ==========================================
+  // 1. MINI SHORT ALERT POPUP (Image 1 Style)
+  // ==========================================
+  if (isToast) {
+    return (
+      <aside 
+        aria-label="বিজ্ঞপ্তি অ্যালার্ট"
+        className="fixed top-5 right-4 sm:right-6 z-50 max-w-sm sm:max-w-md w-full animate-in slide-in-from-top-4 fade-in duration-200"
       >
-        {/* Top Glow Header */}
-        <div className={`p-6 pb-4 bg-gradient-to-b ${config.headerBg} border-b border-slate-100 dark:border-slate-800/60 flex items-start justify-between gap-4`}>
-          <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-200/80 dark:border-slate-700/80 shrink-0">
-              {config.icon}
+        <div className="bg-slate-900/95 dark:bg-black/95 text-white border-2 border-amber-500/70 rounded-full sm:rounded-2xl px-4 py-3 shadow-2xl backdrop-blur-md flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+              <AlertTriangle className="w-4 h-4 text-amber-400" />
             </div>
-            <div>
-              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${config.badgeBg}`}>
-                {config.tag}
-              </span>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                {new Date(announcement.createdAt).toLocaleDateString('bn-BD', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <h4 className="text-xs sm:text-sm font-bold tracking-tight text-white truncate">
+                  {announcement.title}
+                </h4>
+                {secondsLeft !== null && (
+                  <span className="text-[10px] font-mono text-amber-400/90 bg-amber-500/20 px-1.5 py-0.2 rounded-full shrink-0 flex items-center gap-0.5">
+                    <Clock className="w-2.5 h-2.5" />
+                    <span>{secondsLeft}s</span>
+                  </span>
+                )}
+              </div>
+              <p className="text-[11px] text-slate-300 truncate">
+                {announcement.message}
               </p>
             </div>
           </div>
 
           <button
+            type="button"
             onClick={onDismiss}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-            aria-label="বন্ধ করুন"
+            className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
+            title="বন্ধ করুন"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
+      </aside>
+    );
+  }
 
-        {/* Content Body */}
-        <div className="p-6 space-y-4">
-          <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
-            {announcement.title}
-          </h2>
+  // ==========================================
+  // 2. CENTER DISPLAY NOTIFICATION (Image 2 Style)
+  // ==========================================
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200 font-bangla">
+      <div 
+        className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl sm:rounded-4xl shadow-2xl p-6 sm:p-8 pt-10 text-center relative animate-in zoom-in-95 duration-200"
+        role="dialog"
+        aria-modal="true"
+      >
+        {/* Close Button top-right */}
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center cursor-pointer shadow-2xs"
+          title="বন্ধ করুন"
+        >
+          <X className="w-4 h-4" />
+        </button>
 
-          <div className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 max-h-60 overflow-y-auto">
-            {announcement.message}
+        {/* Top Centered Protruding Bell Badge (Image 2 style) */}
+        <div className="relative -mt-16 sm:-mt-18 mx-auto w-20 h-20 rounded-full bg-amber-50 dark:bg-slate-800 border-4 border-white dark:border-slate-900 shadow-xl flex items-center justify-center mb-4">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-400 to-amber-300 flex items-center justify-center shadow-inner">
+            <Bell className="w-7 h-7 text-amber-900 fill-amber-900" />
           </div>
+          {/* Red Notification Badge */}
+          <span className="absolute top-1 right-1 w-6 h-6 rounded-full bg-rose-600 text-white font-black text-xs flex items-center justify-center border-2 border-white dark:border-slate-900 shadow-sm">
+            1
+          </span>
+        </div>
 
-          {/* Action Footer */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center gap-2.5 justify-end">
-            <button
-              type="button"
-              onClick={onDismiss}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer text-center"
-            >
-              বুঝেছি / বন্ধ করুন
-            </button>
+        {/* Title */}
+        <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
+          {announcement.title}
+        </h3>
 
-            {announcement.actionUrl && (
-              <button
-                type="button"
-                onClick={handleActionClick}
-                className={`w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-bold shadow-lg transition-all transform active:scale-95 cursor-pointer flex items-center justify-center gap-2 ${config.btnColor}`}
-              >
-                <span>{announcement.actionText || 'এখনই দেখুন'}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
+        {/* Message */}
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6 whitespace-pre-wrap max-h-48 overflow-y-auto px-2">
+          {announcement.message}
+        </p>
+
+        {/* Action Button */}
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={handleActionClick}
+            className="w-full py-3 px-5 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 active:scale-[0.99] shadow-lg shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>{announcement.actionText || 'বিস্তারিত দেখুন'}</span>
+            <ExternalLink className="w-4 h-4" />
+          </button>
+
+          {secondsLeft !== null && (
+            <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-mono">
+              <Clock className="w-3.5 h-3.5 text-amber-500" />
+              <span>{secondsLeft} সেকেন্ডের মধ্যে স্বয়ংক্রিয়ভাবে বন্ধ হবে</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

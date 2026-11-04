@@ -7,24 +7,25 @@ import {
   Check,
   AlertCircle,
   MessageCircle,
-  Send
+  Send,
+  User
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
 
 interface AccessKeyScreenProps {
-  onActivate: (key: string) => Promise<{ success: boolean; message?: string }>;
+  onActivate: (key: string, name?: string) => Promise<{ success: boolean; message?: string }>;
   isLoading: boolean;
   errorMessage?: string | null;
 }
 
 function autoFormatKey(raw: string): string {
-  const upper = raw.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const upper = raw.toUpperCase().replace(/[^A-Z0-9*]/g, '');
   if (upper.startsWith('BONOLOTA')) {
     const after = upper.slice(8);
     const parts = after.match(/.{1,4}/g) || [];
     return ['BONOLOTA', ...parts].join('-').slice(0, 29);
   }
-  return raw.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 32);
+  return raw.toUpperCase().replace(/[^A-Z0-9*-]/g, '').slice(0, 32);
 }
 
 export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
@@ -33,6 +34,7 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
   errorMessage,
 }) => {
   const [accessKey, setAccessKey] = useState('');
+  const [customerName, setCustomerName] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [justPasted, setJustPasted] = useState(false);
@@ -76,7 +78,7 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
     setLocalError(null);
     haptics.tap();
 
-    const res = await onActivate(cleanKey);
+    const res = await onActivate(cleanKey, customerName.trim() || undefined);
     setIsSubmitting(false);
 
     if (!res.success) {
@@ -156,6 +158,26 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
                   )}
                 </button>
               </div>
+            </div>
+
+            {/* Student Name Input (Optional) */}
+            <div>
+              <div className="flex items-center justify-between text-xs font-medium text-slate-600 mb-1.5">
+                <label htmlFor="nameInput" className="flex items-center gap-1">
+                  <User className="w-3.5 h-3.5 text-slate-400" />
+                  <span>আপনার নাম <span className="text-slate-400 font-normal">(ঐচ্ছিক)</span></span>
+                </label>
+              </div>
+
+              <input
+                id="nameInput"
+                type="text"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                placeholder="যেমন: চঞ্চল বা আরিফা"
+                disabled={isSubmitting || isLoading}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm placeholder:text-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/15 transition-colors font-bangla"
+              />
             </div>
 
             {/* Error Message */}

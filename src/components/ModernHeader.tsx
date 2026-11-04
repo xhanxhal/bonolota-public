@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import { UserSettings, LearningStats } from '../data/types';
 import { NavTab } from './Navbar';
-import { PWAInstallButton } from './PWAInstallButton';
 import { haptics } from '../utils/haptics';
 
 interface ModernHeaderProps {
@@ -429,9 +428,6 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             <Grid className={`w-4 h-4 ${currentTab === 'explore' ? 'text-white' : 'text-emerald-600 dark:text-emerald-400'}`} />
           </button>
         </div>
-
-        {/* In-App PWA Install Button - Placed at the absolute far right */}
-        <PWAInstallButton variant="header" />
       </div>
     </header>
   );

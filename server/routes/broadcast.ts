@@ -67,7 +67,7 @@ broadcastRouter.get('/stream', async (req: Request, res: Response): Promise<void
  * Public Client: Fetch all active announcements
  * GET /api/broadcasts/active
  */
-broadcastRouter.get('/active', async (_req: Request, res: Response): Promise<void> => {
+const handleGetActiveAnnouncements = async (_req: Request, res: Response): Promise<void> => {
   try {
     const announcements = await storage.listAnnouncements(false);
     res.json({ ok: true, announcements });
@@ -75,7 +75,10 @@ broadcastRouter.get('/active', async (_req: Request, res: Response): Promise<voi
     console.error('[broadcasts/active] Error:', error);
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to fetch announcements.' });
   }
-});
+};
+
+broadcastRouter.get('/active', handleGetActiveAnnouncements);
+broadcastRouter.get('/', handleGetActiveAnnouncements);
 
 /**
  * Admin: Create and broadcast new announcement
@@ -83,7 +86,7 @@ broadcastRouter.get('/active', async (_req: Request, res: Response): Promise<voi
  */
 broadcastRouter.post('/admin/create', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
-    const { title, message, type, priority, actionUrl, actionText, author } = req.body;
+    const { title, message, type, priority, actionUrl, actionText, author, targetKey, displayStyle, autoDismissSeconds } = req.body;
 
     if (!title || typeof title !== 'string' || title.trim().length < 2) {
       res.status(400).json({ ok: false, error: 'INVALID_TITLE', message: 'অ্যানাউন্সমেন্ট এর একটি উপযুক্ত শিরোনাম প্রয়োজন।' });
@@ -98,6 +101,11 @@ broadcastRouter.post('/admin/create', requireAdminAuth, async (req: Authenticate
     const validTypes = ['info', 'urgent', 'update', 'promotion'] as const;
     const selectedType = validTypes.includes(type) ? type : 'info';
     const selectedPriority = priority === 'high' ? 'high' : 'normal';
+    const selectedDisplayStyle = displayStyle === 'toast' ? 'toast' : 'center_modal';
+    const parsedAutoDismiss = typeof autoDismissSeconds === 'number' && autoDismissSeconds > 0
+      ? autoDismissSeconds
+      : (typeof autoDismissSeconds === 'string' && parseInt(autoDismissSeconds, 10) > 0 ? parseInt(autoDismissSeconds, 10) : undefined);
+    const cleanTargetKey = typeof targetKey === 'string' && targetKey.trim().length > 0 ? targetKey.trim().toUpperCase() : undefined;
 
     const newAnnouncement: BroadcastAnnouncement = {
       id: `anno_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -105,6 +113,9 @@ broadcastRouter.post('/admin/create', requireAdminAuth, async (req: Authenticate
       message: message.trim(),
       type: selectedType,
       priority: selectedPriority,
+      displayStyle: selectedDisplayStyle,
+      targetKey: cleanTargetKey,
+      autoDismissSeconds: parsedAutoDismiss,
       actionUrl: typeof actionUrl === 'string' ? actionUrl.trim() : undefined,
       actionText: typeof actionText === 'string' ? actionText.trim() : undefined,
       createdAt: Date.now(),
@@ -120,7 +131,7 @@ broadcastRouter.post('/admin/create', requireAdminAuth, async (req: Authenticate
       id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
       action: 'create_broadcast',
-      details: `Broadcast sent: "${newAnnouncement.title}" [${newAnnouncement.type}|${newAnnouncement.priority}] to ${sseClients.size} live clients.`,
+      details: `Broadcast sent: "${newAnnouncement.title}" [${newAnnouncement.type}|${newAnnouncement.priority}|${selectedDisplayStyle}${cleanTargetKey ? `|Target: ${cleanTargetKey}` : '|Target: ALL'}${parsedAutoDismiss ? `|${parsedAutoDismiss}s` : ''}] to ${sseClients.size} live clients.`,
     });
 
     // Real-time instant push to all connected browsers
@@ -133,7 +144,9 @@ broadcastRouter.post('/admin/create', requireAdminAuth, async (req: Authenticate
       ok: true,
       announcement: newAnnouncement,
       recipientsConnected: sseClients.size,
-      message: 'অ্যানাউন্সমেন্ট সফলভাবে সকল শিক্ষার্থীর কাছে সম্প্রচার করা হয়েছে!',
+      message: cleanTargetKey 
+        ? `নোটিফিকেশনটি নির্দিষ্ট কি (${cleanTargetKey})-এর জন্য সফলভাবে পাঠানো হয়েছে!`
+        : 'অ্যানাউন্সমেন্ট সফলভাবে সকল শিক্ষার্থীর কাছে সম্প্রচার করা হয়েছে!',
     });
   } catch (error) {
     console.error('[broadcasts/admin/create] Error:', error);

@@ -11,19 +11,52 @@ dotenv.config();
 export async function createExpressApp() {
   const app = express();
 
-  // Basic security headers
-  app.use((_req, res, next) => {
+  // Trust first proxy hop for reverse proxies (Vercel, Cloud Run, Cloudflare)
+  app.set('trust proxy', 1);
+
+  // Security and iframe compatibility headers
+  app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.setHeader('X-XSS-Protection', '1; mode=block');
+    // Allow embedding in Google AI Studio preview iframes and production domain
+    res.setHeader(
+      'Content-Security-Policy',
+      "frame-ancestors 'self' https://*.run.app https://*.google.com https://*.aistudio.google.com https://bonolota-public.vercel.app;"
+    );
+
+    // Dynamic CORS for cross-domain API calls
+    const origin = req.headers.origin;
+    if (origin) {
+      const isAllowed = 
+        origin.includes('localhost') || 
+        origin.includes('127.0.0.1') || 
+        origin.endsWith('.run.app') || 
+        origin.endsWith('.vercel.app') ||
+        origin.includes('google.com') ||
+        origin.includes('bonolota');
+      if (isAllowed) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+      }
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-session-token, x-admin-token, x-device-id');
+
+    if (req.method === 'OPTIONS') {
+      res.sendStatus(204);
+      return;
+    }
     next();
   });
 
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
 
-  // Secret admin portal route mapping
-  app.get('/x-admin-arifa', (_req, res) => {
+  // Secret admin portal route mapping with no-cache headers
+  app.get(['/x-admin-arifa', '/x-admin-arifa.html'], (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     res.sendFile(path.resolve('public/x-admin-arifa.html'));
   });
 
@@ -34,6 +67,18 @@ export async function createExpressApp() {
 
   // Mount backend API routes
   app.use('/api', apiRouter);
+
+  // Fallback API error handler
+  app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    console.error('[Server App Error]:', err);
+    if (!res.headersSent) {
+      res.status(500).json({
+        ok: false,
+        error: 'SERVER_ERROR',
+        message: 'Internal server error occurred.',
+      });
+    }
+  });
 
   return app;
 }

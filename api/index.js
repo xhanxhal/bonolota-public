@@ -22145,7 +22145,7 @@ var require_application = __commonJS({
   "node_modules/express/lib/application.js"(exports, module) {
     "use strict";
     var finalhandler = require_finalhandler();
-    var Router5 = require_router();
+    var Router6 = require_router();
     var methods = require_methods();
     var middleware = require_init();
     var query = require_query();
@@ -22210,7 +22210,7 @@ var require_application = __commonJS({
     };
     app2.lazyrouter = function lazyrouter() {
       if (!this._router) {
-        this._router = new Router5({
+        this._router = new Router6({
           caseSensitive: this.enabled("case sensitive routing"),
           strict: this.enabled("strict routing")
         });
@@ -24074,7 +24074,7 @@ var require_express = __commonJS({
     var mixin = require_merge_descriptors();
     var proto = require_application();
     var Route = require_route();
-    var Router5 = require_router();
+    var Router6 = require_router();
     var req = require_request();
     var res = require_response();
     exports = module.exports = createApplication;
@@ -24097,7 +24097,7 @@ var require_express = __commonJS({
     exports.request = req;
     exports.response = res;
     exports.Route = Route;
-    exports.Router = Router5;
+    exports.Router = Router6;
     exports.json = bodyParser.json;
     exports.query = require_query();
     exports.raw = bodyParser.raw;
@@ -24256,11 +24256,11 @@ var require_cookie_parser = __commonJS({
 });
 
 // server/api.ts
-var import_express5 = __toESM(require_express2(), 1);
+var import_express6 = __toESM(require_express2(), 1);
 var import_cookie_parser = __toESM(require_cookie_parser(), 1);
 
 // server/routes/index.ts
-var import_express4 = __toESM(require_express2(), 1);
+var import_express5 = __toESM(require_express2(), 1);
 
 // server/routes/auth.ts
 var import_express = __toESM(require_express2(), 1);
@@ -30188,6 +30188,7 @@ var InMemoryStorage = class {
     this.adminSessions = /* @__PURE__ */ new Map();
     this.auditLogs = [];
     this.rateLimits = /* @__PURE__ */ new Map();
+    this.announcements = /* @__PURE__ */ new Map();
   }
   async createLicense(license) {
     this.licenses.set(license.id, { ...license });
@@ -30274,6 +30275,28 @@ var InMemoryStorage = class {
     item.count++;
     return { allowed: true, remaining: limit - item.count };
   }
+  async createAnnouncement(announcement) {
+    this.announcements.set(announcement.id, { ...announcement });
+  }
+  async getAnnouncementById(id) {
+    const item = this.announcements.get(id);
+    return item ? { ...item } : null;
+  }
+  async listAnnouncements(includeInactive = false) {
+    const all = Array.from(this.announcements.values());
+    const filtered = includeInactive ? all : all.filter((a) => a.active);
+    return filtered.sort((a, b) => b.createdAt - a.createdAt);
+  }
+  async deleteAnnouncement(id) {
+    return this.announcements.delete(id);
+  }
+  async toggleAnnouncement(id, active) {
+    const item = this.announcements.get(id);
+    if (!item) return null;
+    item.active = active;
+    this.announcements.set(id, { ...item });
+    return { ...item };
+  }
 };
 var UpstashStorage = class {
   constructor(url, token) {
@@ -30283,6 +30306,9 @@ var UpstashStorage = class {
     });
   }
   async createLicense(license) {
+    if (!license.id) {
+      license.id = `lic_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    }
     const pipeline = this.redis.pipeline();
     pipeline.set(`lic:${license.id}`, JSON.stringify(license));
     pipeline.set(`lichash:${license.keyHash}`, license.id);
@@ -30303,7 +30329,12 @@ var UpstashStorage = class {
     const existing = await this.getLicenseById(id);
     if (!existing) return null;
     const updated = { ...existing, ...updates };
-    await this.redis.set(`lic:${id}`, JSON.stringify(updated));
+    const pipeline = this.redis.pipeline();
+    pipeline.set(`lic:${id}`, JSON.stringify(updated));
+    if (updates.keyHash && updates.keyHash !== existing.keyHash) {
+      pipeline.set(`lichash:${updates.keyHash}`, id);
+    }
+    await pipeline.exec();
     return updated;
   }
   async deleteLicense(id) {
@@ -30376,6 +30407,50 @@ var UpstashStorage = class {
       return { allowed: false, remaining: 0 };
     }
     return { allowed: true, remaining: limit - count };
+  }
+  async createAnnouncement(announcement) {
+    const pipeline = this.redis.pipeline();
+    pipeline.set(`anno:${announcement.id}`, JSON.stringify(announcement));
+    pipeline.sadd("anno:all_ids", announcement.id);
+    await pipeline.exec();
+  }
+  async getAnnouncementById(id) {
+    const raw = await this.redis.get(`anno:${id}`);
+    if (!raw) return null;
+    return typeof raw === "string" ? JSON.parse(raw) : raw;
+  }
+  async listAnnouncements(includeInactive = false) {
+    const ids = await this.redis.smembers("anno:all_ids");
+    if (!ids || ids.length === 0) return [];
+    const keys = ids.map((id) => `anno:${id}`);
+    const records = await this.redis.mget(...keys);
+    const results = [];
+    for (const item of records) {
+      if (item) {
+        try {
+          const parsed = typeof item === "string" ? JSON.parse(item) : item;
+          if (includeInactive || parsed.active) {
+            results.push(parsed);
+          }
+        } catch {
+        }
+      }
+    }
+    return results.sort((a, b) => b.createdAt - a.createdAt);
+  }
+  async deleteAnnouncement(id) {
+    const pipeline = this.redis.pipeline();
+    pipeline.del(`anno:${id}`);
+    pipeline.srem("anno:all_ids", id);
+    await pipeline.exec();
+    return true;
+  }
+  async toggleAnnouncement(id, active) {
+    const item = await this.getAnnouncementById(id);
+    if (!item) return null;
+    item.active = active;
+    await this.redis.set(`anno:${id}`, JSON.stringify(item));
+    return item;
   }
 };
 var inMemoryInstance = new InMemoryStorage();
@@ -30549,12 +30624,52 @@ var storage = {
       recentlyActivated,
       isUsingFallbackStore: !upstashInstance
     };
+  },
+  async createAnnouncement(announcement) {
+    try {
+      if (upstashInstance) return await upstashInstance.createAnnouncement(announcement);
+    } catch (err) {
+      console.error("[Storage Error] Upstash createAnnouncement failed, using fallback:", err);
+    }
+    return inMemoryInstance.createAnnouncement(announcement);
+  },
+  async getAnnouncementById(id) {
+    try {
+      if (upstashInstance) return await upstashInstance.getAnnouncementById(id);
+    } catch (err) {
+      console.error("[Storage Error] Upstash getAnnouncementById failed, using fallback:", err);
+    }
+    return inMemoryInstance.getAnnouncementById(id);
+  },
+  async listAnnouncements(includeInactive = false) {
+    try {
+      if (upstashInstance) return await upstashInstance.listAnnouncements(includeInactive);
+    } catch (err) {
+      console.error("[Storage Error] Upstash listAnnouncements failed, using fallback:", err);
+    }
+    return inMemoryInstance.listAnnouncements(includeInactive);
+  },
+  async deleteAnnouncement(id) {
+    try {
+      if (upstashInstance) return await upstashInstance.deleteAnnouncement(id);
+    } catch (err) {
+      console.error("[Storage Error] Upstash deleteAnnouncement failed, using fallback:", err);
+    }
+    return inMemoryInstance.deleteAnnouncement(id);
+  },
+  async toggleAnnouncement(id, active) {
+    try {
+      if (upstashInstance) return await upstashInstance.toggleAnnouncement(id, active);
+    } catch (err) {
+      console.error("[Storage Error] Upstash toggleAnnouncement failed, using fallback:", err);
+    }
+    return inMemoryInstance.toggleAnnouncement(id, active);
   }
 };
 
 // server/crypto.ts
 import crypto from "crypto";
-var DEFAULT_PEPPER = "bonolota_default_local_dev_pepper_do_not_use_in_prod";
+var DEFAULT_PEPPER = "bonolota_sec_vault_pepper_prod_salt_2026";
 function getLicensePepper() {
   return process.env.LICENSE_PEPPER || DEFAULT_PEPPER;
 }
@@ -30582,11 +30697,30 @@ function maskKey(key) {
   return key.slice(0, 8) + "****";
 }
 function normalizeKey(key) {
-  return key.trim().toUpperCase().replace(/\s+/g, "");
+  if (!key || typeof key !== "string") return "";
+  let cleaned = key.trim().toUpperCase().replace(/["'“”‘’`]/g, "").replace(/[\s\u200B-\u200D\uFEFF]+/g, "");
+  if (/^BONOLOTA-[A-Z0-9*]{4}-[A-Z0-9*]{4}-[A-Z0-9*]{4}$/.test(cleaned)) {
+    return cleaned;
+  }
+  if (/^[A-Z0-9*]{4}-[A-Z0-9*]{4}-[A-Z0-9*]{4}$/.test(cleaned)) {
+    return `BONOLOTA-${cleaned}`;
+  }
+  const dashReplaced = cleaned.replace(/[_.]/g, "-");
+  if (/^BONOLOTA-[A-Z0-9*]{4}-[A-Z0-9*]{4}-[A-Z0-9*]{4}$/.test(dashReplaced)) {
+    return dashReplaced;
+  }
+  const noDash = cleaned.replace(/[-_.]/g, "");
+  if (noDash.startsWith("BONOLOTA") && noDash.length === 20) {
+    return `BONOLOTA-${noDash.slice(8, 12)}-${noDash.slice(12, 16)}-${noDash.slice(16, 20)}`;
+  }
+  if (noDash.length === 12 && !noDash.startsWith("BONOLOTA")) {
+    return `BONOLOTA-${noDash.slice(0, 4)}-${noDash.slice(4, 8)}-${noDash.slice(8, 12)}`;
+  }
+  return cleaned;
 }
-function hashLicenseKey(key) {
+function hashLicenseKey(key, customPepper) {
   const normalized = normalizeKey(key);
-  const pepper = getLicensePepper();
+  const pepper = customPepper || getLicensePepper();
   return crypto.createHmac("sha256", pepper).update(normalized).digest("hex");
 }
 function verifyPassword(password, storedHash) {
@@ -30612,7 +30746,10 @@ function generateSessionToken() {
   return crypto.randomBytes(32).toString("hex");
 }
 function hashSessionToken(token) {
-  return crypto.createHash("sha256").update(token).digest("hex");
+  if (!token || typeof token !== "string") return "";
+  const sanitized = token.trim().slice(0, 512);
+  if (sanitized.length < 16) return "";
+  return crypto.createHash("sha256").update(sanitized).digest("hex");
 }
 function parseUserAgent(ua) {
   if (!ua) return "\u0985\u099C\u09BE\u09A8\u09BE \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0";
@@ -30635,48 +30772,57 @@ function parseUserAgent(ua) {
 // server/auth.ts
 var USER_COOKIE_NAME = "bonolota_user_session";
 var ADMIN_COOKIE_NAME = "bonolota_admin_session";
-function getCookieOptions() {
+function getCookieOptions(req) {
   const isProd = process.env.NODE_ENV === "production";
+  const isHttps = req ? req.secure || req.headers["x-forwarded-proto"] === "https" : isProd;
   return {
     httpOnly: true,
-    secure: isProd,
-    sameSite: "lax",
-    path: "/"
+    secure: isHttps,
+    sameSite: isHttps ? "none" : "lax",
+    path: "/",
+    partitioned: isHttps
   };
 }
 async function requireCustomerAuth(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
-    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null;
-    const rawToken = req.cookies?.[USER_COOKIE_NAME] || bearerToken || req.headers["x-session-token"];
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const headerToken = req.headers["x-session-token"];
+    const rawToken = typeof cookieToken === "string" && cookieToken.length >= 16 ? cookieToken : bearerToken && bearerToken.length >= 16 ? bearerToken : typeof headerToken === "string" && headerToken.length >= 16 ? headerToken : null;
     if (!rawToken || typeof rawToken !== "string") {
       res.status(401).json({ ok: false, error: "NO_SESSION", message: "No active session found. Please enter your access key." });
       return;
     }
     const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
+      res.status(401).json({ ok: false, error: "INVALID_TOKEN", message: "Malformed session token." });
+      return;
+    }
     const sessionData = await storage.getUserSession(sessionHash);
     if (!sessionData) {
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.status(401).json({ ok: false, error: "SESSION_EXPIRED", message: "Session expired or invalidated. Please re-activate." });
       return;
     }
     const now = Date.now();
     if (now > sessionData.expiresAt) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.status(401).json({ ok: false, error: "SUBSCRIPTION_EXPIRED", message: "Subscription has expired." });
       return;
     }
     const license = await storage.getLicenseById(sessionData.licenseId);
     if (!license) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.status(401).json({ ok: false, error: "LICENSE_NOT_FOUND", message: "License record not found." });
       return;
     }
     if (license.status === "revoked") {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.status(403).json({ ok: false, error: "LICENSE_REVOKED", message: "This license has been permanently revoked." });
       return;
     }
@@ -30686,13 +30832,13 @@ async function requireCustomerAuth(req, res, next) {
     }
     if (now > license.expiresAt) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.status(403).json({ ok: false, error: "SUBSCRIPTION_EXPIRED", message: "Your subscription period has ended." });
       return;
     }
     if (!license.browserBound || license.currentSessionHash !== sessionHash) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.status(403).json({
         ok: false,
         error: "BINDING_INVALID",
@@ -30715,22 +30861,29 @@ async function requireCustomerAuth(req, res, next) {
 async function requireAdminAuth(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
-    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null;
-    const rawToken = req.cookies?.[ADMIN_COOKIE_NAME] || bearerToken || req.headers["x-admin-token"];
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[ADMIN_COOKIE_NAME];
+    const headerToken = req.headers["x-admin-token"];
+    const rawToken = typeof cookieToken === "string" && cookieToken.length >= 16 ? cookieToken : bearerToken && bearerToken.length >= 16 ? bearerToken : typeof headerToken === "string" && headerToken.length >= 16 ? headerToken : null;
     if (!rawToken || typeof rawToken !== "string") {
       res.status(401).json({ ok: false, error: "ADMIN_UNAUTHORIZED", message: "Admin authentication required." });
       return;
     }
     const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
+      res.status(401).json({ ok: false, error: "INVALID_TOKEN", message: "Malformed admin token." });
+      return;
+    }
     const adminSession = await storage.getAdminSession(sessionHash);
     if (!adminSession) {
-      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
       res.status(401).json({ ok: false, error: "ADMIN_SESSION_EXPIRED", message: "Admin session expired. Please log in again." });
       return;
     }
     if (Date.now() > adminSession.expiresAt) {
       await storage.deleteAdminSession(sessionHash);
-      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
       res.status(401).json({ ok: false, error: "ADMIN_SESSION_EXPIRED", message: "Admin session expired." });
       return;
     }
@@ -30775,7 +30928,29 @@ authRouter.post("/activate", async (req, res) => {
       return;
     }
     const keyHash = hashLicenseKey(normalized);
-    const license = await storage.getLicenseByHash(keyHash);
+    let license = await storage.getLicenseByHash(keyHash);
+    if (!license) {
+      const legacyHash = hashLicenseKey(normalized, "bonolota_default_local_dev_pepper_do_not_use_in_prod");
+      license = await storage.getLicenseByHash(legacyHash);
+      if (license) {
+        storage.updateLicense(license.id, { keyHash }).catch(() => {
+        });
+      }
+    }
+    if (!license) {
+      const all = await storage.listLicenses();
+      license = all.find((l) => {
+        if (l.plaintextKey && normalizeKey(l.plaintextKey) === normalized) return true;
+        if (l.keyMasked && (normalizeKey(l.keyMasked) === normalized || l.keyMasked.toUpperCase() === rawKey.trim().toUpperCase())) return true;
+        const cleanRaw = rawKey.trim().toUpperCase();
+        if (cleanRaw.includes("*") && l.keyMasked && l.keyMasked.slice(0, 13) === cleanRaw.slice(0, 13)) return true;
+        return false;
+      }) || null;
+      if (license) {
+        storage.updateLicense(license.id, { keyHash }).catch(() => {
+        });
+      }
+    }
     if (!license) {
       res.status(404).json({
         ok: false,
@@ -30809,23 +30984,33 @@ authRouter.post("/activate", async (req, res) => {
       });
       return;
     }
+    const incomingDeviceId = typeof req.body?.deviceId === "string" && req.body.deviceId.trim().length >= 8 ? req.body.deviceId.trim().slice(0, 128) : void 0;
     const existingCookieToken = req.cookies?.[USER_COOKIE_NAME];
-    const existingCookieHash = existingCookieToken ? hashSessionToken(existingCookieToken) : null;
+    const existingCookieHash = typeof existingCookieToken === "string" && existingCookieToken.length >= 16 ? hashSessionToken(existingCookieToken) : null;
+    const authHeader = req.headers["authorization"];
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7).trim() : null;
+    const existingBearerHash = bearerToken && bearerToken.length >= 16 ? hashSessionToken(bearerToken) : null;
     if (license.browserBound) {
-      if (existingCookieHash && license.currentSessionHash === existingCookieHash) {
-        const daysLeft2 = Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
+      const isCurrentActiveSession = Boolean(
+        existingCookieHash && license.currentSessionHash === existingCookieHash || existingBearerHash && license.currentSessionHash === existingBearerHash
+      );
+      if (isCurrentActiveSession) {
+        const isLifetime2 = Boolean(license.isLifetime || license.durationDays >= 36500);
+        const daysLeft2 = isLifetime2 ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
         res.json({
           ok: true,
           expiresAt: license.expiresAt,
           daysLeft: daysLeft2,
-          message: "\u09B8\u09C7\u09B6\u09A8 \u09AA\u09C1\u09A8\u09B0\u09BE\u09DF \u09B8\u0995\u09CD\u09B0\u09BF\u09DF \u0995\u09B0\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964"
+          isLifetime: isLifetime2,
+          maskedKey: license.keyMasked,
+          message: "\u09B8\u09C7\u09B6\u09A8 \u09B8\u0995\u09CD\u09B0\u09BF\u09DF \u09B0\u09DF\u09C7\u099B\u09C7\u0964"
         });
         return;
       }
       res.status(409).json({
         ok: false,
         error: "ALREADY_BOUND",
-        message: "\u098F\u0987 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u0995\u09BF-\u099F\u09BF \u0987\u09A4\u09BF\u09AE\u09A7\u09CD\u09AF\u09C7 \u0985\u09A8\u09CD\u09AF \u098F\u0995\u099F\u09BF \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0\u09C7 \u09B8\u0982\u09AF\u09C1\u0995\u09CD\u09A4 (Bound) \u09B0\u09DF\u09C7\u099B\u09C7\u0964 \u0986\u09AA\u09A8\u09BF \u09AF\u09A6\u09BF \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0 \u09AC\u09BE \u09A1\u09BF\u09AD\u09BE\u0987\u09B8 \u09AA\u09B0\u09BF\u09AC\u09B0\u09CD\u09A4\u09A8 \u0995\u09B0\u09C7 \u09A5\u09BE\u0995\u09C7\u09A8, \u09A4\u09AC\u09C7 \u0985\u09CD\u09AF\u09BE\u09A1\u09AE\u09BF\u09A8\u0995\u09C7 \u09B0\u09BF\u0995\u09CB\u09DF\u09C7\u09B8\u09CD\u099F \u0995\u09B0\u09C7 \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0 \u09AC\u09BE\u0987\u09A8\u09CD\u09A1\u09BF\u0982 \u09B0\u09BF\u09B8\u09C7\u099F \u0995\u09B0\u09C1\u09A8\u0964"
+        message: "\u098F\u0987 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u0995\u09BF-\u099F\u09BF \u0987\u09A4\u09BF\u09AE\u09A7\u09CD\u09AF\u09C7 \u098F\u0995\u099F\u09BF \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0\u09C7 \u09B8\u0982\u09AF\u09C1\u0995\u09CD\u09A4 (Bound) \u09B0\u09DF\u09C7\u099B\u09C7\u0964 \u098F\u0995\u099F\u09BF \u0995\u09BF \u09B6\u09C1\u09A7\u09C1\u09AE\u09BE\u09A4\u09CD\u09B0 \u098F\u0995\u099F\u09BF \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0\u09C7 \u09AC\u09CD\u09AF\u09AC\u09B9\u09BE\u09B0\u09AF\u09CB\u0997\u09CD\u09AF\u0964 \u09AC\u09CD\u09B0\u09BE\u0989\u099C\u09BE\u09B0 \u09B0\u09BF\u09B8\u09C7\u099F \u09AC\u09BE \u09AB\u09CB\u09A8 \u09AA\u09B0\u09BF\u09AC\u09B0\u09CD\u09A4\u09A8 \u0995\u09B0\u09C7 \u09A5\u09BE\u0995\u09B2\u09C7 \u09AA\u09C2\u09B0\u09CD\u09AC\u09C7\u09B0 \u09AA\u09C7\u09AE\u09C7\u09A8\u09CD\u099F \u09B8\u09CD\u09B2\u09BF\u09AA \u09A6\u09C7\u0996\u09BF\u09DF\u09C7 \u0985\u09CD\u09AF\u09BE\u09A1\u09AE\u09BF\u09A8\u09C7\u09B0 \u09B8\u09BE\u09A5\u09C7 \u09AF\u09CB\u0997\u09BE\u09AF\u09CB\u0997 \u0995\u09B0\u09C7 \u09AC\u09BE\u0987\u09A8\u09CD\u09A1\u09BF\u0982 \u09B0\u09BF\u09B8\u09C7\u099F \u0995\u09B0\u09C7 \u09A8\u09BF\u09A8\u0964"
       });
       return;
     }
@@ -30837,6 +31022,7 @@ authRouter.post("/activate", async (req, res) => {
     const updated = await storage.updateLicense(license.id, {
       browserBound: true,
       currentSessionHash: sessionHash,
+      boundUserAgent: rawUserAgent,
       activatedAt: license.activatedAt || now,
       lastActiveAt: now,
       deviceInfo,
@@ -30866,57 +31052,71 @@ authRouter.post("/activate", async (req, res) => {
       ip: clientIp
     });
     const cookieOptions = {
-      ...getCookieOptions(),
+      ...getCookieOptions(req),
       maxAge: Math.max(0, license.expiresAt - now)
     };
     res.cookie(USER_COOKIE_NAME, sessionToken, cookieOptions);
-    const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
+    const isLifetime = Boolean(license.isLifetime || license.durationDays >= 36500);
+    const daysLeft = isLifetime ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
     res.json({
       ok: true,
+      token: sessionToken,
       sessionToken,
       expiresAt: license.expiresAt,
       daysLeft,
+      isLifetime,
       maskedKey: license.keyMasked,
-      message: "\u0985\u09AD\u09BF\u09A8\u09A8\u09CD\u09A6\u09A8! \u0986\u09AA\u09A8\u09BE\u09B0 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u0995\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u099F\u09BF\u09AD\u09C7\u099F \u09B9\u09DF\u09C7\u099B\u09C7\u0964"
+      message: isLifetime ? "\u0985\u09AD\u09BF\u09A8\u09A8\u09CD\u09A6\u09A8! \u0986\u09AA\u09A8\u09BE\u09B0 \u09B2\u09BE\u0987\u09AB\u099F\u09BE\u0987\u09AE (\u0986\u099C\u09C0\u09AC\u09A8) \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u0995\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u099F\u09BF\u09AD\u09C7\u099F \u09B9\u09DF\u09C7\u099B\u09C7\u0964" : "\u0985\u09AD\u09BF\u09A8\u09A8\u09CD\u09A6\u09A8! \u0986\u09AA\u09A8\u09BE\u09B0 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u0995\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u099F\u09BF\u09AD\u09C7\u099F \u09B9\u09DF\u09C7\u099B\u09C7\u0964"
     });
   } catch (error) {
     console.error("[auth/activate] Error:", error);
     res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "\u09B8\u09BE\u09B0\u09CD\u09AD\u09BE\u09B0 \u09AA\u09CD\u09B0\u0995\u09CD\u09B0\u09BF\u09DF\u09BE\u0995\u09B0\u09A3\u09C7 \u09B8\u09AE\u09B8\u09CD\u09AF\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964 \u0985\u09A8\u09C1\u0997\u09CD\u09B0\u09B9 \u0995\u09B0\u09C7 \u0986\u09AC\u09BE\u09B0 \u099A\u09C7\u09B7\u09CD\u099F\u09BE \u0995\u09B0\u09C1\u09A8\u0964" });
   }
 });
-authRouter.get("/session", async (req, res) => {
+var handleCustomerSession = async (req, res) => {
   try {
-    const rawToken = req.cookies?.[USER_COOKIE_NAME];
+    const authHeader = req.headers["authorization"];
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const headerToken = req.headers["x-session-token"];
+    const rawToken = typeof cookieToken === "string" && cookieToken.length >= 16 ? cookieToken : bearerToken && bearerToken.length >= 16 ? bearerToken : typeof headerToken === "string" && headerToken.length >= 16 ? headerToken : null;
     if (!rawToken || typeof rawToken !== "string") {
       res.json({ authenticated: false });
       return;
     }
     const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
+      res.json({ authenticated: false });
+      return;
+    }
     const sessionData = await storage.getUserSession(sessionHash);
     if (!sessionData) {
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false });
       return;
     }
     const now = Date.now();
     if (now > sessionData.expiresAt) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false, reason: "EXPIRED" });
       return;
     }
     const license = await storage.getLicenseById(sessionData.licenseId);
     if (!license || license.status !== "active" || now > license.expiresAt || !license.browserBound || license.currentSessionHash !== sessionHash) {
       await storage.deleteUserSession(sessionHash);
-      res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false, reason: "INVALID_OR_REVOKED" });
       return;
     }
-    const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
+    const isLifetime = Boolean(license.isLifetime || license.durationDays >= 36500);
+    const daysLeft = isLifetime ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
     res.json({
       authenticated: true,
       expiresAt: license.expiresAt,
       daysLeft,
+      isLifetime,
       keyMasked: license.keyMasked,
       durationDays: license.durationDays
     });
@@ -30924,19 +31124,26 @@ authRouter.get("/session", async (req, res) => {
     console.error("[auth/session] Error:", error);
     res.json({ authenticated: false });
   }
-});
+};
+authRouter.get("/session", handleCustomerSession);
+authRouter.get("/me", handleCustomerSession);
 authRouter.post("/logout", async (req, res) => {
   try {
-    const rawToken = req.cookies?.[USER_COOKIE_NAME];
+    const authHeader = req.headers["authorization"];
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const rawToken = typeof cookieToken === "string" && cookieToken.length >= 16 ? cookieToken : bearerToken;
     if (rawToken && typeof rawToken === "string") {
       const sessionHash = hashSessionToken(rawToken);
-      await storage.deleteUserSession(sessionHash);
+      if (sessionHash) {
+        await storage.deleteUserSession(sessionHash);
+      }
     }
-    res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true });
   } catch (error) {
     console.error("[auth/logout] Error:", error);
-    res.clearCookie(USER_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(USER_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true });
   }
 });
@@ -30956,9 +31163,14 @@ adminRouter.get("/session", async (req, res) => {
       return;
     }
     const sessionHash = hashSessionToken(rawToken);
+    if (!sessionHash) {
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
+      res.json({ authenticated: false, isInitialPasswordActive: !process.env.ADMIN_PASSWORD_HASH });
+      return;
+    }
     const sessionData = await storage.getAdminSession(sessionHash);
     if (!sessionData || Date.now() > sessionData.expiresAt) {
-      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+      res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
       res.json({ authenticated: false, isInitialPasswordActive: !process.env.ADMIN_PASSWORD_HASH });
       return;
     }
@@ -31040,7 +31252,7 @@ adminRouter.post("/login", async (req, res) => {
       ip: clientIp
     });
     res.cookie(ADMIN_COOKIE_NAME, sessionToken, {
-      ...getCookieOptions(),
+      ...getCookieOptions(req),
       maxAge: ttlSeconds * 1e3
     });
     res.json({
@@ -31061,13 +31273,15 @@ adminRouter.post("/logout", async (req, res) => {
     const rawToken = req.cookies?.[ADMIN_COOKIE_NAME];
     if (rawToken && typeof rawToken === "string") {
       const sessionHash = hashSessionToken(rawToken);
-      await storage.deleteAdminSession(sessionHash);
+      if (sessionHash) {
+        await storage.deleteAdminSession(sessionHash);
+      }
     }
-    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true, message: "Admin logged out." });
   } catch (error) {
     console.error("[admin/logout] Error:", error);
-    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions());
+    res.clearCookie(ADMIN_COOKIE_NAME, getCookieOptions(req));
     res.json({ ok: true });
   }
 });
@@ -31098,10 +31312,11 @@ adminRouter.get("/overview", requireAdminAuth, handleOverviewStats);
 adminRouter.get("/stats", requireAdminAuth, handleOverviewStats);
 adminRouter.post("/licenses/create", requireAdminAuth, async (req, res) => {
   try {
-    const { durationDays, customerNote } = req.body || {};
-    const days = parseInt(durationDays, 10);
-    if (isNaN(days) || days <= 0 || days > 3650) {
-      res.status(400).json({ ok: false, error: "INVALID_DURATION", message: "Duration must be between 1 and 3650 days." });
+    const { durationDays, customerNote, isLifetime } = req.body || {};
+    const isLife = isLifetime === true || durationDays === "lifetime" || durationDays === 36500;
+    let days = isLife ? 36500 : parseInt(durationDays, 10);
+    if (!isLife && (isNaN(days) || days <= 0 || days > 36500)) {
+      res.status(400).json({ ok: false, error: "INVALID_DURATION", message: "Duration must be between 1 and 36500 days, or lifetime." });
       return;
     }
     const plaintextKey = generateAccessKey();
@@ -31113,11 +31328,14 @@ adminRouter.post("/licenses/create", requireAdminAuth, async (req, res) => {
     const newLicense = {
       id: licenseId,
       keyMasked: masked,
+      plaintextKey,
+      // Store plaintext key so admin can view, copy, and send anytime
       keyHash,
       status: "active",
       createdAt: now,
       expiresAt,
       durationDays: days,
+      isLifetime: isLife,
       browserBound: false,
       customerNote: typeof customerNote === "string" ? customerNote.trim().slice(0, 200) : void 0
     };
@@ -31127,11 +31345,13 @@ adminRouter.post("/licenses/create", requireAdminAuth, async (req, res) => {
       timestamp: now,
       action: "create_license",
       licenseId,
-      details: `Created ${days}-day license (${masked}). Note: ${customerNote || "None"}`
+      details: isLife ? `Created Lifetime (\u0986\u099C\u09C0\u09AC\u09A8) license (${masked}). Note: ${customerNote || "None"}` : `Created ${days}-day license (${masked}). Note: ${customerNote || "None"}`
     });
     res.json({
       ok: true,
+      key: plaintextKey,
       plaintextKey,
+      isLifetime: isLife,
       license: newLicense,
       warning: "Save this key now. Plaintext keys are not stored and cannot be recovered once you leave this screen."
     });
@@ -31164,7 +31384,7 @@ adminRouter.get("/licenses", requireAdminAuth, async (req, res) => {
     if (search && search.trim()) {
       const q = search.trim().toLowerCase();
       filtered = filtered.filter(
-        (l) => l.id.toLowerCase().includes(q) || l.keyMasked.toLowerCase().includes(q) || l.customerNote && l.customerNote.toLowerCase().includes(q)
+        (l) => l.id.toLowerCase().includes(q) || l.keyMasked.toLowerCase().includes(q) || l.plaintextKey && l.plaintextKey.toLowerCase().includes(q) || l.customerNote && l.customerNote.toLowerCase().includes(q)
       );
     }
     res.json({ ok: true, licenses: filtered });
@@ -31176,9 +31396,10 @@ adminRouter.get("/licenses", requireAdminAuth, async (req, res) => {
 adminRouter.post("/licenses/:id/extend", requireAdminAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const { additionalDays } = req.body || {};
-    const days = parseInt(additionalDays, 10);
-    if (isNaN(days) || days <= 0 || days > 3650) {
+    const { additionalDays, days: altDays, isLifetime } = req.body || {};
+    const isLife = isLifetime === true || additionalDays === "lifetime" || altDays === "lifetime";
+    const days = isLife ? 36500 : parseInt(additionalDays || altDays, 10);
+    if (!isLife && (isNaN(days) || days <= 0 || days > 36500)) {
       res.status(400).json({ ok: false, error: "INVALID_DAYS", message: "Invalid extension days." });
       return;
     }
@@ -31189,24 +31410,54 @@ adminRouter.post("/licenses/:id/extend", requireAdminAuth, async (req, res) => {
     }
     const now = Date.now();
     const baseTimestamp = license.expiresAt > now ? license.expiresAt : now;
-    const newExpiresAt = baseTimestamp + days * 24 * 60 * 60 * 1e3;
+    const newExpiresAt = isLife ? now + 36500 * 24 * 60 * 60 * 1e3 : baseTimestamp + days * 24 * 60 * 60 * 1e3;
     const updated = await storage.updateLicense(id, {
       expiresAt: newExpiresAt,
-      durationDays: license.durationDays + days,
+      durationDays: isLife ? 36500 : license.durationDays + days,
+      isLifetime: isLife || license.isLifetime,
       // If was expired and now extended, restore active status if not explicitly revoked
       status: license.status === "revoked" ? "revoked" : "active"
     });
     await storage.addAuditLog({
       id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: now,
-      action: "extend_license",
+      action: isLife ? "make_lifetime" : "extend_license",
       licenseId: id,
-      details: `Extended license ${license.keyMasked} by ${days} days. New expiry: ${new Date(newExpiresAt).toISOString()}`
+      details: isLife ? `Converted license ${license.keyMasked} to Lifetime (\u0986\u099C\u09C0\u09AC\u09A8).` : `Extended license ${license.keyMasked} by ${days} days. New expiry: ${new Date(newExpiresAt).toISOString()}`
     });
-    res.json({ ok: true, license: updated });
+    res.json({ ok: true, license: updated, message: isLife ? "\u09B2\u09BE\u0987\u09B8\u09C7\u09A8\u09CD\u09B8 \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u0986\u099C\u09C0\u09AC\u09A8 (Lifetime) \u0995\u09B0\u09BE \u09B9\u09DF\u09C7\u099B\u09C7!" : `\u09AE\u09C7\u09DF\u09BE\u09A6 \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 +${days} \u09A6\u09BF\u09A8 \u09AC\u09BE\u09DC\u09BE\u09A8\u09CB \u09B9\u09DF\u09C7\u099B\u09C7!` });
   } catch (error) {
     console.error("[admin/licenses/extend] Error:", error);
     res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "Failed to extend license." });
+  }
+});
+adminRouter.post("/licenses/:id/make-lifetime", requireAdminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const license = await storage.getLicenseById(id);
+    if (!license) {
+      res.status(404).json({ ok: false, error: "NOT_FOUND", message: "License not found." });
+      return;
+    }
+    const now = Date.now();
+    const newExpiresAt = now + 36500 * 24 * 60 * 60 * 1e3;
+    const updated = await storage.updateLicense(id, {
+      expiresAt: newExpiresAt,
+      durationDays: 36500,
+      isLifetime: true,
+      status: license.status === "revoked" ? "revoked" : "active"
+    });
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: now,
+      action: "make_lifetime",
+      licenseId: id,
+      details: `Upgraded license ${license.keyMasked} to Lifetime (\u0986\u099C\u09C0\u09AC\u09A8).`
+    });
+    res.json({ ok: true, license: updated, message: "\u09B2\u09BE\u0987\u09B8\u09C7\u09A8\u09CD\u09B8 \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u0986\u099C\u09C0\u09AC\u09A8 (Lifetime) \u0995\u09B0\u09BE \u09B9\u09DF\u09C7\u099B\u09C7!" });
+  } catch (error) {
+    console.error("[admin/licenses/make-lifetime] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "Failed to upgrade to lifetime." });
   }
 });
 adminRouter.post("/licenses/:id/reset-binding", requireAdminAuth, async (req, res) => {
@@ -31222,6 +31473,8 @@ adminRouter.post("/licenses/:id/reset-binding", requireAdminAuth, async (req, re
     }
     const updated = await storage.updateLicense(id, {
       browserBound: false,
+      boundDeviceId: void 0,
+      boundUserAgent: void 0,
       currentSessionHash: void 0,
       deviceInfo: void 0,
       clientIp: void 0
@@ -65602,11 +65855,182 @@ contentRouter.get("/unit/:id", requireCustomerAuth, (req, res) => {
   });
 });
 
+// server/routes/broadcast.ts
+var import_express4 = __toESM(require_express2(), 1);
+var broadcastRouter = (0, import_express4.Router)();
+var sseClients = /* @__PURE__ */ new Set();
+function pushEventToClients(event) {
+  const payload = `data: ${JSON.stringify(event)}
+
+`;
+  for (const client of sseClients) {
+    try {
+      client.write(payload);
+    } catch {
+      sseClients.delete(client);
+    }
+  }
+}
+setInterval(() => {
+  if (sseClients.size > 0) {
+    const ping = ": heartbeat\n\n";
+    for (const client of sseClients) {
+      try {
+        client.write(ping);
+      } catch {
+        sseClients.delete(client);
+      }
+    }
+  }
+}, 25e3).unref();
+broadcastRouter.get("/stream", async (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");
+  res.flushHeaders?.();
+  sseClients.add(res);
+  try {
+    const activeList = await storage.listAnnouncements(false);
+    res.write(`data: ${JSON.stringify({ type: "init", announcements: activeList })}
+
+`);
+  } catch (err) {
+    console.error("[SSE Init Error]:", err);
+  }
+  req.on("close", () => {
+    sseClients.delete(res);
+  });
+});
+var handleGetActiveAnnouncements = async (_req, res) => {
+  try {
+    const announcements = await storage.listAnnouncements(false);
+    res.json({ ok: true, announcements });
+  } catch (error) {
+    console.error("[broadcasts/active] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "Failed to fetch announcements." });
+  }
+};
+broadcastRouter.get("/active", handleGetActiveAnnouncements);
+broadcastRouter.get("/", handleGetActiveAnnouncements);
+broadcastRouter.post("/admin/create", requireAdminAuth, async (req, res) => {
+  try {
+    const { title, message, type, priority, actionUrl, actionText, author } = req.body;
+    if (!title || typeof title !== "string" || title.trim().length < 2) {
+      res.status(400).json({ ok: false, error: "INVALID_TITLE", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u098F\u09B0 \u098F\u0995\u099F\u09BF \u0989\u09AA\u09AF\u09C1\u0995\u09CD\u09A4 \u09B6\u09BF\u09B0\u09CB\u09A8\u09BE\u09AE \u09AA\u09CD\u09B0\u09DF\u09CB\u099C\u09A8\u0964" });
+      return;
+    }
+    if (!message || typeof message !== "string" || message.trim().length < 2) {
+      res.status(400).json({ ok: false, error: "INVALID_MESSAGE", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u098F\u09B0 \u09AC\u09BF\u09B8\u09CD\u09A4\u09BE\u09B0\u09BF\u09A4 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u09AA\u09CD\u09B0\u09DF\u09CB\u099C\u09A8\u0964" });
+      return;
+    }
+    const validTypes = ["info", "urgent", "update", "promotion"];
+    const selectedType = validTypes.includes(type) ? type : "info";
+    const selectedPriority = priority === "high" ? "high" : "normal";
+    const newAnnouncement = {
+      id: `anno_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      title: title.trim(),
+      message: message.trim(),
+      type: selectedType,
+      priority: selectedPriority,
+      actionUrl: typeof actionUrl === "string" ? actionUrl.trim() : void 0,
+      actionText: typeof actionText === "string" ? actionText.trim() : void 0,
+      createdAt: Date.now(),
+      active: true,
+      author: typeof author === "string" ? author.trim() : "Admin"
+    };
+    await storage.createAnnouncement(newAnnouncement);
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: "create_broadcast",
+      details: `Broadcast sent: "${newAnnouncement.title}" [${newAnnouncement.type}|${newAnnouncement.priority}] to ${sseClients.size} live clients.`
+    });
+    pushEventToClients({
+      type: "announcement",
+      data: newAnnouncement
+    });
+    res.json({
+      ok: true,
+      announcement: newAnnouncement,
+      recipientsConnected: sseClients.size,
+      message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09B8\u0995\u09B2 \u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0\u09B0 \u0995\u09BE\u099B\u09C7 \u09B8\u09AE\u09CD\u09AA\u09CD\u09B0\u099A\u09BE\u09B0 \u0995\u09B0\u09BE \u09B9\u09DF\u09C7\u099B\u09C7!"
+    });
+  } catch (error) {
+    console.error("[broadcasts/admin/create] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09B8\u09AE\u09CD\u09AA\u09CD\u09B0\u099A\u09BE\u09B0 \u0995\u09B0\u09A4\u09C7 \u09B8\u09AE\u09B8\u09CD\u09AF\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  }
+});
+broadcastRouter.get("/admin/list", requireAdminAuth, async (_req, res) => {
+  try {
+    const announcements = await storage.listAnnouncements(true);
+    res.json({
+      ok: true,
+      announcements,
+      connectedClients: sseClients.size
+    });
+  } catch (error) {
+    console.error("[broadcasts/admin/list] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09A4\u09BE\u09B2\u09BF\u0995\u09BE \u09B2\u09CB\u09A1 \u0995\u09B0\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
+  }
+});
+broadcastRouter.delete("/admin/:id", requireAdminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await storage.deleteAnnouncement(id);
+    if (!deleted) {
+      res.status(404).json({ ok: false, error: "NOT_FOUND", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
+      return;
+    }
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: "delete_broadcast",
+      details: `Deleted announcement ID: ${id}`
+    });
+    pushEventToClients({
+      type: "delete",
+      data: { id }
+    });
+    res.json({ ok: true, message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09AE\u09C1\u099B\u09C7 \u09AB\u09C7\u09B2\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  } catch (error) {
+    console.error("[broadcasts/admin/:id] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09AE\u09C1\u099B\u09A4\u09C7 \u09B8\u09AE\u09B8\u09CD\u09AF\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  }
+});
+broadcastRouter.patch("/admin/:id/toggle", requireAdminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { active } = req.body;
+    const updated = await storage.toggleAnnouncement(id, Boolean(active));
+    if (!updated) {
+      res.status(404).json({ ok: false, error: "NOT_FOUND", message: "\u0985\u09CD\u09AF\u09BE\u09A8\u09BE\u0989\u09A8\u09CD\u09B8\u09AE\u09C7\u09A8\u09CD\u099F \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
+      return;
+    }
+    if (!updated.active) {
+      pushEventToClients({
+        type: "delete",
+        data: { id }
+      });
+    } else {
+      pushEventToClients({
+        type: "announcement",
+        data: updated
+      });
+    }
+    res.json({ ok: true, announcement: updated });
+  } catch (error) {
+    console.error("[broadcasts/admin/:id/toggle] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "\u09B8\u09CD\u099F\u09CD\u09AF\u09BE\u099F\u09BE\u09B8 \u0986\u09AA\u09A1\u09C7\u099F \u0995\u09B0\u09A4\u09C7 \u09B8\u09AE\u09B8\u09CD\u09AF\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  }
+});
+
 // server/routes/index.ts
-var apiRouter = (0, import_express4.Router)();
+var apiRouter = (0, import_express5.Router)();
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/admin", adminRouter);
 apiRouter.use("/content", contentRouter);
+apiRouter.use("/broadcasts", broadcastRouter);
 apiRouter.get("/health", (_req, res) => {
   const envReport = validateEnvironment();
   res.json({
@@ -65635,18 +66059,40 @@ apiRouter.post("/system/verify-admin-slug", (req, res) => {
 });
 
 // server/api.ts
-var app = (0, import_express5.default)();
-app.use((_req, res, next) => {
+var app = (0, import_express6.default)();
+app.set("trust proxy", 1);
+app.use((req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "SAMEORIGIN");
   res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader(
+    "Content-Security-Policy",
+    "frame-ancestors 'self' https://*.run.app https://*.google.com https://*.aistudio.google.com https://bonolota-public.vercel.app;"
+  );
+  const origin = req.headers.origin;
+  if (origin) {
+    const isAllowed = origin.includes("localhost") || origin.includes("127.0.0.1") || origin.endsWith(".run.app") || origin.endsWith(".vercel.app") || origin.includes("google.com") || origin.includes("bonolota");
+    if (isAllowed) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+    }
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-session-token, x-admin-token, x-device-id");
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204);
+    return;
+  }
   next();
 });
-app.use(import_express5.default.json({ limit: "1mb" }));
+app.use(import_express6.default.json({ limit: "1mb" }));
 app.use((0, import_cookie_parser.default)());
 app.use("/api", apiRouter);
 app.use("/", apiRouter);
-assertEnvironment();
+try {
+  assertEnvironment();
+} catch (e) {
+  console.warn("[Serverless] Warning during environment assertion:", e);
+}
 app.use((err, _req, res, _next) => {
   console.error("[API Server Error]", err);
   if (!res.headersSent) {
