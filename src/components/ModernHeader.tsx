@@ -31,6 +31,7 @@ interface ModernHeaderProps {
   currentTab: NavTab;
   unreadAnnouncementsCount?: number;
   onOpenAnnouncements?: () => void;
+  onOpenSupport?: () => void;
 }
 
 export const ModernHeader: React.FC<ModernHeaderProps> = ({
@@ -42,6 +43,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   currentTab,
   unreadAnnouncementsCount = 0,
   onOpenAnnouncements,
+  onOpenSupport,
 }) => {
   const [showStatsPopup, setShowStatsPopup] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -406,6 +408,20 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
               {unreadAnnouncementsCount > 9 ? '9+' : unreadAnnouncementsCount}
             </span>
           )}
+        </button>
+
+        {/* Student Support Button */}
+        <button
+          type="button"
+          onClick={() => {
+            haptics.tap();
+            onOpenSupport?.();
+          }}
+          aria-label="সহায়তা ও সাপোর্ট ইনবক্স"
+          title="সহায়তা ও সাপোর্ট ইনবক্স"
+          className="p-1.5 sm:p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-300 transition-all cursor-pointer shadow-xs shrink-0"
+        >
+          <HelpCircle className="w-4 h-4 text-teal-600 dark:text-teal-400" />
         </button>
 
         {/* ALL SECTIONS / EXPLORE BUTTON (Direct Full Page Navigation - No Popup) */}

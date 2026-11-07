@@ -174,7 +174,7 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
                 type="text"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="যেমন: চঞ্চল বা আরিফা"
+                placeholder="যেমন: বনলতা"
                 disabled={isSubmitting || isLoading}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm placeholder:text-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/15 transition-colors font-bangla"
               />

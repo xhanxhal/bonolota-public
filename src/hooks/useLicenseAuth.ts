@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { offlineDatabaseCache } from '../utils/offlineDatabaseCache';
 import { setAuthorizedUnits } from '../data/units';
-import { getClientDeviceId } from '../utils/deviceFingerprint';
+import { getClientDeviceId, getCanvasFingerprintHash } from '../utils/deviceFingerprint';
 import { storage } from '../utils/storage';
 
 export interface LicenseSessionState {
@@ -17,6 +17,34 @@ export interface LicenseSessionState {
 }
 
 const USER_TOKEN_KEY = 'bonolota_user_token';
+
+export function collectClientBrowserMetadata() {
+  if (typeof window === 'undefined') return {};
+  try {
+    const nav = window.navigator as any;
+    const screen = window.screen;
+    const connection = nav?.connection || nav?.mozConnection || nav?.webkitConnection;
+
+    return {
+      screenResolution: screen ? `${screen.width}x${screen.height}` : undefined,
+      windowSize: `${window.innerWidth}x${window.innerHeight}`,
+      pixelRatio: window.devicePixelRatio || 1,
+      colorDepth: screen?.colorDepth || 24,
+      language: nav?.languages ? nav.languages.join(', ') : (nav?.language || undefined),
+      timezone: Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone || undefined,
+      timezoneOffset: `UTC${new Date().getTimezoneOffset() <= 0 ? '+' : '-'}${Math.abs(Math.floor(new Date().getTimezoneOffset() / 60))}:00`,
+      touchSupport: Boolean('ontouchstart' in window || (nav?.maxTouchPoints && nav.maxTouchPoints > 0)),
+      cpuCores: nav?.hardwareConcurrency || undefined,
+      deviceMemoryGb: nav?.deviceMemory || undefined,
+      networkType: connection?.effectiveType || connection?.type || undefined,
+      platform: nav?.userAgentData?.platform || nav?.platform || undefined,
+      onlineStatus: nav?.onLine !== false,
+      canvasFingerprintHash: getCanvasFingerprintHash(),
+    };
+  } catch {
+    return {};
+  }
+}
 
 function getAuthHeaders(): Record<string, string> {
   const token = typeof window !== 'undefined' ? localStorage.getItem(USER_TOKEN_KEY) : null;
@@ -63,7 +91,7 @@ export function useLicenseAuth() {
           ...getAuthHeaders(),
         },
         credentials: 'include',
-        body: JSON.stringify(stats),
+        body: JSON.stringify({ ...stats, clientMetadata: collectClientBrowserMetadata() }),
       });
     } catch {
       // Ignore network errors
@@ -133,7 +161,7 @@ export function useLicenseAuth() {
           ...getAuthHeaders(),
         },
         credentials: 'include',
-        body: JSON.stringify({ key, name, deviceId: getClientDeviceId() }),
+        body: JSON.stringify({ key, name, deviceId: getClientDeviceId(), clientMetadata: collectClientBrowserMetadata() }),
       });
 
       const data = await res.json();
@@ -203,5 +231,20 @@ export function useLicenseAuth() {
     logout,
     checkSession,
     syncProgressToServer,
+    logStudentAction: async (actionType: string, details: string, activeSection?: string) => {
+      try {
+        await fetch('/api/auth/action-ping', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...getAuthHeaders(),
+          },
+          credentials: 'include',
+          body: JSON.stringify({ actionType, details, activeSection }),
+        });
+      } catch {
+        // Non-blocking ping
+      }
+    },
   };
 }

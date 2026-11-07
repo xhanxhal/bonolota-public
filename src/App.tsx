@@ -40,6 +40,7 @@ import { Sparkles as SparklesIcon, AlertTriangle, RotateCcw } from 'lucide-react
 import { useBroadcastAnnouncements } from './hooks/useBroadcastAnnouncements';
 import { BroadcastDrawer } from './components/BroadcastDrawer';
 import { BroadcastModal } from './components/BroadcastModal';
+import { StudentSupportModal } from './components/StudentSupportModal';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -150,6 +151,75 @@ function MainApp() {
 
     if (auth.isAuthenticated) {
       auth.syncProgressToServer();
+    }
+  }, [currentTab, auth.isAuthenticated]);
+
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+  const [antiCopyWarning, setAntiCopyWarning] = useState(false);
+
+  // Feature 42: Frontend DRM & Anti-Copy Protection Handler
+  useEffect(() => {
+    let active = true;
+    const checkDrm = async () => {
+      try {
+        const res = await fetch('/api/system/security-config');
+        if (res.ok) {
+          const d = await res.json();
+          if (active && d.antiCopyEnabled) {
+            document.body.classList.add('select-none');
+            
+            const handleContextMenu = (e: MouseEvent) => {
+              e.preventDefault();
+              setAntiCopyWarning(true);
+              setTimeout(() => setAntiCopyWarning(false), 2500);
+            };
+
+            const handleCopy = (e: ClipboardEvent) => {
+              e.preventDefault();
+              setAntiCopyWarning(true);
+              setTimeout(() => setAntiCopyWarning(false), 2500);
+            };
+
+            const handleKeyDown = (e: KeyboardEvent) => {
+              if (
+                ((e.ctrlKey || e.metaKey) && ['c', 'u', 's', 'p', 'a'].includes(e.key.toLowerCase())) ||
+                e.key === 'F12'
+              ) {
+                e.preventDefault();
+                setAntiCopyWarning(true);
+                setTimeout(() => setAntiCopyWarning(false), 2500);
+              }
+            };
+
+            window.addEventListener('contextmenu', handleContextMenu);
+            window.addEventListener('copy', handleCopy);
+            window.addEventListener('keydown', handleKeyDown);
+
+            return () => {
+              document.body.classList.remove('select-none');
+              window.removeEventListener('contextmenu', handleContextMenu);
+              window.removeEventListener('copy', handleCopy);
+              window.removeEventListener('keydown', handleKeyDown);
+            };
+          } else {
+            document.body.classList.remove('select-none');
+          }
+        }
+      } catch {}
+    };
+
+    checkDrm();
+    const interval = setInterval(checkDrm, 30000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  // Action ping when student changes tab
+  useEffect(() => {
+    if (auth.isAuthenticated && (auth as any).logStudentAction) {
+      (auth as any).logStudentAction('tab_change', `ট্যাব পরিবর্তন: ${currentTab}`, `সেকশন: ${currentTab}`);
     }
   }, [currentTab, auth.isAuthenticated]);
 
@@ -276,6 +346,7 @@ function MainApp() {
           currentTab={currentTab}
           unreadAnnouncementsCount={broadcast.unreadCount}
           onOpenAnnouncements={() => setIsBroadcastDrawerOpen(true)}
+          onOpenSupport={() => setIsSupportModalOpen(true)}
         />
 
         {/* MAIN BODY: Generous max-w-7xl width for multi-column grid layout */}
@@ -580,6 +651,22 @@ function MainApp() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
+      )}
+
+      {/* Student Support & Feedback Modal */}
+      <StudentSupportModal
+        isOpen={isSupportModalOpen}
+        onClose={() => setIsSupportModalOpen(false)}
+        keyMasked={auth.keyMasked}
+        customerName={auth.customerName}
+      />
+
+      {/* Feature 42: Anti-Copy Warning Alert */}
+      {antiCopyWarning && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-rose-950/95 border border-rose-700 text-rose-200 text-xs font-bold shadow-2xl flex items-center gap-2 animate-scaleUp pointer-events-none">
+          <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+          <span>কপিরাইট সুরক্ষা: কন্টেন্ট কপি বা সিলেক্ট করা সংরক্ষিত।</span>
+        </div>
       )}
     </div>
   );

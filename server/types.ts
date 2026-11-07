@@ -12,13 +12,42 @@ export interface LicenseRecord {
   browserBound: boolean;
   currentSessionHash?: string;
   lastActiveAt?: number;
-  customerName?: string; // Buyer/Student name e.g. "Arifa" or "Chanchal"
+  customerName?: string; // Buyer/Student name e.g. "Bonolota"
   customerNote?: string; // Optional note: buyer name, WhatsApp number, transaction ID
   deviceInfo?: string; // e.g. "Chrome (Windows)" or "Safari (iOS)"
   clientIp?: string;
   boundDeviceId?: string; // Persistent client device identifier
   boundUserAgent?: string;
   progress?: UserProgressSummary; // User learning progress, streak, quizzes, and vocabulary mastery
+  browserMetadata?: ClientBrowserMetadata; // Comprehensive browser, OS, screen, hardware, and IP telemetry
+  fraudAlert?: string; // Flagged when another device attempts to access this bound key
+  tamperAlert?: string; // Flagged when client-side HMAC or data anomaly is detected
+  canvasFingerprintHash?: string; // Unique GPU hardware fingerprint
+}
+
+export interface ClientBrowserMetadata {
+  ip?: string;
+  userAgent?: string;
+  browserName?: string;
+  browserVersion?: string;
+  osName?: string;
+  osVersion?: string;
+  deviceType?: 'Mobile' | 'Tablet' | 'Desktop' | 'Unknown';
+  screenResolution?: string;
+  windowSize?: string;
+  pixelRatio?: number;
+  colorDepth?: number;
+  language?: string;
+  timezone?: string;
+  timezoneOffset?: string;
+  touchSupport?: boolean;
+  cpuCores?: number;
+  deviceMemoryGb?: number;
+  networkType?: string;
+  platform?: string;
+  onlineStatus?: boolean;
+  canvasFingerprintHash?: string;
+  capturedAt?: number;
 }
 
 export interface UserProgressSummary {
@@ -32,6 +61,81 @@ export interface UserProgressSummary {
   quizzesTaken: number;
   quizAccuracy: number;
   lastSyncAt: number;
+  studyHistory?: Record<string, number>; // date "YYYY-MM-DD" -> words studied count (for heatmap)
+  canvasFingerprintHash?: string;
+  tamperFlag?: boolean;
+  activeFeature?: string; // Live active section e.g. "Unit 12 Flashcards"
+  hmacSignature?: string;
+}
+
+export interface SupportTicket {
+  id: string; // e.g. "tkt_17300000_abc"
+  licenseId: string;
+  keyMasked: string;
+  customerName?: string;
+  subject: string;
+  message: string;
+  status: 'open' | 'replied' | 'resolved';
+  createdAt: number;
+  updatedAt: number;
+  adminReply?: string;
+  repliedAt?: number;
+  clientIp?: string;
+  clientDevice?: string;
+}
+
+export interface StudentActionEvent {
+  id: string;
+  licenseId: string;
+  keyMasked: string;
+  customerName?: string;
+  actionType: 'login' | 'study_word' | 'quiz_complete' | 'flashcard_review' | 'tab_change';
+  details: string; // e.g. "Unit 7 - 15 words studied" or "Quiz completed: 9/10 (90%)"
+  activeSection?: string; // e.g. "Unit 12 Flashcards"
+  timestamp: number;
+  clientIp?: string;
+  deviceInfo?: string;
+}
+
+export interface SecurityTerminalEvent {
+  id: string;
+  timestamp: number;
+  level: 'info' | 'warn' | 'alert' | 'danger';
+  source: 'FIREWALL' | 'AUTH' | 'HONEYPOT' | 'TAMPER' | 'TELEGRAM' | 'SYSTEM';
+  message: string;
+  ip?: string;
+  keyMasked?: string;
+}
+
+export interface SystemHealthMetrics {
+  uptimeSeconds: number;
+  uptimeFormatted: string;
+  nodeVersion: string;
+  pid: number;
+  memoryUsageMb: {
+    rss: number;
+    heapTotal: number;
+    heapUsed: number;
+    external: number;
+  };
+  redisConnected: boolean;
+  redisPingMs: number;
+  totalKeys: number;
+  blacklistedIpsCount: number;
+  activeOnlineStudents: number;
+  antiCopyEnabled: boolean;
+  honeypotTriggeredCount: number;
+}
+
+export interface SecurityConfig {
+  antiCopyEnabled: boolean;
+  ipBlacklist: string[];
+  honeypotCount: number;
+  telegram: {
+    enabled: boolean;
+    botToken: string;
+    chatId: string;
+  };
 }
 
 export interface UserSessionData {

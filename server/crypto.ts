@@ -161,24 +161,104 @@ export function hashSessionToken(token: string): string {
  * Parses user-agent header into a concise, readable browser and device string
  */
 export function parseUserAgent(ua?: string): string {
-  if (!ua) return 'অজানা ব্রাউজার';
-  let browser = 'Browser';
-  let os = 'Device';
+  const details = parseUserAgentDetailed(ua);
+  return `${details.browserName} ${details.browserVersion ? details.browserVersion.split('.')[0] : ''} (${details.osName})`.replace(/\s+/g, ' ').trim();
+}
 
-  // Detect OS
-  if (/iphone|ipad|ipod/i.test(ua)) os = 'iPhone / iOS';
-  else if (/android/i.test(ua)) os = 'Android Phone';
-  else if (/windows/i.test(ua)) os = 'Windows PC';
-  else if (/macintosh|mac os x/i.test(ua)) os = 'MacBook / macOS';
-  else if (/linux/i.test(ua)) os = 'Linux';
+export interface DetailedUserAgentInfo {
+  browserName: string;
+  browserVersion: string;
+  osName: string;
+  osVersion: string;
+  deviceType: 'Mobile' | 'Tablet' | 'Desktop' | 'Unknown';
+}
 
-  // Detect Browser
-  if (/samsungbrowser/i.test(ua)) browser = 'Samsung Internet';
-  else if (/edg/i.test(ua)) browser = 'Edge';
-  else if (/chrome|crios/i.test(ua)) browser = 'Chrome';
-  else if (/firefox|fxios/i.test(ua)) browser = 'Firefox';
-  else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = 'Safari';
-  else if (/opera|opr/i.test(ua)) browser = 'Opera';
+export function parseUserAgentDetailed(ua?: string): DetailedUserAgentInfo {
+  if (!ua) {
+    return {
+      browserName: 'Unknown Browser',
+      browserVersion: '',
+      osName: 'Unknown OS',
+      osVersion: '',
+      deviceType: 'Unknown',
+    };
+  }
 
-  return `${browser} on ${os}`;
+  let browserName = 'Browser';
+  let browserVersion = '';
+  let osName = 'Device';
+  let osVersion = '';
+  let deviceType: 'Mobile' | 'Tablet' | 'Desktop' | 'Unknown' = 'Desktop';
+
+  // Device type detection
+  if (/tablet|ipad|playbook|silk/i.test(ua) || (/android/i.test(ua) && !/mobile/i.test(ua))) {
+    deviceType = 'Tablet';
+  } else if (/mobile|iphone|ipod|android.*mobile|blackberry|iemobile|opera mini/i.test(ua)) {
+    deviceType = 'Mobile';
+  } else {
+    deviceType = 'Desktop';
+  }
+
+  // OS detection
+  if (/iphone/i.test(ua)) {
+    osName = 'iOS (iPhone)';
+    const match = ua.match(/OS (\d+[._]\d+([._]\d+)?)/i);
+    if (match) osVersion = match[1].replace(/_/g, '.');
+  } else if (/ipad/i.test(ua)) {
+    osName = 'iPadOS (iPad)';
+    const match = ua.match(/OS (\d+[._]\d+([._]\d+)?)/i);
+    if (match) osVersion = match[1].replace(/_/g, '.');
+  } else if (/android/i.test(ua)) {
+    osName = 'Android';
+    const match = ua.match(/Android (\d+(\.\d+)?)/i);
+    if (match) osVersion = match[1];
+  } else if (/windows nt 10\.0/i.test(ua)) {
+    osName = 'Windows';
+    osVersion = '10 / 11';
+  } else if (/windows nt 6\.3/i.test(ua)) {
+    osName = 'Windows';
+    osVersion = '8.1';
+  } else if (/windows nt 6\.1/i.test(ua)) {
+    osName = 'Windows';
+    osVersion = '7';
+  } else if (/windows/i.test(ua)) {
+    osName = 'Windows PC';
+  } else if (/macintosh|mac os x/i.test(ua)) {
+    osName = 'macOS';
+    const match = ua.match(/Mac OS X (\d+[._]\d+([._]\d+)?)/i);
+    if (match) osVersion = match[1].replace(/_/g, '.');
+  } else if (/linux/i.test(ua)) {
+    osName = 'Linux';
+  }
+
+  // Browser detection
+  if (/edg\/(\d+(\.\d+)?)/i.test(ua)) {
+    browserName = 'Edge';
+    browserVersion = ua.match(/edg\/(\d+(\.\d+)?)/i)?.[1] || '';
+  } else if (/samsungbrowser\/(\d+(\.\d+)?)/i.test(ua)) {
+    browserName = 'Samsung Internet';
+    browserVersion = ua.match(/samsungbrowser\/(\d+(\.\d+)?)/i)?.[1] || '';
+  } else if (/opr\/(\d+(\.\d+)?)/i.test(ua) || /opera\/(\d+(\.\d+)?)/i.test(ua)) {
+    browserName = 'Opera';
+    browserVersion = ua.match(/(?:opr|opera)\/(\d+(\.\d+)?)/i)?.[1] || '';
+  } else if (/chrome\/(\d+(\.\d+)?)/i.test(ua) || /crios\/(\d+(\.\d+)?)/i.test(ua)) {
+    browserName = 'Chrome';
+    browserVersion = ua.match(/(?:chrome|crios)\/(\d+(\.\d+)?)/i)?.[1] || '';
+  } else if (/firefox\/(\d+(\.\d+)?)/i.test(ua) || /fxios\/(\d+(\.\d+)?)/i.test(ua)) {
+    browserName = 'Firefox';
+    browserVersion = ua.match(/(?:firefox|fxios)\/(\d+(\.\d+)?)/i)?.[1] || '';
+  } else if (/version\/(\d+(\.\d+)?).*safari/i.test(ua)) {
+    browserName = 'Safari';
+    browserVersion = ua.match(/version\/(\d+(\.\d+)?)/i)?.[1] || '';
+  } else if (/safari/i.test(ua)) {
+    browserName = 'Safari';
+  }
+
+  return {
+    browserName,
+    browserVersion,
+    osName,
+    osVersion,
+    deviceType,
+  };
 }

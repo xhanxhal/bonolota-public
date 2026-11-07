@@ -1,12 +1,13 @@
 import { Router, Request, Response } from 'express';
 import { storage } from '../storage';
-import { UserProgressSummary } from '../types';
+import { UserProgressSummary, ClientBrowserMetadata } from '../types';
 import { 
   hashLicenseKey, 
   generateSessionToken, 
   hashSessionToken,
   normalizeKey,
-  parseUserAgent
+  parseUserAgent,
+  parseUserAgentDetailed
 } from '../crypto';
 import { 
   USER_COOKIE_NAME, 
@@ -14,6 +15,7 @@ import {
   requireCustomerAuth, 
   AuthenticatedUserRequest 
 } from '../auth';
+import { sendTelegramAlert } from '../telegram';
 
 export const authRouter = Router();
 
@@ -174,9 +176,31 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
         return;
       }
 
-      // STRICT 1-BROWSER LOCK:
-      // The key is already bound to a browser.
-      // If the user reset their browser or changed phones, they must contact admin with their payment slip to reset binding.
+      // STRICT 1-BROWSER LOCK & FEATURE 15: Multi-Device Fraud Alert
+      // The key is already bound to another browser/hardware.
+      const currentUa = (req.headers['user-agent'] as string) || '';
+      const currDetails = parseUserAgentDetailed(currentUa);
+      const incomingDevice = `${currDetails.browserName} (${currDetails.osName})`.trim();
+      const fraudText = `অননুমোদিত ডিভাইস থেকে অ্যাক্সেস চেষ্টা: ${incomingDevice} (IP: ${clientIp})`;
+
+      await storage.updateLicense(license.id, {
+        fraudAlert: fraudText,
+      });
+
+      await storage.recordFailedActivation();
+
+      await storage.addSecurityEvent({
+        level: 'danger',
+        source: 'AUTH',
+        message: `ফ্রড অ্যালার্ট: বাইন্ড করা কি-তে অননুমোদিত অ্যাক্সেস চেষ্টা (${license.keyMasked}, IP: ${clientIp})`,
+        ip: clientIp,
+        keyMasked: license.keyMasked,
+      });
+
+      sendTelegramAlert(
+        `🚨 <b>মাল্টি-ডিভাইস ফ্রড অ্যালার্ট!</b>\nকী: <code>${license.keyMasked}</code>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nআক্রমণকারী আইপি: <code>${clientIp}</code>\nডিভাইস: ${incomingDevice}\nস্ট্যাটাস: ইতিমধ্যে অন্য ব্রাউজারে লক করা কি-তে অননুমোদিত প্রবেশের চেষ্টা!`
+      ).catch(() => {});
+
       res.status(409).json({
         ok: false,
         error: 'ALREADY_BOUND',
@@ -190,10 +214,36 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
     const sessionHash = hashSessionToken(sessionToken);
     const ttlSeconds = Math.max(60, Math.floor((license.expiresAt - now) / 1000));
 
-    const rawUserAgent = req.headers['user-agent'] as string | undefined;
-    const deviceInfo = parseUserAgent(rawUserAgent);
+    const rawUserAgent = (req.headers['user-agent'] as string) || '';
+    const uaDetails = parseUserAgentDetailed(rawUserAgent);
+    const deviceInfo = `${uaDetails.browserName} ${uaDetails.browserVersion ? uaDetails.browserVersion.split('.')[0] : ''} (${uaDetails.osName})`.trim();
 
-    // Atomically claim the license binding for this browser
+    const incomingClientMeta = req.body?.clientMetadata || {};
+    const browserMetadata: ClientBrowserMetadata = {
+      ip: clientIp,
+      userAgent: rawUserAgent,
+      browserName: uaDetails.browserName,
+      browserVersion: uaDetails.browserVersion,
+      osName: uaDetails.osName,
+      osVersion: uaDetails.osVersion,
+      deviceType: uaDetails.deviceType,
+      screenResolution: typeof incomingClientMeta.screenResolution === 'string' ? incomingClientMeta.screenResolution : undefined,
+      windowSize: typeof incomingClientMeta.windowSize === 'string' ? incomingClientMeta.windowSize : undefined,
+      pixelRatio: typeof incomingClientMeta.pixelRatio === 'number' ? incomingClientMeta.pixelRatio : undefined,
+      colorDepth: typeof incomingClientMeta.colorDepth === 'number' ? incomingClientMeta.colorDepth : undefined,
+      language: typeof incomingClientMeta.language === 'string' ? incomingClientMeta.language : (req.headers['accept-language']?.split(',')[0] || undefined),
+      timezone: typeof incomingClientMeta.timezone === 'string' ? incomingClientMeta.timezone : undefined,
+      timezoneOffset: typeof incomingClientMeta.timezoneOffset === 'string' ? incomingClientMeta.timezoneOffset : undefined,
+      touchSupport: typeof incomingClientMeta.touchSupport === 'boolean' ? incomingClientMeta.touchSupport : undefined,
+      cpuCores: typeof incomingClientMeta.cpuCores === 'number' ? incomingClientMeta.cpuCores : undefined,
+      deviceMemoryGb: typeof incomingClientMeta.deviceMemoryGb === 'number' ? incomingClientMeta.deviceMemoryGb : undefined,
+      networkType: typeof incomingClientMeta.networkType === 'string' ? incomingClientMeta.networkType : undefined,
+      platform: typeof incomingClientMeta.platform === 'string' ? incomingClientMeta.platform : undefined,
+      onlineStatus: typeof incomingClientMeta.onlineStatus === 'boolean' ? incomingClientMeta.onlineStatus : undefined,
+      capturedAt: now,
+    };
+
+    // Atomically claim the license binding for this browser with full metadata
     const updated = await storage.updateLicense(license.id, {
       browserBound: true,
       currentSessionHash: sessionHash,
@@ -202,6 +252,7 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
       lastActiveAt: now,
       deviceInfo,
       clientIp,
+      browserMetadata,
       ...(incomingName ? { customerName: incomingName } : {}),
     });
 
@@ -231,6 +282,22 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
       licenseId: license.id,
       details: `License activated by customer. Browser bound. IP: ${clientIp}`,
       ip: clientIp,
+    });
+
+    // Telegram Notification & Student Action Timeline
+    sendTelegramAlert(
+      `🎉 <b>নতুন লাইসেন্স সক্রিয়করণ!</b>\nছাত্র: <b>${updated.customerName || 'নতুন শিক্ষার্থী'}</b>\nকী: <code>${updated.keyMasked}</code>\nডিভাইস: ${deviceInfo}\nআইপি: <code>${clientIp}</code>\nমেয়াদ: ${updated.durationDays} দিন`
+    ).catch(() => {});
+
+    await storage.addStudentAction({
+      licenseId: license.id,
+      keyMasked: license.keyMasked,
+      customerName: updated.customerName,
+      actionType: 'login',
+      details: 'প্রথমবার ব্রাউজারে সফলভাবে সক্রিয়করণ সম্পন্ন',
+      activeSection: 'ড্যাশবোর্ড',
+      clientIp,
+      deviceInfo,
     });
 
     // Set HttpOnly Secure Cookie
@@ -318,6 +385,34 @@ const handleCustomerSession = async (req: Request, res: Response): Promise<void>
 
     const isLifetime = Boolean(license.isLifetime || license.durationDays >= 36500);
     const daysLeft = isLifetime ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
+
+    // Update lastActiveAt, clientIp and browser metadata if available
+    const rawUserAgent = (req.headers['user-agent'] as string) || '';
+    const currentClientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || 
+      (req.headers['cf-connecting-ip'] as string) || 
+      (req.headers['x-real-ip'] as string) || 
+      req.socket?.remoteAddress || 
+      req.ip || 
+      license.clientIp;
+
+    if (!license.clientIp || !license.browserMetadata || currentClientIp !== license.clientIp) {
+      const uaDetails = parseUserAgentDetailed(rawUserAgent);
+      storage.updateLicense(license.id, {
+        clientIp: currentClientIp,
+        lastActiveAt: now,
+        browserMetadata: {
+          ...(license.browserMetadata || {}),
+          ip: currentClientIp,
+          userAgent: rawUserAgent || license.browserMetadata?.userAgent,
+          browserName: uaDetails.browserName,
+          browserVersion: uaDetails.browserVersion,
+          osName: uaDetails.osName,
+          osVersion: uaDetails.osVersion,
+          deviceType: uaDetails.deviceType,
+          capturedAt: now,
+        }
+      }).catch(() => {});
+    }
 
     res.json({
       authenticated: true,
@@ -414,13 +509,25 @@ authRouter.post('/sync-progress', async (req: Request, res: Response): Promise<v
       needsRevisionCount = 0,
       favoritesCount = 0,
       quizzesTaken = 0, 
-      quizAccuracy = 0 
+      quizAccuracy = 0,
+      studyHistory,
+      activeFeature,
+      tamperDetected
     } = req.body || {};
 
+    const wordsStudiedNum = Math.max(0, parseInt(wordsStudied, 10) || 0);
+    const streakNum = Math.max(0, parseInt(learningStreak, 10) || 0);
+
+    // Feature 32: Anti-Tamper Check
+    let isTampered = Boolean(tamperDetected);
+    if (wordsStudiedNum > 50000 || streakNum > 10000) {
+      isTampered = true;
+    }
+
     const progress: UserProgressSummary = {
-      learningStreak: Math.max(0, parseInt(learningStreak, 10) || 0),
+      learningStreak: streakNum,
       lastStudyDate: typeof lastStudyDate === 'string' ? lastStudyDate : null,
-      wordsStudied: Math.max(0, parseInt(wordsStudied, 10) || 0),
+      wordsStudied: wordsStudiedNum,
       wordsPracticed: Math.max(0, parseInt(wordsPracticed, 10) || 0),
       wordsMastered: Math.max(0, parseInt(wordsMastered, 10) || 0),
       needsRevisionCount: Math.max(0, parseInt(needsRevisionCount, 10) || 0),
@@ -428,11 +535,69 @@ authRouter.post('/sync-progress', async (req: Request, res: Response): Promise<v
       quizzesTaken: Math.max(0, parseInt(quizzesTaken, 10) || 0),
       quizAccuracy: Math.min(100, Math.max(0, parseInt(quizAccuracy, 10) || 0)),
       lastSyncAt: Date.now(),
+      studyHistory: typeof studyHistory === 'object' && studyHistory !== null ? studyHistory : license.progress?.studyHistory,
+      activeFeature: typeof activeFeature === 'string' ? activeFeature.slice(0, 80) : license.progress?.activeFeature,
+      tamperFlag: isTampered,
     };
+
+    const incomingClientMeta = req.body?.clientMetadata || {};
+    const currentClientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || 
+      (req.headers['cf-connecting-ip'] as string) || 
+      (req.headers['x-real-ip'] as string) || 
+      req.socket?.remoteAddress || 
+      req.ip || 
+      license.clientIp;
+
+    const rawUserAgent = (req.headers['user-agent'] as string) || license.boundUserAgent || '';
+    const uaDetails = parseUserAgentDetailed(rawUserAgent);
+
+    const mergedBrowserMetadata: ClientBrowserMetadata = {
+      ...(license.browserMetadata || {}),
+      ip: currentClientIp,
+      userAgent: rawUserAgent || license.browserMetadata?.userAgent,
+      browserName: uaDetails.browserName,
+      browserVersion: uaDetails.browserVersion,
+      osName: uaDetails.osName,
+      osVersion: uaDetails.osVersion,
+      deviceType: uaDetails.deviceType,
+      screenResolution: incomingClientMeta.screenResolution || license.browserMetadata?.screenResolution,
+      windowSize: incomingClientMeta.windowSize || license.browserMetadata?.windowSize,
+      pixelRatio: incomingClientMeta.pixelRatio || license.browserMetadata?.pixelRatio,
+      colorDepth: incomingClientMeta.colorDepth || license.browserMetadata?.colorDepth,
+      language: incomingClientMeta.language || license.browserMetadata?.language || req.headers['accept-language']?.split(',')[0],
+      timezone: incomingClientMeta.timezone || license.browserMetadata?.timezone,
+      timezoneOffset: incomingClientMeta.timezoneOffset || license.browserMetadata?.timezoneOffset,
+      touchSupport: typeof incomingClientMeta.touchSupport === 'boolean' ? incomingClientMeta.touchSupport : license.browserMetadata?.touchSupport,
+      cpuCores: incomingClientMeta.cpuCores || license.browserMetadata?.cpuCores,
+      deviceMemoryGb: incomingClientMeta.deviceMemoryGb || license.browserMetadata?.deviceMemoryGb,
+      networkType: incomingClientMeta.networkType || license.browserMetadata?.networkType,
+      platform: incomingClientMeta.platform || license.browserMetadata?.platform,
+      onlineStatus: typeof incomingClientMeta.onlineStatus === 'boolean' ? incomingClientMeta.onlineStatus : true,
+      canvasFingerprintHash: incomingClientMeta.canvasFingerprintHash || license.browserMetadata?.canvasFingerprintHash,
+      capturedAt: Date.now(),
+    };
+
+    if (isTampered) {
+      await storage.addSecurityEvent({
+        level: 'alert',
+        source: 'TAMPER',
+        message: `ট্যাম্পার সনাক্ত: ক্লায়েন্ট ডেটা ম্যানিপুলেশন (${license.keyMasked}, IP: ${currentClientIp})`,
+        ip: currentClientIp,
+        keyMasked: license.keyMasked,
+      });
+
+      sendTelegramAlert(
+        `⚠️ <b>অ্যান্টি-ট্যাম্পার অ্যালার্ট!</b>\nকী: <code>${license.keyMasked}</code>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nআইপি: <code>${currentClientIp}</code>\nস্ট্যাটাস: ব্রাউজারের লোকালস্টোরেজ বা স্টাডি কাউন্টারে অস্বাভাবিক পরিবর্তন সনাক্ত হয়েছে।`
+      ).catch(() => {});
+    }
 
     await storage.updateLicense(license.id, {
       progress,
       lastActiveAt: Date.now(),
+      clientIp: currentClientIp,
+      browserMetadata: mergedBrowserMetadata,
+      ...(isTampered ? { tamperAlert: '⚠️ ক্লায়েন্ট ডেটা ম্যানিপুলেশন সনাক্ত করা হয়েছে' } : {}),
+      canvasFingerprintHash: incomingClientMeta.canvasFingerprintHash || license.canvasFingerprintHash,
     });
 
     res.json({ ok: true, progress });
@@ -441,4 +606,119 @@ authRouter.post('/sync-progress', async (req: Request, res: Response): Promise<v
     res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
   }
 });
+
+/**
+ * Feature 51 & 25: Real-Time Action Ping & Timeline Logger
+ * POST /api/auth/action-ping
+ */
+authRouter.post('/action-ping', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  try {
+    const license = req.license!;
+    const { actionType, details, activeSection } = req.body || {};
+
+    if (!actionType || !details) {
+      res.status(400).json({ ok: false, message: 'Invalid action ping' });
+      return;
+    }
+
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || license.clientIp;
+    const now = Date.now();
+
+    // Record action event
+    const action = await storage.addStudentAction({
+      licenseId: license.id,
+      keyMasked: license.keyMasked,
+      customerName: license.customerName,
+      actionType,
+      details,
+      activeSection,
+      clientIp,
+      deviceInfo: license.deviceInfo,
+    });
+
+    // Update active feature & lastActiveAt on license
+    if (activeSection) {
+      const currentProgress = license.progress || {
+        learningStreak: 0,
+        wordsStudied: 0,
+        wordsPracticed: 0,
+        wordsMastered: 0,
+        quizzesTaken: 0,
+        quizAccuracy: 0,
+        lastSyncAt: now,
+      };
+      await storage.updateLicense(license.id, {
+        lastActiveAt: now,
+        progress: {
+          ...currentProgress,
+          activeFeature: activeSection,
+        },
+      });
+    }
+
+    res.json({ ok: true, actionId: action.id });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 7: Student Support Tickets Submission & Status
+ * POST /api/support/ticket
+ * GET /api/support/my-tickets
+ */
+authRouter.post('/support/ticket', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  try {
+    const license = req.license!;
+    const { subject, message } = req.body || {};
+
+    if (!subject || !message) {
+      res.status(400).json({ ok: false, message: 'বিষয় এবং বার্তা উভয়ই পূরণ করতে হবে।' });
+      return;
+    }
+
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || license.clientIp;
+    const cleanSubject = String(subject).slice(0, 150);
+    const cleanMessage = String(message).slice(0, 2000);
+
+    const ticket = await storage.createSupportTicket({
+      licenseId: license.id,
+      keyMasked: license.keyMasked,
+      customerName: license.customerName,
+      subject: cleanSubject,
+      message: cleanMessage,
+      clientIp,
+      clientDevice: license.deviceInfo,
+    });
+
+    // Telegram Alert for immediate response
+    sendTelegramAlert(
+      `📩 <b>নতুন স্টুডেন্ট সাপোর্ট টিকেট!</b>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nকী: <code>${license.keyMasked}</code>\nবিষয়: <b>${cleanSubject}</b>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>\nআইপি: <code>${clientIp}</code>`
+    ).catch(() => {});
+
+    await storage.addSecurityEvent({
+      level: 'info',
+      source: 'AUTH',
+      message: `নতুন সাপোর্ট টিকেট প্রেরিত: "${cleanSubject}" (${license.keyMasked})`,
+      ip: clientIp,
+      keyMasked: license.keyMasked,
+    });
+
+    res.json({ ok: true, ticket, message: 'আপনার বার্তাটি সফলভাবে পাঠানো হয়েছে। অ্যাডমিন শীঘ্রই উত্তর দেবেন।' });
+  } catch (error) {
+    console.error('[support/ticket] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+authRouter.get('/support/my-tickets', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  try {
+    const license = req.license!;
+    const tickets = await storage.listSupportTicketsByLicense(license.id);
+    res.json({ ok: true, tickets });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
 

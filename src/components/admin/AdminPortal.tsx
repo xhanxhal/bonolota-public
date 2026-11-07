@@ -35,11 +35,24 @@ import {
   Award,
   BookOpen,
   Target,
-  Sparkles,
-  Trophy
+  Trophy,
+  Globe,
+  Monitor,
+  Cpu,
+  MapPin,
+  Activity,
+  Radio,
+  ShieldAlert,
+  MessageSquare,
+  Settings
 } from 'lucide-react';
 import { LicenseRecord, AuditLogEntry, AdminOverviewStats, BroadcastAnnouncement } from '../../../server/types';
 import { haptics } from '../../utils/haptics';
+import { LiveSecurityTab } from './LiveSecurityTab';
+import { SupportInboxTab } from './SupportInboxTab';
+import { AdminSettingsTab } from './AdminSettingsTab';
+import { StudentTimelineModal } from './StudentTimelineModal';
+import { ActivityHeatmap } from './ActivityHeatmap';
 
 interface AdminPortalProps {
   onExitAdmin?: () => void;
@@ -53,7 +66,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Dashboard Data
-  const [activeTab, setActiveTab] = useState<'overview' | 'generate' | 'licenses' | 'audit' | 'broadcast'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'generate' | 'licenses' | 'audit' | 'broadcast' | 'live_security' | 'support' | 'settings'>('overview');
+  const [selectedTimelineLicense, setSelectedTimelineLicense] = useState<LicenseRecord | null>(null);
   const [stats, setStats] = useState<AdminOverviewStats | null>(null);
   const [licenses, setLicenses] = useState<LicenseRecord[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
@@ -99,6 +113,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
 
   // Modal for viewing student learning progress & streaks
   const [selectedProgressLicense, setSelectedProgressLicense] = useState<LicenseRecord | null>(null);
+
+  // Modal for inspecting student device, browser & IP telemetry
+  const [selectedDeviceLicense, setSelectedDeviceLicense] = useState<LicenseRecord | null>(null);
+  const [copiedUa, setCopiedUa] = useState(false);
 
   // Check admin session on mount
   const checkAdminSession = useCallback(async () => {
@@ -449,6 +467,25 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
     }
   };
 
+  const handleSendRenewal = async (licId: string) => {
+    haptics.tap();
+    try {
+      const res = await fetch(`/api/admin/licenses/${licId}/send-renewal`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setActionMessage({ type: 'success', text: data.message });
+        loadDashboardData();
+      } else {
+        setActionMessage({ type: 'error', text: data.message || 'নবায়ন নোটিশ পাঠানো যায়নি।' });
+      }
+    } catch {
+      setActionMessage({ type: 'error', text: 'সার্ভার এরর।' });
+    }
+  };
+
   // Aggregated student learning progress & streak summary
   const learningSummary = React.useMemo(() => {
     let activeStreaks = 0;
@@ -521,6 +558,11 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
       matchesStatus = lic.status === 'suspended';
     } else if (statusFilter === 'revoked') {
       matchesStatus = lic.status === 'revoked';
+    } else if (statusFilter === 'expiring') {
+      const sevenDays = 7 * 24 * 60 * 60 * 1000;
+      matchesStatus = lic.status === 'active' && now <= lic.expiresAt && lic.expiresAt <= now + sevenDays;
+    } else if (statusFilter === 'alerts') {
+      matchesStatus = Boolean(lic.fraudAlert || lic.tamperAlert);
     }
 
     const q = searchQuery.trim().toLowerCase();
@@ -735,6 +777,45 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
           >
             <Megaphone className="w-4 h-4" />
             <span>নোটিফিকেশন ও ব্রডকাস্ট ({broadcasts.length})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('live_security')}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'live_security'
+                ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
+            <span>লাইভ ও সিকিউরিটি হাব</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('support')}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'support'
+                ? 'bg-teal-600 text-white shadow-lg shadow-teal-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>সাপোর্ট ইনবক্স</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('settings')}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'settings'
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <Settings className="w-4 h-4" />
+            <span>নিরাপত্তা ও সেটিংস</span>
           </button>
         </div>
 
@@ -1158,6 +1239,8 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                 {[
                   { id: 'all', label: 'সব' },
                   { id: 'active', label: 'সক্রিয়' },
+                  { id: 'expiring', label: '⏳ মেয়াদ শেষ (৭ দিন)' },
+                  { id: 'alerts', label: '⚠️ ফ্রড/ট্যাম্পার' },
                   { id: 'streak', label: '🔥 স্ট্রিকধারী' },
                   { id: 'bound', label: 'Bound' },
                   { id: 'unbound', label: 'Unbound' },
@@ -1285,6 +1368,20 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
 
                               <p className="text-[11px] text-slate-400 mt-0.5">{lic.customerNote || 'নোট নেই'}</p>
                               <p className="text-[10px] text-slate-500 font-mono">{lic.id}</p>
+
+                              {/* Fraud & Tamper Badges */}
+                              {lic.fraudAlert && (
+                                <div className="mt-1.5 flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-rose-950/90 border border-rose-800 text-rose-300 text-[10px] font-bold animate-pulse" title={lic.fraudAlert}>
+                                  <AlertTriangle className="w-3 h-3 text-rose-400 shrink-0" />
+                                  <span className="truncate">⚠️ ফ্রড অ্যালার্ট (অন্য ডিভাইস)</span>
+                                </div>
+                              )}
+                              {lic.tamperAlert && (
+                                <div className="mt-1.5 flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-amber-950/90 border border-amber-800 text-amber-300 text-[10px] font-bold" title={lic.tamperAlert}>
+                                  <ShieldAlert className="w-3 h-3 text-amber-400 shrink-0" />
+                                  <span className="truncate">⚠️ ট্যাম্পার সনাক্ত</span>
+                                </div>
+                              )}
                             </td>
 
                             {/* Status */}
@@ -1308,27 +1405,47 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                               )}
                             </td>
 
-                            {/* Browser Binding */}
+                            {/* Browser Binding & Device Telemetry */}
                             <td className="py-3.5 px-4">
                               {lic.browserBound ? (
-                                <div>
-                                  <span className="inline-flex items-center gap-1 text-teal-400 font-semibold text-[11px]">
-                                    <Smartphone className="w-3.5 h-3.5" /> Bound
-                                  </span>
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-1.5 flex-wrap">
+                                    <span className="inline-flex items-center gap-1 text-teal-300 font-bold text-[10px] bg-teal-950/80 px-2 py-0.5 rounded-full border border-teal-800/80">
+                                      <Smartphone className="w-3 h-3 text-teal-400" /> Bound
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => setSelectedDeviceLicense(lic)}
+                                      className="px-1.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-teal-300 hover:text-white text-[10px] font-semibold transition-colors flex items-center gap-1 cursor-pointer border border-slate-700"
+                                      title="ব্রাউজার, ডিভাইস ও আইপি সম্পূর্ণ বিবরণ দেখুন"
+                                    >
+                                      <Globe className="w-2.5 h-2.5 text-teal-400" />
+                                      <span>ফুল ইনফো</span>
+                                    </button>
+                                  </div>
+
                                   {lic.deviceInfo && (
-                                    <p className="text-[11px] font-bold text-slate-200 mt-0.5 flex items-center gap-1">
+                                    <p className="text-[11px] font-bold text-slate-200 flex items-center gap-1">
                                       <span>🌐</span>
-                                      <span>{lic.deviceInfo}</span>
+                                      <span className="truncate max-w-[150px]" title={lic.deviceInfo}>{lic.deviceInfo}</span>
                                     </p>
                                   )}
+
+                                  {(lic.browserMetadata?.ip || lic.clientIp) && (
+                                    <p className="text-[10px] font-mono text-indigo-300 flex items-center gap-1">
+                                      <MapPin className="w-3 h-3 text-indigo-400 shrink-0" />
+                                      <span>IP: {lic.browserMetadata?.ip || lic.clientIp}</span>
+                                    </p>
+                                  )}
+
                                   {lic.activatedAt && (
-                                    <p className="text-[10px] text-slate-500 mt-0.5">
+                                    <p className="text-[10px] text-slate-500">
                                       যুক্ত: {new Date(lic.activatedAt).toLocaleDateString()}
                                     </p>
                                   )}
                                 </div>
                               ) : (
-                                <span className="inline-flex items-center gap-1 text-slate-500 text-[11px]">
+                                <span className="inline-flex items-center gap-1 text-slate-500 text-[11px] italic">
                                   Unbound (লগইন হয়নি)
                                 </span>
                               )}
@@ -1396,6 +1513,29 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
                             {/* Actions */}
                             <td className="py-3.5 px-4 text-right">
                               <div className="flex items-center justify-end gap-1.5 flex-wrap">
+                                {/* Feature 2: 1-Click Renewal Alert Button */}
+                                {lic.status === 'active' && daysRemaining <= 7 && !isExpired && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleSendRenewal(lic.id)}
+                                    title="১-ক্লিক মেয়াদ শেষ সতর্কতা পাঠান"
+                                    className="px-2.5 py-1 rounded-lg bg-amber-950/90 hover:bg-amber-900 border border-amber-700 text-amber-200 text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+                                  >
+                                    <span>⏳ নবায়ন নোটিশ</span>
+                                  </button>
+                                )}
+
+                                {/* Feature 51: Action Timeline Button */}
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedTimelineLicense(lic)}
+                                  title="শিক্ষার্থীর পূর্ণাঙ্গ অ্যাকশন টাইমলাইন দেখুন"
+                                  className="px-2.5 py-1 rounded-lg bg-sky-950/80 hover:bg-sky-900 border border-sky-800 text-sky-300 text-[11px] font-semibold transition-colors cursor-pointer flex items-center gap-1"
+                                >
+                                  <History className="w-3 h-3" />
+                                  <span>টাইমলাইন</span>
+                                </button>
+
                                 {/* Reset Binding Button */}
                                 {lic.browserBound && (
                                   <button
@@ -1841,6 +1981,15 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
             </div>
           </div>
         )}
+
+        {/* TAB 6: LIVE & SECURITY HUB */}
+        {activeTab === 'live_security' && <LiveSecurityTab />}
+
+        {/* TAB 7: SUPPORT INBOX */}
+        {activeTab === 'support' && <SupportInboxTab />}
+
+        {/* TAB 8: SETTINGS & TELEGRAM */}
+        {activeTab === 'settings' && <AdminSettingsTab />}
       </main>
 
       {/* Modal: Extend License Duration */}
@@ -2021,6 +2170,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
               </div>
             </div>
 
+            {/* Feature 18: Activity Heatmap Calendar */}
+            <ActivityHeatmap
+              studyHistory={selectedProgressLicense.progress?.studyHistory}
+              totalWordsStudied={selectedProgressLicense.progress?.wordsStudied}
+              streak={selectedProgressLicense.progress?.learningStreak}
+            />
+
             {/* Footer Timestamps */}
             <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500">
               <div>
@@ -2051,6 +2207,286 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({ onExitAdmin }) => {
             </button>
           </div>
         </div>
+      )}
+
+      {/* MODAL: FULL DEVICE, BROWSER & IP TELEMETRY INSPECTOR */}
+      {selectedDeviceLicense && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl relative animate-scaleUp font-sans max-h-[90vh] overflow-y-auto">
+            <button
+              type="button"
+              onClick={() => setSelectedDeviceLicense(null)}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Modal Header */}
+            <div className="flex items-center gap-3.5 mb-6 pr-8">
+              <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-400 border border-teal-500/30 flex items-center justify-center shrink-0 shadow-xs">
+                <Globe className="w-6 h-6 text-teal-400" />
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-bold text-white truncate">
+                    ব্রাউজার, ডিভাইস ও আইপি পূর্ণাঙ্গ বিবরণ
+                  </h3>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-950 text-teal-300 border border-teal-800 shrink-0">
+                    DEVICE TELEMETRY
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 font-mono truncate mt-0.5">
+                  শিক্ষার্থী: <span className="text-slate-200 font-bold">{selectedDeviceLicense.customerName || 'বেনামী'}</span> • {selectedDeviceLicense.plaintextKey || selectedDeviceLicense.keyMasked}
+                </p>
+              </div>
+            </div>
+
+            {/* Primary IP & Location Banner */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-teal-950/60 via-indigo-950/50 to-slate-950 border border-teal-700/60 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span className="text-[11px] font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>ক্লায়েন্ট আইপি অ্যাড্রেস (Client IP)</span>
+                </span>
+                <p className="text-xl sm:text-2xl font-mono font-black text-white mt-0.5 select-all">
+                  {selectedDeviceLicense.browserMetadata?.ip || selectedDeviceLicense.clientIp || '127.0.0.1 (Localhost)'}
+                </p>
+                <p className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
+                  <span>টাইমজোন: <strong className="text-slate-200">{selectedDeviceLicense.browserMetadata?.timezone || 'অজানা'}</strong></span>
+                  {selectedDeviceLicense.browserMetadata?.timezoneOffset && (
+                    <span className="text-teal-300 font-mono">({selectedDeviceLicense.browserMetadata.timezoneOffset})</span>
+                  )}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const ip = selectedDeviceLicense.browserMetadata?.ip || selectedDeviceLicense.clientIp || '';
+                    if (ip) {
+                      navigator.clipboard.writeText(ip);
+                      setActionMessage({ type: 'success', text: `আইপি অ্যাড্রেস কপি করা হয়েছে (${ip})` });
+                    }
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-teal-900/60 hover:bg-teal-800 border border-teal-700 text-teal-200 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>আইপি কপি</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Structured Specifications Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5 text-xs">
+              
+              {/* 1. Browser & Engine */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
+                <div className="flex items-center gap-2 text-teal-400 font-bold border-b border-slate-800/80 pb-2">
+                  <Globe className="w-4 h-4" />
+                  <span>ব্রাউজার বিশদ (Browser)</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div>
+                    <span className="text-slate-500 block">ব্রাউজারের নাম</span>
+                    <span className="text-slate-200 font-bold text-xs mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.browserName || selectedDeviceLicense.deviceInfo?.split(' ')[0] || 'Unknown'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">ভার্সন (Version)</span>
+                    <span className="text-slate-200 font-mono text-xs mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.browserVersion || 'Latest'}
+                    </span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-slate-500 block">সিস্টেম ল্যাঙ্গুয়েজ (Locale)</span>
+                    <span className="text-slate-200 font-medium mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.language || 'bn-BD, en-US'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. OS & Device Type */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
+                <div className="flex items-center gap-2 text-indigo-400 font-bold border-b border-slate-800/80 pb-2">
+                  <Monitor className="w-4 h-4" />
+                  <span>অপারেটিং সিস্টেম ও ডিভাইস (OS & Device)</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div>
+                    <span className="text-slate-500 block">ডিভাইস ক্যাটাগরি</span>
+                    <span className="text-slate-200 font-bold text-xs mt-0.5 block flex items-center gap-1">
+                      {selectedDeviceLicense.browserMetadata?.deviceType === 'Mobile' ? (
+                        <>📱 Mobile Phone</>
+                      ) : selectedDeviceLicense.browserMetadata?.deviceType === 'Tablet' ? (
+                        <>📟 Tablet</>
+                      ) : (
+                        <>💻 Desktop / PC</>
+                      )}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">অপারেটিং সিস্টেম</span>
+                    <span className="text-slate-200 font-bold text-xs mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.osName || 'Unknown OS'} {selectedDeviceLicense.browserMetadata?.osVersion || ''}
+                    </span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-slate-500 block">প্ল্যাটফর্ম আর্কিটেকচার</span>
+                    <span className="text-slate-200 font-mono text-[11px] mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.platform || 'Standard Web Host'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Screen & Display */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
+                <div className="flex items-center gap-2 text-amber-400 font-bold border-b border-slate-800/80 pb-2">
+                  <Activity className="w-4 h-4" />
+                  <span>ডিসপ্লে ও রেজোলিউশন (Display Specs)</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div>
+                    <span className="text-slate-500 block">স্ক্রিন রেজোলিউশন</span>
+                    <span className="text-slate-200 font-mono font-bold text-xs mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.screenResolution || '1920x1080'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">উইন্ডো সাইজ (Viewport)</span>
+                    <span className="text-slate-200 font-mono text-xs mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.windowSize || 'Responsive'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">পিক্সেল রেশিও (DPI)</span>
+                    <span className="text-slate-200 font-mono mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.pixelRatio ? `${selectedDeviceLicense.browserMetadata.pixelRatio}x (Retina/High-DPI)` : '1x'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">কালার ডেপথ</span>
+                    <span className="text-slate-200 font-mono mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.colorDepth ? `${selectedDeviceLicense.browserMetadata.colorDepth}-bit True Color` : '24-bit'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. Hardware & Hardware Capability */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold border-b border-slate-800/80 pb-2">
+                  <Cpu className="w-4 h-4" />
+                  <span>হার্ডওয়্যার ও ক্যাপাসিটি (Hardware Specs)</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div>
+                    <span className="text-slate-500 block">টাচস্ক্রিন সুবিধা</span>
+                    <span className="text-slate-200 font-bold mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.touchSupport ? '✅ Touchscreen সচল' : '🖱️ মাউস / নন-টাচ'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">নেটওয়ার্ক মাধ্যম</span>
+                    <span className="text-slate-200 font-mono mt-0.5 block uppercase">
+                      {selectedDeviceLicense.browserMetadata?.networkType || 'Broadband / Cellular'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">সিপিইউ কোর (CPU Cores)</span>
+                    <span className="text-slate-200 font-mono mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.cpuCores ? `${selectedDeviceLicense.browserMetadata.cpuCores} Logic Cores` : 'মডার্ন প্রসেসর'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">ডিভাইস মেমোরি (RAM)</span>
+                    <span className="text-slate-200 font-mono mt-0.5 block">
+                      {selectedDeviceLicense.browserMetadata?.deviceMemoryGb ? `~${selectedDeviceLicense.browserMetadata.deviceMemoryGb} GB RAM` : 'স্ট্যান্ডার্ড র‍্যাম'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* 5. Complete Raw User-Agent Header with Copy */}
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 mb-5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400 font-semibold flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-teal-400" />
+                  <span>সম্পূর্ণ User-Agent স্ট্রিং (Raw Telemetry)</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const ua = selectedDeviceLicense.browserMetadata?.userAgent || selectedDeviceLicense.boundUserAgent || navigator.userAgent;
+                    navigator.clipboard.writeText(ua);
+                    setCopiedUa(true);
+                    setTimeout(() => setCopiedUa(false), 2000);
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  {copiedUa ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  <span>{copiedUa ? 'কপি হয়েছে' : 'UA কপি করুন'}</span>
+                </button>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800/80 font-mono text-[11px] text-slate-300 break-all select-all leading-relaxed">
+                {selectedDeviceLicense.browserMetadata?.userAgent || selectedDeviceLicense.boundUserAgent || 'User-Agent header not recorded yet.'}
+              </div>
+            </div>
+
+            {/* 6. Feature 38: Canvas & WebGL GPU Hardware Fingerprint Hash */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-slate-950 border border-emerald-800/60 space-y-2 mb-5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
+                  <Cpu className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>ক্যানভাস ও WebGL জিপিইউ হার্ডওয়্যার ফিঙ্গারপ্রিন্ট (GPU Hash)</span>
+                </span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">
+                  IMMUTABLE HARDWARE ID
+                </span>
+              </div>
+              <p className="font-mono text-xs font-black text-white bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 select-all">
+                {selectedDeviceLicense.browserMetadata?.canvasFingerprintHash || selectedDeviceLicense.canvasFingerprintHash || 'GPU-STANDARD-RASTER-HASH'}
+              </p>
+              <p className="text-[10px] text-slate-400">
+                এই হার্ডওয়্যার হ্যাশটি ডিভাইসের GPU চিপের সাব-পিক্সেল রেন্ডারিং দ্বারা তৈরি। এটি VPN, ইনকগনিটো বা ব্রাউজার কুকি মুছে ফেলার মাধ্যমেও বাইপাস করা সম্ভব নয়।
+              </p>
+            </div>
+
+            {/* Timestamps & Close */}
+            <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] text-slate-500">
+              <div className="space-y-0.5">
+                <p>
+                  প্রথম অ্যাক্টিভেশন: <span className="text-slate-300 font-mono">{selectedDeviceLicense.activatedAt ? new Date(selectedDeviceLicense.activatedAt).toLocaleString() : 'নেই'}</span>
+                </p>
+                <p>
+                  সর্বশেষ সক্রিয় (Last Active): <span className="text-slate-300 font-mono">{selectedDeviceLicense.lastActiveAt ? new Date(selectedDeviceLicense.lastActiveAt).toLocaleString() : 'নেই'}</span>
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedDeviceLicense(null)}
+                className="w-full sm:w-auto px-6 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs cursor-pointer transition-colors"
+              >
+                বন্ধ করুন
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: GRANULAR STUDENT ACTION TIMELINE */}
+      {selectedTimelineLicense && (
+        <StudentTimelineModal
+          license={selectedTimelineLicense}
+          onClose={() => setSelectedTimelineLicense(null)}
+        />
       )}
     </div>
   );

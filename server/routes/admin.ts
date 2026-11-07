@@ -15,7 +15,8 @@ import {
   requireAdminAuth, 
   AuthenticatedAdminRequest 
 } from '../auth';
-import { LicenseRecord } from '../types';
+import { LicenseRecord, SystemHealthMetrics } from '../types';
+import { sendTelegramAlert, testTelegramConnection } from '../telegram';
 
 export const adminRouter = Router();
 
@@ -100,13 +101,24 @@ adminRouter.post('/login', async (req: Request, res: Response): Promise<void> =>
     }
 
     let isValid = false;
-    if (password === DEFAULT_ADMIN_PASS) {
+    const customHash = await storage.getAdminPasswordHash();
+    if (customHash && verifyPassword(password, customHash)) {
+      isValid = true;
+    } else if (!customHash && password === DEFAULT_ADMIN_PASS) {
       isValid = true;
     } else if (process.env.ADMIN_PASSWORD_HASH && verifyPassword(password, process.env.ADMIN_PASSWORD_HASH)) {
       isValid = true;
     }
 
     if (!isValid) {
+      await storage.recordFailedAdminLogin();
+      await storage.addSecurityEvent({
+        level: 'warn',
+        source: 'AUTH',
+        message: `অ্যাডমিন লগইনে ব্যর্থ চেষ্টা (IP: ${clientIp})`,
+        ip: clientIp,
+      });
+
       await storage.addAuditLog({
         id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
         timestamp: Date.now(),
@@ -115,10 +127,14 @@ adminRouter.post('/login', async (req: Request, res: Response): Promise<void> =>
         ip: clientIp,
       });
 
+      sendTelegramAlert(
+        `⚠️ <b>অ্যাডমিন লগইন সতর্কতা!</b>\nআইপি: <code>${clientIp}</code>\nস্ট্যাটাস: ভুল পাসওয়ার্ড দিয়ে অ্যাডমিন পোর্টালে প্রবেশের চেষ্টা করা হয়েছে।`
+      ).catch(() => {});
+
       res.status(401).json({
         ok: false,
         error: 'INVALID_CREDENTIALS',
-        message: 'Invalid administrator password.',
+        message: 'ভুল অ্যাডমিন পাসওয়ার্ড। অনুগ্রহ করে পুনরায় চেষ্টা করুন।',
       });
       return;
     }
@@ -663,3 +679,501 @@ adminRouter.get('/audit', requireAdminAuth, async (_req: AuthenticatedAdminReque
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to fetch audit logs.' });
   }
 });
+
+/**
+ * Feature 8: Change Admin Password
+ * POST /api/admin/change-password
+ */
+adminRouter.post('/change-password', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.socket?.remoteAddress || req.ip || 'unknown';
+    const { currentPassword, newPassword } = req.body || {};
+
+    if (!currentPassword || !newPassword) {
+      res.status(400).json({ ok: false, error: 'MISSING_FIELDS', message: 'বর্তমান পাসওয়ার্ড এবং নতুন পাসওয়ার্ড উভয়ই আবশ্যক।' });
+      return;
+    }
+
+    if (typeof newPassword !== 'string' || newPassword.length < 8) {
+      res.status(400).json({ ok: false, error: 'WEAK_PASSWORD', message: 'নতুন পাসওয়ার্ড অন্তত ৮ অক্ষরের হতে হবে।' });
+      return;
+    }
+
+    // Verify current password
+    let isCurrentValid = false;
+    const customHash = await storage.getAdminPasswordHash();
+    if (customHash && verifyPassword(currentPassword, customHash)) {
+      isCurrentValid = true;
+    } else if (!customHash && currentPassword === DEFAULT_ADMIN_PASS) {
+      isCurrentValid = true;
+    } else if (process.env.ADMIN_PASSWORD_HASH && verifyPassword(currentPassword, process.env.ADMIN_PASSWORD_HASH)) {
+      isCurrentValid = true;
+    }
+
+    if (!isCurrentValid) {
+      res.status(401).json({ ok: false, error: 'INVALID_CURRENT_PASSWORD', message: 'বর্তমান পাসওয়ার্ড সঠিক নয়।' });
+      return;
+    }
+
+    // Hash and store new password
+    const newHash = hashPassword(newPassword);
+    await storage.setAdminPasswordHash(newHash);
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'admin_login',
+      details: `Administrator password changed successfully from IP: ${clientIp}`,
+      ip: clientIp,
+    });
+
+    await storage.addSecurityEvent({
+      level: 'alert',
+      source: 'AUTH',
+      message: `অ্যাডমিনিস্ট্রেটর পাসওয়ার্ড পরিবর্তিত হয়েছে (IP: ${clientIp})`,
+      ip: clientIp,
+    });
+
+    sendTelegramAlert(
+      `🔐 <b>অ্যাডমিন পাসওয়ার্ড পরিবর্তিত হয়েছে!</b>\nআইপি: <code>${clientIp}</code>\nসময়: ${new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })}\nঅ্যাডমিন প্যানেলের পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছে।`
+    ).catch(() => {});
+
+    res.json({ ok: true, message: 'অ্যাডমিন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে।' });
+  } catch (error) {
+    console.error('[admin/change-password] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'পাসওয়ার্ড পরিবর্তন করতে ব্যর্থ হয়েছে।' });
+  }
+});
+
+/**
+ * Feature 57: Telegram Bot Settings & Webhook
+ * GET /api/admin/telegram/config
+ * POST /api/admin/telegram/config
+ * POST /api/admin/telegram/test
+ */
+adminRouter.get('/telegram/config', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const config = await storage.getSecurityConfig();
+    res.json({
+      ok: true,
+      telegram: {
+        enabled: config.telegram?.enabled ?? true,
+        botToken: config.telegram?.botToken || '',
+        chatId: config.telegram?.chatId || '',
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/telegram/config', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { botToken, chatId, enabled } = req.body || {};
+    const updated = await storage.updateSecurityConfig({
+      telegram: {
+        enabled: typeof enabled === 'boolean' ? enabled : true,
+        botToken: typeof botToken === 'string' ? botToken.trim() : '',
+        chatId: typeof chatId === 'string' ? chatId.trim() : '',
+      },
+    });
+
+    await storage.addSecurityEvent({
+      level: 'info',
+      source: 'TELEGRAM',
+      message: `টেলিগ্রাম কনফিগারেশন আপডেট করা হয়েছে (Chat ID: ${chatId || 'not set'})`,
+    });
+
+    res.json({ ok: true, telegram: updated.telegram, message: 'টেলিগ্রাম সেটিংস সফলভাবে সংরক্ষিত হয়েছে।' });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/telegram/test', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { botToken, chatId } = req.body || {};
+    const config = await storage.getSecurityConfig();
+    const token = botToken || config.telegram?.botToken;
+    const chat = chatId || config.telegram?.chatId;
+
+    const result = await testTelegramConnection(token, chat);
+    res.json({ ok: result.success, message: result.message });
+  } catch (error: any) {
+    res.status(500).json({ ok: false, message: error?.message || 'টেস্ট মেসেজ পাঠাতে ব্যর্থ হয়েছে।' });
+  }
+});
+
+/**
+ * Feature 12: Full Database Backup & Restore
+ * GET /api/admin/backup
+ * POST /api/admin/restore
+ */
+adminRouter.get('/backup', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const backup = await storage.getFullBackupData();
+    const filename = `bonolota_backup_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.json(backup);
+  } catch (error) {
+    console.error('[admin/backup] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'Failed to generate backup.' });
+  }
+});
+
+adminRouter.post('/restore', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const backupData = req.body;
+    if (!backupData || typeof backupData !== 'object') {
+      res.status(400).json({ ok: false, error: 'INVALID_BACKUP', message: 'অবৈধ ব্যাকআপ ফাইল ফরম্যাট।' });
+      return;
+    }
+
+    const result = await storage.restoreFullBackupData(backupData);
+
+    await storage.addSecurityEvent({
+      level: 'alert',
+      source: 'SYSTEM',
+      message: `ডাটাবেজ ব্যাকআপ রিস্টোর সম্পন্ন (${result.restoredLicenses} লাইসেন্স, ${result.restoredTickets} টিকেট)`,
+    });
+
+    sendTelegramAlert(
+      `📥 <b>ডাটাবেজ রিস্টোর সফল!</b>\nরিস্টোরকৃত লাইসেন্স: ${result.restoredLicenses}\nরিস্টোরকৃত টিকেট: ${result.restoredTickets}\nরিস্টোর সময়: ${new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })}`
+    ).catch(() => {});
+
+    res.json({
+      ok: true,
+      message: `ডাটাবেজ সফলভাবে রিস্টোর হয়েছে (${result.restoredLicenses} লাইসেন্স আপডেট করা হয়েছে)।`,
+      ...result,
+    });
+  } catch (error: any) {
+    console.error('[admin/restore] Error:', error);
+    res.status(500).json({ ok: false, error: 'RESTORE_FAILED', message: error?.message || 'রিস্টোর করতে সমস্যা হয়েছে।' });
+  }
+});
+
+/**
+ * Feature 35: 1-Click IP Blacklist & Firewall Shield
+ * GET /api/admin/security/blacklist
+ * POST /api/admin/security/blacklist/add
+ * POST /api/admin/security/blacklist/remove
+ */
+adminRouter.get('/security/blacklist', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const blacklist = await storage.getBlacklistedIps();
+    res.json({ ok: true, blacklist });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/security/blacklist/add', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { ip, reason } = req.body || {};
+    if (!ip || typeof ip !== 'string') {
+      res.status(400).json({ ok: false, message: 'আইপি ঠিকানা প্রদান করুন।' });
+      return;
+    }
+    await storage.addBlacklistedIp(ip, reason || 'অ্যাডমিন ম্যানুয়াল ব্লক');
+
+    await storage.addSecurityEvent({
+      level: 'danger',
+      source: 'FIREWALL',
+      message: `আইপি ব্ল্যাকলিস্টে যুক্ত করা হয়েছে: ${ip} (${reason || 'অ্যাডমিন ম্যানুয়াল ব্লক'})`,
+      ip,
+    });
+
+    sendTelegramAlert(
+      `🛡️ <b>ফায়ারওয়াল আইপি ব্লক!</b>\nআইপি: <code>${ip}</code>\nকারণ: ${reason || 'অ্যাডমিন ম্যানুয়াল ব্লক'}\nফায়ারওয়াল কর্তৃক সকল ট্রাফিক নিষিদ্ধ করা হয়েছে।`
+    ).catch(() => {});
+
+    res.json({ ok: true, message: `আইপি ${ip} সফলভাবে ব্লক করা হয়েছে।` });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/security/blacklist/remove', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { ip } = req.body || {};
+    if (!ip || typeof ip !== 'string') {
+      res.status(400).json({ ok: false, message: 'আইপি ঠিকানা প্রদান করুন।' });
+      return;
+    }
+    const removed = await storage.removeBlacklistedIp(ip);
+
+    await storage.addSecurityEvent({
+      level: 'info',
+      source: 'FIREWALL',
+      message: `আইপি আনব্লক করা হয়েছে: ${ip}`,
+      ip,
+    });
+
+    res.json({ ok: true, removed, message: `আইপি ${ip} আনব্লক করা হয়েছে।` });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 34: Terminal Security Event Stream
+ * GET /api/admin/security/terminal-events
+ */
+adminRouter.get('/security/terminal-events', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const events = await storage.getSecurityEvents(100);
+    res.json({ ok: true, events });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 36: Server System Health & Resource Monitor
+ * GET /api/admin/security/system-health
+ */
+adminRouter.get('/security/system-health', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const uptime = process.uptime();
+    const hours = Math.floor(uptime / 3600);
+    const minutes = Math.floor((uptime % 3600) / 60);
+    const seconds = Math.floor(uptime % 60);
+    const uptimeFormatted = `${hours}h ${minutes}m ${seconds}s`;
+
+    const mem = process.memoryUsage();
+    const memoryUsageMb = {
+      rss: Math.round(mem.rss / 1024 / 1024),
+      heapTotal: Math.round(mem.heapTotal / 1024 / 1024),
+      heapUsed: Math.round(mem.heapUsed / 1024 / 1024),
+      external: Math.round(mem.external / 1024 / 1024),
+    };
+
+    const redisPingMs = await storage.pingRedis();
+    const licenses = await storage.listLicenses();
+    const blacklist = await storage.getBlacklistedIps();
+    const secConfig = await storage.getSecurityConfig();
+
+    const fiveMinsAgo = Date.now() - 5 * 60 * 1000;
+    const activeOnlineStudents = licenses.filter(l => l.lastActiveAt && l.lastActiveAt > fiveMinsAgo).length;
+
+    const health: SystemHealthMetrics = {
+      uptimeSeconds: Math.floor(uptime),
+      uptimeFormatted,
+      nodeVersion: process.version,
+      pid: process.pid,
+      memoryUsageMb,
+      redisConnected: redisPingMs >= 0,
+      redisPingMs: redisPingMs >= 0 ? redisPingMs : 0,
+      totalKeys: licenses.length,
+      blacklistedIpsCount: blacklist.length,
+      activeOnlineStudents,
+      antiCopyEnabled: Boolean(secConfig.antiCopyEnabled),
+      honeypotTriggeredCount: secConfig.honeypotCount || 0,
+    };
+
+    res.json({ ok: true, health });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 40: Brute-Force Rate-Limit Meter & Shield
+ * GET /api/admin/security/rate-limits
+ */
+adminRouter.get('/security/rate-limits', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const stats = await storage.getFailedAuthStats();
+    res.json({ ok: true, stats });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 42: DRM & Anti-Copy Protection Switch
+ * GET /api/admin/security/anti-copy
+ * POST /api/admin/security/anti-copy
+ */
+adminRouter.get('/security/anti-copy', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const config = await storage.getSecurityConfig();
+    res.json({ ok: true, antiCopyEnabled: Boolean(config.antiCopyEnabled) });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/security/anti-copy', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { enabled } = req.body || {};
+    const updated = await storage.updateSecurityConfig({ antiCopyEnabled: Boolean(enabled) });
+
+    await storage.addSecurityEvent({
+      level: 'info',
+      source: 'SYSTEM',
+      message: `অ্যান্টি-কপি DRM সুরক্ষা ${updated.antiCopyEnabled ? 'চালু (Enabled)' : 'বন্ধ (Disabled)'} করা হয়েছে।`,
+    });
+
+    res.json({
+      ok: true,
+      antiCopyEnabled: updated.antiCopyEnabled,
+      message: `কন্টেন্ট অ্যান্টি-কপি সুরক্ষা ${updated.antiCopyEnabled ? 'চালু' : 'বন্ধ'} করা হয়েছে।`,
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 7: Student Support Tickets (Admin Inbox)
+ * GET /api/admin/support/tickets
+ * POST /api/admin/support/reply
+ */
+adminRouter.get('/support/tickets', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const tickets = await storage.listSupportTickets();
+    res.json({ ok: true, tickets });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/support/reply', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { ticketId, replyMessage, markResolved } = req.body || {};
+    if (!ticketId || !replyMessage) {
+      res.status(400).json({ ok: false, message: 'টিকেট আইডি এবং উত্তর বার্তা আবশ্যক।' });
+      return;
+    }
+
+    const ticket = await storage.getSupportTicketById(ticketId);
+    if (!ticket) {
+      res.status(404).json({ ok: false, message: 'টিকেট পাওয়া যায়নি।' });
+      return;
+    }
+
+    const updated = await storage.updateSupportTicket(ticketId, {
+      adminReply: replyMessage,
+      repliedAt: Date.now(),
+      status: markResolved ? 'resolved' : 'replied',
+    });
+
+    // Also send an in-app broadcast announcement directed specifically to that student key!
+    await storage.createAnnouncement({
+      id: `anno_reply_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      title: `📩 সাপোর্ট উত্তর: ${ticket.subject}`,
+      message: replyMessage,
+      type: 'info',
+      priority: 'high',
+      displayStyle: 'center_modal',
+      targetKey: ticket.keyMasked,
+      createdAt: Date.now(),
+      active: true,
+      author: 'Bonolota Support',
+    });
+
+    res.json({ ok: true, ticket: updated, message: 'উত্তর সফলভাবে পাঠানো হয়েছে।' });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 25: Real-Time Live Active Students Online Tracker
+ * GET /api/admin/students/live
+ */
+adminRouter.get('/students/live', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const licenses = await storage.listLicenses();
+    const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+
+    const liveStudents = licenses
+      .filter(l => l.lastActiveAt && l.lastActiveAt >= fiveMinutesAgo && l.status === 'active')
+      .map(l => ({
+        licenseId: l.id,
+        keyMasked: l.keyMasked,
+        customerName: l.customerName || 'বেনামী শিক্ষার্থী',
+        activeFeature: l.progress?.activeFeature || 'প্রধান ড্যাশবোর্ড',
+        deviceInfo: l.deviceInfo || 'Unknown Device',
+        clientIp: l.clientIp || 'Unknown IP',
+        lastActiveAt: l.lastActiveAt,
+        wordsStudied: l.progress?.wordsStudied || 0,
+        quizzesTaken: l.progress?.quizzesTaken || 0,
+        streak: l.progress?.learningStreak || 0,
+      }))
+      .sort((a, b) => (b.lastActiveAt || 0) - (a.lastActiveAt || 0));
+
+    res.json({ ok: true, liveStudents, count: liveStudents.length });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 51: Granular Student Step-by-Step Action Timeline
+ * GET /api/admin/students/timeline/:licenseId
+ */
+adminRouter.get('/students/timeline/:licenseId', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { licenseId } = req.params;
+    const actions = await storage.getStudentActions(licenseId, 150);
+    res.json({ ok: true, actions });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+/**
+ * Feature 2: 1-Click Renewal Notification Broadcast
+ * POST /api/admin/licenses/:id/send-renewal
+ */
+adminRouter.post('/licenses/:id/send-renewal', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const license = await storage.getLicenseById(id);
+    if (!license) {
+      res.status(404).json({ ok: false, message: 'লাইসেন্স পাওয়া যায়নি।' });
+      return;
+    }
+
+    const now = Date.now();
+    const daysLeft = Math.max(0, Math.ceil((license.expiresAt - now) / (1000 * 60 * 60 * 24)));
+
+    // Create targeted high-priority renewal announcement
+    const announcement = {
+      id: `anno_renewal_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      title: '⏳ সাবস্ক্রিপশন মেয়াদ শেষ হতে চলেছে',
+      message: `প্রিয় ${license.customerName || 'শিক্ষার্থী'}, আপনার বনলতা ভোকাবুলারির সাবস্ক্রিপশনের মেয়াদ আর মাত্র ${daysLeft} দিন বাকি রয়েছে। নিরবচ্ছিন্ন শিক্ষার জন্য এখনই অ্যাডমিনের সাথে যোগাযোগ করে মেয়াদ নবায়ন করে নিন।`,
+      type: 'urgent' as const,
+      priority: 'high' as const,
+      displayStyle: 'center_modal' as const,
+      targetKey: license.keyMasked,
+      createdAt: now,
+      active: true,
+      author: 'Bonolota Team',
+    };
+
+    await storage.createAnnouncement(announcement);
+
+    // Send Telegram Notification
+    sendTelegramAlert(
+      `⏳ <b>মেয়াদ শেষ নবায়ন নোটিফিকেশন প্রেরিত!</b>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nকী: <code>${license.keyMasked}</code>\nঅবশিষ্ট দিন: ${daysLeft} দিন`
+    ).catch(() => {});
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'create_broadcast',
+      licenseId: id,
+      details: `Sent 1-click renewal alert to ${license.keyMasked} (${daysLeft} days remaining).`,
+    });
+
+    res.json({ ok: true, message: `নবায়ন নোটিফিকেশন সফলভাবে ${license.customerName || license.keyMasked} এর ডিভাইসে পাঠানো হয়েছে!` });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+

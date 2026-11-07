@@ -1,5 +1,16 @@
 import { Redis } from '@upstash/redis';
-import { LicenseRecord, UserSessionData, AdminSessionData, AuditLogEntry, AdminOverviewStats, BroadcastAnnouncement } from './types';
+import { 
+  LicenseRecord, 
+  UserSessionData, 
+  AdminSessionData, 
+  AuditLogEntry, 
+  AdminOverviewStats, 
+  BroadcastAnnouncement,
+  SupportTicket,
+  StudentActionEvent,
+  SecurityTerminalEvent,
+  SecurityConfig
+} from './types';
 
 import { DEFAULT_REDIS_URL, DEFAULT_REDIS_TOKEN } from './env-validator';
 
@@ -18,6 +29,30 @@ class InMemoryStorage {
   private auditLogs: AuditLogEntry[] = [];
   private rateLimits = new Map<string, { count: number; expiresAt: number }>();
   private announcements = new Map<string, BroadcastAnnouncement>();
+
+  // Security & Feature extensions
+  private ipBlacklist = new Set<string>();
+  private blacklistMeta = new Map<string, { reason: string; timestamp: number }>();
+  private securityEvents: SecurityTerminalEvent[] = [];
+  private supportTickets = new Map<string, SupportTicket>();
+  private studentActions: StudentActionEvent[] = [];
+  private securityConfig: SecurityConfig = {
+    antiCopyEnabled: false,
+    ipBlacklist: [],
+    honeypotCount: 0,
+    telegram: {
+      enabled: true,
+      botToken: '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE',
+      chatId: '6745501942',
+    },
+  };
+  private adminPasswordHash: string | null = null;
+  private failedAuthStats = {
+    failedActivationsCount: 0,
+    failedAdminLoginsCount: 0,
+    blockedAttemptsCount: 0,
+    lastAttackTimestamp: 0,
+  };
 
   async createLicense(license: LicenseRecord): Promise<void> {
     this.licenses.set(license.id, { ...license });
@@ -145,9 +180,244 @@ class InMemoryStorage {
     this.announcements.set(id, { ...item });
     return { ...item };
   }
+
+  // Security Config
+  async getSecurityConfig(): Promise<SecurityConfig> {
+    return {
+      ...this.securityConfig,
+      ipBlacklist: Array.from(this.ipBlacklist),
+    };
+  }
+
+  async updateSecurityConfig(partial: Partial<SecurityConfig>): Promise<SecurityConfig> {
+    this.securityConfig = {
+      ...this.securityConfig,
+      ...partial,
+      telegram: {
+        ...this.securityConfig.telegram,
+        ...(partial.telegram || {}),
+      },
+    };
+    if (partial.ipBlacklist) {
+      this.ipBlacklist = new Set(partial.ipBlacklist);
+    }
+    return this.getSecurityConfig();
+  }
+
+  // IP Blacklist & Firewall
+  async getBlacklistedIps(): Promise<Array<{ ip: string; reason: string; timestamp: number }>> {
+    const result: Array<{ ip: string; reason: string; timestamp: number }> = [];
+    for (const ip of this.ipBlacklist) {
+      const meta = this.blacklistMeta.get(ip) || { reason: 'অ্যাডমিন দ্বারা ব্লক করা', timestamp: Date.now() };
+      result.push({ ip, reason: meta.reason, timestamp: meta.timestamp });
+    }
+    return result;
+  }
+
+  async isIpBlacklisted(ip: string): Promise<boolean> {
+    if (!ip) return false;
+    const cleanIp = ip.trim();
+    return this.ipBlacklist.has(cleanIp) || this.ipBlacklist.has(cleanIp.replace(/^::ffff:/, ''));
+  }
+
+  async addBlacklistedIp(ip: string, reason = 'ম্যানুয়াল ব্লক'): Promise<void> {
+    const cleanIp = ip.trim();
+    this.ipBlacklist.add(cleanIp);
+    this.blacklistMeta.set(cleanIp, { reason, timestamp: Date.now() });
+    this.securityConfig.ipBlacklist = Array.from(this.ipBlacklist);
+  }
+
+  async removeBlacklistedIp(ip: string): Promise<boolean> {
+    const cleanIp = ip.trim();
+    const removed = this.ipBlacklist.delete(cleanIp);
+    this.blacklistMeta.delete(cleanIp);
+    this.securityConfig.ipBlacklist = Array.from(this.ipBlacklist);
+    return removed;
+  }
+
+  // Security Terminal Stream
+  async addSecurityEvent(event: Omit<SecurityTerminalEvent, 'id' | 'timestamp'>): Promise<SecurityTerminalEvent> {
+    const fullEvent: SecurityTerminalEvent = {
+      ...event,
+      id: `sec_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+    };
+    this.securityEvents.unshift(fullEvent);
+    if (this.securityEvents.length > 200) {
+      this.securityEvents = this.securityEvents.slice(0, 200);
+    }
+    return fullEvent;
+  }
+
+  async getSecurityEvents(limit = 100): Promise<SecurityTerminalEvent[]> {
+    return this.securityEvents.slice(0, limit);
+  }
+
+  // Support Tickets
+  async createSupportTicket(ticket: Omit<SupportTicket, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<SupportTicket> {
+    const fullTicket: SupportTicket = {
+      ...ticket,
+      id: `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
+      status: 'open',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    this.supportTickets.set(fullTicket.id, fullTicket);
+    return fullTicket;
+  }
+
+  async listSupportTickets(): Promise<SupportTicket[]> {
+    return Array.from(this.supportTickets.values()).sort((a, b) => b.updatedAt - a.updatedAt);
+  }
+
+  async getSupportTicketById(id: string): Promise<SupportTicket | null> {
+    return this.supportTickets.get(id) || null;
+  }
+
+  async updateSupportTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket | null> {
+    const existing = this.supportTickets.get(id);
+    if (!existing) return null;
+    const updated: SupportTicket = {
+      ...existing,
+      ...updates,
+      updatedAt: Date.now(),
+    };
+    this.supportTickets.set(id, updated);
+    return updated;
+  }
+
+  async listSupportTicketsByLicense(licenseId: string): Promise<SupportTicket[]> {
+    return Array.from(this.supportTickets.values())
+      .filter(t => t.licenseId === licenseId)
+      .sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  // Student Actions Timeline
+  async addStudentAction(action: Omit<StudentActionEvent, 'id' | 'timestamp'>): Promise<StudentActionEvent> {
+    const fullAction: StudentActionEvent = {
+      ...action,
+      id: `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+    };
+    this.studentActions.unshift(fullAction);
+    if (this.studentActions.length > 1000) {
+      this.studentActions = this.studentActions.slice(0, 1000);
+    }
+    return fullAction;
+  }
+
+  async getStudentActions(licenseId?: string, limit = 100): Promise<StudentActionEvent[]> {
+    if (!licenseId) {
+      return this.studentActions.slice(0, limit);
+    }
+    return this.studentActions.filter(a => a.licenseId === licenseId).slice(0, limit);
+  }
+
+  // Admin Password Management
+  async getAdminPasswordHash(): Promise<string | null> {
+    return this.adminPasswordHash;
+  }
+
+  async setAdminPasswordHash(hash: string): Promise<void> {
+    this.adminPasswordHash = hash;
+  }
+
+  // Attack Stats / Rate Limit Meter
+  async recordFailedActivation(): Promise<void> {
+    this.failedAuthStats.failedActivationsCount++;
+    this.failedAuthStats.lastAttackTimestamp = Date.now();
+  }
+
+  async recordFailedAdminLogin(): Promise<void> {
+    this.failedAuthStats.failedAdminLoginsCount++;
+    this.failedAuthStats.lastAttackTimestamp = Date.now();
+  }
+
+  async recordBlockedFirewallAttempt(): Promise<void> {
+    this.failedAuthStats.blockedAttemptsCount++;
+    this.failedAuthStats.lastAttackTimestamp = Date.now();
+  }
+
+  async getFailedAuthStats() {
+    return { ...this.failedAuthStats };
+  }
+
+  // Database Backup & Restore
+  async getFullBackupData() {
+    return {
+      version: '1.0',
+      exportedAt: Date.now(),
+      licenses: Array.from(this.licenses.values()),
+      auditLogs: this.auditLogs,
+      announcements: Array.from(this.announcements.values()),
+      supportTickets: Array.from(this.supportTickets.values()),
+      blacklistedIps: await this.getBlacklistedIps(),
+      securityEvents: this.securityEvents.slice(0, 100),
+      securityConfig: this.securityConfig,
+      adminPasswordHash: this.adminPasswordHash,
+    };
+  }
+
+  async restoreFullBackupData(data: any): Promise<{ restoredLicenses: number; restoredTickets: number }> {
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid backup data format.');
+    }
+
+    let restoredLicenses = 0;
+    if (Array.isArray(data.licenses)) {
+      for (const lic of data.licenses) {
+        if (lic?.id && lic?.keyHash) {
+          this.licenses.set(lic.id, lic);
+          this.hashToId.set(lic.keyHash, lic.id);
+          restoredLicenses++;
+        }
+      }
+    }
+
+    if (Array.isArray(data.auditLogs)) {
+      this.auditLogs = [...data.auditLogs, ...this.auditLogs].slice(0, 500);
+    }
+
+    if (Array.isArray(data.announcements)) {
+      for (const anno of data.announcements) {
+        if (anno?.id) {
+          this.announcements.set(anno.id, anno);
+        }
+      }
+    }
+
+    let restoredTickets = 0;
+    if (Array.isArray(data.supportTickets)) {
+      for (const tkt of data.supportTickets) {
+        if (tkt?.id) {
+          this.supportTickets.set(tkt.id, tkt);
+          restoredTickets++;
+        }
+      }
+    }
+
+    if (Array.isArray(data.blacklistedIps)) {
+      for (const item of data.blacklistedIps) {
+        if (item?.ip) {
+          this.ipBlacklist.add(item.ip);
+          this.blacklistMeta.set(item.ip, { reason: item.reason || 'Restored', timestamp: item.timestamp || Date.now() });
+        }
+      }
+    }
+
+    if (data.securityConfig) {
+      this.securityConfig = { ...this.securityConfig, ...data.securityConfig };
+    }
+
+    if (data.adminPasswordHash) {
+      this.adminPasswordHash = data.adminPasswordHash;
+    }
+
+    return { restoredLicenses, restoredTickets };
+  }
 }
 
-// Upstash Redis storage implementation
+// Upstash Redis storage implementation with persistent support
 class UpstashStorage {
   private redis: Redis;
 
@@ -209,11 +479,9 @@ class UpstashStorage {
     const ids = await this.redis.smembers('lic:all_ids');
     if (!ids || ids.length === 0) return [];
     
-    // Batch fetch in chunks
     const keys = ids.map(id => `lic:${id}`);
     const results: LicenseRecord[] = [];
     
-    // Upstash mget supports array of keys
     if (keys.length > 0) {
       const records = await this.redis.mget<Array<string | LicenseRecord>>(...keys);
       for (const item of records) {
@@ -330,6 +598,235 @@ class UpstashStorage {
     await this.redis.set(`anno:${id}`, JSON.stringify(item));
     return item;
   }
+
+  // Security Config
+  async getSecurityConfig(): Promise<SecurityConfig> {
+    const raw = await this.redis.get<string | SecurityConfig>('sec:config');
+    if (!raw) {
+      return {
+        antiCopyEnabled: false,
+        ipBlacklist: [],
+        honeypotCount: 0,
+        telegram: {
+          enabled: true,
+          botToken: '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE',
+          chatId: '6745501942',
+        },
+      };
+    }
+    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+  }
+
+  async updateSecurityConfig(partial: Partial<SecurityConfig>): Promise<SecurityConfig> {
+    const current = await this.getSecurityConfig();
+    const updated: SecurityConfig = {
+      ...current,
+      ...partial,
+      telegram: {
+        ...current.telegram,
+        ...(partial.telegram || {}),
+      },
+    };
+    await this.redis.set('sec:config', JSON.stringify(updated));
+    return updated;
+  }
+
+  // Blacklist
+  async getBlacklistedIps(): Promise<Array<{ ip: string; reason: string; timestamp: number }>> {
+    const ips = await this.redis.smembers('ip:blacklist');
+    if (!ips || ips.length === 0) return [];
+    const keys = ips.map(ip => `ip:meta:${ip}`);
+    const metas = await this.redis.mget<Array<string | { reason: string; timestamp: number }>>(...keys);
+    const results: Array<{ ip: string; reason: string; timestamp: number }> = [];
+    for (let i = 0; i < ips.length; i++) {
+      const ip = ips[i];
+      const m = metas[i];
+      const parsed = m ? (typeof m === 'string' ? JSON.parse(m) : m) : { reason: 'ব্লক করা আইপি', timestamp: Date.now() };
+      results.push({ ip, reason: parsed.reason, timestamp: parsed.timestamp });
+    }
+    return results;
+  }
+
+  async isIpBlacklisted(ip: string): Promise<boolean> {
+    if (!ip) return false;
+    const clean = ip.trim().replace(/^::ffff:/, '');
+    const isMember = await this.redis.sismember('ip:blacklist', clean);
+    return Boolean(isMember);
+  }
+
+  async addBlacklistedIp(ip: string, reason = 'ম্যানুয়াল ব্লক'): Promise<void> {
+    const clean = ip.trim().replace(/^::ffff:/, '');
+    const pipeline = this.redis.pipeline();
+    pipeline.sadd('ip:blacklist', clean);
+    pipeline.set(`ip:meta:${clean}`, JSON.stringify({ reason, timestamp: Date.now() }));
+    await pipeline.exec();
+  }
+
+  async removeBlacklistedIp(ip: string): Promise<boolean> {
+    const clean = ip.trim().replace(/^::ffff:/, '');
+    const pipeline = this.redis.pipeline();
+    pipeline.srem('ip:blacklist', clean);
+    pipeline.del(`ip:meta:${clean}`);
+    await pipeline.exec();
+    return true;
+  }
+
+  // Security Events Stream
+  async addSecurityEvent(event: Omit<SecurityTerminalEvent, 'id' | 'timestamp'>): Promise<SecurityTerminalEvent> {
+    const fullEvent: SecurityTerminalEvent = {
+      ...event,
+      id: `sec_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+    };
+    await this.redis.lpush('sec:events', JSON.stringify(fullEvent));
+    await this.redis.ltrim('sec:events', 0, 200);
+    return fullEvent;
+  }
+
+  async getSecurityEvents(limit = 100): Promise<SecurityTerminalEvent[]> {
+    const raw = await this.redis.lrange('sec:events', 0, limit - 1);
+    if (!raw) return [];
+    return raw.map(item => (typeof item === 'string' ? JSON.parse(item) : item));
+  }
+
+  // Support Tickets
+  async createSupportTicket(ticket: Omit<SupportTicket, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<SupportTicket> {
+    const id = `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    const fullTicket: SupportTicket = {
+      ...ticket,
+      id,
+      status: 'open',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    const pipeline = this.redis.pipeline();
+    pipeline.set(`support:tkt:${id}`, JSON.stringify(fullTicket));
+    pipeline.sadd('support:all_ids', id);
+    pipeline.sadd(`support:lic:${ticket.licenseId}`, id);
+    await pipeline.exec();
+    return fullTicket;
+  }
+
+  async listSupportTickets(): Promise<SupportTicket[]> {
+    const ids = await this.redis.smembers('support:all_ids');
+    if (!ids || ids.length === 0) return [];
+    const keys = ids.map(id => `support:tkt:${id}`);
+    const records = await this.redis.mget<Array<string | SupportTicket>>(...keys);
+    const results: SupportTicket[] = [];
+    for (const r of records) {
+      if (r) {
+        try {
+          const parsed = typeof r === 'string' ? JSON.parse(r) : r;
+          results.push(parsed);
+        } catch {}
+      }
+    }
+    return results.sort((a, b) => b.updatedAt - a.updatedAt);
+  }
+
+  async getSupportTicketById(id: string): Promise<SupportTicket | null> {
+    const raw = await this.redis.get<string | SupportTicket>(`support:tkt:${id}`);
+    if (!raw) return null;
+    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+  }
+
+  async updateSupportTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket | null> {
+    const existing = await this.getSupportTicketById(id);
+    if (!existing) return null;
+    const updated: SupportTicket = {
+      ...existing,
+      ...updates,
+      updatedAt: Date.now(),
+    };
+    await this.redis.set(`support:tkt:${id}`, JSON.stringify(updated));
+    return updated;
+  }
+
+  async listSupportTicketsByLicense(licenseId: string): Promise<SupportTicket[]> {
+    const ids = await this.redis.smembers(`support:lic:${licenseId}`);
+    if (!ids || ids.length === 0) return [];
+    const keys = ids.map(id => `support:tkt:${id}`);
+    const records = await this.redis.mget<Array<string | SupportTicket>>(...keys);
+    const results: SupportTicket[] = [];
+    for (const r of records) {
+      if (r) {
+        try {
+          const parsed = typeof r === 'string' ? JSON.parse(r) : r;
+          results.push(parsed);
+        } catch {}
+      }
+    }
+    return results.sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  // Student Actions
+  async addStudentAction(action: Omit<StudentActionEvent, 'id' | 'timestamp'>): Promise<StudentActionEvent> {
+    const fullAction: StudentActionEvent = {
+      ...action,
+      id: `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+    };
+    await this.redis.lpush('student:actions', JSON.stringify(fullAction));
+    await this.redis.ltrim('student:actions', 0, 1000);
+    return fullAction;
+  }
+
+  async getStudentActions(licenseId?: string, limit = 100): Promise<StudentActionEvent[]> {
+    const raw = await this.redis.lrange('student:actions', 0, 499);
+    if (!raw) return [];
+    const list: StudentActionEvent[] = raw.map(item => (typeof item === 'string' ? JSON.parse(item) : item));
+    if (!licenseId) {
+      return list.slice(0, limit);
+    }
+    return list.filter(a => a.licenseId === licenseId).slice(0, limit);
+  }
+
+  // Admin Password Management
+  async getAdminPasswordHash(): Promise<string | null> {
+    return await this.redis.get<string>('admin:password_hash');
+  }
+
+  async setAdminPasswordHash(hash: string): Promise<void> {
+    await this.redis.set('admin:password_hash', hash);
+  }
+
+  // Failed Auth Stats
+  async recordFailedActivation(): Promise<void> {
+    await this.redis.incr('stats:failed_activations');
+    await this.redis.set('stats:last_attack_time', Date.now().toString());
+  }
+
+  async recordFailedAdminLogin(): Promise<void> {
+    await this.redis.incr('stats:failed_admin_logins');
+    await this.redis.set('stats:last_attack_time', Date.now().toString());
+  }
+
+  async recordBlockedFirewallAttempt(): Promise<void> {
+    await this.redis.incr('stats:blocked_attempts');
+    await this.redis.set('stats:last_attack_time', Date.now().toString());
+  }
+
+  async getFailedAuthStats() {
+    const [fa, fal, ba, lat] = await Promise.all([
+      this.redis.get<number | string>('stats:failed_activations'),
+      this.redis.get<number | string>('stats:failed_admin_logins'),
+      this.redis.get<number | string>('stats:blocked_attempts'),
+      this.redis.get<number | string>('stats:last_attack_time'),
+    ]);
+    return {
+      failedActivationsCount: Number(fa || 0),
+      failedAdminLoginsCount: Number(fal || 0),
+      blockedAttemptsCount: Number(ba || 0),
+      lastAttackTimestamp: Number(lat || 0),
+    };
+  }
+
+  // Ping Redis to test connection latency
+  async ping(): Promise<number> {
+    const start = Date.now();
+    await this.redis.ping();
+    return Date.now() - start;
+  }
 }
 
 // Storage Singleton Dispatcher
@@ -347,12 +844,19 @@ if (isUpstashConfigured) {
   console.warn('[Storage] UPSTASH_REDIS_REST_URL not configured. Operating in local in-memory mode.');
 }
 
-const activeBackend = () => {
-  return upstashInstance || inMemoryInstance;
-};
-
 export const storage = {
   isPersistent: () => Boolean(upstashInstance),
+
+  async pingRedis(): Promise<number> {
+    if (upstashInstance) {
+      try {
+        return await upstashInstance.ping();
+      } catch {
+        return -1;
+      }
+    }
+    return 1;
+  },
 
   async createLicense(license: LicenseRecord): Promise<void> {
     try {
@@ -578,5 +1082,226 @@ export const storage = {
       console.error('[Storage Error] Upstash toggleAnnouncement failed, using fallback:', err);
     }
     return inMemoryInstance.toggleAnnouncement(id, active);
+  },
+
+  // Security Config
+  async getSecurityConfig(): Promise<SecurityConfig> {
+    try {
+      if (upstashInstance) return await upstashInstance.getSecurityConfig();
+    } catch (err) {
+      console.error('[Storage Error] Upstash getSecurityConfig failed:', err);
+    }
+    return inMemoryInstance.getSecurityConfig();
+  },
+
+  async updateSecurityConfig(partial: Partial<SecurityConfig>): Promise<SecurityConfig> {
+    try {
+      if (upstashInstance) return await upstashInstance.updateSecurityConfig(partial);
+    } catch (err) {
+      console.error('[Storage Error] Upstash updateSecurityConfig failed:', err);
+    }
+    return inMemoryInstance.updateSecurityConfig(partial);
+  },
+
+  // Blacklist
+  async getBlacklistedIps(): Promise<Array<{ ip: string; reason: string; timestamp: number }>> {
+    try {
+      if (upstashInstance) return await upstashInstance.getBlacklistedIps();
+    } catch (err) {
+      console.error('[Storage Error] Upstash getBlacklistedIps failed:', err);
+    }
+    return inMemoryInstance.getBlacklistedIps();
+  },
+
+  async isIpBlacklisted(ip: string): Promise<boolean> {
+    try {
+      if (upstashInstance) {
+        const bl = await upstashInstance.isIpBlacklisted(ip);
+        if (bl) return true;
+      }
+    } catch (err) {
+      console.error('[Storage Error] Upstash isIpBlacklisted failed:', err);
+    }
+    return inMemoryInstance.isIpBlacklisted(ip);
+  },
+
+  async addBlacklistedIp(ip: string, reason?: string): Promise<void> {
+    try {
+      if (upstashInstance) await upstashInstance.addBlacklistedIp(ip, reason);
+    } catch (err) {
+      console.error('[Storage Error] Upstash addBlacklistedIp failed:', err);
+    }
+    await inMemoryInstance.addBlacklistedIp(ip, reason);
+  },
+
+  async removeBlacklistedIp(ip: string): Promise<boolean> {
+    try {
+      if (upstashInstance) await upstashInstance.removeBlacklistedIp(ip);
+    } catch (err) {
+      console.error('[Storage Error] Upstash removeBlacklistedIp failed:', err);
+    }
+    return inMemoryInstance.removeBlacklistedIp(ip);
+  },
+
+  // Security Events Stream
+  async addSecurityEvent(event: Omit<SecurityTerminalEvent, 'id' | 'timestamp'>): Promise<SecurityTerminalEvent> {
+    try {
+      if (upstashInstance) await upstashInstance.addSecurityEvent(event);
+    } catch (err) {
+      console.error('[Storage Error] Upstash addSecurityEvent failed:', err);
+    }
+    return inMemoryInstance.addSecurityEvent(event);
+  },
+
+  async getSecurityEvents(limit = 100): Promise<SecurityTerminalEvent[]> {
+    try {
+      if (upstashInstance) return await upstashInstance.getSecurityEvents(limit);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getSecurityEvents failed:', err);
+    }
+    return inMemoryInstance.getSecurityEvents(limit);
+  },
+
+  // Support Tickets
+  async createSupportTicket(ticket: Omit<SupportTicket, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<SupportTicket> {
+    try {
+      if (upstashInstance) return await upstashInstance.createSupportTicket(ticket);
+    } catch (err) {
+      console.error('[Storage Error] Upstash createSupportTicket failed:', err);
+    }
+    return inMemoryInstance.createSupportTicket(ticket);
+  },
+
+  async listSupportTickets(): Promise<SupportTicket[]> {
+    try {
+      if (upstashInstance) return await upstashInstance.listSupportTickets();
+    } catch (err) {
+      console.error('[Storage Error] Upstash listSupportTickets failed:', err);
+    }
+    return inMemoryInstance.listSupportTickets();
+  },
+
+  async getSupportTicketById(id: string): Promise<SupportTicket | null> {
+    try {
+      if (upstashInstance) return await upstashInstance.getSupportTicketById(id);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getSupportTicketById failed:', err);
+    }
+    return inMemoryInstance.getSupportTicketById(id);
+  },
+
+  async updateSupportTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket | null> {
+    try {
+      if (upstashInstance) return await upstashInstance.updateSupportTicket(id, updates);
+    } catch (err) {
+      console.error('[Storage Error] Upstash updateSupportTicket failed:', err);
+    }
+    return inMemoryInstance.updateSupportTicket(id, updates);
+  },
+
+  async listSupportTicketsByLicense(licenseId: string): Promise<SupportTicket[]> {
+    try {
+      if (upstashInstance) return await upstashInstance.listSupportTicketsByLicense(licenseId);
+    } catch (err) {
+      console.error('[Storage Error] Upstash listSupportTicketsByLicense failed:', err);
+    }
+    return inMemoryInstance.listSupportTicketsByLicense(licenseId);
+  },
+
+  // Student Actions
+  async addStudentAction(action: Omit<StudentActionEvent, 'id' | 'timestamp'>): Promise<StudentActionEvent> {
+    try {
+      if (upstashInstance) await upstashInstance.addStudentAction(action);
+    } catch (err) {
+      console.error('[Storage Error] Upstash addStudentAction failed:', err);
+    }
+    return inMemoryInstance.addStudentAction(action);
+  },
+
+  async getStudentActions(licenseId?: string, limit = 100): Promise<StudentActionEvent[]> {
+    try {
+      if (upstashInstance) return await upstashInstance.getStudentActions(licenseId, limit);
+    } catch (err) {
+      console.error('[Storage Error] Upstash getStudentActions failed:', err);
+    }
+    return inMemoryInstance.getStudentActions(licenseId, limit);
+  },
+
+  // Admin Password Management
+  async getAdminPasswordHash(): Promise<string | null> {
+    try {
+      if (upstashInstance) {
+        const hash = await upstashInstance.getAdminPasswordHash();
+        if (hash) return hash;
+      }
+    } catch (err) {
+      console.error('[Storage Error] Upstash getAdminPasswordHash failed:', err);
+    }
+    return inMemoryInstance.getAdminPasswordHash();
+  },
+
+  async setAdminPasswordHash(hash: string): Promise<void> {
+    try {
+      if (upstashInstance) await upstashInstance.setAdminPasswordHash(hash);
+    } catch (err) {
+      console.error('[Storage Error] Upstash setAdminPasswordHash failed:', err);
+    }
+    await inMemoryInstance.setAdminPasswordHash(hash);
+  },
+
+  // Attack Stats / Rate Limits
+  async recordFailedActivation(): Promise<void> {
+    try {
+      if (upstashInstance) await upstashInstance.recordFailedActivation();
+    } catch {}
+    await inMemoryInstance.recordFailedActivation();
+  },
+
+  async recordFailedAdminLogin(): Promise<void> {
+    try {
+      if (upstashInstance) await upstashInstance.recordFailedAdminLogin();
+    } catch {}
+    await inMemoryInstance.recordFailedAdminLogin();
+  },
+
+  async recordBlockedFirewallAttempt(): Promise<void> {
+    try {
+      if (upstashInstance) await upstashInstance.recordBlockedFirewallAttempt();
+    } catch {}
+    await inMemoryInstance.recordBlockedFirewallAttempt();
+  },
+
+  async getFailedAuthStats() {
+    try {
+      if (upstashInstance) return await upstashInstance.getFailedAuthStats();
+    } catch {}
+    return inMemoryInstance.getFailedAuthStats();
+  },
+
+  // Full Database Backup & Restore
+  async getFullBackupData() {
+    const licenses = await this.listLicenses();
+    const auditLogs = await this.getAuditLogs(500);
+    const announcements = await this.listAnnouncements(true);
+    const supportTickets = await this.listSupportTickets();
+    const blacklistedIps = await this.getBlacklistedIps();
+    const securityEvents = await this.getSecurityEvents(100);
+    const securityConfig = await this.getSecurityConfig();
+
+    return {
+      version: '1.0',
+      exportedAt: Date.now(),
+      licenses,
+      auditLogs,
+      announcements,
+      supportTickets,
+      blacklistedIps,
+      securityEvents,
+      securityConfig,
+    };
+  },
+
+  async restoreFullBackupData(data: any): Promise<{ restoredLicenses: number; restoredTickets: number }> {
+    return inMemoryInstance.restoreFullBackupData(data);
   },
 };
