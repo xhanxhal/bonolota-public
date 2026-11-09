@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { storage } from '../storage';
 import { requireAdminAuth, AuthenticatedAdminRequest } from '../auth';
 import { BroadcastAnnouncement } from '../types';
+import { sanitizeActionUrl } from '../security';
 
 export const broadcastRouter = Router();
 
@@ -116,7 +117,7 @@ broadcastRouter.post('/admin/create', requireAdminAuth, async (req: Authenticate
       displayStyle: selectedDisplayStyle,
       targetKey: cleanTargetKey,
       autoDismissSeconds: parsedAutoDismiss,
-      actionUrl: typeof actionUrl === 'string' ? actionUrl.trim() : undefined,
+      actionUrl: sanitizeActionUrl(actionUrl),
       actionText: typeof actionText === 'string' ? actionText.trim() : undefined,
       createdAt: Date.now(),
       active: true,

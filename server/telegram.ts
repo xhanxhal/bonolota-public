@@ -1,11 +1,16 @@
 import { storage } from './storage';
+import { 
+  validateTelegramBotToken, 
+  validateTelegramChatId, 
+  validateSafeOutboundUrl 
+} from './security';
 
 // Default configuration provided by user
 export const DEFAULT_TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE';
 export const DEFAULT_TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '6745501942';
 
 /**
- * Send an alert message to Telegram
+ * Send an alert message to Telegram with SSRF Shield & strict host validation
  */
 export async function sendTelegramAlert(
   text: string,
@@ -24,7 +29,7 @@ export async function sendTelegramAlert(
         if (config.telegram.chatId) chatId = config.telegram.chatId;
         if (typeof config.telegram.enabled === 'boolean') enabled = config.telegram.enabled;
       }
-    } catch (e) {
+    } catch {
       // Storage might not be initialized yet; fallback to default
     }
 
@@ -32,16 +37,38 @@ export async function sendTelegramAlert(
       return { success: false, error: 'Telegram alert is disabled or missing credentials' };
     }
 
-    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    // SSRF & Parameter Validation
+    const tokenCheck = validateTelegramBotToken(botToken);
+    if (!tokenCheck.valid) {
+      console.warn('[SSRF Shield] Invalid Telegram token format detected:', tokenCheck.reason);
+      return { success: false, error: tokenCheck.reason };
+    }
+
+    const chatCheck = validateTelegramChatId(chatId);
+    if (!chatCheck.valid) {
+      console.warn('[SSRF Shield] Invalid Telegram chat ID format detected:', chatCheck.reason);
+      return { success: false, error: chatCheck.reason };
+    }
+
+    const url = `https://api.telegram.org/bot${botToken.trim()}/sendMessage`;
+
+    // Strict URL validation: protocol must be https, host must strictly be api.telegram.org
+    const urlCheck = validateSafeOutboundUrl(url, { allowedHosts: ['api.telegram.org'], allowedProtocols: ['https:'] });
+    if (!urlCheck.safe) {
+      console.error('[SSRF Shield] Outbound request blocked to non-whitelisted destination:', urlCheck.reason);
+      return { success: false, error: urlCheck.reason };
+    }
+
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: chatId,
+        chat_id: chatId.trim(),
         text,
         parse_mode: options?.parseMode || 'HTML',
         disable_web_page_preview: true,
       }),
+      signal: AbortSignal.timeout(8000), // 8s timeout to prevent hanging connections
     });
 
     const data = await response.json().catch(() => null);
@@ -75,18 +102,29 @@ export async function sendTelegramAlert(
 }
 
 /**
- * Test Telegram bot connection and chat ID
+ * Test Telegram bot connection and chat ID with SSRF validation
  */
 export async function testTelegramConnection(
   botToken: string,
   chatId: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const cleanToken = botToken.trim();
-    const cleanChatId = chatId.trim();
+    const cleanToken = (botToken || '').trim();
+    const cleanChatId = (chatId || '').trim();
 
     if (!cleanToken || !cleanChatId) {
       return { success: false, message: 'বট টোকেন এবং চ্যাট আইডি উভয়ই পূরণ করতে হবে।' };
+    }
+
+    // SSRF & Parameter Validation
+    const tokenCheck = validateTelegramBotToken(cleanToken);
+    if (!tokenCheck.valid) {
+      return { success: false, message: tokenCheck.reason || 'অবৈধ বট টোকেন।' };
+    }
+
+    const chatCheck = validateTelegramChatId(cleanChatId);
+    if (!chatCheck.valid) {
+      return { success: false, message: chatCheck.reason || 'অবৈধ চ্যাট আইডি।' };
     }
 
     const testMessage = `🛡️ <b>বনলতা সিকিউরিটি নোটিফিকেশন টেস্ট</b>\n\n` +
@@ -95,6 +133,13 @@ export async function testTelegramConnection(
       `📌 আপনার অ্যাডমিন প্যানেল থেকে পাঠানো টেস্ট মেসেজ। সমস্ত সিকিউরিটি ইভেন্ট, ফ্রড অ্যালার্ট এবং হানি-পট নোটিফিকেশন এই চ্যাটে পাওয়া যাবে।`;
 
     const url = `https://api.telegram.org/bot${cleanToken}/sendMessage`;
+
+    // Strict URL validation: protocol must be https, host must strictly be api.telegram.org
+    const urlCheck = validateSafeOutboundUrl(url, { allowedHosts: ['api.telegram.org'], allowedProtocols: ['https:'] });
+    if (!urlCheck.safe) {
+      return { success: false, message: `SSRF Shield: ${urlCheck.reason}` };
+    }
+
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -103,6 +148,7 @@ export async function testTelegramConnection(
         text: testMessage,
         parse_mode: 'HTML',
       }),
+      signal: AbortSignal.timeout(8000), // 8s timeout
     });
 
     const data = await response.json().catch(() => null);

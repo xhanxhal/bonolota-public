@@ -346,7 +346,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
         <button
           type="button"
           onClick={onToggleSound}
-          className={`p-1.5 sm:p-2 rounded-lg border transition-all cursor-pointer ${
+          className={`hidden sm:flex p-1.5 sm:p-2 rounded-lg border transition-all cursor-pointer ${
             settings.soundEnabled
               ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100/60'
               : 'border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200/60'

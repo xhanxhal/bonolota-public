@@ -15,8 +15,14 @@ import {
   requireAdminAuth, 
   AuthenticatedAdminRequest 
 } from '../auth';
-import { LicenseRecord, SystemHealthMetrics } from '../types';
+import { LicenseRecord, SystemHealthMetrics, SupportMessage } from '../types';
 import { sendTelegramAlert, testTelegramConnection } from '../telegram';
+import { 
+  canBlockIp, 
+  isLoopbackIp, 
+  validateTelegramBotToken, 
+  validateTelegramChatId 
+} from '../security';
 
 export const adminRouter = Router();
 
@@ -74,9 +80,11 @@ adminRouter.get('/session', async (req: Request, res: Response): Promise<void> =
 adminRouter.post('/login', async (req: Request, res: Response): Promise<void> => {
   try {
     const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.socket?.remoteAddress || req.ip || 'unknown';
+    const isLoopback = isLoopbackIp(clientIp);
 
-    // Rate limit: 5 login attempts per 15 minutes per IP to resist brute force
-    const rateCheck = await storage.checkRateLimit(`adminlogin:${clientIp}`, 5, 15 * 60);
+    // Rate limit: 5 attempts per 15 minutes per IP (50 for loopback/local dev so localhost is never locked out)
+    const maxAttempts = isLoopback ? 50 : 5;
+    const rateCheck = await storage.checkRateLimit(`adminlogin:${clientIp}`, maxAttempts, 15 * 60);
     if (!rateCheck.allowed) {
       await storage.addAuditLog({
         id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -770,18 +778,37 @@ adminRouter.get('/telegram/config', requireAdminAuth, async (_req: Authenticated
 adminRouter.post('/telegram/config', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
     const { botToken, chatId, enabled } = req.body || {};
+    const cleanToken = typeof botToken === 'string' ? botToken.trim() : '';
+    const cleanChatId = typeof chatId === 'string' ? chatId.trim() : '';
+
+    if (cleanToken) {
+      const tokenCheck = validateTelegramBotToken(cleanToken);
+      if (!tokenCheck.valid) {
+        res.status(400).json({ ok: false, message: tokenCheck.reason });
+        return;
+      }
+    }
+
+    if (cleanChatId) {
+      const chatCheck = validateTelegramChatId(cleanChatId);
+      if (!chatCheck.valid) {
+        res.status(400).json({ ok: false, message: chatCheck.reason });
+        return;
+      }
+    }
+
     const updated = await storage.updateSecurityConfig({
       telegram: {
         enabled: typeof enabled === 'boolean' ? enabled : true,
-        botToken: typeof botToken === 'string' ? botToken.trim() : '',
-        chatId: typeof chatId === 'string' ? chatId.trim() : '',
+        botToken: cleanToken,
+        chatId: cleanChatId,
       },
     });
 
     await storage.addSecurityEvent({
       level: 'info',
       source: 'TELEGRAM',
-      message: `টেলিগ্রাম কনফিগারেশন আপডেট করা হয়েছে (Chat ID: ${chatId || 'not set'})`,
+      message: `টেলিগ্রাম কনফিগারেশন আপডেট করা হয়েছে (Chat ID: ${cleanChatId || 'not set'})`,
     });
 
     res.json({ ok: true, telegram: updated.telegram, message: 'টেলিগ্রাম সেটিংস সফলভাবে সংরক্ষিত হয়েছে।' });
@@ -794,10 +821,27 @@ adminRouter.post('/telegram/test', requireAdminAuth, async (req: AuthenticatedAd
   try {
     const { botToken, chatId } = req.body || {};
     const config = await storage.getSecurityConfig();
-    const token = botToken || config.telegram?.botToken;
-    const chat = chatId || config.telegram?.chatId;
+    const cleanToken = (botToken || config.telegram?.botToken || '').trim();
+    const cleanChat = (chatId || config.telegram?.chatId || '').trim();
 
-    const result = await testTelegramConnection(token, chat);
+    if (!cleanToken || !cleanChat) {
+      res.status(400).json({ ok: false, message: 'বট টোকেন এবং চ্যাট আইডি উভয়ই পূরণ করতে হবে।' });
+      return;
+    }
+
+    const tokenCheck = validateTelegramBotToken(cleanToken);
+    if (!tokenCheck.valid) {
+      res.status(400).json({ ok: false, message: tokenCheck.reason });
+      return;
+    }
+
+    const chatCheck = validateTelegramChatId(cleanChat);
+    if (!chatCheck.valid) {
+      res.status(400).json({ ok: false, message: chatCheck.reason });
+      return;
+    }
+
+    const result = await testTelegramConnection(cleanToken, cleanChat);
     res.json({ ok: result.success, message: result.message });
   } catch (error: any) {
     res.status(500).json({ ok: false, message: error?.message || 'টেস্ট মেসেজ পাঠাতে ব্যর্থ হয়েছে।' });
@@ -876,6 +920,13 @@ adminRouter.post('/security/blacklist/add', requireAdminAuth, async (req: Authen
       res.status(400).json({ ok: false, message: 'আইপি ঠিকানা প্রদান করুন।' });
       return;
     }
+
+    const blockCheck = canBlockIp(ip);
+    if (!blockCheck.allowed) {
+      res.status(400).json({ ok: false, message: blockCheck.reason });
+      return;
+    }
+
     await storage.addBlacklistedIp(ip, reason || 'অ্যাডমিন ম্যানুয়াল ব্লক');
 
     await storage.addSecurityEvent({
@@ -1044,8 +1095,14 @@ adminRouter.get('/support/tickets', requireAdminAuth, async (_req: Authenticated
 adminRouter.post('/support/reply', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
     const { ticketId, replyMessage, markResolved } = req.body || {};
-    if (!ticketId || !replyMessage) {
+    if (!ticketId || typeof replyMessage !== 'string' || !replyMessage.trim()) {
       res.status(400).json({ ok: false, message: 'টিকেট আইডি এবং উত্তর বার্তা আবশ্যক।' });
+      return;
+    }
+
+    const cleanReply = replyMessage.trim().slice(0, 3000).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (!cleanReply) {
+      res.status(400).json({ ok: false, message: 'উত্তর বার্তা ফাঁকা রাখা যাবে না।' });
       return;
     }
 
@@ -1055,17 +1112,30 @@ adminRouter.post('/support/reply', requireAdminAuth, async (req: AuthenticatedAd
       return;
     }
 
+    const now = Date.now();
+    const adminMsg: SupportMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: 'admin',
+      senderName: 'Bonolota Support',
+      text: cleanReply,
+      timestamp: now,
+    };
+
+    const existingMessages = Array.isArray(ticket.messages) ? ticket.messages : [];
+    const updatedMessages = [...existingMessages, adminMsg];
+
     const updated = await storage.updateSupportTicket(ticketId, {
-      adminReply: replyMessage,
-      repliedAt: Date.now(),
+      adminReply: cleanReply,
+      repliedAt: now,
       status: markResolved ? 'resolved' : 'replied',
+      messages: updatedMessages,
     });
 
     // Also send an in-app broadcast announcement directed specifically to that student key!
     await storage.createAnnouncement({
       id: `anno_reply_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
       title: `📩 সাপোর্ট উত্তর: ${ticket.subject}`,
-      message: replyMessage,
+      message: cleanReply,
       type: 'info',
       priority: 'high',
       displayStyle: 'center_modal',
@@ -1080,6 +1150,53 @@ adminRouter.post('/support/reply', requireAdminAuth, async (req: AuthenticatedAd
     res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
   }
 });
+
+// Admin: Delete entire support chat conversation from both sides
+const handleDeleteSupportTicket = async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const ticket = await storage.getSupportTicketById(id);
+    if (!ticket) {
+      res.status(404).json({ ok: false, message: 'টিকেট পাওয়া যায়নি।' });
+      return;
+    }
+
+    await storage.deleteSupportTicket(id);
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'delete_support_chat',
+      details: `Deleted support chat: "${ticket.subject}" (${ticket.keyMasked}) from both sides.`,
+    });
+
+    res.json({ ok: true, message: 'চ্যাটটি উভয়পাশ থেকেই স্থায়ীভাবে মুছে ফেলা হয়েছে।' });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+};
+
+adminRouter.delete('/support/ticket/:id', requireAdminAuth, handleDeleteSupportTicket);
+adminRouter.post('/support/ticket/:id/delete', requireAdminAuth, handleDeleteSupportTicket);
+
+// Admin: Delete a specific message from both sides
+const handleDeleteSupportMessage = async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { id, messageId } = req.params;
+    const updated = await storage.deleteSupportMessage(id, messageId);
+    if (!updated) {
+      res.status(404).json({ ok: false, message: 'টিকেট পাওয়া যায়নি।' });
+      return;
+    }
+
+    res.json({ ok: true, ticket: updated, message: 'মেসেজটি উভয়পাশ থেকেই মুছে ফেলা হয়েছে।' });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+};
+
+adminRouter.delete('/support/ticket/:id/message/:messageId', requireAdminAuth, handleDeleteSupportMessage);
+adminRouter.post('/support/ticket/:id/message/:messageId/delete', requireAdminAuth, handleDeleteSupportMessage);
 
 /**
  * Feature 25: Real-Time Live Active Students Online Tracker

@@ -6,6 +6,7 @@ import { broadcastRouter } from './broadcast';
 import { storage } from '../storage';
 import { sendTelegramAlert } from '../telegram';
 import { validateEnvironment } from '../env-validator';
+import { isLoopbackIp } from '../security';
 
 export const apiRouter = Router();
 
@@ -14,9 +15,14 @@ apiRouter.use(async (req: Request, res: Response, next) => {
   try {
     const rawIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || 'unknown';
     const clientIp = rawIp.replace(/^::ffff:/, '');
-    const isLoopback = clientIp === '127.0.0.1' || clientIp === '::1' || clientIp === 'localhost';
 
-    if (!isLoopback && await storage.isIpBlacklisted(clientIp)) {
+    // Never block 127.0.0.1, localhost, or loopback IPs
+    if (isLoopbackIp(clientIp) || isLoopbackIp(rawIp)) {
+      next();
+      return;
+    }
+
+    if (await storage.isIpBlacklisted(clientIp)) {
       await storage.recordBlockedFirewallAttempt();
       res.status(403).json({
         ok: false,
@@ -39,8 +45,8 @@ const honeypotHandler = async (req: Request, res: Response): Promise<void> => {
   const targetPath = req.originalUrl || req.url;
 
   try {
-    const isLoopback = clientIp === '127.0.0.1' || clientIp === '::1' || clientIp === 'localhost';
-    if (!isLoopback) {
+    // Never blacklist loopback/localhost IPs
+    if (!isLoopbackIp(clientIp) && !isLoopbackIp(rawIp)) {
       await storage.addBlacklistedIp(clientIp, `Honeypot Triggered on ${targetPath}`);
     }
     const currentConfig = await storage.getSecurityConfig();
@@ -77,6 +83,7 @@ apiRouter.all(['/admin/dump-database', '/v1/dump-keys', '/system/database-dump',
 
 // Sub-routers
 apiRouter.use('/auth', authRouter);
+apiRouter.use('/', authRouter);
 apiRouter.use('/admin', adminRouter);
 apiRouter.use('/content', contentRouter);
 apiRouter.use('/broadcasts', broadcastRouter);

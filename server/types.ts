@@ -68,6 +68,14 @@ export interface UserProgressSummary {
   hmacSignature?: string;
 }
 
+export interface SupportMessage {
+  id: string; // e.g. "msg_17300000_abc"
+  sender: 'customer' | 'admin';
+  senderName: string;
+  text: string;
+  timestamp: number;
+}
+
 export interface SupportTicket {
   id: string; // e.g. "tkt_17300000_abc"
   licenseId: string;
@@ -75,6 +83,7 @@ export interface SupportTicket {
   customerName?: string;
   subject: string;
   message: string;
+  messages: SupportMessage[];
   status: 'open' | 'replied' | 'resolved';
   createdAt: number;
   updatedAt: number;
@@ -172,7 +181,7 @@ export interface BroadcastAnnouncement {
 export interface AuditLogEntry {
   id: string;
   timestamp: number;
-  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'update_customer_name' | 'admin_login' | 'admin_failed_login';
+  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'update_customer_name' | 'admin_login' | 'admin_failed_login' | 'delete_support_chat';
   licenseId?: string;
   details: string;
   ip?: string;

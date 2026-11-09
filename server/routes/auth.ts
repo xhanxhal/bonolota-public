@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { storage } from '../storage';
-import { UserProgressSummary, ClientBrowserMetadata } from '../types';
+import { UserProgressSummary, ClientBrowserMetadata, SupportMessage } from '../types';
 import { 
   hashLicenseKey, 
   generateSessionToken, 
@@ -667,19 +667,44 @@ authRouter.post('/action-ping', requireCustomerAuth, async (req: AuthenticatedUs
  * POST /api/support/ticket
  * GET /api/support/my-tickets
  */
+// Helper to sanitize message input
+function sanitizeText(str: any, maxLen: number): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .trim()
+    .slice(0, maxLen)
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 authRouter.post('/support/ticket', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
   try {
     const license = req.license!;
     const { subject, message } = req.body || {};
 
-    if (!subject || !message) {
-      res.status(400).json({ ok: false, message: 'বিষয় এবং বার্তা উভয়ই পূরণ করতে হবে।' });
+    const cleanSubject = sanitizeText(subject, 150);
+    const cleanMessage = sanitizeText(message, 3000);
+
+    if (!cleanSubject || cleanSubject.length < 2) {
+      res.status(400).json({ ok: false, message: 'সমস্যার বিষয় কমপক্ষে ২ অক্ষরের হতে হবে।' });
+      return;
+    }
+
+    if (!cleanMessage || cleanMessage.length < 1) {
+      res.status(400).json({ ok: false, message: 'বার্তা বা প্রশ্নের বিবরণ ফাঁকা রাখা যাবে না।' });
       return;
     }
 
     const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || license.clientIp;
-    const cleanSubject = String(subject).slice(0, 150);
-    const cleanMessage = String(message).slice(0, 2000);
+
+    const now = Date.now();
+    const initialMessage: SupportMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: 'customer',
+      senderName: license.customerName || 'শিক্ষার্থী',
+      text: cleanMessage,
+      timestamp: now,
+    };
 
     const ticket = await storage.createSupportTicket({
       licenseId: license.id,
@@ -687,19 +712,20 @@ authRouter.post('/support/ticket', requireCustomerAuth, async (req: Authenticate
       customerName: license.customerName,
       subject: cleanSubject,
       message: cleanMessage,
+      messages: [initialMessage],
       clientIp,
       clientDevice: license.deviceInfo,
     });
 
     // Telegram Alert for immediate response
     sendTelegramAlert(
-      `📩 <b>নতুন স্টুডেন্ট সাপোর্ট টিকেট!</b>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nকী: <code>${license.keyMasked}</code>\nবিষয়: <b>${cleanSubject}</b>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>\nআইপি: <code>${clientIp}</code>`
+      `📩 <b>নতুন স্টুডেন্ট সাপোর্ট চ্যাট!</b>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nকী: <code>${license.keyMasked}</code>\nবিষয়: <b>${cleanSubject}</b>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>\nআইপি: <code>${clientIp}</code>`
     ).catch(() => {});
 
     await storage.addSecurityEvent({
       level: 'info',
       source: 'AUTH',
-      message: `নতুন সাপোর্ট টিকেট প্রেরিত: "${cleanSubject}" (${license.keyMasked})`,
+      message: `নতুন সাপোর্ট চ্যাট শুরু: "${cleanSubject}" (${license.keyMasked})`,
       ip: clientIp,
       keyMasked: license.keyMasked,
     });
@@ -711,6 +737,58 @@ authRouter.post('/support/ticket', requireCustomerAuth, async (req: Authenticate
   }
 });
 
+// Student 1:1 Chat Reply into existing ticket thread
+authRouter.post('/support/ticket/:id/message', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  try {
+    const license = req.license!;
+    const ticketId = req.params.id;
+    const { message } = req.body || {};
+
+    const cleanMessage = sanitizeText(message, 3000);
+    if (!cleanMessage || cleanMessage.length < 1) {
+      res.status(400).json({ ok: false, message: 'বার্তা ফাঁকা রাখা যাবে না।' });
+      return;
+    }
+
+    // STRICT 1:1 VERIFICATION: Ticket MUST belong to the authenticated license
+    const ticket = await storage.getSupportTicketById(ticketId);
+    if (!ticket || ticket.licenseId !== license.id) {
+      res.status(404).json({ ok: false, message: 'চ্যাট থ্রেড পাওয়া যায়নি।' });
+      return;
+    }
+
+    const now = Date.now();
+    const newMsg: SupportMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: 'customer',
+      senderName: license.customerName || 'শিক্ষার্থী',
+      text: cleanMessage,
+      timestamp: now,
+    };
+
+    const existingMessages = Array.isArray(ticket.messages) ? ticket.messages : [];
+    const updatedMessages = [...existingMessages, newMsg];
+
+    const updated = await storage.updateSupportTicket(ticket.id, {
+      messages: updatedMessages,
+      status: 'open', // Mark open so admin sees unread message
+      updatedAt: now,
+    });
+
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || license.clientIp;
+
+    sendTelegramAlert(
+      `💬 <b>স্টুডেন্ট নতুন রিপ্লাই দিয়েছে!</b>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nবিষয়: <b>${ticket.subject}</b>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>`
+    ).catch(() => {});
+
+    res.json({ ok: true, ticket: updated, message: 'মেসেজ পাঠানো হয়েছে।' });
+  } catch (error) {
+    console.error('[support/ticket/:id/message] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+// Student fetch their own tickets (Strict 1:1 filter)
 authRouter.get('/support/my-tickets', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
   try {
     const license = req.license!;

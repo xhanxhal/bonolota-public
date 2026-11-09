@@ -7,12 +7,40 @@ import {
   AdminOverviewStats, 
   BroadcastAnnouncement,
   SupportTicket,
+  SupportMessage,
   StudentActionEvent,
   SecurityTerminalEvent,
   SecurityConfig
 } from './types';
 
 import { DEFAULT_REDIS_URL, DEFAULT_REDIS_TOKEN } from './env-validator';
+import { isLoopbackIp } from './security';
+
+function normalizeTicketMessages(ticket: SupportTicket): SupportTicket {
+  if (!Array.isArray(ticket.messages) || ticket.messages.length === 0) {
+    const list: SupportMessage[] = [];
+    if (ticket.message) {
+      list.push({
+        id: `msg_init_${ticket.id}`,
+        sender: 'customer',
+        senderName: ticket.customerName || 'শিক্ষার্থী',
+        text: ticket.message,
+        timestamp: ticket.createdAt || Date.now(),
+      });
+    }
+    if (ticket.adminReply) {
+      list.push({
+        id: `msg_reply_${ticket.id}`,
+        sender: 'admin',
+        senderName: 'Bonolota Support',
+        text: ticket.adminReply,
+        timestamp: ticket.repliedAt || ticket.updatedAt || Date.now(),
+      });
+    }
+    ticket.messages = list;
+  }
+  return ticket;
+}
 
 // Upstash Redis configuration for bonolota-db
 const upstashUrl = process.env.UPSTASH_REDIS_REST_URL || DEFAULT_REDIS_URL;
@@ -217,11 +245,16 @@ class InMemoryStorage {
   async isIpBlacklisted(ip: string): Promise<boolean> {
     if (!ip) return false;
     const cleanIp = ip.trim();
+    if (isLoopbackIp(cleanIp)) return false;
     return this.ipBlacklist.has(cleanIp) || this.ipBlacklist.has(cleanIp.replace(/^::ffff:/, ''));
   }
 
   async addBlacklistedIp(ip: string, reason = 'ম্যানুয়াল ব্লক'): Promise<void> {
     const cleanIp = ip.trim();
+    if (isLoopbackIp(cleanIp)) {
+      console.warn(`[Security] Block ignored for loopback/internal IP: ${cleanIp}`);
+      return;
+    }
     this.ipBlacklist.add(cleanIp);
     this.blacklistMeta.set(cleanIp, { reason, timestamp: Date.now() });
     this.securityConfig.ipBlacklist = Array.from(this.ipBlacklist);
@@ -253,32 +286,46 @@ class InMemoryStorage {
     return this.securityEvents.slice(0, limit);
   }
 
-  // Support Tickets
+  // Support Tickets & 1:1 Chat
   async createSupportTicket(ticket: Omit<SupportTicket, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<SupportTicket> {
+    const id = `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    const now = Date.now();
+    const initialMessage: SupportMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: 'customer',
+      senderName: ticket.customerName || 'শিক্ষার্থী',
+      text: ticket.message,
+      timestamp: now,
+    };
     const fullTicket: SupportTicket = {
       ...ticket,
-      id: `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
+      id,
+      messages: ticket.messages && ticket.messages.length > 0 ? ticket.messages : [initialMessage],
       status: 'open',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     };
     this.supportTickets.set(fullTicket.id, fullTicket);
     return fullTicket;
   }
 
   async listSupportTickets(): Promise<SupportTicket[]> {
-    return Array.from(this.supportTickets.values()).sort((a, b) => b.updatedAt - a.updatedAt);
+    return Array.from(this.supportTickets.values())
+      .map(t => normalizeTicketMessages(t))
+      .sort((a, b) => b.updatedAt - a.updatedAt);
   }
 
   async getSupportTicketById(id: string): Promise<SupportTicket | null> {
-    return this.supportTickets.get(id) || null;
+    const t = this.supportTickets.get(id);
+    return t ? normalizeTicketMessages(t) : null;
   }
 
   async updateSupportTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket | null> {
     const existing = this.supportTickets.get(id);
     if (!existing) return null;
+    const normalized = normalizeTicketMessages(existing);
     const updated: SupportTicket = {
-      ...existing,
+      ...normalized,
       ...updates,
       updatedAt: Date.now(),
     };
@@ -286,9 +333,24 @@ class InMemoryStorage {
     return updated;
   }
 
+  async deleteSupportTicket(id: string): Promise<boolean> {
+    return this.supportTickets.delete(id);
+  }
+
+  async deleteSupportMessage(ticketId: string, messageId: string): Promise<SupportTicket | null> {
+    const existing = this.supportTickets.get(ticketId);
+    if (!existing) return null;
+    const normalized = normalizeTicketMessages(existing);
+    normalized.messages = normalized.messages.filter(m => m.id !== messageId);
+    normalized.updatedAt = Date.now();
+    this.supportTickets.set(ticketId, normalized);
+    return normalized;
+  }
+
   async listSupportTicketsByLicense(licenseId: string): Promise<SupportTicket[]> {
     return Array.from(this.supportTickets.values())
       .filter(t => t.licenseId === licenseId)
+      .map(t => normalizeTicketMessages(t))
       .sort((a, b) => b.createdAt - a.createdAt);
   }
 
@@ -650,12 +712,17 @@ class UpstashStorage {
   async isIpBlacklisted(ip: string): Promise<boolean> {
     if (!ip) return false;
     const clean = ip.trim().replace(/^::ffff:/, '');
+    if (isLoopbackIp(clean)) return false;
     const isMember = await this.redis.sismember('ip:blacklist', clean);
     return Boolean(isMember);
   }
 
   async addBlacklistedIp(ip: string, reason = 'ম্যানুয়াল ব্লক'): Promise<void> {
     const clean = ip.trim().replace(/^::ffff:/, '');
+    if (isLoopbackIp(clean)) {
+      console.warn(`[Security] Block ignored for loopback/internal IP: ${clean}`);
+      return;
+    }
     const pipeline = this.redis.pipeline();
     pipeline.sadd('ip:blacklist', clean);
     pipeline.set(`ip:meta:${clean}`, JSON.stringify({ reason, timestamp: Date.now() }));
@@ -689,15 +756,24 @@ class UpstashStorage {
     return raw.map(item => (typeof item === 'string' ? JSON.parse(item) : item));
   }
 
-  // Support Tickets
+  // Support Tickets & 1:1 Chat
   async createSupportTicket(ticket: Omit<SupportTicket, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<SupportTicket> {
     const id = `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    const now = Date.now();
+    const initialMessage: SupportMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: 'customer',
+      senderName: ticket.customerName || 'শিক্ষার্থী',
+      text: ticket.message,
+      timestamp: now,
+    };
     const fullTicket: SupportTicket = {
       ...ticket,
       id,
+      messages: ticket.messages && ticket.messages.length > 0 ? ticket.messages : [initialMessage],
       status: 'open',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     };
     const pipeline = this.redis.pipeline();
     pipeline.set(`support:tkt:${id}`, JSON.stringify(fullTicket));
@@ -717,7 +793,7 @@ class UpstashStorage {
       if (r) {
         try {
           const parsed = typeof r === 'string' ? JSON.parse(r) : r;
-          results.push(parsed);
+          results.push(normalizeTicketMessages(parsed));
         } catch {}
       }
     }
@@ -727,19 +803,42 @@ class UpstashStorage {
   async getSupportTicketById(id: string): Promise<SupportTicket | null> {
     const raw = await this.redis.get<string | SupportTicket>(`support:tkt:${id}`);
     if (!raw) return null;
-    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+    const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    return normalizeTicketMessages(parsed);
   }
 
   async updateSupportTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket | null> {
     const existing = await this.getSupportTicketById(id);
     if (!existing) return null;
+    const normalized = normalizeTicketMessages(existing);
     const updated: SupportTicket = {
-      ...existing,
+      ...normalized,
       ...updates,
       updatedAt: Date.now(),
     };
     await this.redis.set(`support:tkt:${id}`, JSON.stringify(updated));
     return updated;
+  }
+
+  async deleteSupportTicket(id: string): Promise<boolean> {
+    const ticket = await this.getSupportTicketById(id);
+    if (!ticket) return false;
+    const pipeline = this.redis.pipeline();
+    pipeline.del(`support:tkt:${id}`);
+    pipeline.srem('support:all_ids', id);
+    pipeline.srem(`support:lic:${ticket.licenseId}`, id);
+    await pipeline.exec();
+    return true;
+  }
+
+  async deleteSupportMessage(ticketId: string, messageId: string): Promise<SupportTicket | null> {
+    const ticket = await this.getSupportTicketById(ticketId);
+    if (!ticket) return null;
+    const normalized = normalizeTicketMessages(ticket);
+    normalized.messages = normalized.messages.filter(m => m.id !== messageId);
+    normalized.updatedAt = Date.now();
+    await this.redis.set(`support:tkt:${ticketId}`, JSON.stringify(normalized));
+    return normalized;
   }
 
   async listSupportTicketsByLicense(licenseId: string): Promise<SupportTicket[]> {
@@ -752,7 +851,7 @@ class UpstashStorage {
       if (r) {
         try {
           const parsed = typeof r === 'string' ? JSON.parse(r) : r;
-          results.push(parsed);
+          results.push(normalizeTicketMessages(parsed));
         } catch {}
       }
     }
@@ -1206,6 +1305,24 @@ export const storage = {
       console.error('[Storage Error] Upstash listSupportTicketsByLicense failed:', err);
     }
     return inMemoryInstance.listSupportTicketsByLicense(licenseId);
+  },
+
+  async deleteSupportTicket(id: string): Promise<boolean> {
+    try {
+      if (upstashInstance) await upstashInstance.deleteSupportTicket(id);
+    } catch (err) {
+      console.error('[Storage Error] Upstash deleteSupportTicket failed:', err);
+    }
+    return inMemoryInstance.deleteSupportTicket(id);
+  },
+
+  async deleteSupportMessage(ticketId: string, messageId: string): Promise<SupportTicket | null> {
+    try {
+      if (upstashInstance) await upstashInstance.deleteSupportMessage(ticketId, messageId);
+    } catch (err) {
+      console.error('[Storage Error] Upstash deleteSupportMessage failed:', err);
+    }
+    return inMemoryInstance.deleteSupportMessage(ticketId, messageId);
   },
 
   // Student Actions

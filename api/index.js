@@ -30176,7 +30176,171 @@ function assertEnvironment() {
   return report;
 }
 
+// server/security.ts
+import { URL as URL2 } from "url";
+function isLoopbackIp(rawIp) {
+  if (!rawIp) return false;
+  const clean = rawIp.trim().toLowerCase().replace(/^\[|\]$/g, "");
+  const unmapped = clean.replace(/^::ffff:/, "");
+  if (clean === "localhost" || clean === "127.0.0.1" || clean === "::1" || clean === "0.0.0.0" || clean === "::") {
+    return true;
+  }
+  if (unmapped.startsWith("127.")) {
+    return true;
+  }
+  return false;
+}
+function isPrivateOrMetadataIp(rawIp) {
+  if (!rawIp) return false;
+  if (isLoopbackIp(rawIp)) return true;
+  const clean = rawIp.trim().toLowerCase().replace(/^::ffff:/, "");
+  if (clean.startsWith("169.254.")) {
+    return true;
+  }
+  if (clean.startsWith("10.")) {
+    return true;
+  }
+  if (clean.startsWith("192.168.")) {
+    return true;
+  }
+  if (/^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(clean)) {
+    return true;
+  }
+  if (clean.startsWith("fe80:") || clean.startsWith("fc") || clean.startsWith("fd")) {
+    return true;
+  }
+  return false;
+}
+function canBlockIp(ip) {
+  if (!ip || typeof ip !== "string" || ip.trim().length === 0) {
+    return { allowed: false, reason: "\u0985\u09AC\u09C8\u09A7 \u09AC\u09BE \u09AB\u09BE\u0981\u0995\u09BE \u0986\u0987\u09AA\u09BF \u09A0\u09BF\u0995\u09BE\u09A8\u09BE\u0964" };
+  }
+  const clean = ip.trim();
+  if (isLoopbackIp(clean)) {
+    return {
+      allowed: false,
+      reason: "\u09B2\u09C1\u09AA\u09AC\u09CD\u09AF\u09BE\u0995 \u09AC\u09BE \u09B2\u09CB\u0995\u09BE\u09B2\u09B9\u09CB\u09B8\u09CD\u099F (127.0.0.1 / localhost) \u0986\u0987\u09AA\u09BF \u0995\u0996\u09A8\u09CB\u0987 \u09AC\u09CD\u09B2\u0995 \u0995\u09B0\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964"
+    };
+  }
+  const ipv4Regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  const ipv6Regex = /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::1$|^::$|^([0-9a-fA-F]{1,4}:)+[0-9a-fA-F]{1,4}$/;
+  const stripped = clean.replace(/^::ffff:/, "");
+  if (!ipv4Regex.test(stripped) && !ipv6Regex.test(stripped)) {
+    return { allowed: false, reason: "\u0986\u0987\u09AA\u09BF \u09A0\u09BF\u0995\u09BE\u09A8\u09BE\u09B0 \u09AB\u09B0\u09AE\u09CD\u09AF\u09BE\u099F \u09B8\u09A0\u09BF\u0995 \u09A8\u09DF\u0964" };
+  }
+  return { allowed: true };
+}
+var TELEGRAM_BOT_TOKEN_REGEX = /^[0-9]{8,14}:[a-zA-Z0-9_-]{30,60}$/;
+function validateTelegramBotToken(token) {
+  if (!token || typeof token !== "string") {
+    return { valid: false, reason: "\u09AC\u099F \u099F\u09CB\u0995\u09C7\u09A8 \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" };
+  }
+  const clean = token.trim();
+  if (/[\/\s\\@\?#%:]/.test(clean.split(":")[1] || "")) {
+    return { valid: false, reason: "\u09AC\u099F \u099F\u09CB\u0995\u09C7\u09A8\u09C7 \u0985\u09AC\u09C8\u09A7 \u0995\u09CD\u09AF\u09BE\u09B0\u09C7\u0995\u09CD\u099F\u09BE\u09B0 \u09AC\u09BE \u09AA\u09BE\u09A5 \u099F\u09CD\u09B0\u09BE\u09AD\u09BE\u09B0\u09CD\u09B8\u09BE\u09B2 \u09AA\u09BE\u0993\u09DF\u09BE \u0997\u09C7\u099B\u09C7\u0964" };
+  }
+  if (!TELEGRAM_BOT_TOKEN_REGEX.test(clean)) {
+    return {
+      valid: false,
+      reason: "\u099F\u09C7\u09B2\u09BF\u0997\u09CD\u09B0\u09BE\u09AE \u09AC\u099F \u099F\u09CB\u0995\u09C7\u09A8 \u09B8\u09A0\u09BF\u0995 \u09AB\u09B0\u09AE\u09CD\u09AF\u09BE\u099F\u09C7 \u09A8\u09C7\u0987 (\u0989\u09A6\u09BE\u09B9\u09B0\u09A3: 9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE)"
+    };
+  }
+  return { valid: true };
+}
+var TELEGRAM_CHAT_ID_REGEX = /^-?[0-9]{5,20}$/;
+function validateTelegramChatId(chatId) {
+  if (!chatId || typeof chatId !== "string") {
+    return { valid: false, reason: "\u099A\u09CD\u09AF\u09BE\u099F \u0986\u0987\u09A1\u09BF \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" };
+  }
+  const clean = chatId.trim();
+  if (!TELEGRAM_CHAT_ID_REGEX.test(clean) && !/^@[a-zA-Z0-9_]{4,32}$/.test(clean)) {
+    return {
+      valid: false,
+      reason: "\u099F\u09C7\u09B2\u09BF\u0997\u09CD\u09B0\u09BE\u09AE \u099A\u09CD\u09AF\u09BE\u099F \u0986\u0987\u09A1\u09BF \u09B8\u0982\u0996\u09CD\u09AF\u09BE\u09B8\u09C2\u099A\u0995 \u09B9\u09A4\u09C7 \u09B9\u09AC\u09C7 (\u09AF\u09C7\u09AE\u09A8: 6745501942)"
+    };
+  }
+  return { valid: true };
+}
+function validateSafeOutboundUrl(urlStr, options) {
+  try {
+    const parsed = new URL2(urlStr);
+    const allowedProtocols = options?.allowedProtocols || ["https:"];
+    if (!allowedProtocols.includes(parsed.protocol)) {
+      return {
+        safe: false,
+        reason: `\u0985\u09B8\u09C1\u09B0\u0995\u09CD\u09B7\u09BF\u09A4 \u09AA\u09CD\u09B0\u09CB\u099F\u09CB\u0995\u09B2: ${parsed.protocol}\u0964 \u09B6\u09C1\u09A7\u09C1\u09AE\u09BE\u09A4\u09CD\u09B0 ${allowedProtocols.join(", ")} \u0985\u09A8\u09C1\u09AE\u09CB\u09A6\u09BF\u09A4\u0964`
+      };
+    }
+    const host = parsed.hostname.toLowerCase();
+    if (isLoopbackIp(host) || host === "localhost") {
+      return { safe: false, reason: "\u09B2\u09CB\u0995\u09BE\u09B2\u09B9\u09CB\u09B8\u09CD\u099F \u09AC\u09BE \u09B2\u09C1\u09AA\u09AC\u09CD\u09AF\u09BE\u0995 \u0986\u0987\u09AA\u09BF\u09A4\u09C7 \u09AC\u09B9\u09BF\u09B0\u09CD\u0997\u09BE\u09AE\u09C0 \u09B0\u09BF\u0995\u09CB\u09DF\u09C7\u09B8\u09CD\u099F \u09A8\u09BF\u09B7\u09BF\u09A6\u09CD\u09A7 (SSRF Protection)\u0964" };
+    }
+    if (host === "169.254.169.254" || host === "metadata.google.internal" || host === "instance-data" || host.endsWith(".metadata.google.internal")) {
+      return { safe: false, reason: "\u0995\u09CD\u09B2\u09BE\u0989\u09A1 \u09AE\u09C7\u099F\u09BE\u09A1\u09BE\u099F\u09BE \u09B8\u09BE\u09B0\u09CD\u09AD\u09BF\u09B8 \u0985\u09CD\u09AF\u09BE\u0995\u09CD\u09B8\u09C7\u09B8 \u09A8\u09BF\u09B7\u09BF\u09A6\u09CD\u09A7 (SSRF Protection)\u0964" };
+    }
+    if (isPrivateOrMetadataIp(host)) {
+      return { safe: false, reason: "\u0985\u09AD\u09CD\u09AF\u09A8\u09CD\u09A4\u09B0\u09C0\u09A3 \u09AC\u09BE \u09AA\u09CD\u09B0\u09BE\u0987\u09AD\u09C7\u099F \u0986\u0987\u09AA\u09BF\u09A4\u09C7 \u09AC\u09B9\u09BF\u09B0\u09CD\u0997\u09BE\u09AE\u09C0 \u09B0\u09BF\u0995\u09CB\u09DF\u09C7\u09B8\u09CD\u099F \u09A8\u09BF\u09B7\u09BF\u09A6\u09CD\u09A7 (SSRF Protection)\u0964" };
+    }
+    if (options?.allowedHosts && options.allowedHosts.length > 0) {
+      const isAllowed = options.allowedHosts.some((allowed) => {
+        if (allowed.startsWith("*.")) {
+          return host.endsWith(allowed.slice(1)) || host === allowed.slice(2);
+        }
+        return host === allowed;
+      });
+      if (!isAllowed) {
+        return { safe: false, reason: `\u09B9\u09CB\u09B8\u09CD\u099F '${host}' \u0985\u09A8\u09C1\u09AE\u09CB\u09A6\u09BF\u09A4 \u09AC\u09B9\u09BF\u09B0\u09CD\u0997\u09BE\u09AE\u09C0 \u09B8\u09BE\u09B0\u09CD\u09AD\u09BE\u09B0\u09C7\u09B0 \u09A4\u09BE\u09B2\u09BF\u0995\u09BE\u09DF \u09A8\u09C7\u0987\u0964` };
+      }
+    }
+    return { safe: true, parsedUrl: parsed };
+  } catch (e) {
+    return { safe: false, reason: `\u0985\u09AC\u09C8\u09A7 URL: ${e?.message || "Parse error"}` };
+  }
+}
+function sanitizeActionUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== "string") return void 0;
+  const clean = rawUrl.trim();
+  if (clean.length === 0) return void 0;
+  if (clean.startsWith("/") && !clean.startsWith("//")) {
+    return clean;
+  }
+  const lower = clean.toLowerCase();
+  if (lower.startsWith("javascript:") || lower.startsWith("data:") || lower.startsWith("vbscript:") || lower.startsWith("file:")) {
+    return void 0;
+  }
+  const check = validateSafeOutboundUrl(clean, { allowedProtocols: ["https:", "http:"] });
+  if (!check.safe) {
+    return void 0;
+  }
+  return clean;
+}
+
 // server/storage.ts
+function normalizeTicketMessages(ticket) {
+  if (!Array.isArray(ticket.messages) || ticket.messages.length === 0) {
+    const list = [];
+    if (ticket.message) {
+      list.push({
+        id: `msg_init_${ticket.id}`,
+        sender: "customer",
+        senderName: ticket.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+        text: ticket.message,
+        timestamp: ticket.createdAt || Date.now()
+      });
+    }
+    if (ticket.adminReply) {
+      list.push({
+        id: `msg_reply_${ticket.id}`,
+        sender: "admin",
+        senderName: "Bonolota Support",
+        text: ticket.adminReply,
+        timestamp: ticket.repliedAt || ticket.updatedAt || Date.now()
+      });
+    }
+    ticket.messages = list;
+  }
+  return ticket;
+}
 var upstashUrl = process.env.UPSTASH_REDIS_REST_URL || DEFAULT_REDIS_URL;
 var upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN || DEFAULT_REDIS_TOKEN;
 var isUpstashConfigured = Boolean(upstashUrl && upstashToken && upstashUrl.startsWith("http"));
@@ -30353,10 +30517,15 @@ var InMemoryStorage = class {
   async isIpBlacklisted(ip) {
     if (!ip) return false;
     const cleanIp = ip.trim();
+    if (isLoopbackIp(cleanIp)) return false;
     return this.ipBlacklist.has(cleanIp) || this.ipBlacklist.has(cleanIp.replace(/^::ffff:/, ""));
   }
   async addBlacklistedIp(ip, reason = "\u09AE\u09CD\u09AF\u09BE\u09A8\u09C1\u09DF\u09BE\u09B2 \u09AC\u09CD\u09B2\u0995") {
     const cleanIp = ip.trim();
+    if (isLoopbackIp(cleanIp)) {
+      console.warn(`[Security] Block ignored for loopback/internal IP: ${cleanIp}`);
+      return;
+    }
     this.ipBlacklist.add(cleanIp);
     this.blacklistMeta.set(cleanIp, { reason, timestamp: Date.now() });
     this.securityConfig.ipBlacklist = Array.from(this.ipBlacklist);
@@ -30384,37 +30553,61 @@ var InMemoryStorage = class {
   async getSecurityEvents(limit = 100) {
     return this.securityEvents.slice(0, limit);
   }
-  // Support Tickets
+  // Support Tickets & 1:1 Chat
   async createSupportTicket(ticket) {
+    const id = `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    const now = Date.now();
+    const initialMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: "customer",
+      senderName: ticket.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+      text: ticket.message,
+      timestamp: now
+    };
     const fullTicket = {
       ...ticket,
-      id: `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
+      id,
+      messages: ticket.messages && ticket.messages.length > 0 ? ticket.messages : [initialMessage],
       status: "open",
-      createdAt: Date.now(),
-      updatedAt: Date.now()
+      createdAt: now,
+      updatedAt: now
     };
     this.supportTickets.set(fullTicket.id, fullTicket);
     return fullTicket;
   }
   async listSupportTickets() {
-    return Array.from(this.supportTickets.values()).sort((a, b) => b.updatedAt - a.updatedAt);
+    return Array.from(this.supportTickets.values()).map((t) => normalizeTicketMessages(t)).sort((a, b) => b.updatedAt - a.updatedAt);
   }
   async getSupportTicketById(id) {
-    return this.supportTickets.get(id) || null;
+    const t = this.supportTickets.get(id);
+    return t ? normalizeTicketMessages(t) : null;
   }
   async updateSupportTicket(id, updates) {
     const existing = this.supportTickets.get(id);
     if (!existing) return null;
+    const normalized = normalizeTicketMessages(existing);
     const updated = {
-      ...existing,
+      ...normalized,
       ...updates,
       updatedAt: Date.now()
     };
     this.supportTickets.set(id, updated);
     return updated;
   }
+  async deleteSupportTicket(id) {
+    return this.supportTickets.delete(id);
+  }
+  async deleteSupportMessage(ticketId, messageId) {
+    const existing = this.supportTickets.get(ticketId);
+    if (!existing) return null;
+    const normalized = normalizeTicketMessages(existing);
+    normalized.messages = normalized.messages.filter((m) => m.id !== messageId);
+    normalized.updatedAt = Date.now();
+    this.supportTickets.set(ticketId, normalized);
+    return normalized;
+  }
   async listSupportTicketsByLicense(licenseId) {
-    return Array.from(this.supportTickets.values()).filter((t) => t.licenseId === licenseId).sort((a, b) => b.createdAt - a.createdAt);
+    return Array.from(this.supportTickets.values()).filter((t) => t.licenseId === licenseId).map((t) => normalizeTicketMessages(t)).sort((a, b) => b.createdAt - a.createdAt);
   }
   // Student Actions Timeline
   async addStudentAction(action) {
@@ -30725,11 +30918,16 @@ var UpstashStorage = class {
   async isIpBlacklisted(ip) {
     if (!ip) return false;
     const clean = ip.trim().replace(/^::ffff:/, "");
+    if (isLoopbackIp(clean)) return false;
     const isMember = await this.redis.sismember("ip:blacklist", clean);
     return Boolean(isMember);
   }
   async addBlacklistedIp(ip, reason = "\u09AE\u09CD\u09AF\u09BE\u09A8\u09C1\u09DF\u09BE\u09B2 \u09AC\u09CD\u09B2\u0995") {
     const clean = ip.trim().replace(/^::ffff:/, "");
+    if (isLoopbackIp(clean)) {
+      console.warn(`[Security] Block ignored for loopback/internal IP: ${clean}`);
+      return;
+    }
     const pipeline = this.redis.pipeline();
     pipeline.sadd("ip:blacklist", clean);
     pipeline.set(`ip:meta:${clean}`, JSON.stringify({ reason, timestamp: Date.now() }));
@@ -30759,15 +30957,24 @@ var UpstashStorage = class {
     if (!raw) return [];
     return raw.map((item) => typeof item === "string" ? JSON.parse(item) : item);
   }
-  // Support Tickets
+  // Support Tickets & 1:1 Chat
   async createSupportTicket(ticket) {
     const id = `tkt_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    const now = Date.now();
+    const initialMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: "customer",
+      senderName: ticket.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+      text: ticket.message,
+      timestamp: now
+    };
     const fullTicket = {
       ...ticket,
       id,
+      messages: ticket.messages && ticket.messages.length > 0 ? ticket.messages : [initialMessage],
       status: "open",
-      createdAt: Date.now(),
-      updatedAt: Date.now()
+      createdAt: now,
+      updatedAt: now
     };
     const pipeline = this.redis.pipeline();
     pipeline.set(`support:tkt:${id}`, JSON.stringify(fullTicket));
@@ -30786,7 +30993,7 @@ var UpstashStorage = class {
       if (r) {
         try {
           const parsed = typeof r === "string" ? JSON.parse(r) : r;
-          results.push(parsed);
+          results.push(normalizeTicketMessages(parsed));
         } catch {
         }
       }
@@ -30796,18 +31003,39 @@ var UpstashStorage = class {
   async getSupportTicketById(id) {
     const raw = await this.redis.get(`support:tkt:${id}`);
     if (!raw) return null;
-    return typeof raw === "string" ? JSON.parse(raw) : raw;
+    const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+    return normalizeTicketMessages(parsed);
   }
   async updateSupportTicket(id, updates) {
     const existing = await this.getSupportTicketById(id);
     if (!existing) return null;
+    const normalized = normalizeTicketMessages(existing);
     const updated = {
-      ...existing,
+      ...normalized,
       ...updates,
       updatedAt: Date.now()
     };
     await this.redis.set(`support:tkt:${id}`, JSON.stringify(updated));
     return updated;
+  }
+  async deleteSupportTicket(id) {
+    const ticket = await this.getSupportTicketById(id);
+    if (!ticket) return false;
+    const pipeline = this.redis.pipeline();
+    pipeline.del(`support:tkt:${id}`);
+    pipeline.srem("support:all_ids", id);
+    pipeline.srem(`support:lic:${ticket.licenseId}`, id);
+    await pipeline.exec();
+    return true;
+  }
+  async deleteSupportMessage(ticketId, messageId) {
+    const ticket = await this.getSupportTicketById(ticketId);
+    if (!ticket) return null;
+    const normalized = normalizeTicketMessages(ticket);
+    normalized.messages = normalized.messages.filter((m) => m.id !== messageId);
+    normalized.updatedAt = Date.now();
+    await this.redis.set(`support:tkt:${ticketId}`, JSON.stringify(normalized));
+    return normalized;
   }
   async listSupportTicketsByLicense(licenseId) {
     const ids = await this.redis.smembers(`support:lic:${licenseId}`);
@@ -30819,7 +31047,7 @@ var UpstashStorage = class {
       if (r) {
         try {
           const parsed = typeof r === "string" ? JSON.parse(r) : r;
-          results.push(parsed);
+          results.push(normalizeTicketMessages(parsed));
         } catch {
         }
       }
@@ -31219,6 +31447,22 @@ var storage = {
       console.error("[Storage Error] Upstash listSupportTicketsByLicense failed:", err);
     }
     return inMemoryInstance.listSupportTicketsByLicense(licenseId);
+  },
+  async deleteSupportTicket(id) {
+    try {
+      if (upstashInstance) await upstashInstance.deleteSupportTicket(id);
+    } catch (err) {
+      console.error("[Storage Error] Upstash deleteSupportTicket failed:", err);
+    }
+    return inMemoryInstance.deleteSupportTicket(id);
+  },
+  async deleteSupportMessage(ticketId, messageId) {
+    try {
+      if (upstashInstance) await upstashInstance.deleteSupportMessage(ticketId, messageId);
+    } catch (err) {
+      console.error("[Storage Error] Upstash deleteSupportMessage failed:", err);
+    }
+    return inMemoryInstance.deleteSupportMessage(ticketId, messageId);
   },
   // Student Actions
   async addStudentAction(action) {
@@ -31625,21 +31869,38 @@ async function sendTelegramAlert(text, options) {
         if (config.telegram.chatId) chatId = config.telegram.chatId;
         if (typeof config.telegram.enabled === "boolean") enabled = config.telegram.enabled;
       }
-    } catch (e) {
+    } catch {
     }
     if (!enabled || !botToken || !chatId) {
       return { success: false, error: "Telegram alert is disabled or missing credentials" };
     }
-    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const tokenCheck = validateTelegramBotToken(botToken);
+    if (!tokenCheck.valid) {
+      console.warn("[SSRF Shield] Invalid Telegram token format detected:", tokenCheck.reason);
+      return { success: false, error: tokenCheck.reason };
+    }
+    const chatCheck = validateTelegramChatId(chatId);
+    if (!chatCheck.valid) {
+      console.warn("[SSRF Shield] Invalid Telegram chat ID format detected:", chatCheck.reason);
+      return { success: false, error: chatCheck.reason };
+    }
+    const url = `https://api.telegram.org/bot${botToken.trim()}/sendMessage`;
+    const urlCheck = validateSafeOutboundUrl(url, { allowedHosts: ["api.telegram.org"], allowedProtocols: ["https:"] });
+    if (!urlCheck.safe) {
+      console.error("[SSRF Shield] Outbound request blocked to non-whitelisted destination:", urlCheck.reason);
+      return { success: false, error: urlCheck.reason };
+    }
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        chat_id: chatId,
+        chat_id: chatId.trim(),
         text,
         parse_mode: options?.parseMode || "HTML",
         disable_web_page_preview: true
-      })
+      }),
+      signal: AbortSignal.timeout(8e3)
+      // 8s timeout to prevent hanging connections
     });
     const data = await response.json().catch(() => null);
     if (!response.ok || !data?.ok) {
@@ -31667,10 +31928,18 @@ async function sendTelegramAlert(text, options) {
 }
 async function testTelegramConnection(botToken, chatId) {
   try {
-    const cleanToken = botToken.trim();
-    const cleanChatId = chatId.trim();
+    const cleanToken = (botToken || "").trim();
+    const cleanChatId = (chatId || "").trim();
     if (!cleanToken || !cleanChatId) {
       return { success: false, message: "\u09AC\u099F \u099F\u09CB\u0995\u09C7\u09A8 \u098F\u09AC\u0982 \u099A\u09CD\u09AF\u09BE\u099F \u0986\u0987\u09A1\u09BF \u0989\u09AD\u09DF\u0987 \u09AA\u09C2\u09B0\u09A3 \u0995\u09B0\u09A4\u09C7 \u09B9\u09AC\u09C7\u0964" };
+    }
+    const tokenCheck = validateTelegramBotToken(cleanToken);
+    if (!tokenCheck.valid) {
+      return { success: false, message: tokenCheck.reason || "\u0985\u09AC\u09C8\u09A7 \u09AC\u099F \u099F\u09CB\u0995\u09C7\u09A8\u0964" };
+    }
+    const chatCheck = validateTelegramChatId(cleanChatId);
+    if (!chatCheck.valid) {
+      return { success: false, message: chatCheck.reason || "\u0985\u09AC\u09C8\u09A7 \u099A\u09CD\u09AF\u09BE\u099F \u0986\u0987\u09A1\u09BF\u0964" };
     }
     const testMessage = `\u{1F6E1}\uFE0F <b>\u09AC\u09A8\u09B2\u09A4\u09BE \u09B8\u09BF\u0995\u09BF\u0989\u09B0\u09BF\u099F\u09BF \u09A8\u09CB\u099F\u09BF\u09AB\u09BF\u0995\u09C7\u09B6\u09A8 \u099F\u09C7\u09B8\u09CD\u099F</b>
 
@@ -31678,6 +31947,10 @@ async function testTelegramConnection(botToken, chatId) {
 \u23F0 \u09B8\u09AE\u09DF: ${(/* @__PURE__ */ new Date()).toLocaleString("bn-BD", { timeZone: "Asia/Dhaka" })}
 \u{1F4CC} \u0986\u09AA\u09A8\u09BE\u09B0 \u0985\u09CD\u09AF\u09BE\u09A1\u09AE\u09BF\u09A8 \u09AA\u09CD\u09AF\u09BE\u09A8\u09C7\u09B2 \u09A5\u09C7\u0995\u09C7 \u09AA\u09BE\u09A0\u09BE\u09A8\u09CB \u099F\u09C7\u09B8\u09CD\u099F \u09AE\u09C7\u09B8\u09C7\u099C\u0964 \u09B8\u09AE\u09B8\u09CD\u09A4 \u09B8\u09BF\u0995\u09BF\u0989\u09B0\u09BF\u099F\u09BF \u0987\u09AD\u09C7\u09A8\u09CD\u099F, \u09AB\u09CD\u09B0\u09A1 \u0985\u09CD\u09AF\u09BE\u09B2\u09BE\u09B0\u09CD\u099F \u098F\u09AC\u0982 \u09B9\u09BE\u09A8\u09BF-\u09AA\u099F \u09A8\u09CB\u099F\u09BF\u09AB\u09BF\u0995\u09C7\u09B6\u09A8 \u098F\u0987 \u099A\u09CD\u09AF\u09BE\u099F\u09C7 \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09AC\u09C7\u0964`;
     const url = `https://api.telegram.org/bot${cleanToken}/sendMessage`;
+    const urlCheck = validateSafeOutboundUrl(url, { allowedHosts: ["api.telegram.org"], allowedProtocols: ["https:"] });
+    if (!urlCheck.safe) {
+      return { success: false, message: `SSRF Shield: ${urlCheck.reason}` };
+    }
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31685,7 +31958,9 @@ async function testTelegramConnection(botToken, chatId) {
         chat_id: cleanChatId,
         text: testMessage,
         parse_mode: "HTML"
-      })
+      }),
+      signal: AbortSignal.timeout(8e3)
+      // 8s timeout
     });
     const data = await response.json().catch(() => null);
     if (!response.ok || !data?.ok) {
@@ -32215,28 +32490,45 @@ authRouter.post("/action-ping", requireCustomerAuth, async (req, res) => {
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
 });
+function sanitizeText(str, maxLen) {
+  if (typeof str !== "string") return "";
+  return str.trim().slice(0, maxLen).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 authRouter.post("/support/ticket", requireCustomerAuth, async (req, res) => {
   try {
     const license = req.license;
     const { subject, message } = req.body || {};
-    if (!subject || !message) {
-      res.status(400).json({ ok: false, message: "\u09AC\u09BF\u09B7\u09DF \u098F\u09AC\u0982 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u0989\u09AD\u09DF\u0987 \u09AA\u09C2\u09B0\u09A3 \u0995\u09B0\u09A4\u09C7 \u09B9\u09AC\u09C7\u0964" });
+    const cleanSubject = sanitizeText(subject, 150);
+    const cleanMessage = sanitizeText(message, 3e3);
+    if (!cleanSubject || cleanSubject.length < 2) {
+      res.status(400).json({ ok: false, message: "\u09B8\u09AE\u09B8\u09CD\u09AF\u09BE\u09B0 \u09AC\u09BF\u09B7\u09DF \u0995\u09AE\u09AA\u0995\u09CD\u09B7\u09C7 \u09E8 \u0985\u0995\u09CD\u09B7\u09B0\u09C7\u09B0 \u09B9\u09A4\u09C7 \u09B9\u09AC\u09C7\u0964" });
+      return;
+    }
+    if (!cleanMessage || cleanMessage.length < 1) {
+      res.status(400).json({ ok: false, message: "\u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u09AC\u09BE \u09AA\u09CD\u09B0\u09B6\u09CD\u09A8\u09C7\u09B0 \u09AC\u09BF\u09AC\u09B0\u09A3 \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" });
       return;
     }
     const clientIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || license.clientIp;
-    const cleanSubject = String(subject).slice(0, 150);
-    const cleanMessage = String(message).slice(0, 2e3);
+    const now = Date.now();
+    const initialMessage = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: "customer",
+      senderName: license.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+      text: cleanMessage,
+      timestamp: now
+    };
     const ticket = await storage.createSupportTicket({
       licenseId: license.id,
       keyMasked: license.keyMasked,
       customerName: license.customerName,
       subject: cleanSubject,
       message: cleanMessage,
+      messages: [initialMessage],
       clientIp,
       clientDevice: license.deviceInfo
     });
     sendTelegramAlert(
-      `\u{1F4E9} <b>\u09A8\u09A4\u09C1\u09A8 \u09B8\u09CD\u099F\u09C1\u09A1\u09C7\u09A8\u09CD\u099F \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u099F\u09BF\u0995\u09C7\u099F!</b>
+      `\u{1F4E9} <b>\u09A8\u09A4\u09C1\u09A8 \u09B8\u09CD\u099F\u09C1\u09A1\u09C7\u09A8\u09CD\u099F \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u099A\u09CD\u09AF\u09BE\u099F!</b>
 \u099B\u09BE\u09A4\u09CD\u09B0: <b>${license.customerName || "Unknown"}</b>
 \u0995\u09C0: <code>${license.keyMasked}</code>
 \u09AC\u09BF\u09B7\u09DF: <b>${cleanSubject}</b>
@@ -32247,13 +32539,58 @@ authRouter.post("/support/ticket", requireCustomerAuth, async (req, res) => {
     await storage.addSecurityEvent({
       level: "info",
       source: "AUTH",
-      message: `\u09A8\u09A4\u09C1\u09A8 \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u099F\u09BF\u0995\u09C7\u099F \u09AA\u09CD\u09B0\u09C7\u09B0\u09BF\u09A4: "${cleanSubject}" (${license.keyMasked})`,
+      message: `\u09A8\u09A4\u09C1\u09A8 \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u099A\u09CD\u09AF\u09BE\u099F \u09B6\u09C1\u09B0\u09C1: "${cleanSubject}" (${license.keyMasked})`,
       ip: clientIp,
       keyMasked: license.keyMasked
     });
     res.json({ ok: true, ticket, message: "\u0986\u09AA\u09A8\u09BE\u09B0 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE\u099F\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09AA\u09BE\u09A0\u09BE\u09A8\u09CB \u09B9\u09DF\u09C7\u099B\u09C7\u0964 \u0985\u09CD\u09AF\u09BE\u09A1\u09AE\u09BF\u09A8 \u09B6\u09C0\u0998\u09CD\u09B0\u0987 \u0989\u09A4\u09CD\u09A4\u09B0 \u09A6\u09C7\u09AC\u09C7\u09A8\u0964" });
   } catch (error) {
     console.error("[support/ticket] Error:", error);
+    res.status(500).json({ ok: false, error: "SERVER_ERROR" });
+  }
+});
+authRouter.post("/support/ticket/:id/message", requireCustomerAuth, async (req, res) => {
+  try {
+    const license = req.license;
+    const ticketId = req.params.id;
+    const { message } = req.body || {};
+    const cleanMessage = sanitizeText(message, 3e3);
+    if (!cleanMessage || cleanMessage.length < 1) {
+      res.status(400).json({ ok: false, message: "\u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" });
+      return;
+    }
+    const ticket = await storage.getSupportTicketById(ticketId);
+    if (!ticket || ticket.licenseId !== license.id) {
+      res.status(404).json({ ok: false, message: "\u099A\u09CD\u09AF\u09BE\u099F \u09A5\u09CD\u09B0\u09C7\u09A1 \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
+      return;
+    }
+    const now = Date.now();
+    const newMsg = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: "customer",
+      senderName: license.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+      text: cleanMessage,
+      timestamp: now
+    };
+    const existingMessages = Array.isArray(ticket.messages) ? ticket.messages : [];
+    const updatedMessages = [...existingMessages, newMsg];
+    const updated = await storage.updateSupportTicket(ticket.id, {
+      messages: updatedMessages,
+      status: "open",
+      // Mark open so admin sees unread message
+      updatedAt: now
+    });
+    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || license.clientIp;
+    sendTelegramAlert(
+      `\u{1F4AC} <b>\u09B8\u09CD\u099F\u09C1\u09A1\u09C7\u09A8\u09CD\u099F \u09A8\u09A4\u09C1\u09A8 \u09B0\u09BF\u09AA\u09CD\u09B2\u09BE\u0987 \u09A6\u09BF\u09DF\u09C7\u099B\u09C7!</b>
+\u099B\u09BE\u09A4\u09CD\u09B0: <b>${license.customerName || "Unknown"}</b>
+\u09AC\u09BF\u09B7\u09DF: <b>${ticket.subject}</b>
+\u09AE\u09C7\u09B8\u09C7\u099C: <i>${cleanMessage.slice(0, 300)}</i>`
+    ).catch(() => {
+    });
+    res.json({ ok: true, ticket: updated, message: "\u09AE\u09C7\u09B8\u09C7\u099C \u09AA\u09BE\u09A0\u09BE\u09A8\u09CB \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  } catch (error) {
+    console.error("[support/ticket/:id/message] Error:", error);
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
 });
@@ -32308,7 +32645,9 @@ adminRouter.get("/session", async (req, res) => {
 adminRouter.post("/login", async (req, res) => {
   try {
     const clientIp = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket?.remoteAddress || req.ip || "unknown";
-    const rateCheck = await storage.checkRateLimit(`adminlogin:${clientIp}`, 5, 15 * 60);
+    const isLoopback = isLoopbackIp(clientIp);
+    const maxAttempts = isLoopback ? 50 : 5;
+    const rateCheck = await storage.checkRateLimit(`adminlogin:${clientIp}`, maxAttempts, 15 * 60);
     if (!rateCheck.allowed) {
       await storage.addAuditLog({
         id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -32843,17 +33182,33 @@ adminRouter.get("/telegram/config", requireAdminAuth, async (_req, res) => {
 adminRouter.post("/telegram/config", requireAdminAuth, async (req, res) => {
   try {
     const { botToken, chatId, enabled } = req.body || {};
+    const cleanToken = typeof botToken === "string" ? botToken.trim() : "";
+    const cleanChatId = typeof chatId === "string" ? chatId.trim() : "";
+    if (cleanToken) {
+      const tokenCheck = validateTelegramBotToken(cleanToken);
+      if (!tokenCheck.valid) {
+        res.status(400).json({ ok: false, message: tokenCheck.reason });
+        return;
+      }
+    }
+    if (cleanChatId) {
+      const chatCheck = validateTelegramChatId(cleanChatId);
+      if (!chatCheck.valid) {
+        res.status(400).json({ ok: false, message: chatCheck.reason });
+        return;
+      }
+    }
     const updated = await storage.updateSecurityConfig({
       telegram: {
         enabled: typeof enabled === "boolean" ? enabled : true,
-        botToken: typeof botToken === "string" ? botToken.trim() : "",
-        chatId: typeof chatId === "string" ? chatId.trim() : ""
+        botToken: cleanToken,
+        chatId: cleanChatId
       }
     });
     await storage.addSecurityEvent({
       level: "info",
       source: "TELEGRAM",
-      message: `\u099F\u09C7\u09B2\u09BF\u0997\u09CD\u09B0\u09BE\u09AE \u0995\u09A8\u09AB\u09BF\u0997\u09BE\u09B0\u09C7\u09B6\u09A8 \u0986\u09AA\u09A1\u09C7\u099F \u0995\u09B0\u09BE \u09B9\u09DF\u09C7\u099B\u09C7 (Chat ID: ${chatId || "not set"})`
+      message: `\u099F\u09C7\u09B2\u09BF\u0997\u09CD\u09B0\u09BE\u09AE \u0995\u09A8\u09AB\u09BF\u0997\u09BE\u09B0\u09C7\u09B6\u09A8 \u0986\u09AA\u09A1\u09C7\u099F \u0995\u09B0\u09BE \u09B9\u09DF\u09C7\u099B\u09C7 (Chat ID: ${cleanChatId || "not set"})`
     });
     res.json({ ok: true, telegram: updated.telegram, message: "\u099F\u09C7\u09B2\u09BF\u0997\u09CD\u09B0\u09BE\u09AE \u09B8\u09C7\u099F\u09BF\u0982\u09B8 \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09B8\u0982\u09B0\u0995\u09CD\u09B7\u09BF\u09A4 \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
   } catch (error) {
@@ -32864,9 +33219,23 @@ adminRouter.post("/telegram/test", requireAdminAuth, async (req, res) => {
   try {
     const { botToken, chatId } = req.body || {};
     const config = await storage.getSecurityConfig();
-    const token = botToken || config.telegram?.botToken;
-    const chat = chatId || config.telegram?.chatId;
-    const result = await testTelegramConnection(token, chat);
+    const cleanToken = (botToken || config.telegram?.botToken || "").trim();
+    const cleanChat = (chatId || config.telegram?.chatId || "").trim();
+    if (!cleanToken || !cleanChat) {
+      res.status(400).json({ ok: false, message: "\u09AC\u099F \u099F\u09CB\u0995\u09C7\u09A8 \u098F\u09AC\u0982 \u099A\u09CD\u09AF\u09BE\u099F \u0986\u0987\u09A1\u09BF \u0989\u09AD\u09DF\u0987 \u09AA\u09C2\u09B0\u09A3 \u0995\u09B0\u09A4\u09C7 \u09B9\u09AC\u09C7\u0964" });
+      return;
+    }
+    const tokenCheck = validateTelegramBotToken(cleanToken);
+    if (!tokenCheck.valid) {
+      res.status(400).json({ ok: false, message: tokenCheck.reason });
+      return;
+    }
+    const chatCheck = validateTelegramChatId(cleanChat);
+    if (!chatCheck.valid) {
+      res.status(400).json({ ok: false, message: chatCheck.reason });
+      return;
+    }
+    const result = await testTelegramConnection(cleanToken, cleanChat);
     res.json({ ok: result.success, message: result.message });
   } catch (error) {
     res.status(500).json({ ok: false, message: error?.message || "\u099F\u09C7\u09B8\u09CD\u099F \u09AE\u09C7\u09B8\u09C7\u099C \u09AA\u09BE\u09A0\u09BE\u09A4\u09C7 \u09AC\u09CD\u09AF\u09B0\u09CD\u09A5 \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
@@ -32927,6 +33296,11 @@ adminRouter.post("/security/blacklist/add", requireAdminAuth, async (req, res) =
     const { ip, reason } = req.body || {};
     if (!ip || typeof ip !== "string") {
       res.status(400).json({ ok: false, message: "\u0986\u0987\u09AA\u09BF \u09A0\u09BF\u0995\u09BE\u09A8\u09BE \u09AA\u09CD\u09B0\u09A6\u09BE\u09A8 \u0995\u09B0\u09C1\u09A8\u0964" });
+      return;
+    }
+    const blockCheck = canBlockIp(ip);
+    if (!blockCheck.allowed) {
+      res.status(400).json({ ok: false, message: blockCheck.reason });
       return;
     }
     await storage.addBlacklistedIp(ip, reason || "\u0985\u09CD\u09AF\u09BE\u09A1\u09AE\u09BF\u09A8 \u09AE\u09CD\u09AF\u09BE\u09A8\u09C1\u09DF\u09BE\u09B2 \u09AC\u09CD\u09B2\u0995");
@@ -33059,8 +33433,13 @@ adminRouter.get("/support/tickets", requireAdminAuth, async (_req, res) => {
 adminRouter.post("/support/reply", requireAdminAuth, async (req, res) => {
   try {
     const { ticketId, replyMessage, markResolved } = req.body || {};
-    if (!ticketId || !replyMessage) {
+    if (!ticketId || typeof replyMessage !== "string" || !replyMessage.trim()) {
       res.status(400).json({ ok: false, message: "\u099F\u09BF\u0995\u09C7\u099F \u0986\u0987\u09A1\u09BF \u098F\u09AC\u0982 \u0989\u09A4\u09CD\u09A4\u09B0 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u0986\u09AC\u09B6\u09CD\u09AF\u0995\u0964" });
+      return;
+    }
+    const cleanReply = replyMessage.trim().slice(0, 3e3).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    if (!cleanReply) {
+      res.status(400).json({ ok: false, message: "\u0989\u09A4\u09CD\u09A4\u09B0 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" });
       return;
     }
     const ticket = await storage.getSupportTicketById(ticketId);
@@ -33068,15 +33447,26 @@ adminRouter.post("/support/reply", requireAdminAuth, async (req, res) => {
       res.status(404).json({ ok: false, message: "\u099F\u09BF\u0995\u09C7\u099F \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
       return;
     }
+    const now = Date.now();
+    const adminMsg = {
+      id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
+      sender: "admin",
+      senderName: "Bonolota Support",
+      text: cleanReply,
+      timestamp: now
+    };
+    const existingMessages = Array.isArray(ticket.messages) ? ticket.messages : [];
+    const updatedMessages = [...existingMessages, adminMsg];
     const updated = await storage.updateSupportTicket(ticketId, {
-      adminReply: replyMessage,
-      repliedAt: Date.now(),
-      status: markResolved ? "resolved" : "replied"
+      adminReply: cleanReply,
+      repliedAt: now,
+      status: markResolved ? "resolved" : "replied",
+      messages: updatedMessages
     });
     await storage.createAnnouncement({
       id: `anno_reply_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
       title: `\u{1F4E9} \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u0989\u09A4\u09CD\u09A4\u09B0: ${ticket.subject}`,
-      message: replyMessage,
+      message: cleanReply,
       type: "info",
       priority: "high",
       displayStyle: "center_modal",
@@ -33090,6 +33480,43 @@ adminRouter.post("/support/reply", requireAdminAuth, async (req, res) => {
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
 });
+var handleDeleteSupportTicket = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ticket = await storage.getSupportTicketById(id);
+    if (!ticket) {
+      res.status(404).json({ ok: false, message: "\u099F\u09BF\u0995\u09C7\u099F \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
+      return;
+    }
+    await storage.deleteSupportTicket(id);
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: "delete_support_chat",
+      details: `Deleted support chat: "${ticket.subject}" (${ticket.keyMasked}) from both sides.`
+    });
+    res.json({ ok: true, message: "\u099A\u09CD\u09AF\u09BE\u099F\u099F\u09BF \u0989\u09AD\u09DF\u09AA\u09BE\u09B6 \u09A5\u09C7\u0995\u09C7\u0987 \u09B8\u09CD\u09A5\u09BE\u09DF\u09C0\u09AD\u09BE\u09AC\u09C7 \u09AE\u09C1\u099B\u09C7 \u09AB\u09C7\u09B2\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: "SERVER_ERROR" });
+  }
+};
+adminRouter.delete("/support/ticket/:id", requireAdminAuth, handleDeleteSupportTicket);
+adminRouter.post("/support/ticket/:id/delete", requireAdminAuth, handleDeleteSupportTicket);
+var handleDeleteSupportMessage = async (req, res) => {
+  try {
+    const { id, messageId } = req.params;
+    const updated = await storage.deleteSupportMessage(id, messageId);
+    if (!updated) {
+      res.status(404).json({ ok: false, message: "\u099F\u09BF\u0995\u09C7\u099F \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
+      return;
+    }
+    res.json({ ok: true, ticket: updated, message: "\u09AE\u09C7\u09B8\u09C7\u099C\u099F\u09BF \u0989\u09AD\u09DF\u09AA\u09BE\u09B6 \u09A5\u09C7\u0995\u09C7\u0987 \u09AE\u09C1\u099B\u09C7 \u09AB\u09C7\u09B2\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: "SERVER_ERROR" });
+  }
+};
+adminRouter.delete("/support/ticket/:id/message/:messageId", requireAdminAuth, handleDeleteSupportMessage);
+adminRouter.post("/support/ticket/:id/message/:messageId/delete", requireAdminAuth, handleDeleteSupportMessage);
 adminRouter.get("/students/live", requireAdminAuth, async (_req, res) => {
   try {
     const licenses = await storage.listLicenses();
@@ -67491,7 +67918,7 @@ broadcastRouter.post("/admin/create", requireAdminAuth, async (req, res) => {
       displayStyle: selectedDisplayStyle,
       targetKey: cleanTargetKey,
       autoDismissSeconds: parsedAutoDismiss,
-      actionUrl: typeof actionUrl === "string" ? actionUrl.trim() : void 0,
+      actionUrl: sanitizeActionUrl(actionUrl),
       actionText: typeof actionText === "string" ? actionText.trim() : void 0,
       createdAt: Date.now(),
       active: true,
@@ -67589,8 +68016,11 @@ apiRouter.use(async (req, res, next) => {
   try {
     const rawIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || "unknown";
     const clientIp = rawIp.replace(/^::ffff:/, "");
-    const isLoopback = clientIp === "127.0.0.1" || clientIp === "::1" || clientIp === "localhost";
-    if (!isLoopback && await storage.isIpBlacklisted(clientIp)) {
+    if (isLoopbackIp(clientIp) || isLoopbackIp(rawIp)) {
+      next();
+      return;
+    }
+    if (await storage.isIpBlacklisted(clientIp)) {
       await storage.recordBlockedFirewallAttempt();
       res.status(403).json({
         ok: false,
@@ -67609,8 +68039,7 @@ var honeypotHandler = async (req, res) => {
   const ua = req.headers["user-agent"] || "Unknown Scanner";
   const targetPath = req.originalUrl || req.url;
   try {
-    const isLoopback = clientIp === "127.0.0.1" || clientIp === "::1" || clientIp === "localhost";
-    if (!isLoopback) {
+    if (!isLoopbackIp(clientIp) && !isLoopbackIp(rawIp)) {
       await storage.addBlacklistedIp(clientIp, `Honeypot Triggered on ${targetPath}`);
     }
     const currentConfig = await storage.getSecurityConfig();
@@ -67641,6 +68070,7 @@ var honeypotHandler = async (req, res) => {
 };
 apiRouter.all(["/admin/dump-database", "/v1/dump-keys", "/system/database-dump", "/debug/database", "/admin/config/env"], honeypotHandler);
 apiRouter.use("/auth", authRouter);
+apiRouter.use("/", authRouter);
 apiRouter.use("/admin", adminRouter);
 apiRouter.use("/content", contentRouter);
 apiRouter.use("/broadcasts", broadcastRouter);
