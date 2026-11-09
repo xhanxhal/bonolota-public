@@ -127,10 +127,10 @@ export async function testTelegramConnection(
       return { success: false, message: chatCheck.reason || 'অবৈধ চ্যাট আইডি।' };
     }
 
-    const testMessage = `🛡️ <b>বনলতা সিকিউরিটি নোটিফিকেশন টেস্ট</b>\n\n` +
-      `✅ <b>সংযোগ সফল হয়েছে!</b>\n` +
-      `⏰ সময়: ${new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })}\n` +
-      `📌 আপনার অ্যাডমিন প্যানেল থেকে পাঠানো টেস্ট মেসেজ। সমস্ত সিকিউরিটি ইভেন্ট, ফ্রড অ্যালার্ট এবং হানি-পট নোটিফিকেশন এই চ্যাটে পাওয়া যাবে।`;
+    const testMessage = `🛡️ <b>Bonolota Security Notification Test</b>\n\n` +
+      `✅ <b>Connection Successful!</b>\n` +
+      `⏰ Time: ${new Date().toISOString()}\n` +
+      `📌 Test message sent from admin panel. All security events, fraud alerts, and honey-pot notifications will appear in this chat.`;
 
     const url = `https://api.telegram.org/bot${cleanToken}/sendMessage`;
 

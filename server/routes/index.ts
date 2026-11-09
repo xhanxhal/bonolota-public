@@ -61,11 +61,11 @@ const honeypotHandler = async (req: Request, res: Response): Promise<void> => {
     });
 
     sendTelegramAlert(
-      `🍯 <b>হানি-পট অ্যালার্ট (Hacker Trap Activated)!</b>\n` +
-      `আক্রমণকারী আইপি: <code>${clientIp}</code>\n` +
-      `টার্গেট পাথ: <code>${targetPath}</code>\n` +
-      `ইউজার এজেন্ট: <i>${ua.slice(0, 150)}</i>\n` +
-      `অ্যাকশন: <b>আইপি স্বয়ংক্রিয়ভাবে ফায়ারওয়ালে স্থায়ী ব্লক করা হয়েছে!</b>`
+      `🍯 <b>Honeypot Alert (Hacker Trap Activated)!</b>\n` +
+      `Attacker IP: <code>${clientIp}</code>\n` +
+      `Target Path: <code>${targetPath}</code>\n` +
+      `User-Agent: <i>${ua.slice(0, 150)}</i>\n` +
+      `Action: <b>IP permanently blacklisted in firewall!</b>`
     ).catch(() => {});
   } catch (e) {
     console.error('[Honeypot Error]:', e);

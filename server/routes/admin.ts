@@ -136,7 +136,9 @@ adminRouter.post('/login', async (req: Request, res: Response): Promise<void> =>
       });
 
       sendTelegramAlert(
-        `⚠️ <b>অ্যাডমিন লগইন সতর্কতা!</b>\nআইপি: <code>${clientIp}</code>\nস্ট্যাটাস: ভুল পাসওয়ার্ড দিয়ে অ্যাডমিন পোর্টালে প্রবেশের চেষ্টা করা হয়েছে।`
+        `⚠️ <b>Admin Login Warning!</b>\n` +
+        `IP: <code>${clientIp}</code>\n` +
+        `Status: Failed login attempt with incorrect admin password.`
       ).catch(() => {});
 
       res.status(401).json({
@@ -743,7 +745,10 @@ adminRouter.post('/change-password', requireAdminAuth, async (req: Authenticated
     });
 
     sendTelegramAlert(
-      `🔐 <b>অ্যাডমিন পাসওয়ার্ড পরিবর্তিত হয়েছে!</b>\nআইপি: <code>${clientIp}</code>\nসময়: ${new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })}\nঅ্যাডমিন প্যানেলের পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছে।`
+      `🔐 <b>Admin Password Changed!</b>\n` +
+      `IP: <code>${clientIp}</code>\n` +
+      `Time: ${new Date().toISOString()}\n` +
+      `Status: Administrator password updated successfully.`
     ).catch(() => {});
 
     res.json({ ok: true, message: 'অ্যাডমিন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে।' });
@@ -884,7 +889,10 @@ adminRouter.post('/restore', requireAdminAuth, async (req: AuthenticatedAdminReq
     });
 
     sendTelegramAlert(
-      `📥 <b>ডাটাবেজ রিস্টোর সফল!</b>\nরিস্টোরকৃত লাইসেন্স: ${result.restoredLicenses}\nরিস্টোরকৃত টিকেট: ${result.restoredTickets}\nরিস্টোর সময়: ${new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })}`
+      `📥 <b>Database Restored Successfully!</b>\n` +
+      `Restored Licenses: ${result.restoredLicenses}\n` +
+      `Restored Tickets: ${result.restoredTickets}\n` +
+      `Time: ${new Date().toISOString()}`
     ).catch(() => {});
 
     res.json({
@@ -937,7 +945,10 @@ adminRouter.post('/security/blacklist/add', requireAdminAuth, async (req: Authen
     });
 
     sendTelegramAlert(
-      `🛡️ <b>ফায়ারওয়াল আইপি ব্লক!</b>\nআইপি: <code>${ip}</code>\nকারণ: ${reason || 'অ্যাডমিন ম্যানুয়াল ব্লক'}\nফায়ারওয়াল কর্তৃক সকল ট্রাফিক নিষিদ্ধ করা হয়েছে।`
+      `🛡️ <b>Firewall IP Block!</b>\n` +
+      `IP: <code>${ip}</code>\n` +
+      `Reason: ${reason || 'Manual Admin Block'}\n` +
+      `Status: All inbound traffic prohibited by firewall shield.`
     ).catch(() => {});
 
     res.json({ ok: true, message: `আইপি ${ip} সফলভাবে ব্লক করা হয়েছে।` });
@@ -1304,7 +1315,10 @@ adminRouter.post('/licenses/:id/send-renewal', requireAdminAuth, async (req: Aut
 
     // Send Telegram Notification
     sendTelegramAlert(
-      `⏳ <b>মেয়াদ শেষ নবায়ন নোটিফিকেশন প্রেরিত!</b>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nকী: <code>${license.keyMasked}</code>\nঅবশিষ্ট দিন: ${daysLeft} দিন`
+      `⏳ <b>Subscription Renewal Alert Sent!</b>\n` +
+      `User: <b>${license.customerName || 'Unknown'}</b>\n` +
+      `Key: <code>${license.keyMasked}</code>\n` +
+      `Days Left: ${daysLeft} days`
     ).catch(() => {});
 
     await storage.addAuditLog({

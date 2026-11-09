@@ -210,7 +210,12 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
       });
 
       sendTelegramAlert(
-        `🚨 <b>মাল্টি-ডিভাইস ফ্রড অ্যালার্ট!</b>\nকী: <code>${license.keyMasked}</code>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nআক্রমণকারী আইপি: <code>${clientIp}</code>\nডিভাইস: ${incomingDevice}\nস্ট্যাটাস: ইতিমধ্যে অন্য ব্রাউজারে লক করা কি-তে অননুমোদিত প্রবেশের চেষ্টা!`
+        `🚨 <b>Multi-Device Fraud Alert!</b>\n` +
+        `Key: <code>${license.keyMasked}</code>\n` +
+        `User: <b>${license.customerName || 'Unknown'}</b>\n` +
+        `Attacker IP: <code>${clientIp}</code>\n` +
+        `Device: ${incomingDevice}\n` +
+        `Status: Unauthorized access attempt to already-bound key!`
       ).catch(() => {});
 
       res.status(409).json({
@@ -298,7 +303,12 @@ authRouter.post('/activate', async (req: Request, res: Response): Promise<void> 
 
     // Telegram Notification & Student Action Timeline
     sendTelegramAlert(
-      `🎉 <b>নতুন লাইসেন্স সক্রিয়করণ!</b>\nছাত্র: <b>${updated.customerName || 'নতুন শিক্ষার্থী'}</b>\nকী: <code>${updated.keyMasked}</code>\nডিভাইস: ${deviceInfo}\nআইপি: <code>${clientIp}</code>\nমেয়াদ: ${updated.durationDays} দিন`
+      `🎉 <b>New License Activation!</b>\n` +
+      `User: <b>${updated.customerName || 'New Student'}</b>\n` +
+      `Key: <code>${updated.keyMasked}</code>\n` +
+      `Device: ${deviceInfo}\n` +
+      `IP: <code>${clientIp}</code>\n` +
+      `Duration: ${updated.durationDays} days`
     ).catch(() => {});
 
     await storage.addStudentAction({
@@ -599,7 +609,11 @@ authRouter.post('/sync-progress', async (req: Request, res: Response): Promise<v
       });
 
       sendTelegramAlert(
-        `⚠️ <b>অ্যান্টি-ট্যাম্পার অ্যালার্ট!</b>\nকী: <code>${license.keyMasked}</code>\nছাত্র: <b>${license.customerName || 'Unknown'}</b>\nআইপি: <code>${currentClientIp}</code>\nস্ট্যাটাস: ব্রাউজারের লোকালস্টোরেজ বা স্টাডি কাউন্টারে অস্বাভাবিক পরিবর্তন সনাক্ত হয়েছে।`
+        `⚠️ <b>Anti-Tamper Security Alert!</b>\n` +
+        `Key: <code>${license.keyMasked}</code>\n` +
+        `User: <b>${license.customerName || 'Unknown'}</b>\n` +
+        `IP: <code>${currentClientIp}</code>\n` +
+        `Status: Abnormal client-side manipulation detected in study counters.`
       ).catch(() => {});
     }
 

@@ -138,23 +138,24 @@ export async function handleTelegramMessage(message: NonNullable<TelegramUpdate[
     case '/start':
     case '/help': {
       const helpMsg = 
-        `🤖 <b>বনলতা অ্যাডমিন টেলিগ্রাম বট</b>\n\n` +
-        `আপনি সরাসরি এখান থেকেই সম্পূর্ণ সিস্টেম নিয়ন্ত্রণ করতে পারবেন:\n\n` +
-        `🔑 <b>কি ম্যানেজমেন্ট:</b>\n` +
-        `• <code>/newkey [নাম] [দিন]</code> — নতুন কি তৈরি\n` +
-        `  <i>উদাহরণ:</i> <code>/newkey Rahat 30</code>\n` +
-        `  <i>লাইফটাইম:</i> <code>/newkey Rahat lifetime</code>\n` +
-        `• <code>/deletekey [কী]</code> — ডাটাবেজ থেকে কি স্থায়ী ডিলিট\n` +
-        `• <code>/revokekey [কী]</code> — কি বাতিল/সাসপেন্ড করা\n` +
-        `• <code>/activekey [কী]</code> — বাতিল কি পুনরায় সক্রিয় করা\n` +
-        `• <code>/extend [কী] [দিন]</code> — মেয়াদ বাড়ানো\n` +
-        `• <code>/keys</code> — সাম্প্রতিক অ্যাক্সেস কি তালিকা\n\n` +
-        `💬 <b>১:১ স্টুডেন্ট সাপোর্ট চ্যাট:</b>\n` +
-        `• মেসেজ নোটিফিকেশনে সরাসরি <b>Telegram Reply</b> দিয়ে উত্তর পাঠাতে পারবেন।\n` +
-        `• <code>/reply [TicketID] [উত্তর]</code> — নির্দিষ্ট টিকেটে উত্তর পাঠান\n` +
-        `• <code>/tickets</code> — অপেক্ষমাণ (Unread) চ্যাটের তালিকা\n\n` +
-        `📊 <b>সিস্টেম ও স্ট্যাটাস:</b>\n` +
-        `• <code>/stats</code> বা <code>/online</code> — সক্রিয় শিক্ষার্থী ও সিস্টেম রিপোর্ট`;
+        `🤖 <b>Bonolota Admin Telegram Bot</b>\n\n` +
+        `Manage access keys and student support directly from Telegram:\n\n` +
+        `🔑 <b>Key Management:</b>\n` +
+        `• <code>/newkey [Name] [Days]</code> — Generate new access key\n` +
+        `  <i>Example:</i> <code>/newkey Rahat 30</code>\n` +
+        `  <i>Lifetime:</i> <code>/newkey Rahat lifetime</code>\n` +
+        `• <code>/deletekey [KEY]</code> — Permanently delete key from database\n` +
+        `• <code>/revokekey [KEY]</code> — Suspend / revoke key access\n` +
+        `• <code>/activekey [KEY]</code> — Reactivate suspended key\n` +
+        `• <code>/extend [KEY] [Days]</code> — Extend key duration\n` +
+        `• <code>/keys</code> — View recent access keys list\n\n` +
+        `💬 <b>1:1 Student Support:</b>\n` +
+        `• Reply directly to any support notification using Telegram's <b>Reply</b> feature.\n` +
+        `• <code>/reply [TicketID] [Answer]</code> — Reply to a specific ticket\n` +
+        `• <code>/tickets</code> — View all pending support tickets\n` +
+        `• <code>/cleartickets</code> — Delete all support tickets permanently\n\n` +
+        `📊 <b>System & Metrics:</b>\n` +
+        `• <code>/stats</code> or <code>/online</code> — Live online students & server status`;
       await sendTelegramBotReply(helpMsg, messageId);
       break;
     }
@@ -191,7 +192,7 @@ export async function handleTelegramMessage(message: NonNullable<TelegramUpdate[
     case '/reply': {
       if (args.length < 2) {
         await sendTelegramBotReply(
-          `⚠️ <b>ফরম্যাট সঠিক নয়!</b>\nব্যবহারবিধি: <code>/reply [TicketID] [আপনার উত্তর বার্তা]</code>\n<i>উদাহরণ:</i> <code>/reply ticket_123 ভাইয়া সমস্যার সমাধান করা হয়েছে।</code>`,
+          `⚠️ <b>Invalid Format!</b>\nUsage: <code>/reply [TicketID] [Your Answer]</code>\n<i>Example:</i> <code>/reply ticket_123 Issue resolved, please check your app.</code>`,
           messageId
         );
         return;
@@ -227,7 +228,7 @@ export async function handleTelegramMessage(message: NonNullable<TelegramUpdate[
     default: {
       if (command.startsWith('/')) {
         await sendTelegramBotReply(
-          `❓ অপরিচিত কমান্ড: <code>${command}</code>\nসকল কমান্ড দেখতে <code>/help</code> লিখুন।`,
+          `❓ Unknown command: <code>${command}</code>\nType <code>/help</code> for available commands.`,
           messageId
         );
       }
@@ -245,13 +246,13 @@ async function executeTicketReply(ticketId: string, replyText: string, messageId
     const cleanText = replyText.trim();
 
     if (!cleanText) {
-      await sendTelegramBotReply(`⚠️ উত্তরের বার্তা ফাঁকা রাখা যাবে না।`, messageId);
+      await sendTelegramBotReply(`⚠️ Reply text cannot be empty.`, messageId);
       return;
     }
 
     const ticket = await storage.getSupportTicketById(cleanId);
     if (!ticket) {
-      await sendTelegramBotReply(`❌ টিকেট আইডি <code>${cleanId}</code> পাওয়া যায়নি।`, messageId);
+      await sendTelegramBotReply(`❌ Ticket ID <code>${cleanId}</code> not found.`, messageId);
       return;
     }
 
@@ -289,12 +290,12 @@ async function executeTicketReply(ticketId: string, replyText: string, messageId
       `Ticket ID: <code>${ticket.id}</code>\n` +
       `Key: <code>${ticket.keyMasked}</code>\n` +
       `Message: <i>${cleanText}</i>\n` +
-      `📌 শিক্ষার্থী তার অ্যাপের চ্যাট বক্সে তাৎক্ষণিক উত্তর দেখতে পাবেন।`,
+      `📌 The student will immediately see this reply in their chat.`,
       messageId
     );
   } catch (error: any) {
     console.error('[TelegramBot] executeTicketReply error:', error);
-    await sendTelegramBotReply(`❌ উত্তর পাঠাতে ত্রুটি হয়েছে: ${error?.message || 'Unknown error'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to send reply: ${error?.message || 'Unknown error'}`, messageId);
   }
 }
 
@@ -304,7 +305,7 @@ async function executeTicketReply(ticketId: string, replyText: string, messageId
  */
 async function handleGenerateKey(args: string[], messageId?: number): Promise<void> {
   try {
-    let customerName = 'নতুন শিক্ষার্থী';
+    let customerName = 'Student';
     let durationDays = 30;
     let isLifetime = false;
 
@@ -365,24 +366,24 @@ async function handleGenerateKey(args: string[], messageId?: number): Promise<vo
       details: `Generated ${isLifetime ? 'Lifetime' : `${durationDays}d`} key (${masked}) for ${customerName} via Telegram.`,
     });
 
-    const expDateStr = isLifetime ? 'আজীবন (Lifetime)' : new Date(expiresAt).toLocaleDateString('bn-BD', {
+    const expDateStr = isLifetime ? 'Lifetime' : new Date(expiresAt).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric'
     });
 
     await sendTelegramBotReply(
-      `🎉 <b>নতুন অ্যাক্সেস কি সফলভাবে তৈরি হয়েছে!</b>\n\n` +
-      `🔑 <b>অ্যাক্সেস কী:</b>\n<code>${plaintextKey}</code>\n<i>(ক্লিক করলেই কপি হবে)</i>\n\n` +
-      `👤 শিক্ষার্থী: <b>${customerName}</b>\n` +
-      `⏱️ মেয়াদ: <b>${isLifetime ? 'আজীবন (Lifetime)' : `${durationDays} দিন`}</b>\n` +
-      `📅 মেয়াদ শেষ: <b>${expDateStr}</b>\n\n` +
-      `💡 <i>এই কী-টি শিক্ষার্থীকে কপি করে পাঠিয়ে দিন। শিক্ষার্থী প্রথমবার ব্রাউজারে বসালেই এটি লক হয়ে যাবে।</i>`,
+      `🎉 <b>New Access Key Generated Successfully!</b>\n\n` +
+      `🔑 <b>Access Key:</b>\n<code>${plaintextKey}</code>\n<i>(Tap to copy)</i>\n\n` +
+      `👤 User: <b>${customerName}</b>\n` +
+      `⏱️ Duration: <b>${isLifetime ? 'Lifetime' : `${durationDays} Days`}</b>\n` +
+      `📅 Expires: <b>${expDateStr}</b>\n\n` +
+      `💡 <i>Send this key to the student. It will automatically bind on first browser activation.</i>`,
       messageId
     );
   } catch (error: any) {
     console.error('[TelegramBot] handleGenerateKey error:', error);
-    await sendTelegramBotReply(`❌ কি তৈরি করতে সমস্যা হয়েছে: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to generate key: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -392,7 +393,7 @@ async function handleGenerateKey(args: string[], messageId?: number): Promise<vo
  */
 async function handleDeleteKey(rawKey: string, messageId?: number): Promise<void> {
   if (!rawKey) {
-    await sendTelegramBotReply(`⚠️ কী প্রদান করুন।\nব্যবহারবিধি: <code>/deletekey BONO-XXXX-YYYY</code>`, messageId);
+    await sendTelegramBotReply(`⚠️ Please provide key.\nUsage: <code>/deletekey BONOLOTA-XXXX-XXXX-XXXX</code>`, messageId);
     return;
   }
 
@@ -406,7 +407,7 @@ async function handleDeleteKey(rawKey: string, messageId?: number): Promise<void
     );
 
     if (!target) {
-      await sendTelegramBotReply(`❌ কী <code>${rawKey}</code> খুঁজে পাওয়া যায়নি।`, messageId);
+      await sendTelegramBotReply(`❌ Key <code>${rawKey}</code> not found.`, messageId);
       return;
     }
 
@@ -425,14 +426,14 @@ async function handleDeleteKey(rawKey: string, messageId?: number): Promise<void
     });
 
     await sendTelegramBotReply(
-      `🗑️ <b>কি সফলভাবে মুছে ফেলা হয়েছে!</b>\n\n` +
-      `🔑 কী: <code>${target.keyMasked}</code>\n` +
-      `👤 শিক্ষার্থী: <b>${target.customerName || 'বেনামী'}</b>\n` +
-      `✅ ডাটাবেজ থেকে স্থায়ীভাবে রিমুভ করা হয়েছে এবং সক্রিয় সেশন বন্ধ করা হয়েছে।`,
+      `🗑️ <b>Key Deleted Successfully!</b>\n\n` +
+      `Key: <code>${target.keyMasked}</code>\n` +
+      `User: <b>${target.customerName || 'None'}</b>\n` +
+      `Status: Permanently deleted from database. Active session terminated.`,
       messageId
     );
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ ডিলিট ব্যর্থ হয়েছে: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to delete key: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -441,7 +442,7 @@ async function handleDeleteKey(rawKey: string, messageId?: number): Promise<void
  */
 async function handleRevokeKey(rawKey: string, messageId?: number): Promise<void> {
   if (!rawKey) {
-    await sendTelegramBotReply(`⚠️ কী প্রদান করুন।\nব্যবহারবিধি: <code>/revokekey BONO-XXXX-YYYY</code>`, messageId);
+    await sendTelegramBotReply(`⚠️ Please provide key.\nUsage: <code>/revokekey BONOLOTA-XXXX-XXXX-XXXX</code>`, messageId);
     return;
   }
 
@@ -455,7 +456,7 @@ async function handleRevokeKey(rawKey: string, messageId?: number): Promise<void
     );
 
     if (!target) {
-      await sendTelegramBotReply(`❌ কী <code>${rawKey}</code> খুঁজে পাওয়া যায়নি।`, messageId);
+      await sendTelegramBotReply(`❌ Key <code>${rawKey}</code> not found.`, messageId);
       return;
     }
 
@@ -470,14 +471,14 @@ async function handleRevokeKey(rawKey: string, messageId?: number): Promise<void
     });
 
     await sendTelegramBotReply(
-      `🚫 <b>কি বাতিল (Revoked) করা হয়েছে!</b>\n\n` +
-      `🔑 কী: <code>${target.keyMasked}</code>\n` +
-      `👤 শিক্ষার্থী: <b>${target.customerName || 'বেনামী'}</b>\n` +
-      `স্ট্যাটাস: অ্যাক্সেস চিরতরে বন্ধ। সেশন ধ্বংস করা হয়েছে।`,
+      `🚫 <b>Key Revoked Successfully!</b>\n\n` +
+      `Key: <code>${target.keyMasked}</code>\n` +
+      `User: <b>${target.customerName || 'None'}</b>\n` +
+      `Status: Access suspended. Session destroyed.`,
       messageId
     );
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ বাতিল করতে সমস্যা হয়েছে: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to revoke key: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -486,7 +487,7 @@ async function handleRevokeKey(rawKey: string, messageId?: number): Promise<void
  */
 async function handleActivateKey(rawKey: string, messageId?: number): Promise<void> {
   if (!rawKey) {
-    await sendTelegramBotReply(`⚠️ কী প্রদান করুন।\nব্যবহারবিধি: <code>/activekey BONO-XXXX-YYYY</code>`, messageId);
+    await sendTelegramBotReply(`⚠️ Please provide key.\nUsage: <code>/activekey BONOLOTA-XXXX-XXXX-XXXX</code>`, messageId);
     return;
   }
 
@@ -500,20 +501,21 @@ async function handleActivateKey(rawKey: string, messageId?: number): Promise<vo
     );
 
     if (!target) {
-      await sendTelegramBotReply(`❌ কী <code>${rawKey}</code> খুঁজে পাওয়া যায়নি।`, messageId);
+      await sendTelegramBotReply(`❌ Key <code>${rawKey}</code> not found.`, messageId);
       return;
     }
 
     await storage.updateLicense(target.id, { status: 'active' });
 
     await sendTelegramBotReply(
-      `✅ <b>কি সক্রিয় (Activated) করা হয়েছে!</b>\n\n` +
-      `🔑 কী: <code>${target.keyMasked}</code>\n` +
-      `👤 শিক্ষার্থী: <b>${target.customerName || 'বেনামী'}</b>`,
+      `✅ <b>Key Activated Successfully!</b>\n\n` +
+      `Key: <code>${target.keyMasked}</code>\n` +
+      `User: <b>${target.customerName || 'None'}</b>\n` +
+      `Status: Active and ready for use.`,
       messageId
     );
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ সক্রিয় করতে সমস্যা হয়েছে: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to activate key: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -523,7 +525,7 @@ async function handleActivateKey(rawKey: string, messageId?: number): Promise<vo
 async function handleExtendKey(rawKey: string, rawDays: string, messageId?: number): Promise<void> {
   const days = parseInt(rawDays, 10);
   if (!rawKey || isNaN(days) || days <= 0) {
-    await sendTelegramBotReply(`⚠️ সঠিক ফরম্যাট লিখুন।\nব্যবহারবিধি: <code>/extend BONO-XXXX-YYYY 30</code>`, messageId);
+    await sendTelegramBotReply(`⚠️ Invalid format.\nUsage: <code>/extend BONOLOTA-XXXX-XXXX-XXXX 30</code>`, messageId);
     return;
   }
 
@@ -537,7 +539,7 @@ async function handleExtendKey(rawKey: string, rawDays: string, messageId?: numb
     );
 
     if (!target) {
-      await sendTelegramBotReply(`❌ কী <code>${rawKey}</code> খুঁজে পাওয়া যায়নি।`, messageId);
+      await sendTelegramBotReply(`❌ Key <code>${rawKey}</code> not found.`, messageId);
       return;
     }
 
@@ -552,15 +554,15 @@ async function handleExtendKey(rawKey: string, rawDays: string, messageId?: numb
     });
 
     await sendTelegramBotReply(
-      `⏳ <b>মেয়াদ বৃদ্ধি সম্পন্ন!</b>\n\n` +
-      `🔑 কী: <code>${target.keyMasked}</code>\n` +
-      `👤 শিক্ষার্থী: <b>${target.customerName || 'বেনামী'}</b>\n` +
-      `➕ বৃদ্ধি: <b>+${days} দিন</b>\n` +
-      `📅 নতুন মেয়াদ শেষ: <b>${new Date(newExpiresAt).toLocaleDateString('bn-BD')}</b>`,
+      `⏳ <b>Key Extended Successfully!</b>\n\n` +
+      `Key: <code>${target.keyMasked}</code>\n` +
+      `User: <b>${target.customerName || 'None'}</b>\n` +
+      `Extended by: <b>+${days} Days</b>\n` +
+      `New Expiry: <b>${new Date(newExpiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</b>`,
       messageId
     );
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ মেয়াদ বাড়াতে সমস্যা হয়েছে: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to extend key: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -574,25 +576,25 @@ async function handleListRecentKeys(messageId?: number): Promise<void> {
     const now = Date.now();
 
     if (sorted.length === 0) {
-      await sendTelegramBotReply(`ডাটাবেজে বর্তমানে কোনো অ্যাক্সেস কি নেই।`, messageId);
+      await sendTelegramBotReply(`No access keys found in database.`, messageId);
       return;
     }
 
-    let text = `📋 <b>সাম্প্রতিক অ্যাক্সেস কী তালিকা (${sorted.length}টি):</b>\n\n`;
+    let text = `📋 <b>Recent Access Keys (${sorted.length} keys):</b>\n\n`;
     for (const l of sorted) {
       const isExpired = now > l.expiresAt && !l.isLifetime;
       const statusIcon = l.status === 'revoked' ? '🚫' : isExpired ? '⏳' : l.browserBound ? '🔒' : '🟢';
-      const daysLeft = l.isLifetime ? 'আজীবন' : Math.max(0, Math.ceil((l.expiresAt - now) / (1000 * 60 * 60 * 24))) + ' দিন';
+      const daysLeft = l.isLifetime ? 'Lifetime' : Math.max(0, Math.ceil((l.expiresAt - now) / (1000 * 60 * 60 * 24))) + ' days';
 
       text += `${statusIcon} <code>${l.keyMasked}</code>\n`;
-      text += `   👤 <b>${l.customerName || 'বেনামী'}</b> | বাকি: ${daysLeft}\n`;
-      text += `   ডিভাইস: ${l.browserBound ? 'লকড' : 'অব্যবহৃত'}\n\n`;
+      text += `   User: <b>${l.customerName || 'None'}</b> | Remaining: ${daysLeft}\n`;
+      text += `   Device: ${l.browserBound ? 'Bound' : 'Unbound'}\n\n`;
     }
 
-    text += `💡 <i>নতুন কি বানাতে লিখুন:</i> <code>/newkey [নাম] [দিন]</code>`;
+    text += `💡 <i>To create a new key:</i> <code>/newkey [Name] [Days]</code>`;
     await sendTelegramBotReply(text, messageId);
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ তালিকা পেতে ব্যর্থ: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to retrieve keys list: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -605,7 +607,7 @@ async function handleListPendingTickets(messageId?: number): Promise<void> {
     const openTickets = tickets.filter(t => t.status === 'open');
 
     if (openTickets.length === 0) {
-      await sendTelegramBotReply(`✨ <b>সব ক্লিয়ার!</b> কোনো অপেক্ষমাণ (Pending) সাপোর্ট মেসেজ নেই।`, messageId);
+      await sendTelegramBotReply(`✨ <b>All Clear!</b> No pending support tickets.`, messageId);
       return;
     }
 
@@ -619,10 +621,10 @@ async function handleListPendingTickets(messageId?: number): Promise<void> {
       text += `   <b>Reply:</b> <code>/reply ${t.id} your answer</code>\n\n`;
     }
 
-    text += `💡 <i>সব টিকেট একসাথে মুছতে লিখুন:</i> <code>/cleartickets</code>`;
+    text += `💡 <i>To clear all tickets:</i> <code>/cleartickets</code>`;
     await sendTelegramBotReply(text, messageId);
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ টিকেট তালিকা পেতে ত্রুটি: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to retrieve tickets list: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -633,7 +635,7 @@ async function handleDeleteAllTickets(messageId?: number): Promise<void> {
   try {
     const tickets = await storage.listSupportTickets();
     if (tickets.length === 0) {
-      await sendTelegramBotReply(`কোনো টিকেট পাওয়া যায়নি। ইনবক্স ইতিমধ্যে খালি।`, messageId);
+      await sendTelegramBotReply(`No support tickets found. Inbox is already empty.`, messageId);
       return;
     }
     let count = 0;
@@ -649,11 +651,11 @@ async function handleDeleteAllTickets(messageId?: number): Promise<void> {
     });
     await sendTelegramBotReply(
       `🗑️ <b>All Tickets Deleted!</b>\n` +
-      `মোট ${count}টি টিকেট উভয়পাশ থেকেই স্থায়ীভাবে সম্পূর্ণ মুছে ফেলা হয়েছে।`,
+      `Total ${count} ticket(s) permanently deleted from both sides.`,
       messageId
     );
   } catch (err: any) {
-    await sendTelegramBotReply(`❌ টিকেট ডিলিট করতে ব্যর্থ: ${err?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to delete tickets: ${err?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -671,22 +673,22 @@ async function handleShowSystemStats(messageId?: number): Promise<void> {
     const uptimeMins = Math.floor((process.uptime() % 3600) / 60);
 
     let text = 
-      `📊 <b>বনলতা লাইভ সিস্টেম রিপোর্ট</b>\n\n` +
-      `🟢 <b>বর্তমানে অনলাইন শিক্ষার্থী:</b> <b>${onlineStudents.length} জন</b>\n` +
-      `🔑 মোট সক্রিয় কি: <b>${totalActive}টি</b> (সর্বমোট: ${licenses.length}টি)\n` +
-      `📩 মোট সাপোর্ট টিকিট: <b>${tickets.length}টি</b>\n` +
-      `⏱️ সার্ভার আপটাইম: <b>${uptimeHours}h ${uptimeMins}m</b>\n\n`;
+      `📊 <b>Bonolota Live System Status</b>\n\n` +
+      `🟢 <b>Online Students (last 5 min):</b> <b>${onlineStudents.length}</b>\n` +
+      `🔑 <b>Total Active Keys:</b> <b>${totalActive}</b> (Total generated: ${licenses.length})\n` +
+      `📩 <b>Total Support Tickets:</b> <b>${tickets.length}</b>\n` +
+      `⏱️ <b>Server Uptime:</b> <b>${uptimeHours}h ${uptimeMins}m</b>\n\n`;
 
     if (onlineStudents.length > 0) {
-      text += `👥 <b>অনলাইন শিক্ষার্থীদের তালিকা:</b>\n`;
+      text += `👥 <b>Active Online Students:</b>\n`;
       for (const s of onlineStudents.slice(0, 5)) {
-        text += `• <b>${s.customerName || 'শিক্ষার্থী'}</b> (${s.keyMasked})\n  সেকশন: <i>${s.progress?.activeFeature || 'ড্যাশবোর্ড'}</i>\n`;
+        text += `• <b>${s.customerName || 'Student'}</b> (${s.keyMasked})\n  Section: <i>${s.progress?.activeFeature || 'Dashboard'}</i>\n`;
       }
     }
 
     await sendTelegramBotReply(text, messageId);
   } catch (error: any) {
-    await sendTelegramBotReply(`❌ রিপোর্ট তৈরি করতে ব্যর্থ: ${error?.message || 'Unknown'}`, messageId);
+    await sendTelegramBotReply(`❌ Failed to generate report: ${error?.message || 'Unknown'}`, messageId);
   }
 }
 
@@ -704,7 +706,6 @@ export async function startTelegramBotListener(): Promise<void> {
       try {
         const { botToken, enabled } = await getBotCredentials();
         if (!enabled || !botToken) {
-          // If bot disabled or token missing, wait 15 seconds before checking again
           await new Promise(r => setTimeout(r, 15000));
           continue;
         }
@@ -717,7 +718,7 @@ export async function startTelegramBotListener(): Promise<void> {
         }
 
         const response = await fetch(url, {
-          signal: AbortSignal.timeout(30000), // 30s timeout for 20s long-poll
+          signal: AbortSignal.timeout(30000),
         });
 
         if (response.ok) {
@@ -726,7 +727,6 @@ export async function startTelegramBotListener(): Promise<void> {
             for (const update of data.result as TelegramUpdate[]) {
               lastUpdateOffset = Math.max(lastUpdateOffset, update.update_id + 1);
               if (update.message) {
-                // Process update in background without blocking loop
                 handleTelegramMessage(update.message).catch(err => {
                   console.error('[TelegramBot] Error handling message:', err);
                 });
@@ -734,17 +734,14 @@ export async function startTelegramBotListener(): Promise<void> {
             }
           }
         } else {
-          // Non-200 from Telegram (e.g. 401 or 409 conflict if another instance is running), back off
           await new Promise(r => setTimeout(r, 8000));
         }
       } catch (err: any) {
-        // Network timeout / drop, wait 5 seconds before retrying
         await new Promise(r => setTimeout(r, 5000));
       }
     }
   };
 
-  // Start detached background loop
   pollLoop().catch(err => {
     console.error('[TelegramBot] Poll loop crashed:', err);
     isBotRunning = false;
