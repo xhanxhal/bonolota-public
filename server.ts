@@ -18,26 +18,17 @@ export async function createExpressApp() {
   app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-XSS-Protection', '1; mode=block');
-    // Allow embedding in Google AI Studio preview iframes and production domain
+    // Allow embedding in Google AI Studio preview iframes, production custom domains, and Vercel
     res.setHeader(
       'Content-Security-Policy',
-      "frame-ancestors 'self' https://*.run.app https://*.google.com https://*.aistudio.google.com https://bonolota-public.vercel.app;"
+      "frame-ancestors 'self' https://*.run.app https://*.google.com https://*.aistudio.google.com https://bonolota.online https://*.bonolota.online https://bonolota-public.vercel.app https://*.vercel.app;"
     );
 
-    // Dynamic CORS for cross-domain API calls
+    // Dynamic CORS for any domain the user points to (bonolota.online, Vercel, localhost, Cloud Run, etc.)
     const origin = req.headers.origin;
     if (origin) {
-      const isAllowed = 
-        origin.includes('localhost') || 
-        origin.includes('127.0.0.1') || 
-        origin.endsWith('.run.app') || 
-        origin.endsWith('.vercel.app') ||
-        origin.includes('google.com') ||
-        origin.includes('bonolota');
-      if (isAllowed) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-        res.setHeader('Access-Control-Allow-Credentials', 'true');
-      }
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
     }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-session-token, x-admin-token, x-device-id');
@@ -52,12 +43,12 @@ export async function createExpressApp() {
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
 
-  // Secret admin portal route mapping with no-cache headers
-  app.get(['/x-admin-arifa', '/x-admin-arifa.html'], (_req, res) => {
+  // Ensure no-cache headers on secret admin path and let React SPA render the portal
+  app.use(['/x-admin-arifa', '/x-admin-arifa.html'], (_req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
-    res.sendFile(path.resolve('public/x-admin-arifa.html'));
+    next();
   });
 
   // Block old /admin or /admin.html access to prevent unauthorized discovery

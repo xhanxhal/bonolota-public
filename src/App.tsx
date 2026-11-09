@@ -41,6 +41,7 @@ import { useBroadcastAnnouncements } from './hooks/useBroadcastAnnouncements';
 import { BroadcastDrawer } from './components/BroadcastDrawer';
 import { BroadcastModal } from './components/BroadcastModal';
 import { StudentSupportModal } from './components/StudentSupportModal';
+import { AdminPortal } from './components/admin/AdminPortal';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -673,6 +674,36 @@ function MainApp() {
 }
 
 export default function App() {
+  const [isAdmin, setIsAdmin] = useState(() => {
+    const p = window.location.pathname.toLowerCase();
+    const h = window.location.hash.toLowerCase();
+    return p.includes('x-admin-arifa') || h.includes('x-admin-arifa') || p.includes('/admin') || h.includes('/admin');
+  });
+
+  useEffect(() => {
+    const handleRoute = () => {
+      const p = window.location.pathname.toLowerCase();
+      const h = window.location.hash.toLowerCase();
+      setIsAdmin(p.includes('x-admin-arifa') || h.includes('x-admin-arifa') || p.includes('/admin') || h.includes('/admin'));
+    };
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+    return () => {
+      window.removeEventListener('hashchange', handleRoute);
+      window.removeEventListener('popstate', handleRoute);
+    };
+  }, []);
+
+  if (isAdmin) {
+    return (
+      <ErrorBoundary>
+        <AdminPortal onExitAdmin={() => {
+          window.location.href = '/';
+        }} />
+      </ErrorBoundary>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <MainApp />

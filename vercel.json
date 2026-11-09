@@ -2,7 +2,7 @@
   "version": 2,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/x-admin-arifa", "destination": "/x-admin-arifa.html" },
+    { "source": "/x-admin-arifa(.*)", "destination": "/index.html" },
     { "source": "/admin(.*)", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],

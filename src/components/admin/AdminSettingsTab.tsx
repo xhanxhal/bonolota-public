@@ -4,14 +4,12 @@ import {
   Send, 
   Download, 
   Upload, 
-  ShieldCheck, 
   RefreshCw, 
   Check, 
   AlertTriangle, 
   KeyRound, 
   Database,
-  Radio,
-  FileCheck
+  Radio
 } from 'lucide-react';
 import { haptics } from '../../utils/haptics';
 
@@ -158,7 +156,7 @@ export const AdminSettingsTab: React.FC = () => {
     }
   };
 
-  // Download Full Database Backup JSON
+  // Download Backup JSON
   const handleDownloadBackup = async () => {
     haptics.tap();
     setIsExporting(true);
@@ -182,7 +180,7 @@ export const AdminSettingsTab: React.FC = () => {
     }
   };
 
-  // Upload & Restore Database JSON
+  // Upload & Restore JSON
   const handleRestoreFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -222,48 +220,48 @@ export const AdminSettingsTab: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn font-sans">
-      {/* SECTION 1: Feature 57: Telegram Bot Webhook Integration */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-sky-500/15 text-sky-400 border border-sky-500/30 flex items-center justify-center shrink-0">
-              <Send className="w-6 h-6 text-sky-400" />
+    <div className="space-y-4 sm:space-y-6 animate-fadeIn font-bangla">
+      {/* SECTION 1: Telegram Bot Integration */}
+      <div className="bg-[#0f172a] border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center shrink-0">
+              <Send className="w-5 h-5 text-sky-400" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                <span>টেলিগ্রাম বট ওয়েবহুক ও ইনস্ট্যান্ট সিকিউরিটি অ্যালার্ট</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800">
-                  Feature 57
+              <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                <span>টেলিগ্রাম বট নোটিফিকেশন ও অ্যালার্ট</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800 font-mono">
+                  LIVE BOT
                 </span>
               </h3>
               <p className="text-xs text-slate-400">
-                নতুন অ্যাক্টিভেশন, ফ্রড অ্যাটেম্পট, হানি-পট ট্র্যাপ ও সাপোর্ট টিকেটের লাইভ নোটিফিকেশন
+                নতুন অ্যাক্টিভেশন, ফ্রড বা সাপোর্ট টিকেটের তাৎক্ষণিক নোটিফিকেশন
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className={`w-2.5 h-2.5 rounded-full ${telegramEnabled ? 'bg-sky-400 animate-pulse' : 'bg-slate-600'}`} />
+            <span className={`w-2 h-2 rounded-full ${telegramEnabled ? 'bg-sky-400 animate-pulse' : 'bg-slate-600'}`} />
             <span className="text-xs font-semibold text-slate-300">
-              {telegramEnabled ? 'অ্যালার্ট সক্রিয়' : 'অ্যালার্ট বন্ধ'}
+              {telegramEnabled ? 'অ্যালার্ট সচল' : 'অ্যালার্ট বন্ধ'}
             </span>
           </div>
         </div>
 
         {telegramStatusMsg && (
-          <div className={`mb-4 p-3.5 rounded-xl border text-xs flex items-center gap-2 ${
+          <div className={`mb-3.5 p-3 rounded-xl border text-xs flex items-center gap-2 ${
             telegramStatusMsg.ok ? 'bg-emerald-950/70 border-emerald-800 text-emerald-300' : 'bg-rose-950/70 border-rose-800 text-rose-300'
           }`}>
-            {telegramStatusMsg.ok ? <Check className="w-4 h-4 shrink-0" /> : <AlertTriangle className="w-4 h-4 shrink-0" />}
+            {telegramStatusMsg.ok ? <Check className="w-4 h-4 shrink-0 text-emerald-400" /> : <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />}
             <span>{telegramStatusMsg.text}</span>
           </div>
         )}
 
-        <form onSubmit={handleSaveTelegram} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSaveTelegram} className="space-y-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
                 টেলিগ্রাম বট টোকেন (Bot Token)
               </label>
               <input
@@ -271,31 +269,31 @@ export const AdminSettingsTab: React.FC = () => {
                 value={botToken}
                 onChange={e => setBotToken(e.target.value)}
                 placeholder="e.g. 9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-sky-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d1a] border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-sky-500"
               />
               <p className="text-[11px] text-slate-500 mt-1">
-                BotFather থেকে প্রাপ্ত বট টোকেন। যেকোনো সময় পরিবর্তন করতে পারবেন।
+                টেলিগ্রাম বট টোকেন পরিবর্তনযোগ্য।
               </p>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                আপনার পার্মানেন্ট টেলিগ্রাম চ্যাট/ইউজার আইডি (Chat ID)
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                টেলিগ্রাম ইউজার/চ্যাট আইডি (Chat ID)
               </label>
               <input
                 type="text"
                 value={chatId}
                 onChange={e => setChatId(e.target.value)}
                 placeholder="e.g. 6745501942"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-sky-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#080d1a] border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-sky-500"
               />
               <p className="text-[11px] text-slate-500 mt-1">
-                আপনার নির্দিষ্ট টেলিগ্রাম ইউজার আইডি (ডিফল্ট: 6745501942)।
+                আপনার নির্দিষ্ট আইডি (ডিফল্ট: 6745501942)।
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
             <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
               <input
                 type="checkbox"
@@ -303,7 +301,7 @@ export const AdminSettingsTab: React.FC = () => {
                 onChange={e => setTelegramEnabled(e.target.checked)}
                 className="rounded text-sky-600 focus:ring-0 cursor-pointer"
               />
-              <span>টেলিগ্রাম ইনস্ট্যান্ট পুশ অ্যালার্ট চালু রাখুন</span>
+              <span>টেলিগ্রাম পুশ অ্যালার্ট চালু রাখুন</span>
             </label>
 
             <div className="flex items-center gap-2">
@@ -311,16 +309,16 @@ export const AdminSettingsTab: React.FC = () => {
                 type="button"
                 onClick={handleTestTelegram}
                 disabled={isTestingTelegram || !botToken || !chatId}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isTestingTelegram ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Radio className="w-3.5 h-3.5" />}
-                <span>টেস্ট অ্যালার্ট পাঠান</span>
+                <span>টেস্ট অ্যালার্ট</span>
               </button>
 
               <button
                 type="submit"
                 disabled={isSavingTelegram}
-                className="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-lg shadow-sky-600/30 disabled:opacity-50"
+                className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
               >
                 {isSavingTelegram ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                 <span>সংরক্ষণ করুন</span>
@@ -330,145 +328,132 @@ export const AdminSettingsTab: React.FC = () => {
         </form>
       </div>
 
-      {/* SECTION 2: Feature 8 & Feature 12 in 2 Columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        {/* Feature 8: Admin Password Change */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-xl">
-          <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-800">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0">
-              <KeyRound className="w-5 h-5 text-amber-400" />
+      {/* SECTION 2: Password & Database Backup */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        {/* Password Change */}
+        <div className="bg-[#0f172a] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl">
+          <div className="flex items-center gap-2.5 mb-3.5 pb-2.5 border-b border-slate-800">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center shrink-0">
+              <KeyRound className="w-4 h-4 text-amber-400" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <span>অ্যাডমিন পাসওয়ার্ড পরিবর্তন (Change Password)</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">
-                  Feature 8
-                </span>
-              </h3>
-              <p className="text-xs text-slate-400">নিরাপত্তা নিশ্চিত করতে অ্যাডমিন পাসওয়ার্ড আপডেট করুন</p>
+              <h3 className="text-sm font-bold text-white">অ্যাডমিন পাসওয়ার্ড পরিবর্তন</h3>
+              <p className="text-[11px] text-slate-400">নতুন সিকিউর পাসওয়ার্ড সেট করুন</p>
             </div>
           </div>
 
           {passwordStatusMsg && (
-            <div className={`mb-4 p-3 rounded-xl border text-xs flex items-center gap-2 ${
+            <div className={`mb-3 p-2.5 rounded-xl border text-xs flex items-center gap-1.5 ${
               passwordStatusMsg.ok ? 'bg-emerald-950/70 border-emerald-800 text-emerald-300' : 'bg-rose-950/70 border-rose-800 text-rose-300'
             }`}>
-              {passwordStatusMsg.ok ? <Check className="w-4 h-4 shrink-0" /> : <AlertTriangle className="w-4 h-4 shrink-0" />}
+              {passwordStatusMsg.ok ? <Check className="w-3.5 h-3.5 shrink-0 text-emerald-400" /> : <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-rose-400" />}
               <span>{passwordStatusMsg.text}</span>
             </div>
           )}
 
-          <form onSubmit={handleChangePassword} className="space-y-3.5">
+          <form onSubmit={handleChangePassword} className="space-y-3">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
-                বর্তমান পাসওয়ার্ড (Current Password)
+                বর্তমান পাসওয়ার্ড
               </label>
               <input
                 type="password"
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
                 placeholder="বর্তমান পাসওয়ার্ড লিখুন"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
-                নতুন পাসওয়ার্ড (New Password, min 8 chars)
+                নতুন পাসওয়ার্ড (ন্যূনতম ৮ অক্ষর)
               </label>
               <input
                 type="password"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 placeholder="নতুন পাসওয়ার্ড দিন"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
-                নতুন পাসওয়ার্ড পুনরায় লিখুন (Confirm)
+                নতুন পাসওয়ার্ড পুনরায় লিখুন
               </label>
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
                 placeholder="পুনরায় কনফার্ম করুন"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={isChangingPassword || !currentPassword || !newPassword}
-              className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-amber-600 hover:bg-amber-500 active:scale-95 disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-600/30 text-xs"
+              className="w-full py-2 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 transition-all flex items-center justify-center gap-1.5 cursor-pointer text-xs"
             >
               {isChangingPassword ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Lock className="w-3.5 h-3.5" />}
-              <span>পাসওয়ার্ড পরিবর্তন সম্পন্ন করুন</span>
+              <span>পাসওয়ার্ড পরিবর্তন করুন</span>
             </button>
           </form>
         </div>
 
-        {/* Feature 12: Full Database Backup & Restore */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+        {/* Database Backup & Restore */}
+        <div className="bg-[#0f172a] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                <Database className="w-5 h-5 text-emerald-400" />
+            <div className="flex items-center gap-2.5 mb-3.5 pb-2.5 border-b border-slate-800">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <Database className="w-4 h-4 text-emerald-400" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <span>ডাটাবেজ ব্যাকআপ ও রিস্টোর (Backup & Restore)</span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
-                    Feature 12
-                  </span>
-                </h3>
-                <p className="text-xs text-slate-400">লাইসেন্স, অডিট লগ, টিকেট ও ফায়ারওয়াল ব্যাকআপ</p>
+                <h3 className="text-sm font-bold text-white">ডাটাবেজ ব্যাকআপ ও রিস্টোর</h3>
+                <p className="text-[11px] text-slate-400">লাইসেন্স ও অডিট লগ ব্যাকআপ</p>
               </div>
             </div>
 
             {restoreStatusMsg && (
-              <div className={`mb-4 p-3 rounded-xl border text-xs flex items-center gap-2 ${
+              <div className={`mb-3 p-2.5 rounded-xl border text-xs flex items-center gap-1.5 ${
                 restoreStatusMsg.ok ? 'bg-emerald-950/70 border-emerald-800 text-emerald-300' : 'bg-rose-950/70 border-rose-800 text-rose-300'
               }`}>
-                {restoreStatusMsg.ok ? <Check className="w-4 h-4 shrink-0" /> : <AlertTriangle className="w-4 h-4 shrink-0" />}
+                {restoreStatusMsg.ok ? <Check className="w-3.5 h-3.5 shrink-0 text-emerald-400" /> : <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-rose-400" />}
                 <span>{restoreStatusMsg.text}</span>
               </div>
             )}
 
-            <div className="space-y-4">
-              {/* Backup Download */}
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
-                <span className="text-xs font-bold text-slate-200 block mb-1">
-                  ১-ক্লিক সম্পূর্ণ ব্যাকআপ ডাউনলোড:
+            <div className="space-y-3">
+              <div className="p-3 rounded-2xl bg-[#080d1a] border border-slate-800">
+                <span className="text-xs font-bold text-slate-200 block mb-0.5">
+                  ১-ক্লিক ব্যাকআপ ডাউনলোড:
                 </span>
-                <p className="text-[11px] text-slate-400 mb-3">
-                  সমস্ত অ্যাক্টিভ কি, স্টুডেন্ট ডাটা, অডিট হিস্ট্রি এবং ফায়ারওয়াল রুলসহ একটি `.json` ব্যাকআপ স্ন্যাপশট ডাউনলোড হবে।
+                <p className="text-[11px] text-slate-400 mb-2.5">
+                  সমস্ত কি, স্টুডেন্ট ডাটা ও অডিট হিস্ট্রি সহ একটি `.json` ব্যাকআপ ডাউনলোড হবে।
                 </p>
                 <button
                   type="button"
                   onClick={handleDownloadBackup}
                   disabled={isExporting}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer border border-slate-700"
+                  className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-slate-700"
                 >
-                  {isExporting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4 text-emerald-400" />}
-                  <span>ডাউনলোড ডাটাবেজ ব্যাকআপ (.json)</span>
+                  {isExporting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5 text-emerald-400" />}
+                  <span>ডাউনলোড ব্যাকআপ (.json)</span>
                 </button>
               </div>
 
-              {/* Restore Upload */}
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
-                <span className="text-xs font-bold text-slate-200 block mb-1">
-                  ব্যাকআপ ফাইল আপলোড ও রিস্টোর:
+              <div className="p-3 rounded-2xl bg-[#080d1a] border border-slate-800">
+                <span className="text-xs font-bold text-slate-200 block mb-0.5">
+                  ব্যাকআপ ফাইল রিস্টোর:
                 </span>
-                <p className="text-[11px] text-slate-400 mb-3">
-                  পূর্ববর্তী ব্যাকআপ `.json` ফাইল নির্বাচন করে সম্পূর্ণ ডাটাবেজ মুহূর্তের মধ্যে ফিরিয়ে আনুন।
+                <p className="text-[11px] text-slate-400 mb-2.5">
+                  পূর্ববর্তী ব্যাকআপ `.json` ফাইল দিয়ে ডাটাবেজ পুনরুদ্ধার করুন।
                 </p>
 
-                <label className="w-full py-2.5 px-4 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/80 text-emerald-200 font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer">
-                  {isRestoring ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4 text-emerald-300" />}
-                  <span>{isRestoring ? 'রিস্টোর হচ্ছে...' : 'ব্যাকআপ ফাইল আপলোড করুন'}</span>
+                <label className="w-full py-2 px-3 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/80 text-emerald-200 font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                  {isRestoring ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 text-emerald-300" />}
+                  <span>{isRestoring ? 'রিস্টোর হচ্ছে...' : 'ব্যাকআপ ফাইল আপলোড'}</span>
                   <input
                     type="file"
                     accept=".json"
@@ -481,7 +466,6 @@ export const AdminSettingsTab: React.FC = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
