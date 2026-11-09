@@ -156,7 +156,68 @@ function MainApp() {
   }, [currentTab, auth.isAuthenticated]);
 
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+  const [unreadSupportCount, setUnreadSupportCount] = useState<number>(0);
   const [antiCopyWarning, setAntiCopyWarning] = useState(false);
+
+  // Feature 3.1 & 1.3: Background check for unread support replies with anti-leak headers
+  useEffect(() => {
+    let active = true;
+    const checkUnreadSupport = async () => {
+      try {
+        const lastSeenStr = typeof window !== 'undefined' ? (localStorage.getItem('bonolota_last_seen_support_time') || '0') : '0';
+        const lastSeen = parseInt(lastSeenStr, 10) || 0;
+
+        const token = typeof window !== 'undefined' ? localStorage.getItem('bonolota_user_token') : null;
+        const userKey = typeof window !== 'undefined' ? (localStorage.getItem('bonolota_user_key') || auth.keyMasked) : null;
+        let deviceId = typeof window !== 'undefined' ? localStorage.getItem('bonolota_device_id') : null;
+        if (!deviceId && typeof window !== 'undefined') {
+          deviceId = `dev_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 8)}`;
+          localStorage.setItem('bonolota_device_id', deviceId);
+        }
+
+        const headers: Record<string, string> = {
+          ...(token ? { Authorization: `Bearer ${token}`, 'x-session-token': token } : {}),
+          ...(userKey ? { 'x-access-key': userKey } : {}),
+          ...(deviceId ? { 'x-device-id': deviceId } : {}),
+        };
+
+        const res = await fetch(`/api/support/unread-count?since=${lastSeen}`, {
+          headers,
+          credentials: 'include',
+        });
+        if (res.ok && active) {
+          const data = await res.json();
+          if (data.ok) {
+            setUnreadSupportCount(data.unreadCount || 0);
+          }
+        }
+      } catch {
+        // Silent background polling
+      }
+    };
+
+    checkUnreadSupport();
+    const interval = setInterval(checkUnreadSupport, 18000);
+
+    const handleSeenEvent = () => {
+      setUnreadSupportCount(0);
+    };
+    window.addEventListener('bonolota_support_seen', handleSeenEvent);
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+      window.removeEventListener('bonolota_support_seen', handleSeenEvent);
+    };
+  }, [auth.keyMasked]);
+
+  const handleOpenSupport = () => {
+    setUnreadSupportCount(0);
+    try {
+      localStorage.setItem('bonolota_last_seen_support_time', String(Date.now()));
+    } catch {}
+    setIsSupportModalOpen(true);
+  };
 
   // Feature 42: Frontend DRM & Anti-Copy Protection Handler
   useEffect(() => {
@@ -346,8 +407,9 @@ function MainApp() {
           onSelectTab={setCurrentTab}
           currentTab={currentTab}
           unreadAnnouncementsCount={broadcast.unreadCount}
+          unreadSupportCount={unreadSupportCount}
           onOpenAnnouncements={() => setIsBroadcastDrawerOpen(true)}
-          onOpenSupport={() => setIsSupportModalOpen(true)}
+          onOpenSupport={handleOpenSupport}
         />
 
         {/* MAIN BODY: Generous max-w-7xl width for multi-column grid layout */}

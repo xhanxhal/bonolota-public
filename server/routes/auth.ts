@@ -690,21 +690,28 @@ function sanitizeText(str: any, maxLen: number): string {
 }
 
 authRouter.post('/support/ticket', requireSupportUserSession, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   try {
     const license = req.license;
     const isGuest = Boolean(req.isGuest);
     const supportId = req.supportIdentifier || (license ? license.id : `guest_${req.guestId}`);
 
-    const { subject, message, customerName: bodyName } = req.body || {};
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || (license ? license.clientIp : 'Unknown');
 
+    // Anti-leak & Anti-flood Rate Limiting (max 20 messages per minute)
+    const rate = await storage.checkRateLimit(`support_rate:${clientIp}`, 20, 60);
+    if (!rate.allowed) {
+      res.status(429).json({ ok: false, message: 'অতিরিক্ত মেসেজ পাঠানো হয়েছে। কিছুক্ষণ পর চেষ্টা করুন।' });
+      return;
+    }
+
+    const { message, customerName: bodyName } = req.body || {};
     const cleanMessage = sanitizeText(message, 3000);
 
     if (!cleanMessage || cleanMessage.length < 1) {
       res.status(400).json({ ok: false, message: 'বার্তা বা প্রশ্নের বিবরণ ফাঁকা রাখা যাবে না।' });
       return;
     }
-
-    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || (license ? license.clientIp : 'Unknown');
 
     const senderDisplayName = (license ? license.customerName : null) || 
       (typeof bodyName === 'string' && bodyName.trim().length > 0 ? bodyName.trim().slice(0, 80) : null) || 
@@ -754,20 +761,30 @@ authRouter.post('/support/ticket', requireSupportUserSession, async (req: Authen
 
 // Student 1:1 Chat Reply into existing ticket thread
 authRouter.post('/support/ticket/:id/message', requireSupportUserSession, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   try {
     const license = req.license;
     const isGuest = Boolean(req.isGuest);
     const supportId = req.supportIdentifier || (license ? license.id : `guest_${req.guestId}`);
     const ticketId = req.params.id;
-    const { message, customerName: bodyName } = req.body || {};
 
+    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || (license ? license.clientIp : 'Unknown');
+
+    // Anti-leak & Anti-flood Rate Limiting
+    const rate = await storage.checkRateLimit(`support_rate:${clientIp}`, 20, 60);
+    if (!rate.allowed) {
+      res.status(429).json({ ok: false, message: 'অতিরিক্ত মেসেজ পাঠানো হয়েছে। কিছুক্ষণ পর চেষ্টা করুন।' });
+      return;
+    }
+
+    const { message, customerName: bodyName } = req.body || {};
     const cleanMessage = sanitizeText(message, 3000);
     if (!cleanMessage || cleanMessage.length < 1) {
       res.status(400).json({ ok: false, message: 'বার্তা ফাঁকা রাখা যাবে না।' });
       return;
     }
 
-    // STRICT 1:1 VERIFICATION: Ticket MUST belong to the user's support identifier
+    // STRICT 1:1 VERIFICATION (IDOR Shield): Ticket MUST belong to the user's support identifier
     const ticket = await storage.getSupportTicketById(ticketId);
     if (!ticket || ticket.licenseId !== supportId) {
       res.status(404).json({ ok: false, message: 'চ্যাট থ্রেড পাওয়া যায়নি।' });
@@ -797,8 +814,6 @@ authRouter.post('/support/ticket/:id/message', requireSupportUserSession, async 
       updatedAt: now,
     });
 
-    const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || (license ? license.clientIp : 'Unknown');
-
     sendTelegramAlert(
       `💬 <b>১:১ চ্যাটে নতুন রিপ্লাই!</b>\nব্যবহারকারী: <b>${senderDisplayName}</b>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>`
     ).catch(() => {});
@@ -810,12 +825,43 @@ authRouter.post('/support/ticket/:id/message', requireSupportUserSession, async 
   }
 });
 
-// Student fetch their own tickets (Strict 1:1 filter)
+// Student fetch their own tickets (Strict 1:1 filter + Anti-leak headers)
 authRouter.get('/support/my-tickets', requireSupportUserSession, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   try {
     const supportId = req.supportIdentifier || (req.license ? req.license.id : `guest_${req.guestId}`);
     const tickets = await storage.listSupportTicketsByLicense(supportId);
     res.json({ ok: true, tickets });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+// Lightweight unread reply counter for student header icon badge
+authRouter.get('/support/unread-count', requireSupportUserSession, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  try {
+    const supportId = req.supportIdentifier || (req.license ? req.license.id : `guest_${req.guestId}`);
+    const since = parseInt((req.query.since as string) || '0', 10) || 0;
+    const tickets = await storage.listSupportTicketsByLicense(supportId);
+    let unreadCount = 0;
+    let latestAdminReplyAt = 0;
+
+    for (const t of tickets) {
+      const messages = t.messages || [];
+      for (const m of messages) {
+        if (m.sender === 'admin') {
+          if (m.timestamp > latestAdminReplyAt) {
+            latestAdminReplyAt = m.timestamp;
+          }
+          if (m.timestamp > since) {
+            unreadCount++;
+          }
+        }
+      }
+    }
+
+    res.json({ ok: true, unreadCount, latestAdminReplyAt });
   } catch (error) {
     res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
   }

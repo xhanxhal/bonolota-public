@@ -33,15 +33,22 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
   const [errorNotice, setErrorNotice] = useState<string | null>(null);
   const [showThreadSelector, setShowThreadSelector] = useState(false);
 
+  const [draftRestored, setDraftRestored] = useState(false);
+  const consecutiveFailuresRef = useRef<number>(0);
+  const pollTimerRef = useRef<NodeJS.Timeout | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Helper to ensure tokens, keys, and device identifiers are passed for 1:1 security & persistence
   const getSupportHeaders = (): Record<string, string> => {
     try {
+      let deviceId = typeof window !== 'undefined' ? localStorage.getItem('bonolota_device_id') : null;
+      if (!deviceId && typeof window !== 'undefined') {
+        deviceId = `dev_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 8)}`;
+        localStorage.setItem('bonolota_device_id', deviceId);
+      }
       const token = typeof window !== 'undefined' ? localStorage.getItem('bonolota_user_token') : null;
       const userKey = typeof window !== 'undefined' ? (localStorage.getItem('bonolota_user_key') || keyMasked) : null;
-      const deviceId = typeof window !== 'undefined' ? localStorage.getItem('bonolota_device_id') : null;
       return {
         ...(token ? { Authorization: `Bearer ${token}`, 'x-session-token': token } : {}),
         ...(userKey ? { 'x-access-key': userKey } : {}),
@@ -52,7 +59,28 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
     }
   };
 
-  // Load tickets from server
+  // Schedule next polling cycle with exponential backoff (Item 2.3)
+  const scheduleNextPoll = (isError = false) => {
+    if (pollTimerRef.current) {
+      clearTimeout(pollTimerRef.current);
+      pollTimerRef.current = null;
+    }
+
+    let delay = 3500;
+    if (isError) {
+      consecutiveFailuresRef.current += 1;
+      // Exponential backoff: 3.5s -> 7s -> 12.6s (capped at 15s)
+      delay = Math.min(15000, Math.round(3500 * Math.pow(1.9, Math.min(consecutiveFailuresRef.current, 3))));
+    } else {
+      consecutiveFailuresRef.current = 0;
+    }
+
+    pollTimerRef.current = setTimeout(() => {
+      loadTickets(true);
+    }, delay);
+  };
+
+  // Load tickets from server with silent background reconnect
   const loadTickets = async (silent = false) => {
     if (!silent) setIsLoading(true);
     try {
@@ -70,9 +98,16 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
           const sorted = [...list].sort((a, b) => (b.updatedAt || b.createdAt) - (a.updatedAt || a.createdAt));
           setActiveTicketId(sorted[0].id);
         }
+
+        // Reset backoff on successful fetch
+        scheduleNextPoll(false);
+      } else {
+        // Backoff on non-ok status
+        scheduleNextPoll(true);
       }
     } catch {
-      // Ignore network errors in silent polling
+      // Silent exponential backoff on network dropouts without disturbing user
+      scheduleNextPoll(true);
     } finally {
       if (!silent) setIsLoading(false);
     }
@@ -80,18 +115,43 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
+      // Touch last seen timestamp & notify app to clear unread badge immediately
+      try {
+        localStorage.setItem('bonolota_last_seen_support_time', String(Date.now()));
+        window.dispatchEvent(new Event('bonolota_support_seen'));
+      } catch {}
+
+      // Restore typed draft from sessionStorage if present (Item 2.3)
+      try {
+        const savedDraft = sessionStorage.getItem('bonolota_support_draft');
+        if (savedDraft && savedDraft.trim() && !inputMessage) {
+          setInputMessage(savedDraft);
+          setDraftRestored(true);
+          setTimeout(() => setDraftRestored(false), 3000);
+        }
+      } catch {}
+
       loadTickets();
-      // Auto-poll for new messages every 3.5 seconds while chat box is open
-      const interval = setInterval(() => {
+
+      // Silent reconnect when internet connection is restored
+      const handleOnline = () => {
+        consecutiveFailuresRef.current = 0;
         loadTickets(true);
-      }, 3500);
+      };
+      window.addEventListener('online', handleOnline);
 
       // Focus input on open after a brief delay
       setTimeout(() => {
         textareaRef.current?.focus();
       }, 150);
 
-      return () => clearInterval(interval);
+      return () => {
+        if (pollTimerRef.current) {
+          clearTimeout(pollTimerRef.current);
+          pollTimerRef.current = null;
+        }
+        window.removeEventListener('online', handleOnline);
+      };
     }
   }, [isOpen]);
 
@@ -106,6 +166,14 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
   }, [activeTicket?.messages?.length, activeTicketId, isOpen]);
 
   if (!isOpen) return null;
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const val = e.target.value;
+    setInputMessage(val);
+    try {
+      sessionStorage.setItem('bonolota_support_draft', val);
+    } catch {}
+  };
 
   const handleSendMessage = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -135,10 +203,15 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
         });
         const data = await res.json();
         if (res.ok && data.ok) {
+          // Message sent successfully -> clear input and draft
           setInputMessage('');
+          try {
+            sessionStorage.removeItem('bonolota_support_draft');
+          } catch {}
           await loadTickets(true);
         } else {
-          setErrorNotice(data.message || 'মেসেজ পাঠানো সম্ভব হয়নি।');
+          // Preserve input draft on failure (Item 2.3)
+          setErrorNotice(data.message || 'মেসেজ পাঠানো সম্ভব হয়নি। আপনার ড্রাফট সুরক্ষিত আছে, আবার চেষ্টা করুন।');
         }
       } else {
         // First message: automatically create ticket and initiate conversation
@@ -157,16 +230,21 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
         const data = await res.json();
         if (res.ok && data.ok) {
           setInputMessage('');
+          try {
+            sessionStorage.removeItem('bonolota_support_draft');
+          } catch {}
           if (data.ticket?.id) {
             setActiveTicketId(data.ticket.id);
           }
           await loadTickets(true);
         } else {
-          setErrorNotice(data.message || 'মেসেজ পাঠানো সম্ভব হয়নি।');
+          // Preserve input draft on failure (Item 2.3)
+          setErrorNotice(data.message || 'মেসেজ পাঠানো সম্ভব হয়নি। আপনার ড্রাফট সুরক্ষিত আছে, আবার চেষ্টা করুন।');
         }
       }
     } catch {
-      setErrorNotice('নেটওয়ার্ক সংযোগে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+      // Network drop: do NOT wipe text, notify user gracefully (Item 2.3)
+      setErrorNotice('নেটওয়ার্ক সংযোগ বিচ্ছিন্ন। আপনার টাইপ করা বার্তা সুরক্ষিত আছে, পুনরায় পাঠান বাটনে চাপুন।');
     } finally {
       setIsSending(false);
     }
@@ -206,12 +284,6 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate flex items-center gap-1">
                 <span>{customerName || 'শিক্ষার্থী'}</span>
-                {keyMasked && (
-                  <>
-                    <span>•</span>
-                    <span className="opacity-75">{keyMasked}</span>
-                  </>
-                )}
               </p>
             </div>
           </div>
@@ -350,11 +422,17 @@ export const StudentSupportModal: React.FC<StudentSupportModalProps> = ({
         {/* DIRECT MESSAGE BOX (Bottom Area) */}
         <div className="p-3 sm:p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 shrink-0">
           <form onSubmit={handleSendMessage} className="space-y-1.5">
+            {draftRestored && (
+              <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 rounded-lg flex items-center gap-1.5 animate-fadeIn">
+                <Sparkles className="w-3 h-3 text-emerald-500" />
+                <span>পূর্বের না পাঠানো ড্রাফট বার্তা পুনরুদ্ধার করা হয়েছে</span>
+              </div>
+            )}
             <div className="relative flex items-end gap-2 bg-slate-50 dark:bg-[#070b14] border border-slate-300 dark:border-slate-700/90 rounded-2xl p-1.5 sm:p-2 focus-within:border-emerald-500 dark:focus-within:border-emerald-500 transition-colors shadow-xs">
               <textarea
                 ref={textareaRef}
                 value={inputMessage}
-                onChange={e => setInputMessage(e.target.value)}
+                onChange={handleMessageChange}
                 onKeyDown={handleKeyDown}
                 placeholder="এখানে সরাসরি আপনার বার্তা বা প্রশ্ন লিখুন..."
                 disabled={isSending}

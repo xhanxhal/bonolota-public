@@ -31,6 +31,7 @@ interface ModernHeaderProps {
   onSelectTab: (tab: NavTab) => void;
   currentTab: NavTab;
   unreadAnnouncementsCount?: number;
+  unreadSupportCount?: number;
   onOpenAnnouncements?: () => void;
   onOpenSupport?: () => void;
 }
@@ -43,6 +44,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   onSelectTab,
   currentTab,
   unreadAnnouncementsCount = 0,
+  unreadSupportCount = 0,
   onOpenAnnouncements,
   onOpenSupport,
 }) => {
@@ -411,7 +413,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
           )}
         </button>
 
-        {/* Student Support Button */}
+        {/* Student Support Button with Unread Reply Badge */}
         <button
           type="button"
           onClick={() => {
@@ -419,10 +421,15 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             onOpenSupport?.();
           }}
           aria-label="সহায়তা ও ১:১ চ্যাট"
-          title="মেসেঞ্জার ও ১:১ সহায়তা"
-          className="p-1.5 sm:p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-300 transition-all cursor-pointer shadow-xs shrink-0"
+          title={unreadSupportCount > 0 ? `নতুন ${unreadSupportCount}টি উত্তর এসেছে` : "মেসেঞ্জার ও ১:১ সহায়তা"}
+          className="relative p-1.5 sm:p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-300 transition-all cursor-pointer shadow-xs shrink-0"
         >
           <MessageSquare className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          {unreadSupportCount > 0 && (
+            <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-emerald-500 text-[9px] font-black text-white shadow-sm ring-2 ring-white dark:ring-slate-900 animate-pulse">
+              {unreadSupportCount > 9 ? '9+' : unreadSupportCount}
+            </span>
+          )}
         </button>
 
         {/* ALL SECTIONS / EXPLORE BUTTON (Direct Full Page Navigation - No Popup) */}
