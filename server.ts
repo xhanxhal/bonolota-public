@@ -4,9 +4,33 @@ import path from 'path';
 import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
 import { apiRouter } from './server/routes';
+import { storage } from './server/storage';
 
 // Load environment variables if available
 dotenv.config();
+
+// Schedule background auto-cleanup for 24h chat retention policy
+function setupChatAutoCleaner() {
+  storage.cleanupExpiredSupportTickets().then(count => {
+    if (count > 0) console.log(`[Support Auto-Cleaner] Purged ${count} expired chat(s) older than 24h.`);
+  }).catch(() => {});
+
+  // Run every 15 minutes
+  setInterval(() => {
+    storage.cleanupExpiredSupportTickets().then(count => {
+      if (count > 0) console.log(`[Support Auto-Cleaner] Purged ${count} expired chat(s) older than 24h.`);
+    }).catch(() => {});
+  }, 15 * 60 * 1000);
+
+  // Also purge any accidental announcement reply popups from legacy replies
+  storage.listAnnouncements().then(list => {
+    list.filter(a => a.id.startsWith('anno_reply_') || a.title.includes('সাপোর্ট উত্তর')).forEach(a => {
+      storage.deleteAnnouncement(a.id).catch(() => {});
+    });
+  }).catch(() => {});
+}
+
+setupChatAutoCleaner();
 
 export async function createExpressApp() {
   const app = express();

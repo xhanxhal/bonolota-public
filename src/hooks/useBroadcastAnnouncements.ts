@@ -93,6 +93,8 @@ export function useBroadcastAnnouncements(userKey?: string) {
   const filterForUser = useCallback((items: BroadcastAnnouncement[]): BroadcastAnnouncement[] => {
     const deletedSet = getStoredIds(DELETED_ANNOUNCEMENTS_KEY);
     return items.filter(item => {
+      // Support replies must never appear as broadcast notification popups
+      if (item.id.startsWith('anno_reply_') || item.title.includes('সাপোর্ট উত্তর')) return false;
       if (deletedSet.has(item.id)) return false;
       if (!item.active) return false;
       if (item.targetKey && item.targetKey.trim().length > 0) {

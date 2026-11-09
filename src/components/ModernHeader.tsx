@@ -16,7 +16,8 @@ import {
   BarChart2,
   ChevronRight,
   Grid,
-  Bell
+  Bell,
+  MessageSquare
 } from 'lucide-react';
 import { UserSettings, LearningStats } from '../data/types';
 import { NavTab } from './Navbar';
@@ -417,11 +418,11 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             haptics.tap();
             onOpenSupport?.();
           }}
-          aria-label="সহায়তা ও সাপোর্ট ইনবক্স"
-          title="সহায়তা ও সাপোর্ট ইনবক্স"
-          className="p-1.5 sm:p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-300 transition-all cursor-pointer shadow-xs shrink-0"
+          aria-label="সহায়তা ও ১:১ চ্যাট"
+          title="মেসেঞ্জার ও ১:১ সহায়তা"
+          className="p-1.5 sm:p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-300 transition-all cursor-pointer shadow-xs shrink-0"
         >
-          <HelpCircle className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+          <MessageSquare className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
         </button>
 
         {/* ALL SECTIONS / EXPLORE BUTTON (Direct Full Page Navigation - No Popup) */}

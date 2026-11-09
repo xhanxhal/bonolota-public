@@ -309,7 +309,21 @@ class InMemoryStorage {
     return fullTicket;
   }
 
+  cleanupExpiredSupportTickets(): number {
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+    let purged = 0;
+    for (const [id, ticket] of this.supportTickets.entries()) {
+      const lastActive = ticket.updatedAt || ticket.createdAt;
+      if (lastActive < cutoff) {
+        this.supportTickets.delete(id);
+        purged++;
+      }
+    }
+    return purged;
+  }
+
   async listSupportTickets(): Promise<SupportTicket[]> {
+    this.cleanupExpiredSupportTickets();
     return Array.from(this.supportTickets.values())
       .map(t => normalizeTicketMessages(t))
       .sort((a, b) => b.updatedAt - a.updatedAt);
@@ -317,7 +331,13 @@ class InMemoryStorage {
 
   async getSupportTicketById(id: string): Promise<SupportTicket | null> {
     const t = this.supportTickets.get(id);
-    return t ? normalizeTicketMessages(t) : null;
+    if (!t) return null;
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+    if ((t.updatedAt || t.createdAt) < cutoff) {
+      this.supportTickets.delete(id);
+      return null;
+    }
+    return normalizeTicketMessages(t);
   }
 
   async updateSupportTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket | null> {
@@ -348,10 +368,11 @@ class InMemoryStorage {
   }
 
   async listSupportTicketsByLicense(licenseId: string): Promise<SupportTicket[]> {
+    this.cleanupExpiredSupportTickets();
     return Array.from(this.supportTickets.values())
       .filter(t => t.licenseId === licenseId)
       .map(t => normalizeTicketMessages(t))
-      .sort((a, b) => b.createdAt - a.createdAt);
+      .sort((a, b) => (b.updatedAt || b.createdAt) - (a.updatedAt || a.createdAt));
   }
 
   // Student Actions Timeline
@@ -783,18 +804,61 @@ class UpstashStorage {
     return fullTicket;
   }
 
+  async cleanupExpiredSupportTickets(): Promise<number> {
+    try {
+      const ids = await this.redis.smembers('support:all_ids');
+      if (!ids || ids.length === 0) return 0;
+      const keys = ids.map(id => `support:tkt:${id}`);
+      const records = await this.redis.mget<Array<string | SupportTicket>>(...keys);
+      const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+      let purged = 0;
+      for (let i = 0; i < ids.length; i++) {
+        const id = ids[i];
+        const r = records[i];
+        if (!r) {
+          await this.redis.srem('support:all_ids', id);
+          continue;
+        }
+        try {
+          const parsed: SupportTicket = typeof r === 'string' ? JSON.parse(r) : r;
+          const lastActive = parsed.updatedAt || parsed.createdAt;
+          if (lastActive < cutoff) {
+            await this.deleteSupportTicket(id);
+            purged++;
+          }
+        } catch {
+          await this.redis.srem('support:all_ids', id);
+        }
+      }
+      return purged;
+    } catch (e) {
+      console.error('[Upstash] cleanupExpiredSupportTickets error:', e);
+      return 0;
+    }
+  }
+
   async listSupportTickets(): Promise<SupportTicket[]> {
     const ids = await this.redis.smembers('support:all_ids');
     if (!ids || ids.length === 0) return [];
     const keys = ids.map(id => `support:tkt:${id}`);
     const records = await this.redis.mget<Array<string | SupportTicket>>(...keys);
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
     const results: SupportTicket[] = [];
-    for (const r of records) {
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const r = records[i];
       if (r) {
         try {
           const parsed = typeof r === 'string' ? JSON.parse(r) : r;
-          results.push(normalizeTicketMessages(parsed));
+          const lastActive = parsed.updatedAt || parsed.createdAt;
+          if (lastActive < cutoff) {
+            this.deleteSupportTicket(id).catch(() => {});
+          } else {
+            results.push(normalizeTicketMessages(parsed));
+          }
         } catch {}
+      } else {
+        this.redis.srem('support:all_ids', id).catch(() => {});
       }
     }
     return results.sort((a, b) => b.updatedAt - a.updatedAt);
@@ -804,6 +868,11 @@ class UpstashStorage {
     const raw = await this.redis.get<string | SupportTicket>(`support:tkt:${id}`);
     if (!raw) return null;
     const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+    if ((parsed.updatedAt || parsed.createdAt) < cutoff) {
+      this.deleteSupportTicket(id).catch(() => {});
+      return null;
+    }
     return normalizeTicketMessages(parsed);
   }
 
@@ -846,16 +915,26 @@ class UpstashStorage {
     if (!ids || ids.length === 0) return [];
     const keys = ids.map(id => `support:tkt:${id}`);
     const records = await this.redis.mget<Array<string | SupportTicket>>(...keys);
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
     const results: SupportTicket[] = [];
-    for (const r of records) {
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const r = records[i];
       if (r) {
         try {
           const parsed = typeof r === 'string' ? JSON.parse(r) : r;
-          results.push(normalizeTicketMessages(parsed));
+          const lastActive = parsed.updatedAt || parsed.createdAt;
+          if (lastActive < cutoff) {
+            this.deleteSupportTicket(id).catch(() => {});
+          } else {
+            results.push(normalizeTicketMessages(parsed));
+          }
         } catch {}
+      } else {
+        this.redis.srem(`support:lic:${licenseId}`, id).catch(() => {});
       }
     }
-    return results.sort((a, b) => b.createdAt - a.createdAt);
+    return results.sort((a, b) => (b.updatedAt || b.createdAt) - (a.updatedAt || a.createdAt));
   }
 
   // Student Actions
@@ -1323,6 +1402,15 @@ export const storage = {
       console.error('[Storage Error] Upstash deleteSupportMessage failed:', err);
     }
     return inMemoryInstance.deleteSupportMessage(ticketId, messageId);
+  },
+
+  async cleanupExpiredSupportTickets(): Promise<number> {
+    try {
+      if (upstashInstance) return await upstashInstance.cleanupExpiredSupportTickets();
+    } catch (err) {
+      console.error('[Storage Error] Upstash cleanupExpiredSupportTickets failed:', err);
+    }
+    return inMemoryInstance.cleanupExpiredSupportTickets();
   },
 
   // Student Actions

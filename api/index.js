@@ -30575,12 +30575,31 @@ var InMemoryStorage = class {
     this.supportTickets.set(fullTicket.id, fullTicket);
     return fullTicket;
   }
+  cleanupExpiredSupportTickets() {
+    const cutoff = Date.now() - 24 * 60 * 60 * 1e3;
+    let purged = 0;
+    for (const [id, ticket] of this.supportTickets.entries()) {
+      const lastActive = ticket.updatedAt || ticket.createdAt;
+      if (lastActive < cutoff) {
+        this.supportTickets.delete(id);
+        purged++;
+      }
+    }
+    return purged;
+  }
   async listSupportTickets() {
+    this.cleanupExpiredSupportTickets();
     return Array.from(this.supportTickets.values()).map((t) => normalizeTicketMessages(t)).sort((a, b) => b.updatedAt - a.updatedAt);
   }
   async getSupportTicketById(id) {
     const t = this.supportTickets.get(id);
-    return t ? normalizeTicketMessages(t) : null;
+    if (!t) return null;
+    const cutoff = Date.now() - 24 * 60 * 60 * 1e3;
+    if ((t.updatedAt || t.createdAt) < cutoff) {
+      this.supportTickets.delete(id);
+      return null;
+    }
+    return normalizeTicketMessages(t);
   }
   async updateSupportTicket(id, updates) {
     const existing = this.supportTickets.get(id);
@@ -30607,7 +30626,8 @@ var InMemoryStorage = class {
     return normalized;
   }
   async listSupportTicketsByLicense(licenseId) {
-    return Array.from(this.supportTickets.values()).filter((t) => t.licenseId === licenseId).map((t) => normalizeTicketMessages(t)).sort((a, b) => b.createdAt - a.createdAt);
+    this.cleanupExpiredSupportTickets();
+    return Array.from(this.supportTickets.values()).filter((t) => t.licenseId === licenseId).map((t) => normalizeTicketMessages(t)).sort((a, b) => (b.updatedAt || b.createdAt) - (a.updatedAt || a.createdAt));
   }
   // Student Actions Timeline
   async addStudentAction(action) {
@@ -30983,19 +31003,63 @@ var UpstashStorage = class {
     await pipeline.exec();
     return fullTicket;
   }
+  async cleanupExpiredSupportTickets() {
+    try {
+      const ids = await this.redis.smembers("support:all_ids");
+      if (!ids || ids.length === 0) return 0;
+      const keys = ids.map((id) => `support:tkt:${id}`);
+      const records = await this.redis.mget(...keys);
+      const cutoff = Date.now() - 24 * 60 * 60 * 1e3;
+      let purged = 0;
+      for (let i = 0; i < ids.length; i++) {
+        const id = ids[i];
+        const r = records[i];
+        if (!r) {
+          await this.redis.srem("support:all_ids", id);
+          continue;
+        }
+        try {
+          const parsed = typeof r === "string" ? JSON.parse(r) : r;
+          const lastActive = parsed.updatedAt || parsed.createdAt;
+          if (lastActive < cutoff) {
+            await this.deleteSupportTicket(id);
+            purged++;
+          }
+        } catch {
+          await this.redis.srem("support:all_ids", id);
+        }
+      }
+      return purged;
+    } catch (e) {
+      console.error("[Upstash] cleanupExpiredSupportTickets error:", e);
+      return 0;
+    }
+  }
   async listSupportTickets() {
     const ids = await this.redis.smembers("support:all_ids");
     if (!ids || ids.length === 0) return [];
     const keys = ids.map((id) => `support:tkt:${id}`);
     const records = await this.redis.mget(...keys);
+    const cutoff = Date.now() - 24 * 60 * 60 * 1e3;
     const results = [];
-    for (const r of records) {
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const r = records[i];
       if (r) {
         try {
           const parsed = typeof r === "string" ? JSON.parse(r) : r;
-          results.push(normalizeTicketMessages(parsed));
+          const lastActive = parsed.updatedAt || parsed.createdAt;
+          if (lastActive < cutoff) {
+            this.deleteSupportTicket(id).catch(() => {
+            });
+          } else {
+            results.push(normalizeTicketMessages(parsed));
+          }
         } catch {
         }
+      } else {
+        this.redis.srem("support:all_ids", id).catch(() => {
+        });
       }
     }
     return results.sort((a, b) => b.updatedAt - a.updatedAt);
@@ -31004,6 +31068,12 @@ var UpstashStorage = class {
     const raw = await this.redis.get(`support:tkt:${id}`);
     if (!raw) return null;
     const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+    const cutoff = Date.now() - 24 * 60 * 60 * 1e3;
+    if ((parsed.updatedAt || parsed.createdAt) < cutoff) {
+      this.deleteSupportTicket(id).catch(() => {
+      });
+      return null;
+    }
     return normalizeTicketMessages(parsed);
   }
   async updateSupportTicket(id, updates) {
@@ -31042,17 +31112,29 @@ var UpstashStorage = class {
     if (!ids || ids.length === 0) return [];
     const keys = ids.map((id) => `support:tkt:${id}`);
     const records = await this.redis.mget(...keys);
+    const cutoff = Date.now() - 24 * 60 * 60 * 1e3;
     const results = [];
-    for (const r of records) {
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const r = records[i];
       if (r) {
         try {
           const parsed = typeof r === "string" ? JSON.parse(r) : r;
-          results.push(normalizeTicketMessages(parsed));
+          const lastActive = parsed.updatedAt || parsed.createdAt;
+          if (lastActive < cutoff) {
+            this.deleteSupportTicket(id).catch(() => {
+            });
+          } else {
+            results.push(normalizeTicketMessages(parsed));
+          }
         } catch {
         }
+      } else {
+        this.redis.srem(`support:lic:${licenseId}`, id).catch(() => {
+        });
       }
     }
-    return results.sort((a, b) => b.createdAt - a.createdAt);
+    return results.sort((a, b) => (b.updatedAt || b.createdAt) - (a.updatedAt || a.createdAt));
   }
   // Student Actions
   async addStudentAction(action) {
@@ -31464,6 +31546,14 @@ var storage = {
     }
     return inMemoryInstance.deleteSupportMessage(ticketId, messageId);
   },
+  async cleanupExpiredSupportTickets() {
+    try {
+      if (upstashInstance) return await upstashInstance.cleanupExpiredSupportTickets();
+    } catch (err) {
+      console.error("[Storage Error] Upstash cleanupExpiredSupportTickets failed:", err);
+    }
+    return inMemoryInstance.cleanupExpiredSupportTickets();
+  },
   // Student Actions
   async addStudentAction(action) {
     try {
@@ -31731,6 +31821,7 @@ function parseUserAgentDetailed(ua) {
 // server/auth.ts
 var USER_COOKIE_NAME = "bonolota_user_session";
 var ADMIN_COOKIE_NAME = "bonolota_admin_session";
+var GUEST_COOKIE_NAME = "bonolota_guest_id";
 function getCookieOptions(req) {
   const isProd = process.env.NODE_ENV === "production";
   const isHttps = req ? req.secure || req.headers["x-forwarded-proto"] === "https" : isProd;
@@ -31815,6 +31906,67 @@ async function requireCustomerAuth(req, res, next) {
   } catch (error) {
     console.error("[requireCustomerAuth] Error validating customer session:", error);
     res.status(500).json({ ok: false, error: "SERVER_ERROR", message: "An error occurred while validating license." });
+  }
+}
+async function requireSupportUserSession(req, res, next) {
+  try {
+    const authHeader = req.headers.authorization;
+    const bearerToken = typeof authHeader === "string" && authHeader.startsWith("Bearer ") ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const headerToken = req.headers["x-session-token"];
+    const rawToken = typeof cookieToken === "string" && cookieToken.length >= 16 ? cookieToken : bearerToken && bearerToken.length >= 16 ? bearerToken : typeof headerToken === "string" && headerToken.length >= 16 ? headerToken : null;
+    if (rawToken && typeof rawToken === "string") {
+      const sessionHash = hashSessionToken(rawToken);
+      if (sessionHash) {
+        const sessionData = await storage.getUserSession(sessionHash);
+        if (sessionData && Date.now() <= sessionData.expiresAt) {
+          const license = await storage.getLicenseById(sessionData.licenseId);
+          if (license && license.status !== "revoked") {
+            req.license = license;
+            req.userSession = sessionData;
+            req.supportIdentifier = license.id;
+            next();
+            return;
+          }
+        }
+      }
+    }
+    const headerKey = req.headers["x-access-key"];
+    if (typeof headerKey === "string" && headerKey.trim().length >= 8) {
+      const cleanKey = headerKey.trim().toUpperCase();
+      const allLicenses = await storage.listLicenses();
+      const matched = allLicenses.find(
+        (l) => l.plaintextKey && l.plaintextKey.toUpperCase() === cleanKey || l.keyMasked && l.keyMasked.toUpperCase() === cleanKey
+      );
+      if (matched && matched.status !== "revoked") {
+        req.license = matched;
+        req.supportIdentifier = matched.id;
+        next();
+        return;
+      }
+    }
+    const clientDeviceId = typeof req.headers["x-device-id"] === "string" && req.headers["x-device-id"].trim().length > 0 ? req.headers["x-device-id"].trim() : null;
+    const cookieGuestId = req.cookies?.[GUEST_COOKIE_NAME];
+    let guestId = cookieGuestId || clientDeviceId;
+    if (!guestId || typeof guestId !== "string" || guestId.length < 6) {
+      guestId = `gst_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 8)}`;
+      res.cookie(GUEST_COOKIE_NAME, guestId, {
+        ...getCookieOptions(req),
+        maxAge: 365 * 24 * 60 * 60 * 1e3
+        // 1 year persistence for guest support thread
+      });
+    }
+    req.isGuest = true;
+    req.guestId = guestId;
+    req.supportIdentifier = `guest_${guestId}`;
+    next();
+  } catch (error) {
+    console.error("[requireSupportUserSession] Error in support session handler:", error);
+    const fallbackId = `gst_${Date.now().toString(36)}`;
+    req.isGuest = true;
+    req.guestId = fallbackId;
+    req.supportIdentifier = `guest_${fallbackId}`;
+    next();
   }
 }
 async function requireAdminAuth(req, res, next) {
@@ -32081,8 +32233,17 @@ authRouter.post("/activate", async (req, res) => {
         }
         const isLifetime2 = Boolean(license.isLifetime || license.durationDays >= 36500);
         const daysLeft2 = isLifetime2 ? 99999 : Math.max(0, Math.ceil((license.expiresAt - now) / (1e3 * 60 * 60 * 24)));
+        const activeToken = bearerToken || existingCookieToken || req.headers["x-session-token"] || "";
+        if (activeToken) {
+          res.cookie(USER_COOKIE_NAME, activeToken, {
+            ...getCookieOptions(req),
+            maxAge: Math.max(0, license.expiresAt - now)
+          });
+        }
         res.json({
           ok: true,
+          token: activeToken,
+          sessionToken: activeToken,
           expiresAt: license.expiresAt,
           daysLeft: daysLeft2,
           isLifetime: isLifetime2,
@@ -32494,44 +32655,42 @@ function sanitizeText(str, maxLen) {
   if (typeof str !== "string") return "";
   return str.trim().slice(0, maxLen).replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
-authRouter.post("/support/ticket", requireCustomerAuth, async (req, res) => {
+authRouter.post("/support/ticket", requireSupportUserSession, async (req, res) => {
   try {
     const license = req.license;
-    const { subject, message } = req.body || {};
-    const cleanSubject = sanitizeText(subject, 150);
+    const isGuest = Boolean(req.isGuest);
+    const supportId = req.supportIdentifier || (license ? license.id : `guest_${req.guestId}`);
+    const { subject, message, customerName: bodyName } = req.body || {};
     const cleanMessage = sanitizeText(message, 3e3);
-    if (!cleanSubject || cleanSubject.length < 2) {
-      res.status(400).json({ ok: false, message: "\u09B8\u09AE\u09B8\u09CD\u09AF\u09BE\u09B0 \u09AC\u09BF\u09B7\u09DF \u0995\u09AE\u09AA\u0995\u09CD\u09B7\u09C7 \u09E8 \u0985\u0995\u09CD\u09B7\u09B0\u09C7\u09B0 \u09B9\u09A4\u09C7 \u09B9\u09AC\u09C7\u0964" });
-      return;
-    }
     if (!cleanMessage || cleanMessage.length < 1) {
       res.status(400).json({ ok: false, message: "\u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u09AC\u09BE \u09AA\u09CD\u09B0\u09B6\u09CD\u09A8\u09C7\u09B0 \u09AC\u09BF\u09AC\u09B0\u09A3 \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" });
       return;
     }
-    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || license.clientIp;
+    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || (license ? license.clientIp : "Unknown");
+    const senderDisplayName = (license ? license.customerName : null) || (typeof bodyName === "string" && bodyName.trim().length > 0 ? bodyName.trim().slice(0, 80) : null) || (isGuest ? "\u09AD\u09BF\u099C\u09BF\u099F\u09B0 / \u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0" : "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0");
+    const keyLabel = license ? license.keyMasked : "\u0985\u09A8\u09BF\u09AC\u09A8\u09CD\u09A7\u09BF\u09A4";
     const now = Date.now();
     const initialMessage = {
       id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
       sender: "customer",
-      senderName: license.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+      senderName: senderDisplayName,
       text: cleanMessage,
       timestamp: now
     };
     const ticket = await storage.createSupportTicket({
-      licenseId: license.id,
-      keyMasked: license.keyMasked,
-      customerName: license.customerName,
-      subject: cleanSubject,
+      licenseId: supportId,
+      keyMasked: keyLabel,
+      customerName: senderDisplayName,
+      subject: "\u09E7:\u09E7 \u09B8\u09B0\u09BE\u09B8\u09B0\u09BF \u099A\u09CD\u09AF\u09BE\u099F",
       message: cleanMessage,
       messages: [initialMessage],
       clientIp,
-      clientDevice: license.deviceInfo
+      clientDevice: license ? license.deviceInfo : req.headers["user-agent"]?.slice(0, 100) || "Web Browser"
     });
     sendTelegramAlert(
-      `\u{1F4E9} <b>\u09A8\u09A4\u09C1\u09A8 \u09B8\u09CD\u099F\u09C1\u09A1\u09C7\u09A8\u09CD\u099F \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u099A\u09CD\u09AF\u09BE\u099F!</b>
-\u099B\u09BE\u09A4\u09CD\u09B0: <b>${license.customerName || "Unknown"}</b>
-\u0995\u09C0: <code>${license.keyMasked}</code>
-\u09AC\u09BF\u09B7\u09DF: <b>${cleanSubject}</b>
+      `\u{1F4E9} <b>\u09A8\u09A4\u09C1\u09A8 \u09B8\u09B0\u09BE\u09B8\u09B0\u09BF \u09AE\u09C7\u09B8\u09C7\u099C!</b>
+\u09AC\u09CD\u09AF\u09AC\u09B9\u09BE\u09B0\u0995\u09BE\u09B0\u09C0: <b>${senderDisplayName}</b>
+\u0995\u09C0: <code>${keyLabel}</code>
 \u09AE\u09C7\u09B8\u09C7\u099C: <i>${cleanMessage.slice(0, 300)}</i>
 \u0986\u0987\u09AA\u09BF: <code>${clientIp}</code>`
     ).catch(() => {
@@ -32539,36 +32698,39 @@ authRouter.post("/support/ticket", requireCustomerAuth, async (req, res) => {
     await storage.addSecurityEvent({
       level: "info",
       source: "AUTH",
-      message: `\u09A8\u09A4\u09C1\u09A8 \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u099A\u09CD\u09AF\u09BE\u099F \u09B6\u09C1\u09B0\u09C1: "${cleanSubject}" (${license.keyMasked})`,
+      message: `\u09A8\u09A4\u09C1\u09A8 \u09B8\u09B0\u09BE\u09B8\u09B0\u09BF \u09AE\u09C7\u09B8\u09C7\u099C: ${senderDisplayName} (${keyLabel})`,
       ip: clientIp,
-      keyMasked: license.keyMasked
+      keyMasked: keyLabel
     });
-    res.json({ ok: true, ticket, message: "\u0986\u09AA\u09A8\u09BE\u09B0 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE\u099F\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09AA\u09BE\u09A0\u09BE\u09A8\u09CB \u09B9\u09DF\u09C7\u099B\u09C7\u0964 \u0985\u09CD\u09AF\u09BE\u09A1\u09AE\u09BF\u09A8 \u09B6\u09C0\u0998\u09CD\u09B0\u0987 \u0989\u09A4\u09CD\u09A4\u09B0 \u09A6\u09C7\u09AC\u09C7\u09A8\u0964" });
+    res.json({ ok: true, ticket, message: "\u0986\u09AA\u09A8\u09BE\u09B0 \u09AC\u09BE\u09B0\u09CD\u09A4\u09BE\u099F\u09BF \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09AA\u09BE\u09A0\u09BE\u09A8\u09CB \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
   } catch (error) {
     console.error("[support/ticket] Error:", error);
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
 });
-authRouter.post("/support/ticket/:id/message", requireCustomerAuth, async (req, res) => {
+authRouter.post("/support/ticket/:id/message", requireSupportUserSession, async (req, res) => {
   try {
     const license = req.license;
+    const isGuest = Boolean(req.isGuest);
+    const supportId = req.supportIdentifier || (license ? license.id : `guest_${req.guestId}`);
     const ticketId = req.params.id;
-    const { message } = req.body || {};
+    const { message, customerName: bodyName } = req.body || {};
     const cleanMessage = sanitizeText(message, 3e3);
     if (!cleanMessage || cleanMessage.length < 1) {
       res.status(400).json({ ok: false, message: "\u09AC\u09BE\u09B0\u09CD\u09A4\u09BE \u09AB\u09BE\u0981\u0995\u09BE \u09B0\u09BE\u0996\u09BE \u09AF\u09BE\u09AC\u09C7 \u09A8\u09BE\u0964" });
       return;
     }
     const ticket = await storage.getSupportTicketById(ticketId);
-    if (!ticket || ticket.licenseId !== license.id) {
+    if (!ticket || ticket.licenseId !== supportId) {
       res.status(404).json({ ok: false, message: "\u099A\u09CD\u09AF\u09BE\u099F \u09A5\u09CD\u09B0\u09C7\u09A1 \u09AA\u09BE\u0993\u09DF\u09BE \u09AF\u09BE\u09DF\u09A8\u09BF\u0964" });
       return;
     }
+    const senderDisplayName = (license ? license.customerName : null) || (typeof bodyName === "string" && bodyName.trim().length > 0 ? bodyName.trim().slice(0, 80) : null) || ticket.customerName || (isGuest ? "\u09AD\u09BF\u099C\u09BF\u099F\u09B0" : "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0");
     const now = Date.now();
     const newMsg = {
       id: `msg_${now}_${Math.random().toString(36).substring(2, 6)}`,
       sender: "customer",
-      senderName: license.customerName || "\u09B6\u09BF\u0995\u09CD\u09B7\u09BE\u09B0\u09CD\u09A5\u09C0",
+      senderName: senderDisplayName,
       text: cleanMessage,
       timestamp: now
     };
@@ -32580,11 +32742,10 @@ authRouter.post("/support/ticket/:id/message", requireCustomerAuth, async (req, 
       // Mark open so admin sees unread message
       updatedAt: now
     });
-    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || license.clientIp;
+    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || (license ? license.clientIp : "Unknown");
     sendTelegramAlert(
-      `\u{1F4AC} <b>\u09B8\u09CD\u099F\u09C1\u09A1\u09C7\u09A8\u09CD\u099F \u09A8\u09A4\u09C1\u09A8 \u09B0\u09BF\u09AA\u09CD\u09B2\u09BE\u0987 \u09A6\u09BF\u09DF\u09C7\u099B\u09C7!</b>
-\u099B\u09BE\u09A4\u09CD\u09B0: <b>${license.customerName || "Unknown"}</b>
-\u09AC\u09BF\u09B7\u09DF: <b>${ticket.subject}</b>
+      `\u{1F4AC} <b>\u09E7:\u09E7 \u099A\u09CD\u09AF\u09BE\u099F\u09C7 \u09A8\u09A4\u09C1\u09A8 \u09B0\u09BF\u09AA\u09CD\u09B2\u09BE\u0987!</b>
+\u09AC\u09CD\u09AF\u09AC\u09B9\u09BE\u09B0\u0995\u09BE\u09B0\u09C0: <b>${senderDisplayName}</b>
 \u09AE\u09C7\u09B8\u09C7\u099C: <i>${cleanMessage.slice(0, 300)}</i>`
     ).catch(() => {
     });
@@ -32594,10 +32755,10 @@ authRouter.post("/support/ticket/:id/message", requireCustomerAuth, async (req, 
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
 });
-authRouter.get("/support/my-tickets", requireCustomerAuth, async (req, res) => {
+authRouter.get("/support/my-tickets", requireSupportUserSession, async (req, res) => {
   try {
-    const license = req.license;
-    const tickets = await storage.listSupportTicketsByLicense(license.id);
+    const supportId = req.supportIdentifier || (req.license ? req.license.id : `guest_${req.guestId}`);
+    const tickets = await storage.listSupportTicketsByLicense(supportId);
     res.json({ ok: true, tickets });
   } catch (error) {
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
@@ -33463,18 +33624,6 @@ adminRouter.post("/support/reply", requireAdminAuth, async (req, res) => {
       status: markResolved ? "resolved" : "replied",
       messages: updatedMessages
     });
-    await storage.createAnnouncement({
-      id: `anno_reply_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      title: `\u{1F4E9} \u09B8\u09BE\u09AA\u09CB\u09B0\u09CD\u099F \u0989\u09A4\u09CD\u09A4\u09B0: ${ticket.subject}`,
-      message: cleanReply,
-      type: "info",
-      priority: "high",
-      displayStyle: "center_modal",
-      targetKey: ticket.keyMasked,
-      createdAt: Date.now(),
-      active: true,
-      author: "Bonolota Support"
-    });
     res.json({ ok: true, ticket: updated, message: "\u0989\u09A4\u09CD\u09A4\u09B0 \u09B8\u09AB\u09B2\u09AD\u09BE\u09AC\u09C7 \u09AA\u09BE\u09A0\u09BE\u09A8\u09CB \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
   } catch (error) {
     res.status(500).json({ ok: false, error: "SERVER_ERROR" });
@@ -33493,7 +33642,7 @@ var handleDeleteSupportTicket = async (req, res) => {
       id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
       action: "delete_support_chat",
-      details: `Deleted support chat: "${ticket.subject}" (${ticket.keyMasked}) from both sides.`
+      details: `Deleted support chat with ${ticket.customerName || "student"} (${ticket.keyMasked}) from both sides.`
     });
     res.json({ ok: true, message: "\u099A\u09CD\u09AF\u09BE\u099F\u099F\u09BF \u0989\u09AD\u09DF\u09AA\u09BE\u09B6 \u09A5\u09C7\u0995\u09C7\u0987 \u09B8\u09CD\u09A5\u09BE\u09DF\u09C0\u09AD\u09BE\u09AC\u09C7 \u09AE\u09C1\u099B\u09C7 \u09AB\u09C7\u09B2\u09BE \u09B9\u09DF\u09C7\u099B\u09C7\u0964" });
   } catch (error) {

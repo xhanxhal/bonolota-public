@@ -5,10 +5,14 @@ import { LicenseRecord, UserSessionData, AdminSessionData } from './types';
 
 export const USER_COOKIE_NAME = 'bonolota_user_session';
 export const ADMIN_COOKIE_NAME = 'bonolota_admin_session';
+export const GUEST_COOKIE_NAME = 'bonolota_guest_id';
 
 export interface AuthenticatedUserRequest extends Request {
   license?: LicenseRecord;
   userSession?: UserSessionData;
+  isGuest?: boolean;
+  guestId?: string;
+  supportIdentifier?: string;
 }
 
 export interface AuthenticatedAdminRequest extends Request {
@@ -128,6 +132,91 @@ export async function requireCustomerAuth(
   } catch (error) {
     console.error('[requireCustomerAuth] Error validating customer session:', error);
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'An error occurred while validating license.' });
+  }
+}
+
+/**
+ * Middleware: Flexible Customer OR Guest Support Session
+ * Allows active students (with license) and visitors/unauthenticated students to reach support 1:1 safely.
+ */
+export async function requireSupportUserSession(
+  req: AuthenticatedUserRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const authHeader = req.headers.authorization;
+    const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.substring(7).trim() : null;
+    const cookieToken = req.cookies?.[USER_COOKIE_NAME];
+    const headerToken = req.headers['x-session-token'];
+    const rawToken = (typeof cookieToken === 'string' && cookieToken.length >= 16) 
+      ? cookieToken 
+      : (bearerToken && bearerToken.length >= 16) 
+        ? bearerToken 
+        : (typeof headerToken === 'string' && headerToken.length >= 16) 
+          ? headerToken 
+          : null;
+
+    if (rawToken && typeof rawToken === 'string') {
+      const sessionHash = hashSessionToken(rawToken);
+      if (sessionHash) {
+        const sessionData = await storage.getUserSession(sessionHash);
+        if (sessionData && Date.now() <= sessionData.expiresAt) {
+          const license = await storage.getLicenseById(sessionData.licenseId);
+          if (license && license.status !== 'revoked') {
+            req.license = license;
+            req.userSession = sessionData;
+            req.supportIdentifier = license.id;
+            next();
+            return;
+          }
+        }
+      }
+    }
+
+    // Check if x-access-key was provided
+    const headerKey = req.headers['x-access-key'];
+    if (typeof headerKey === 'string' && headerKey.trim().length >= 8) {
+      const cleanKey = headerKey.trim().toUpperCase();
+      const allLicenses = await storage.listLicenses();
+      const matched = allLicenses.find(l => 
+        (l.plaintextKey && l.plaintextKey.toUpperCase() === cleanKey) || 
+        (l.keyMasked && l.keyMasked.toUpperCase() === cleanKey)
+      );
+      if (matched && matched.status !== 'revoked') {
+        req.license = matched;
+        req.supportIdentifier = matched.id;
+        next();
+        return;
+      }
+    }
+
+    // Fallback: Guest support session based on persistent guest cookie or client device ID
+    const clientDeviceId = (typeof req.headers['x-device-id'] === 'string' && req.headers['x-device-id'].trim().length > 0)
+      ? req.headers['x-device-id'].trim()
+      : null;
+    const cookieGuestId = req.cookies?.[GUEST_COOKIE_NAME];
+    
+    let guestId = cookieGuestId || clientDeviceId;
+    if (!guestId || typeof guestId !== 'string' || guestId.length < 6) {
+      guestId = `gst_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 8)}`;
+      res.cookie(GUEST_COOKIE_NAME, guestId, {
+        ...getCookieOptions(req),
+        maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year persistence for guest support thread
+      });
+    }
+
+    req.isGuest = true;
+    req.guestId = guestId;
+    req.supportIdentifier = `guest_${guestId}`;
+    next();
+  } catch (error) {
+    console.error('[requireSupportUserSession] Error in support session handler:', error);
+    const fallbackId = `gst_${Date.now().toString(36)}`;
+    req.isGuest = true;
+    req.guestId = fallbackId;
+    req.supportIdentifier = `guest_${fallbackId}`;
+    next();
   }
 }
 

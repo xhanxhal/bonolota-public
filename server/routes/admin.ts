@@ -1131,20 +1131,6 @@ adminRouter.post('/support/reply', requireAdminAuth, async (req: AuthenticatedAd
       messages: updatedMessages,
     });
 
-    // Also send an in-app broadcast announcement directed specifically to that student key!
-    await storage.createAnnouncement({
-      id: `anno_reply_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      title: `📩 সাপোর্ট উত্তর: ${ticket.subject}`,
-      message: cleanReply,
-      type: 'info',
-      priority: 'high',
-      displayStyle: 'center_modal',
-      targetKey: ticket.keyMasked,
-      createdAt: Date.now(),
-      active: true,
-      author: 'Bonolota Support',
-    });
-
     res.json({ ok: true, ticket: updated, message: 'উত্তর সফলভাবে পাঠানো হয়েছে।' });
   } catch (error) {
     res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
@@ -1167,7 +1153,7 @@ const handleDeleteSupportTicket = async (req: AuthenticatedAdminRequest, res: Re
       id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
       action: 'delete_support_chat',
-      details: `Deleted support chat: "${ticket.subject}" (${ticket.keyMasked}) from both sides.`,
+      details: `Deleted support chat with ${ticket.customerName || 'student'} (${ticket.keyMasked}) from both sides.`,
     });
 
     res.json({ ok: true, message: 'চ্যাটটি উভয়পাশ থেকেই স্থায়ীভাবে মুছে ফেলা হয়েছে।' });
