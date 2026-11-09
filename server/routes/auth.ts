@@ -739,9 +739,16 @@ authRouter.post('/support/ticket', requireSupportUserSession, async (req: Authen
       clientDevice: license ? license.deviceInfo : (req.headers['user-agent']?.slice(0, 100) || 'Web Browser'),
     });
 
-    // Telegram Alert for immediate response without any subject field
+    // Telegram Alert with direct Reply capability (English Labels)
     sendTelegramAlert(
-      `📩 <b>নতুন সরাসরি মেসেজ!</b>\nব্যবহারকারী: <b>${senderDisplayName}</b>\nকী: <code>${keyLabel}</code>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>\nআইপি: <code>${clientIp}</code>`
+      `📩 <b>New Support Message</b>\n` +
+      `User: <b>${senderDisplayName}</b>\n` +
+      `Key: <code>${keyLabel}</code>\n` +
+      `Ticket ID: <code>${ticket.id}</code>\n` +
+      `Message: <i>${cleanMessage.slice(0, 300)}</i>\n` +
+      `IP: <code>${clientIp}</code>\n\n` +
+      `💡 <i>Reply to this message directly in Telegram, or send:</i>\n` +
+      `<code>/reply ${ticket.id} your answer</code>`
     ).catch(() => {});
 
     await storage.addSecurityEvent({
@@ -815,7 +822,12 @@ authRouter.post('/support/ticket/:id/message', requireSupportUserSession, async 
     });
 
     sendTelegramAlert(
-      `💬 <b>১:১ চ্যাটে নতুন রিপ্লাই!</b>\nব্যবহারকারী: <b>${senderDisplayName}</b>\nমেসেজ: <i>${cleanMessage.slice(0, 300)}</i>`
+      `💬 <b>New Support Reply</b>\n` +
+      `User: <b>${senderDisplayName}</b>\n` +
+      `Ticket ID: <code>${ticket.id}</code>\n` +
+      `Message: <i>${cleanMessage.slice(0, 300)}</i>\n\n` +
+      `💡 <i>Reply to this message directly in Telegram, or send:</i>\n` +
+      `<code>/reply ${ticket.id} your answer</code>`
     ).catch(() => {});
 
     res.json({ ok: true, ticket: updated, message: 'মেসেজ পাঠানো হয়েছে।' });

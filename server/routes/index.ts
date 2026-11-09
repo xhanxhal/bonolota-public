@@ -133,3 +133,19 @@ apiRouter.post('/system/verify-admin-slug', (req: Request, res: Response): void 
     res.status(404).json({ valid: false });
   }
 });
+
+import { handleTelegramMessage } from '../telegramBot';
+
+// Telegram Bot Webhook endpoint (dual mode: long-poll + webhook support)
+apiRouter.post('/telegram/webhook', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const update = req.body;
+    if (update && update.message) {
+      await handleTelegramMessage(update.message);
+    }
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ ok: false });
+  }
+});
+

@@ -181,7 +181,7 @@ export interface BroadcastAnnouncement {
 export interface AuditLogEntry {
   id: string;
   timestamp: number;
-  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'update_customer_name' | 'admin_login' | 'admin_failed_login' | 'delete_support_chat';
+  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'update_customer_name' | 'admin_login' | 'admin_failed_login' | 'delete_support_chat' | 'reply_support_chat';
   licenseId?: string;
   details: string;
   ip?: string;

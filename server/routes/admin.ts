@@ -1165,6 +1165,47 @@ const handleDeleteSupportTicket = async (req: AuthenticatedAdminRequest, res: Re
 adminRouter.delete('/support/ticket/:id', requireAdminAuth, handleDeleteSupportTicket);
 adminRouter.post('/support/ticket/:id/delete', requireAdminAuth, handleDeleteSupportTicket);
 
+// Admin: Delete multiple tickets or ALL tickets at once
+adminRouter.post('/support/tickets/batch-delete', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { ticketIds, all } = req.body || {};
+    let targets: string[] = [];
+
+    if (all === true) {
+      const allTickets = await storage.listSupportTickets();
+      targets = allTickets.map(t => t.id);
+    } else if (Array.isArray(ticketIds)) {
+      targets = ticketIds.filter((id): id is string => typeof id === 'string' && id.length > 0);
+    }
+
+    if (targets.length === 0) {
+      res.status(400).json({ ok: false, message: 'মুছে ফেলার জন্য কোনো টিকেট সিলেক্ট করা হয়নি।' });
+      return;
+    }
+
+    let deletedCount = 0;
+    for (const id of targets) {
+      const ok = await storage.deleteSupportTicket(id);
+      if (ok) deletedCount++;
+    }
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'delete_support_chat',
+      details: `Batch deleted ${deletedCount} support ticket(s) from both sides.`,
+    });
+
+    res.json({ 
+      ok: true, 
+      deletedCount, 
+      message: `সফলভাবে ${deletedCount}টি চ্যাট উভয়পাশ থেকেই মুছে ফেলা হয়েছে।` 
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
 // Admin: Delete a specific message from both sides
 const handleDeleteSupportMessage = async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {

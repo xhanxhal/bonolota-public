@@ -28,6 +28,7 @@ export const SupportInboxTab: React.FC = () => {
   const [isDeletingTicket, setIsDeletingTicket] = useState(false);
   const [statusFilter, setStatusFilter] = useState<'all' | 'open' | 'replied' | 'resolved'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTicketIds, setSelectedTicketIds] = useState<Set<string>>(new Set());
   const [notice, setNotice] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -173,6 +174,85 @@ export const SupportInboxTab: React.FC = () => {
     }
   };
 
+  const handleToggleSelectTicket = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedTicketIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleToggleSelectAll = () => {
+    if (selectedTicketIds.size === filteredTickets.length && filteredTickets.length > 0) {
+      setSelectedTicketIds(new Set());
+    } else {
+      setSelectedTicketIds(new Set(filteredTickets.map(t => t.id)));
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedTicketIds.size === 0) return;
+    const count = selectedTicketIds.size;
+    if (!window.confirm(`আপনি কি নিশ্চিত যে নির্বাচিত ${count}টি টিকেট উভয়পাশ থেকেই সম্পূর্ণ মুছে ফেলতে চান?`)) return;
+
+    haptics.tap();
+    setIsDeletingTicket(true);
+    try {
+      const res = await fetch('/api/admin/support/tickets/batch-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ ticketIds: Array.from(selectedTicketIds) }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setNotice(data.message || `${count}টি টিকেট মুছে ফেলা হয়েছে!`);
+        setSelectedTicketIds(new Set());
+        setSelectedTicketId(null);
+        await loadTickets(false);
+        setTimeout(() => setNotice(null), 3000);
+      } else {
+        setNotice(data.message || 'টিকেট মুছতে সমস্যা হয়েছে।');
+      }
+    } catch {
+      setNotice('সার্ভার এরর।');
+    } finally {
+      setIsDeletingTicket(false);
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    if (tickets.length === 0) return;
+    if (!window.confirm(`⚠️ সতর্কতা! আপনি কি নিশ্চিত যে সমস্ত (${tickets.length}টি) সাপোর্ট চ্যাট ডাটাবেজ ও উভয়পাশ থেকে চিরতরে মুছে ফেলতে চান?`)) return;
+
+    haptics.tap();
+    setIsDeletingTicket(true);
+    try {
+      const res = await fetch('/api/admin/support/tickets/batch-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ all: true }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setNotice('সকল সাপোর্ট চ্যাট সফলভাবে মুছে ফেলা হয়েছে!');
+        setSelectedTicketIds(new Set());
+        setSelectedTicketId(null);
+        await loadTickets(false);
+        setTimeout(() => setNotice(null), 3000);
+      } else {
+        setNotice(data.message || 'টিকেট মুছতে সমস্যা হয়েছে।');
+      }
+    } catch {
+      setNotice('সার্ভার এরর।');
+    } finally {
+      setIsDeletingTicket(false);
+    }
+  };
+
   const handleDeleteMessage = async (messageId: string) => {
     if (!selectedTicket) return;
     if (!window.confirm('আপনি কি এই নির্দিষ্ট মেসেজটি উভয়পাশ থেকেই মুছে ফেলতে চান?')) return;
@@ -298,23 +378,66 @@ export const SupportInboxTab: React.FC = () => {
             )}
           </div>
 
-          {/* Messenger Category Filters */}
-          <div className="flex items-center gap-1 pb-2.5 mb-2 border-b border-slate-100 dark:border-slate-800/80 overflow-x-auto scrollbar-none">
-            {(['all', 'open', 'replied', 'resolved'] as const).map(s => (
+          {/* Messenger Category Filters & Select All Toolbar */}
+          <div className="flex items-center justify-between gap-1 pb-2.5 mb-2 border-b border-slate-100 dark:border-slate-800/80">
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+              {(['all', 'open', 'replied', 'resolved'] as const).map(s => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setStatusFilter(s)}
+                  className={`px-2 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                    statusFilter === s
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  {s === 'all' ? `All (${tickets.length})` : s === 'open' ? `New (${openTicketsCount})` : s === 'replied' ? 'Replied' : 'Resolved'}
+                </button>
+              ))}
+            </div>
+
+            {/* Select All Toggle Button */}
+            {filteredTickets.length > 0 && (
               <button
-                key={s}
                 type="button"
-                onClick={() => setStatusFilter(s)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                  statusFilter === s
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+                onClick={handleToggleSelectAll}
+                className="px-2 py-1 rounded-lg text-[11px] font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
+                title="Select all tickets"
               >
-                {s === 'all' ? `সব (${tickets.length})` : s === 'open' ? `নতুন (${openTicketsCount})` : s === 'replied' ? 'উত্তরপ্রাপ্ত' : 'সমাধান'}
+                <span>{selectedTicketIds.size === filteredTickets.length && filteredTickets.length > 0 ? 'Deselect' : 'Select All'}</span>
+                <span className="text-[10px] opacity-70">({selectedTicketIds.size})</span>
               </button>
-            ))}
+            )}
           </div>
+
+          {/* Batch Actions Bar (Shown when 1 or more tickets selected) */}
+          {selectedTicketIds.size > 0 && (
+            <div className="mb-2 p-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-between gap-2 text-xs animate-fadeIn shrink-0">
+              <span className="font-bold text-rose-800 dark:text-rose-300">
+                {selectedTicketIds.size} Selected
+              </span>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={handleDeleteSelected}
+                  disabled={isDeletingTicket}
+                  className="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[11px] transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  <span>Delete Selected</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteAll}
+                  disabled={isDeletingTicket}
+                  className="px-2 py-1 rounded-lg bg-rose-100 dark:bg-rose-900/40 hover:bg-rose-200 text-rose-800 dark:text-rose-200 font-bold text-[11px] transition-colors cursor-pointer"
+                >
+                  <span>Delete All</span>
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Conversations Scroll Feed */}
           <div className="flex-1 overflow-y-auto space-y-1.5 pr-1">
@@ -326,6 +449,7 @@ export const SupportInboxTab: React.FC = () => {
             ) : (
               filteredTickets.map(t => {
                 const isSelected = selectedTicket?.id === t.id;
+                const isChecked = selectedTicketIds.has(t.id);
                 const lastMsg = t.messages && t.messages.length > 0 
                   ? t.messages[t.messages.length - 1] 
                   : { text: t.message, timestamp: t.updatedAt, sender: 'customer' };
@@ -338,28 +462,42 @@ export const SupportInboxTab: React.FC = () => {
                       haptics.tap();
                       setSelectedTicketId(t.id);
                     }}
-                    className={`p-3 rounded-2xl transition-all cursor-pointer flex items-center gap-3 relative ${
+                    className={`p-3 rounded-2xl transition-all cursor-pointer flex items-center gap-2.5 relative ${
                       isSelected
                         ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/80 shadow-xs'
                         : 'bg-slate-50/70 dark:bg-[#080d1a]/80 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
                     }`}
                   >
+                    {/* Multi-Select Checkbox */}
+                    <div 
+                      onClick={(e) => handleToggleSelectTicket(t.id, e)}
+                      className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 shrink-0 cursor-pointer"
+                      title="Select ticket"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => {}}
+                        className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer accent-emerald-600"
+                      />
+                    </div>
+
                     {/* User Avatar Circle with Online Dot */}
                     <div className="relative shrink-0">
-                      <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white font-bold text-sm flex items-center justify-center shadow-xs">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white font-bold text-sm flex items-center justify-center shadow-xs">
                         {getInitial(t.customerName)}
                       </div>
-                      <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-slate-900 ${
+                      <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white dark:border-slate-900 ${
                         isUnread ? 'bg-rose-500 animate-ping' : 'bg-emerald-500'
                       }`} />
                     </div>
 
-                    {/* Chat Item Details */}
+                    {/* Chat Item Details with English Labels */}
                     <div className="flex-1 min-w-0">
                       {/* USER NAME PROMINENTLY ON TOP */}
                       <div className="flex items-center justify-between gap-1 mb-0.5">
                         <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate">
-                          {t.customerName || 'বেনামী শিক্ষার্থী'}
+                          User: {t.customerName || 'Student'}
                         </h4>
                         <span className="text-[10px] text-slate-400 dark:text-slate-500 shrink-0 font-mono">
                           {formatMessageTime(lastMsg.timestamp)}
@@ -372,18 +510,21 @@ export const SupportInboxTab: React.FC = () => {
                           ? 'font-bold text-slate-900 dark:text-white' 
                           : 'text-slate-500 dark:text-slate-400'
                       }`}>
-                        {lastMsg.sender === 'admin' ? <span className="text-emerald-600 dark:text-emerald-400 font-semibold">আপনি: </span> : null}
+                        {lastMsg.sender === 'admin' ? <span className="text-emerald-600 dark:text-emerald-400 font-semibold">You: </span> : null}
                         {lastMsg.text}
                       </p>
 
-                      {/* Badges: Key Masked & Status */}
-                      <div className="flex items-center gap-1.5 mt-1 text-[10px] text-slate-400 font-mono">
+                      {/* Badges: English Labels for Ticket ID & Key */}
+                      <div className="flex items-center gap-1.5 mt-1 text-[10px] text-slate-400 font-mono flex-wrap">
                         <span className="px-1.5 py-0.2 rounded-md bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                          {t.keyMasked || 'অনিবন্ধিত'}
+                          Key: {t.keyMasked || 'None'}
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          Ticket ID: {t.id}
                         </span>
                         {isUnread && (
                           <span className="px-1.5 py-0.2 rounded-md bg-rose-500 text-white font-bold font-sans">
-                            নতুন
+                            New
                           </span>
                         )}
                       </div>
@@ -413,14 +554,16 @@ export const SupportInboxTab: React.FC = () => {
                   <div className="min-w-0">
                     {/* USER NAME DISPLAYED CLEARLY AT THE TOP */}
                     <h2 className="text-sm sm:text-base font-black text-slate-900 dark:text-white truncate">
-                      {selectedTicket.customerName || 'বেনামী শিক্ষার্থী'}
+                      User: {selectedTicket.customerName || 'Student'}
                     </h2>
-                    <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">
-                        {selectedTicket.keyMasked}
+                    <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                        Key: {selectedTicket.keyMasked}
                       </span>
                       <span>•</span>
-                      <span className="truncate max-w-[120px]">{selectedTicket.clientDevice || 'ডিভাইস'}</span>
+                      <span>Ticket ID: {selectedTicket.id}</span>
+                      <span>•</span>
+                      <span className="truncate max-w-[120px]">Device: {selectedTicket.clientDevice || 'Unknown'}</span>
                     </div>
                   </div>
                 </div>

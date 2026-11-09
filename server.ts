@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
 import { apiRouter } from './server/routes';
 import { storage } from './server/storage';
+import { startTelegramBotListener } from './server/telegramBot';
 
 // Load environment variables if available
 dotenv.config();
@@ -31,6 +32,10 @@ function setupChatAutoCleaner() {
 }
 
 setupChatAutoCleaner();
+// Start two-way Telegram Admin Bot Interactive Listener
+startTelegramBotListener().catch(err => {
+  console.error('[TelegramBot] Listener failed to start:', err);
+});
 
 export async function createExpressApp() {
   const app = express();
