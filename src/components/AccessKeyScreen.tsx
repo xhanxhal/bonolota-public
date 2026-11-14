@@ -239,7 +239,7 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
               </a>
 
               <a
-                href="https://t.me"
+                href="https://t.me/xhanxhal"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-sky-50 hover:bg-sky-100/80 border border-sky-200/70 text-sky-700 text-xs font-semibold transition-colors cursor-pointer"
