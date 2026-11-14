@@ -8,7 +8,8 @@ import {
   AlertCircle,
   MessageCircle,
   Send,
-  User
+  User,
+  Tag
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
 
@@ -89,11 +90,23 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
   const displayError = localError || errorMessage;
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#f8fafc] text-slate-800 font-bangla antialiased">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#f8fafc] text-slate-800 font-bangla antialiased overflow-x-hidden">
       <div className="w-full max-w-sm mx-auto">
         
-        {/* Minimal Clean Card */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-7 space-y-5">
+        {/* Minimal Clean Card with Price Sticker */}
+        <div className="relative bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-7 space-y-5">
+          {/* Price Sticker Badge */}
+          <div
+            className="absolute -top-3.5 -right-2 sm:-right-3 z-10 rotate-6 select-none pointer-events-none"
+            aria-label="মাত্র ৩০ টাকা"
+          >
+            <div className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg shadow-orange-500/30 ring-2 ring-white flex items-center gap-1.5 border border-amber-300/60">
+              <Tag className="w-3.5 h-3.5 shrink-0 fill-white/20" />
+              <span className="text-xs font-extrabold tracking-wide whitespace-nowrap">
+                মাত্র ৩০ টাকা
+              </span>
+            </div>
+          </div>
           
           {/* Header */}
           <div className="text-center space-y-2">
@@ -215,9 +228,10 @@ export const AccessKeyScreen: React.FC<AccessKeyScreenProps> = ({
             </p>
             <div className="grid grid-cols-2 gap-2">
               <a
-                href="https://wa.me/?text=Hello!+I+need+an+access+key+for+Bonolota"
+                href="https://wa.me/8801613324252?text=Hello!+I+need+an+access+key+for+Bonolota"
                 target="_blank"
                 rel="noopener noreferrer"
+                title="WhatsApp: 01613324252"
                 className="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/70 text-emerald-700 text-xs font-semibold transition-colors cursor-pointer"
               >
                 <MessageCircle className="w-3.5 h-3.5" />

@@ -142,7 +142,7 @@ export const InfoView: React.FC = () => {
 
           {/* B. WHATSAPP */}
           <a
-            href="https://wa.me/8801720942573"
+            href="https://wa.me/8801613324252"
             target="_blank"
             rel="noopener noreferrer"
             className="group p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/20 hover:border-emerald-400 dark:hover:border-emerald-700 transition-all shadow-2xs hover:shadow-xs flex items-center justify-between gap-3 cursor-pointer"
