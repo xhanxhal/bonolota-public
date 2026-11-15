@@ -107,16 +107,17 @@ apiRouter.get('/system/env-check', (_req: Request, res: Response): void => {
   res.json(report);
 });
 
-// Feature 42: Public Security Config endpoint (DRM anti-copy status)
+// Feature 42 & Global Palette: Public System Config endpoint
 apiRouter.get('/system/security-config', async (_req: Request, res: Response): Promise<void> => {
   try {
     const config = await storage.getSecurityConfig();
     res.json({
       ok: true,
       antiCopyEnabled: Boolean(config.antiCopyEnabled),
+      siteColorPalette: config.siteColorPalette === 'sunset' ? 'sunset' : 'botanical',
     });
   } catch {
-    res.json({ ok: true, antiCopyEnabled: false });
+    res.json({ ok: true, antiCopyEnabled: false, siteColorPalette: 'botanical' });
   }
 });
 

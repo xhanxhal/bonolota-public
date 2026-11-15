@@ -371,6 +371,7 @@ Synonyms: ${selectedWord.synonyms.join(', ')}
         const renderVocabularyCard = (isExportLayout: boolean) => (
           <div
             ref={isExportLayout ? exportCardRef : cardRef}
+            data-card-preserve={cardTheme === 'emerald' || cardTheme === 'botanical' ? 'botanical' : undefined}
             style={
               isExportLayout
                 ? { width: `${FIXED_CARD_EXPORT_WIDTH}px`, minHeight: '580px', boxSizing: 'border-box' }

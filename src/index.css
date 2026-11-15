@@ -32,13 +32,83 @@
   }
 }
 
+/* Global Site Palette: Golden Sunset (Warm Amber) Override */
+:root[data-palette="sunset"] {
+  --color-emerald-50: #fffbf2;
+  --color-emerald-100: #fef3c7;
+  --color-emerald-200: #fde68a;
+  --color-emerald-300: #fcd34d;
+  --color-emerald-400: #fbbf24;
+  --color-emerald-500: #d97706;
+  --color-emerald-600: #b45309;
+  --color-emerald-700: #92400e;
+  --color-emerald-800: #78350f;
+  --color-emerald-900: #5c280b;
+  --color-emerald-950: #451a03;
+
+  --color-teal-50: #fff7ed;
+  --color-teal-100: #ffedd5;
+  --color-teal-200: #fed7aa;
+  --color-teal-300: #fdba74;
+  --color-teal-400: #fb923c;
+  --color-teal-500: #ea580c;
+  --color-teal-600: #c2410c;
+  --color-teal-700: #9a3412;
+  --color-teal-800: #7c2d12;
+  --color-teal-900: #5a1f0b;
+  --color-teal-950: #431407;
+}
+
+/* Preserve literal emerald/botanical colors for Card Maker's explicit Emerald/Botanical presets */
+:root[data-palette="sunset"] [data-card-preserve="botanical"] {
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+  --color-teal-950: #042f2e;
+}
+
+:root[data-palette="sunset"] body {
+  background-color: #fffdf8;
+}
+
+:root[data-palette="sunset"].dark body {
+  background-color: #0b1120;
+}
+
 /* Greenish Gradient & Minimalist Theme Utilities */
 .bg-emerald-gradient {
   background: linear-gradient(135deg, #059669 0%, #10b981 50%, #0d9488 100%);
 }
 
+:root[data-palette="sunset"] .bg-emerald-gradient {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #c2410c 100%);
+}
+
 .bg-emerald-soft-gradient {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 148, 136, 0.04) 50%, #ffffff 100%);
+}
+
+:root[data-palette="sunset"] .bg-emerald-soft-gradient {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.09) 0%, rgba(234, 88, 12, 0.05) 50%, #fffdfa 100%);
 }
 
 .bg-hero-mesh {
@@ -48,10 +118,23 @@
                     radial-gradient(at 100% 100%, rgba(52, 211, 153, 0.05) 0px, transparent 50%);
 }
 
+:root[data-palette="sunset"] .bg-hero-mesh {
+  background-color: #fffdfa;
+  background-image: radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.11) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(251, 191, 36, 0.07) 0px, transparent 50%);
+}
+
 .dark .bg-hero-mesh {
   background-color: #0b1120;
   background-image: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
                     radial-gradient(at 100% 0%, rgba(20, 184, 166, 0.12) 0px, transparent 50%);
+}
+
+:root[data-palette="sunset"].dark .bg-hero-mesh {
+  background-color: #0b1120;
+  background-image: radial-gradient(at 0% 0%, rgba(217, 119, 6, 0.16) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(234, 88, 12, 0.12) 0px, transparent 50%);
 }
 
 /* Sleek Minimal Button */
@@ -63,10 +146,20 @@
   box-shadow: 0 2px 8px -2px rgba(16, 185, 129, 0.4);
 }
 
+:root[data-palette="sunset"] .btn-emerald {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  box-shadow: 0 2px 8px -2px rgba(180, 83, 9, 0.4);
+}
+
 .btn-emerald:hover:not(:disabled) {
   background: linear-gradient(135deg, #047857 0%, #059669 100%);
   box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.5);
   transform: translateY(-1px);
+}
+
+:root[data-palette="sunset"] .btn-emerald:hover:not(:disabled) {
+  background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+  box-shadow: 0 4px 14px -2px rgba(180, 83, 9, 0.5);
 }
 
 .btn-emerald:active:not(:disabled) {
@@ -92,6 +185,11 @@
   box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
 }
 
+:root[data-palette="sunset"] .card-minimal:hover {
+  border-color: #fde68a;
+  box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+
 .dark .card-minimal {
   background-color: #111827;
   border-color: #1f2937;
@@ -100,6 +198,11 @@
 .dark .card-minimal:hover {
   border-color: #065f46;
   box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.12);
+}
+
+:root[data-palette="sunset"].dark .card-minimal:hover {
+  border-color: #92400e;
+  box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.15);
 }
 
 /* 3D Flashcard flip styles */

@@ -9,9 +9,13 @@ import {
   AlertTriangle, 
   KeyRound, 
   Database,
-  Radio
+  Radio,
+  Palette,
+  Leaf,
+  Sparkles
 } from 'lucide-react';
 import { haptics } from '../../utils/haptics';
+import { SITE_PALETTES, SiteColorPalette, applySitePalette, getCachedSitePalette } from '../../utils/sitePalette';
 
 export const AdminSettingsTab: React.FC = () => {
   // Telegram Settings State
@@ -34,7 +38,12 @@ export const AdminSettingsTab: React.FC = () => {
   const [isRestoring, setIsRestoring] = useState(false);
   const [restoreStatusMsg, setRestoreStatusMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
-  // Load existing Telegram configuration on mount
+  // Global Site Color Palette State
+  const [selectedPalette, setSelectedPalette] = useState<SiteColorPalette>(() => getCachedSitePalette());
+  const [isSavingPalette, setIsSavingPalette] = useState(false);
+  const [paletteStatusMsg, setPaletteStatusMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  // Load existing Telegram & Palette configuration on mount
   useEffect(() => {
     fetch('/api/admin/telegram/config', { credentials: 'include' })
       .then(res => res.json())
@@ -46,7 +55,47 @@ export const AdminSettingsTab: React.FC = () => {
         }
       })
       .catch(() => {});
+
+    fetch('/api/admin/site-palette', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok && (data.palette === 'botanical' || data.palette === 'sunset')) {
+          setSelectedPalette(data.palette);
+          applySitePalette(data.palette);
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  // Save Global Website Color Palette
+  const handleSelectAndSavePalette = async (palette: SiteColorPalette) => {
+    haptics.tap();
+    setSelectedPalette(palette);
+    applySitePalette(palette);
+    setIsSavingPalette(true);
+    setPaletteStatusMsg(null);
+
+    try {
+      const res = await fetch('/api/admin/site-palette', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ palette }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        applySitePalette(data.palette === 'sunset' ? 'sunset' : 'botanical');
+        setPaletteStatusMsg({ ok: true, text: data.message || 'ওয়েবসাইটের কালার প্যালেট সফলভাবে আপডেট হয়েছে!' });
+      } else {
+        setPaletteStatusMsg({ ok: false, text: data.message || 'কালার প্যালেট সংরক্ষণ ব্যর্থ।' });
+      }
+    } catch {
+      setPaletteStatusMsg({ ok: false, text: 'সার্ভারের সাথে যোগাযোগে ত্রুটি।' });
+    } finally {
+      setIsSavingPalette(false);
+    }
+  };
 
   // Save Telegram Settings
   const handleSaveTelegram = async (e: React.FormEvent) => {
@@ -221,6 +270,120 @@ export const AdminSettingsTab: React.FC = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fadeIn font-bangla">
+      {/* SECTION 0: Global Website Color Palette */}
+      <div className="bg-white dark:bg-[#0f172a] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200/80 dark:border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-center shrink-0">
+              <Palette className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <div>
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap">
+                <span>ওয়েবসাইট গ্লোবাল কালার প্যালেট</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  {selectedPalette === 'sunset' ? 'Golden Sunset সক্রিয়' : 'Botanical Emerald (Default)'}
+                </span>
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                এখান থেকে পুরো ওয়েবসাইটের মূল কালার থিম পরিবর্তন করুন (সব শিক্ষার্থীর জন্য স্বয়ংক্রিয়ভাবে প্রযোজ্য হবে)
+              </p>
+            </div>
+          </div>
+
+          {isSavingPalette && (
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+              <span>সংরক্ষণ হচ্ছে...</span>
+            </div>
+          )}
+        </div>
+
+        {paletteStatusMsg && (
+          <div className={`mb-4 p-3 rounded-xl border text-xs flex items-center gap-2 ${
+            paletteStatusMsg.ok
+              ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
+              : 'bg-rose-50 dark:bg-rose-950/70 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300'
+          }`}>
+            {paletteStatusMsg.ok ? (
+              <Check className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
+            )}
+            <span>{paletteStatusMsg.text}</span>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          {SITE_PALETTES.map((palette) => {
+            const isActive = selectedPalette === palette.id;
+            return (
+              <button
+                key={palette.id}
+                type="button"
+                onClick={() => handleSelectAndSavePalette(palette.id)}
+                disabled={isSavingPalette}
+                className={`text-left rounded-2xl p-4 border-2 transition-all cursor-pointer relative overflow-hidden ${
+                  isActive
+                    ? 'border-emerald-600 dark:border-emerald-400 bg-emerald-50/40 dark:bg-emerald-950/30 shadow-sm'
+                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-[#080d1a] hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                {/* Mini Live Card Swatch Strip */}
+                <div className={`mb-3 rounded-xl p-3 bg-gradient-to-br ${palette.previewBg} border ${palette.previewBorder} flex items-center justify-between gap-2`}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className={`w-7 h-7 rounded-lg ${palette.previewAccent} text-white flex items-center justify-center shrink-0 shadow-xs`}>
+                      {palette.id === 'botanical' ? <Leaf className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+                    </div>
+                    <div className="min-w-0">
+                      <div className={`text-xs font-extrabold truncate ${palette.previewText}`}>
+                        Bonolota · {palette.nameEn}
+                      </div>
+                      <div className="flex items-center gap-1 mt-1">
+                        {palette.swatches.map((hex) => (
+                          <span
+                            key={hex}
+                            className="w-4 h-4 rounded-full border border-black/15 shadow-2xs"
+                            style={{ backgroundColor: hex }}
+                            title={hex}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {isActive ? (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-600 text-white flex items-center gap-1 shrink-0 shadow-xs">
+                      <Check className="w-3 h-3" />
+                      <span>সক্রিয়</span>
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/90 text-slate-700 border border-slate-200 shrink-0">
+                      চালু করুন
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <span>{palette.nameBn}</span>
+                    {palette.isDefault && (
+                      <span className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                        ডিফল্ট
+                      </span>
+                    )}
+                  </h4>
+                  <span className="text-[11px] font-mono text-slate-400">{palette.nameEn}</span>
+                </div>
+
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {palette.descriptionBn}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* SECTION 1: Telegram Bot Integration */}
       <div className="bg-white dark:bg-[#0f172a] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200/80 dark:border-slate-800">

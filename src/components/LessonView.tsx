@@ -628,7 +628,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
                   </div>
 
                   {/* Bengali Meaning: Proportionate & clear */}
-                  <div className="font-bangla font-bold text-base sm:text-lg text-[#064e3b] dark:text-emerald-300 leading-snug tracking-tight mt-1 mb-1.5">
+                  <div className="font-bangla font-bold text-base sm:text-lg text-emerald-950 dark:text-emerald-300 leading-snug tracking-tight mt-1 mb-1.5">
                     {word.banglaMeaning}
                   </div>
 

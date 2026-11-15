@@ -68,6 +68,7 @@ class InMemoryStorage {
     antiCopyEnabled: false,
     ipBlacklist: [],
     honeypotCount: 0,
+    siteColorPalette: 'botanical',
     telegram: {
       enabled: true,
       botToken: '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE',
@@ -690,6 +691,7 @@ class UpstashStorage {
         antiCopyEnabled: false,
         ipBlacklist: [],
         honeypotCount: 0,
+        siteColorPalette: 'botanical',
         telegram: {
           enabled: true,
           botToken: '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE',
@@ -697,7 +699,11 @@ class UpstashStorage {
         },
       };
     }
-    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+    const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    return {
+      ...parsed,
+      siteColorPalette: parsed.siteColorPalette || 'botanical',
+    };
   }
 
   async updateSecurityConfig(partial: Partial<SecurityConfig>): Promise<SecurityConfig> {

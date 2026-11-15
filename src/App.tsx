@@ -42,6 +42,7 @@ import { BroadcastDrawer } from './components/BroadcastDrawer';
 import { BroadcastModal } from './components/BroadcastModal';
 import { StudentSupportModal } from './components/StudentSupportModal';
 import { AdminPortal } from './components/admin/AdminPortal';
+import { applySitePalette, getCachedSitePalette, SiteColorPalette } from './utils/sitePalette';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -227,6 +228,9 @@ function MainApp() {
         const res = await fetch('/api/system/security-config');
         if (res.ok) {
           const d = await res.json();
+          if (active && (d.siteColorPalette === 'botanical' || d.siteColorPalette === 'sunset')) {
+            applySitePalette(d.siteColorPalette as SiteColorPalette);
+          }
           if (active && d.antiCopyEnabled) {
             document.body.classList.add('select-none');
             
@@ -743,6 +747,18 @@ export default function App() {
   });
 
   useEffect(() => {
+    // Apply cached palette immediately, then verify authoritative setting from server
+    applySitePalette(getCachedSitePalette());
+    let active = true;
+    fetch('/api/system/security-config')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((d) => {
+        if (active && d && (d.siteColorPalette === 'botanical' || d.siteColorPalette === 'sunset')) {
+          applySitePalette(d.siteColorPalette as SiteColorPalette);
+        }
+      })
+      .catch(() => {});
+
     const handleRoute = () => {
       const p = window.location.pathname.toLowerCase();
       const h = window.location.hash.toLowerCase();
@@ -751,6 +767,7 @@ export default function App() {
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('popstate', handleRoute);
     return () => {
+      active = false;
       window.removeEventListener('hashchange', handleRoute);
       window.removeEventListener('popstate', handleRoute);
     };

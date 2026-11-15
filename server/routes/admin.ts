@@ -1335,3 +1335,57 @@ adminRouter.post('/licenses/:id/send-renewal', requireAdminAuth, async (req: Aut
   }
 });
 
+/**
+ * Global Website Color Palette Configuration
+ * GET /api/admin/site-palette
+ * POST /api/admin/site-palette
+ */
+adminRouter.get('/site-palette', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const config = await storage.getSecurityConfig();
+    res.json({
+      ok: true,
+      palette: config.siteColorPalette === 'sunset' ? 'sunset' : 'botanical',
+    });
+  } catch {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/site-palette', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { palette } = req.body || {};
+    if (palette !== 'botanical' && palette !== 'sunset') {
+      res.status(400).json({ ok: false, message: 'অবৈধ কালার প্যালেট নির্বাচন করা হয়েছে।' });
+      return;
+    }
+
+    const updated = await storage.updateSecurityConfig({ siteColorPalette: palette });
+
+    await storage.addSecurityEvent({
+      level: 'info',
+      source: 'SYSTEM',
+      message: `ওয়েবসাইট গ্লোবাল কালার প্যালেট পরিবর্তন করা হয়েছে: ${palette === 'sunset' ? 'Golden Sunset (Amber)' : 'Botanical Emerald (Default)'}`,
+    });
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'update_site_palette',
+      details: `Updated global site color palette to "${palette}".`,
+    });
+
+    res.json({
+      ok: true,
+      palette: updated.siteColorPalette || 'botanical',
+      message:
+        palette === 'sunset'
+          ? 'গোল্ডেন সানসেট (Warm Amber) কালার প্যালেট সফলভাবে পুরো ওয়েবসাইটে চালু হয়েছে!'
+          : 'বোটানিক্যাল এমারেল্ড (Default) কালার প্যালেট সফলভাবে চালু হয়েছে!',
+    });
+  } catch (error) {
+    console.error('[admin/site-palette] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'কালার প্যালেট সংরক্ষণে ব্যর্থ।' });
+  }
+});
+
