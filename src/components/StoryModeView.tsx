@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { 
   BookOpen, 
   ChevronRight, 
@@ -12,6 +12,11 @@ import {
   ExternalLink, 
   ListFilter,
   X,
+  Maximize2,
+  Minimize2,
+  Eye,
+  EyeOff,
+  GripVertical,
 } from 'lucide-react';
 import { STORY_UNITS, StoryUnit, StoryVocabItem } from '../data/storyUnitsData';
 import { haptics } from '../utils/haptics';
@@ -39,6 +44,27 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
   const [selectedWord, setSelectedWord] = useState<StoryVocabItem | null>(null);
   const [isUnitDrawerOpen, setIsUnitDrawerOpen] = useState(false);
   const [hoveredWordKey, setHoveredWordKey] = useState<string | null>(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isBanglaBlurred, setIsBanglaBlurred] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('bonolota_story_bn_blur') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [splitPercent, setSplitPercent] = useState<number>(() => {
+    try {
+      const saved = Number(localStorage.getItem('bonolota_story_split_pct'));
+      if (!Number.isNaN(saved) && saved >= 25 && saved <= 75) return saved;
+    } catch {
+      // ignore
+    }
+    return 50;
+  });
+  const [isDraggingSplit, setIsDraggingSplit] = useState(false);
+
+  const fullScreenContainerRef = useRef<HTMLDivElement>(null);
+  const splitContainerRef = useRef<HTMLDivElement>(null);
 
   // Filter units by category and search
   const filteredUnits = useMemo(() => {
@@ -95,6 +121,68 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       }
     };
   }, []);
+
+  // Persist Bangla blur preference
+  useEffect(() => {
+    try {
+      localStorage.setItem('bonolota_story_bn_blur', String(isBanglaBlurred));
+    } catch {
+      // ignore
+    }
+  }, [isBanglaBlurred]);
+
+  // Persist split percentage
+  useEffect(() => {
+    try {
+      localStorage.setItem('bonolota_story_split_pct', String(Math.round(splitPercent * 10) / 10));
+    } catch {
+      // ignore
+    }
+  }, [splitPercent]);
+
+  // Escape key handling for modals and full-screen mode
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (selectedWord) {
+        setSelectedWord(null);
+      } else if (isUnitDrawerOpen) {
+        setIsUnitDrawerOpen(false);
+      } else if (isFullScreen) {
+        setIsFullScreen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedWord, isUnitDrawerOpen, isFullScreen]);
+
+  // Handle dragging middle split divider in Dual View
+  useEffect(() => {
+    if (!isDraggingSplit) return;
+
+    const handlePointerMove = (e: PointerEvent) => {
+      const container = splitContainerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      const rawPercent = ((e.clientX - rect.left) / rect.width) * 100;
+      const clamped = Math.min(75, Math.max(25, rawPercent));
+      setSplitPercent(clamped);
+    };
+
+    const handlePointerUp = () => {
+      setIsDraggingSplit(false);
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerUp);
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
+    };
+  }, [isDraggingSplit]);
 
   // Text-To-Speech Pronounce Word
   const speakWord = useCallback((word: string) => {
@@ -334,23 +422,38 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     });
   };
 
+  const scrollToTop = useCallback(() => {
+    if (isFullScreen && fullScreenContainerRef.current) {
+      fullScreenContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [isFullScreen]);
+
   // Prev / Next Unit
   const handlePrevUnit = () => {
     haptics.tap();
     const prev = activeUnitNumber > 1 ? activeUnitNumber - 1 : 50;
     setActiveUnitNumber(prev);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
 
   const handleNextUnit = () => {
     haptics.tap();
     const next = activeUnitNumber < 50 ? activeUnitNumber + 1 : 1;
     setActiveUnitNumber(next);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-3 font-bangla animate-in fade-in duration-200 pb-16 lg:pb-8">
+    <div
+      ref={fullScreenContainerRef}
+      className={
+        isFullScreen
+          ? 'fixed inset-0 z-40 w-full bg-slate-50 dark:bg-slate-950 overflow-y-auto p-3 sm:p-5 lg:p-6 space-y-3 font-bangla animate-in fade-in duration-200'
+          : 'w-full max-w-7xl mx-auto space-y-3 font-bangla animate-in fade-in duration-200 pb-16 lg:pb-8'
+      }
+    >
       {/* Top Header Bar */}
       <div className="rounded-2xl bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-white dark:from-slate-900 dark:via-emerald-950/20 dark:to-slate-900 p-3 sm:p-4 shadow-2xs border border-emerald-100/90 dark:border-emerald-900/40 text-slate-900 dark:text-white">
         <div className="flex items-center justify-between gap-3">
@@ -384,7 +487,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
             </div>
           </div>
 
-          {/* Unit Drawer Trigger on Mobile + Font Size Controls */}
+          {/* Unit Drawer Trigger + Font Size + Full Screen Controls */}
           <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
@@ -392,7 +495,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 haptics.tap();
                 setIsUnitDrawerOpen(true);
               }}
-              className="lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-xs font-bold shadow-2xs cursor-pointer"
+              className={`${isFullScreen ? 'flex' : 'lg:hidden flex'} items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-xs font-bold shadow-2xs cursor-pointer`}
             >
               <ListFilter className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Unit {activeUnitNumber}</span>
@@ -423,6 +526,24 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 A+
               </button>
             </div>
+
+            {/* Full Screen Toggle */}
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tap();
+                setIsFullScreen(prev => !prev);
+              }}
+              title={isFullScreen ? 'স্বাভাবিক ভিউতে ফিরুন (Esc)' : 'ফুল স্ক্রিন মোড চালু করুন'}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-2xs ${
+                isFullScreen
+                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
+                  : 'bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+              }`}
+            >
+              {isFullScreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
+              <span className="hidden sm:inline">{isFullScreen ? 'স্বাভাবিক' : 'ফুল স্ক্রিন'}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -430,7 +551,8 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       {/* Main Layout: Desktop Sidebar + Content Area */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-start">
         {/* DESKTOP SIDEBAR: Category Tabs + Search + Unit Selector */}
-        <aside className="hidden lg:flex flex-col lg:col-span-3 xl:col-span-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3 shadow-2xs sticky top-20 max-h-[calc(100vh-100px)]">
+        {!isFullScreen && (
+          <aside className="hidden lg:flex flex-col lg:col-span-3 xl:col-span-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3 shadow-2xs sticky top-20 max-h-[calc(100vh-100px)]">
           <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-100 dark:border-slate-800">
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -547,12 +669,13 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 </button>
               );
             })}
-          </div>
-        </aside>
+            </div>
+          </aside>
+        )}
 
-        {/* MOBILE DRAWER: Unit Selector */}
+        {/* MOBILE / FULLSCREEN DRAWER: Unit Selector */}
         {isUnitDrawerOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
+          <div className={`fixed inset-0 z-50 ${isFullScreen ? '' : 'lg:hidden'} flex flex-col justify-end`}>
             <div 
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setIsUnitDrawerOpen(false)}
@@ -666,7 +789,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
         )}
 
         {/* MAIN STORY CONTENT AREA */}
-        <section className="col-span-1 lg:col-span-9 space-y-3 sm:space-y-4">
+        <section className={isFullScreen ? 'col-span-1 lg:col-span-12 space-y-3 sm:space-y-4' : 'col-span-1 lg:col-span-9 space-y-3 sm:space-y-4'}>
           {/* Unit Control Card */}
           <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3.5 sm:p-5 shadow-2xs space-y-3.5">
             {/* Top row: Unit title + Quick Unit Dropdown + Prev/Next buttons */}
@@ -781,8 +904,27 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 </button>
               </div>
 
-              {/* Utility Tools: TTS Play & Copy */}
-              <div className="flex items-center gap-2">
+              {/* Utility Tools: Bangla Blur, TTS Play & Copy */}
+              <div className="flex flex-wrap items-center gap-2">
+                {viewMode !== 'en' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptics.selection();
+                      setIsBanglaBlurred(prev => !prev);
+                    }}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-2xs ${
+                      isBanglaBlurred
+                        ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800'
+                        : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-transparent'
+                    }`}
+                    title={isBanglaBlurred ? 'বাংলা অনুবাদ দেখুন' : 'বাংলা অনুবাদ ব্লার করুন'}
+                  >
+                    {isBanglaBlurred ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                    <span>{isBanglaBlurred ? 'বাংলা দেখুন' : 'বাংলা ব্লার'}</span>
+                  </button>
+                )}
+
                 <button
                   type="button"
                   onClick={togglePlayStory}
@@ -810,20 +952,27 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
             </div>
           </div>
 
-          {/* VIEW 1: DUAL VIEW (Side by Side / Stacked on Mobile) */}
+          {/* VIEW 1: DUAL VIEW (Resizable Split on Desktop / Stacked on Mobile) */}
           {viewMode === 'dual' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 items-stretch">
+            <div
+              ref={splitContainerRef}
+              style={{
+                '--split-left': `${splitPercent}%`,
+                '--split-right': `${100 - splitPercent}%`,
+              } as React.CSSProperties}
+              className={`flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-0 items-stretch ${isDraggingSplit ? 'select-none' : ''}`}
+            >
               {/* Left Column: English Story */}
-              <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-2xs space-y-3 flex flex-col justify-between">
+              <div className="w-full lg:w-[calc(var(--split-left)-10px)] shrink-0 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-2xs space-y-3 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-3">
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800 mb-3">
+                    <div className="flex items-center gap-2 min-w-0">
                       <span className="text-base">🇬🇧</span>
-                      <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">
+                      <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate">
                         English Story
                       </h3>
                     </div>
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
                       শব্দে ট্যাপ করে অর্থ দেখুন
                     </span>
                   </div>
@@ -833,21 +982,97 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 </div>
               </div>
 
+              {/* Draggable Middle Divider Handle (Desktop only) */}
+              <div
+                role="separator"
+                aria-orientation="vertical"
+                aria-label="ইংরেজি ও বাংলা কলামের প্রস্থ পরিবর্তন করুন"
+                aria-valuenow={Math.round(splitPercent)}
+                aria-valuemin={25}
+                aria-valuemax={75}
+                tabIndex={0}
+                onPointerDown={(e) => {
+                  e.preventDefault();
+                  haptics.selection();
+                  setIsDraggingSplit(true);
+                }}
+                onDoubleClick={() => {
+                  haptics.tap();
+                  setSplitPercent(50);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    setSplitPercent(prev => Math.max(25, prev - 2));
+                  } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    setSplitPercent(prev => Math.min(75, prev + 2));
+                  }
+                }}
+                title="ডানে-বামে টেনে বড়-ছোট করুন (ডাবল ক্লিকে রিসেট)"
+                className="hidden lg:flex w-5 shrink-0 cursor-col-resize items-center justify-center group select-none touch-none relative focus:outline-hidden"
+              >
+                <div
+                  className={`w-1 h-full rounded-full transition-colors ${
+                    isDraggingSplit
+                      ? 'bg-emerald-500'
+                      : 'bg-slate-200/90 dark:bg-slate-800 group-hover:bg-emerald-400 dark:group-hover:bg-emerald-600'
+                  }`}
+                />
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 flex items-center justify-center w-5 h-10 rounded-full border shadow-sm transition-all ${
+                    isDraggingSplit
+                      ? 'bg-emerald-600 text-white border-emerald-500 scale-110'
+                      : 'bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 group-hover:text-emerald-600 group-hover:border-emerald-400'
+                  }`}
+                >
+                  <GripVertical className="w-3.5 h-3.5" />
+                </div>
+                {isDraggingSplit && (
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-[10px] font-bold whitespace-nowrap shadow-md pointer-events-none">
+                    {Math.round(splitPercent)}% | {Math.round(100 - splitPercent)}%
+                  </div>
+                )}
+              </div>
+
               {/* Right Column: Bengali Story */}
-              <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-2xs space-y-3 flex flex-col justify-between">
+              <div className="w-full lg:w-[calc(var(--split-right)-10px)] shrink-0 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-2xs space-y-3 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-3">
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800 mb-3">
+                    <div className="flex items-center gap-2 min-w-0">
                       <span className="text-base">🇧🇩</span>
-                      <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">
+                      <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate">
                         বাংলা অনুবাদ
                       </h3>
                     </div>
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
-                      শব্দে ট্যাপ করে ইংরেজি দেখুন
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hidden sm:inline">
+                        শব্দে ট্যাপ করে ইংরেজি দেখুন
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          haptics.selection();
+                          setIsBanglaBlurred(prev => !prev);
+                        }}
+                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer ${
+                          isBanglaBlurred
+                            ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                        }`}
+                        title={isBanglaBlurred ? 'অনুবাদ দেখুন' : 'অনুবাদ ব্লার করুন'}
+                      >
+                        {isBanglaBlurred ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                        <span>{isBanglaBlurred ? 'দেখুন' : 'ব্লার'}</span>
+                      </button>
+                    </div>
                   </div>
-                  <div className="prose dark:prose-invert max-w-none">
+                  <div
+                    className={`prose dark:prose-invert max-w-none transition-all duration-200 ${
+                      isBanglaBlurred ? 'blur-[6px] select-none pointer-events-none opacity-80' : ''
+                    }`}
+                    aria-hidden={isBanglaBlurred}
+                  >
                     {renderStoryBangla(currentUnit.story_bn)}
                   </div>
                 </div>
@@ -878,18 +1103,40 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
           {/* VIEW 3: BANGLA STORY ONLY */}
           {viewMode === 'bn' && (
             <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-6 shadow-2xs space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-2">
                   <span className="text-base">🇧🇩</span>
                   <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">
                     বাংলা অনুবাদ
                   </h3>
                 </div>
-                <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
-                  শব্দে ক্লিক করে ইংরেজি দেখুন
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold hidden sm:inline">
+                    শব্দে ক্লিক করে ইংরেজি দেখুন
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptics.selection();
+                      setIsBanglaBlurred(prev => !prev);
+                    }}
+                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer ${
+                      isBanglaBlurred
+                        ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    {isBanglaBlurred ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                    <span>{isBanglaBlurred ? 'অনুবাদ দেখুন' : 'ব্লার করুন'}</span>
+                  </button>
+                </div>
               </div>
-              <div className="prose dark:prose-invert max-w-none pt-1">
+              <div
+                className={`prose dark:prose-invert max-w-none pt-1 transition-all duration-200 ${
+                  isBanglaBlurred ? 'blur-[6px] select-none pointer-events-none opacity-80' : ''
+                }`}
+                aria-hidden={isBanglaBlurred}
+              >
                 {renderStoryBangla(currentUnit.story_bn)}
               </div>
             </div>
