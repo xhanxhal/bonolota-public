@@ -23,6 +23,12 @@ import {
 import { STORY_UNITS, StoryUnit, StoryVocabItem } from '../data/storyUnitsData';
 import { getAllWords } from '../data/units';
 import { VocabWord } from '../data/types';
+import {
+  preloadBeginnerDictionary,
+  getBeginnerWordIfLoaded,
+  lookupBeginnerDictionaryWord,
+  BeginnerDictEntry,
+} from '../data/beginnerDictionary';
 import { getClientDeviceId } from '../utils/deviceFingerprint';
 import { haptics } from '../utils/haptics';
 
@@ -206,6 +212,19 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     setSelectedWord(null);
   }, []);
 
+  const toBeginnerWordDetail = useCallback((cleanWord: string, entry: BeginnerDictEntry): StoryWordDetail => {
+    return {
+      word: cleanWord,
+      pos: entry.p || 'word',
+      meaning: entry.m,
+      definition: entry.d,
+      phonetic: entry.ph,
+      synonyms: entry.s && entry.s.length > 0 ? entry.s : undefined,
+      antonyms: entry.a && entry.a.length > 0 ? entry.a : undefined,
+      isDictionaryLookup: true,
+    };
+  }, []);
+
   const handleBeginnerWordClick = useCallback(async (rawToken: string, paragraphContext?: string) => {
     haptics.tap();
     const cleanWord = rawToken.trim().replace(/[’']/g, "'").replace(/'s$/i, '');
@@ -244,7 +263,23 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       return;
     }
 
-    // 4. Check local browser dictionary cache
+    // 4. Synchronous 0ms lookup from preloaded local static story dictionary
+    const syncStaticEntry = getBeginnerWordIfLoaded(cleanWord);
+    if (syncStaticEntry) {
+      setIsWordLookupLoading(false);
+      setSelectedWord(toBeginnerWordDetail(cleanWord, syncStaticEntry));
+      return;
+    }
+
+    // 5. Async local chunk load (still 100% offline/local, no external API wait)
+    const asyncStaticEntry = await lookupBeginnerDictionaryWord(cleanWord);
+    if (asyncStaticEntry) {
+      setIsWordLookupLoading(false);
+      setSelectedWord(toBeginnerWordDetail(cleanWord, asyncStaticEntry));
+      return;
+    }
+
+    // 6. Check local browser dictionary cache
     const cache = getWordCache();
     const cached = cache.get(lower);
     if (cached) {
@@ -253,7 +288,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       return;
     }
 
-    // 5. Fetch from server dictionary lookup API
+    // 7. Last-resort fallback to server dictionary lookup API
     lookupAbortRef.current?.abort();
     const controller = new AbortController();
     lookupAbortRef.current = controller;
@@ -327,7 +362,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
         setIsWordLookupLoading(false);
       }
     }
-  }, [vocabMap, globalStoryVocabMap, globalCurriculumMap, enrichWithCurriculum, getWordCache, saveWordToCache]);
+  }, [vocabMap, globalStoryVocabMap, globalCurriculumMap, enrichWithCurriculum, toBeginnerWordDetail, getWordCache, saveWordToCache]);
 
   // Reset speech and hover on unit change
   useEffect(() => {
@@ -357,12 +392,15 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     }
   }, [isBanglaBlurred]);
 
-  // Persist Beginner Mode preference
+  // Persist Beginner Mode preference & preload static dictionary chunks
   useEffect(() => {
     try {
       localStorage.setItem('bonolota_story_beginner_mode', String(isBeginnerMode));
     } catch {
       // ignore
+    }
+    if (isBeginnerMode) {
+      void preloadBeginnerDictionary();
     }
   }, [isBeginnerMode]);
 
