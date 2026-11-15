@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from 'react';
 import { 
   BookOpen, 
   ChevronRight, 
@@ -19,6 +19,7 @@ import {
   GripVertical,
   Sparkles,
   Loader2,
+  MousePointer2,
 } from 'lucide-react';
 import { STORY_UNITS, StoryUnit, StoryVocabItem } from '../data/storyUnitsData';
 import { getAllWords } from '../data/units';
@@ -78,6 +79,14 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       return false;
     }
   });
+  const [isHoverMode, setIsHoverMode] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('bonolota_story_hover_mode') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [hoverPreview, setHoverPreview] = useState<StoryWordDetail | null>(null);
   const [splitPercent, setSplitPercent] = useState<number>(() => {
     try {
       const saved = Number(localStorage.getItem('bonolota_story_split_pct'));
@@ -93,6 +102,9 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
   const splitContainerRef = useRef<HTMLDivElement>(null);
   const lookupAbortRef = useRef<AbortController | null>(null);
   const wordCacheRef = useRef<Map<string, StoryWordDetail> | null>(null);
+  const hoverBoxRef = useRef<HTMLDivElement>(null);
+  const hoverCoordsRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const activeHoverTokenRef = useRef<string | null>(null);
 
   // Filter units by category and search
   const filteredUnits = useMemo(() => {
@@ -223,6 +235,117 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       antonyms: entry.a && entry.a.length > 0 ? entry.a : undefined,
       isDictionaryLookup: true,
     };
+  }, []);
+
+  const resolveWordLocal = useCallback((rawToken: string, explicitVocab?: StoryVocabItem): StoryWordDetail | null => {
+    const cleanWord = rawToken.trim().replace(/[’']/g, "'").replace(/'s$/i, '');
+    if (!cleanWord) return null;
+    const lower = cleanWord.toLowerCase();
+
+    if (explicitVocab) {
+      const enriched = enrichWithCurriculum(explicitVocab);
+      if ((!enriched.synonyms?.length || !enriched.antonyms?.length)) {
+        const staticExtra = getBeginnerWordIfLoaded(cleanWord);
+        if (staticExtra) {
+          return {
+            ...enriched,
+            synonyms: enriched.synonyms?.length ? enriched.synonyms : staticExtra.s,
+            antonyms: enriched.antonyms?.length ? enriched.antonyms : staticExtra.a,
+          };
+        }
+      }
+      return enriched;
+    }
+
+    const unitVocab = vocabMap.get(lower);
+    if (unitVocab) return enrichWithCurriculum(unitVocab);
+
+    const globalStoryVocab = globalStoryVocabMap.get(lower);
+    if (globalStoryVocab) return enrichWithCurriculum(globalStoryVocab);
+
+    const currWord = globalCurriculumMap.get(lower);
+    if (currWord) {
+      return {
+        word: cleanWord,
+        pos: currWord.partOfSpeech || 'word',
+        meaning: currWord.banglaMeaning,
+        phonetic: currWord.pronunciation || undefined,
+        definition: currWord.examples?.[0]?.english ? `Example: "${currWord.examples[0].english}"` : undefined,
+        synonyms: currWord.synonyms,
+        antonyms: currWord.antonyms,
+      };
+    }
+
+    const syncStaticEntry = getBeginnerWordIfLoaded(cleanWord);
+    if (syncStaticEntry) return toBeginnerWordDetail(cleanWord, syncStaticEntry);
+
+    const cached = getWordCache().get(lower);
+    if (cached) return { ...cached, word: cleanWord };
+
+    return null;
+  }, [vocabMap, globalStoryVocabMap, globalCurriculumMap, enrichWithCurriculum, toBeginnerWordDetail, getWordCache]);
+
+  const updateHoverBoxPosition = useCallback((clientX: number, clientY: number) => {
+    hoverCoordsRef.current = { x: clientX, y: clientY };
+    const box = hoverBoxRef.current;
+    if (!box) return;
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const boxW = box.offsetWidth || 300;
+    const boxH = box.offsetHeight || 150;
+
+    // Generous safety margin so the current reading line & nearby words stay completely unobstructed
+    const gapYBelow = 30;
+    const gapYAbove = 28;
+    const gapX = 18;
+    const edgePad = 12;
+
+    let x = clientX + gapX;
+    if (x + boxW > vw - edgePad) {
+      x = Math.max(edgePad, clientX - boxW - gapX);
+    }
+    x = Math.max(edgePad, Math.min(vw - boxW - edgePad, x));
+
+    let y = clientY + gapYBelow;
+    if (y + boxH > vh - edgePad) {
+      const aboveY = clientY - boxH - gapYAbove;
+      y = aboveY >= edgePad ? aboveY : Math.max(edgePad, vh - boxH - edgePad);
+    }
+
+    box.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+  }, []);
+
+  const handleWordHoverEnter = useCallback((rawToken: string, e: React.MouseEvent, explicitVocab?: StoryVocabItem) => {
+    if (!isHoverMode) return;
+    const cleanWord = rawToken.trim().replace(/[’']/g, "'").replace(/'s$/i, '');
+    if (!cleanWord) return;
+    const lower = cleanWord.toLowerCase();
+
+    hoverCoordsRef.current = { x: e.clientX, y: e.clientY };
+    activeHoverTokenRef.current = lower;
+
+    const syncDetail = resolveWordLocal(cleanWord, explicitVocab);
+    if (syncDetail) {
+      setHoverPreview(syncDetail);
+      return;
+    }
+
+    void lookupBeginnerDictionaryWord(cleanWord).then((entry) => {
+      if (entry && activeHoverTokenRef.current === lower) {
+        setHoverPreview(toBeginnerWordDetail(cleanWord, entry));
+      }
+    });
+  }, [isHoverMode, resolveWordLocal, toBeginnerWordDetail]);
+
+  const handleWordHoverMove = useCallback((e: React.MouseEvent) => {
+    if (!isHoverMode) return;
+    updateHoverBoxPosition(e.clientX, e.clientY);
+  }, [isHoverMode, updateHoverBoxPosition]);
+
+  const handleWordHoverLeave = useCallback(() => {
+    activeHoverTokenRef.current = null;
+    setHoverPreview(null);
   }, []);
 
   const handleBeginnerWordClick = useCallback(async (rawToken: string, paragraphContext?: string) => {
@@ -371,6 +494,8 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     }
     setIsTtsPlaying(false);
     setHoveredWordKey(null);
+    activeHoverTokenRef.current = null;
+    setHoverPreview(null);
   }, [activeUnitNumber]);
 
   // Cleanup speech synthesis and active lookup on unmount
@@ -392,17 +517,59 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     }
   }, [isBanglaBlurred]);
 
-  // Persist Beginner Mode preference & preload static dictionary chunks
+  // Persist Beginner Mode & Hover Mode preferences & preload static dictionary chunks
   useEffect(() => {
     try {
       localStorage.setItem('bonolota_story_beginner_mode', String(isBeginnerMode));
     } catch {
       // ignore
     }
-    if (isBeginnerMode) {
+    if (isBeginnerMode || isHoverMode) {
       void preloadBeginnerDictionary();
     }
-  }, [isBeginnerMode]);
+  }, [isBeginnerMode, isHoverMode]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('bonolota_story_hover_mode', String(isHoverMode));
+    } catch {
+      // ignore
+    }
+    if (!isHoverMode) {
+      activeHoverTokenRef.current = null;
+      setHoverPreview(null);
+    }
+  }, [isHoverMode]);
+
+  // Reposition floating hover card safely whenever its content updates
+  useLayoutEffect(() => {
+    if (hoverPreview) {
+      updateHoverBoxPosition(hoverCoordsRef.current.x, hoverCoordsRef.current.y);
+    }
+  }, [hoverPreview, updateHoverBoxPosition]);
+
+  // Hide hover card when modal opens or user scrolls
+  useEffect(() => {
+    if (selectedWord) {
+      activeHoverTokenRef.current = null;
+      setHoverPreview(null);
+    }
+  }, [selectedWord]);
+
+  useEffect(() => {
+    if (!isHoverMode) return;
+    const hideHover = () => {
+      activeHoverTokenRef.current = null;
+      setHoverPreview(null);
+    };
+    window.addEventListener('scroll', hideHover, { passive: true });
+    const fsNode = fullScreenContainerRef.current;
+    fsNode?.addEventListener('scroll', hideHover, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', hideHover);
+      fsNode?.removeEventListener('scroll', hideHover);
+    };
+  }, [isHoverMode, isFullScreen]);
 
   // Persist split percentage
   useEffect(() => {
@@ -545,8 +712,17 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 <button
                   key={index}
                   type="button"
-                  onMouseEnter={() => setHoveredWordKey(wordKey)}
-                  onMouseLeave={() => setHoveredWordKey(null)}
+                  onMouseEnter={(e) => {
+                    setHoveredWordKey(wordKey);
+                    if (isHoverMode) handleWordHoverEnter(trimmed, e, vocab);
+                  }}
+                  onMouseMove={(e) => {
+                    if (isHoverMode) handleWordHoverMove(e);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredWordKey(null);
+                    if (isHoverMode) handleWordHoverLeave();
+                  }}
                   onClick={() => {
                     haptics.tap();
                     setIsWordLookupLoading(false);
@@ -566,13 +742,13 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                       ? 'text-emerald-950 dark:text-emerald-200 bg-emerald-100/90 dark:bg-emerald-900/50 decoration-solid decoration-emerald-600 dark:decoration-emerald-400 rounded-sm px-1 -mx-0.5 shadow-2xs'
                       : 'text-emerald-700 dark:text-emerald-400 decoration-dotted decoration-emerald-500/80 dark:decoration-emerald-400/80 hover:text-emerald-900 dark:hover:text-emerald-200 hover:decoration-solid'
                   }`}
-                  title="অর্থ ও উচ্চারণ দেখতে ক্লিক করুন"
+                  title={isHoverMode ? undefined : 'অর্থ ও উচ্চারণ দেখতে ক্লিক করুন'}
                 >
                   {part}
                 </button>
               );
             }
-            if (!isBeginnerMode) {
+            if (!isBeginnerMode && !isHoverMode) {
               return <span key={index}>{part}</span>;
             }
             const tokens = part.split(/([A-Za-z]+(?:[’'][A-Za-z]+)*)/g);
@@ -583,16 +759,19 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                     return (
                       <span
                         key={tIdx}
-                        role="button"
-                        tabIndex={0}
-                        onClick={() => handleBeginnerWordClick(token, para)}
-                        onKeyDown={(e) => {
+                        role={isBeginnerMode ? 'button' : undefined}
+                        tabIndex={isBeginnerMode ? 0 : undefined}
+                        onMouseEnter={isHoverMode ? (e) => handleWordHoverEnter(token, e) : undefined}
+                        onMouseMove={isHoverMode ? handleWordHoverMove : undefined}
+                        onMouseLeave={isHoverMode ? handleWordHoverLeave : undefined}
+                        onClick={isBeginnerMode ? () => handleBeginnerWordClick(token, para) : undefined}
+                        onKeyDown={isBeginnerMode ? (e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             handleBeginnerWordClick(token, para);
                           }
-                        }}
-                        className="cursor-pointer"
+                        } : undefined}
+                        className={isBeginnerMode ? 'cursor-pointer' : undefined}
                       >
                         {token}
                       </span>
@@ -701,8 +880,17 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 <button
                   key={index}
                   type="button"
-                  onMouseEnter={() => setHoveredWordKey(wordKey)}
-                  onMouseLeave={() => setHoveredWordKey(null)}
+                  onMouseEnter={(e) => {
+                    setHoveredWordKey(wordKey);
+                    if (isHoverMode) handleWordHoverEnter(matchedVocab.word, e, matchedVocab);
+                  }}
+                  onMouseMove={(e) => {
+                    if (isHoverMode) handleWordHoverMove(e);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredWordKey(null);
+                    if (isHoverMode) handleWordHoverLeave();
+                  }}
                   onClick={() => {
                     haptics.tap();
                     setSelectedWord(matchedVocab);
@@ -712,7 +900,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                       ? 'text-emerald-950 dark:text-emerald-200 bg-emerald-100/90 dark:bg-emerald-900/50 decoration-solid decoration-emerald-600 dark:decoration-emerald-400 rounded-sm px-1 -mx-0.5 shadow-2xs'
                       : 'text-emerald-700 dark:text-emerald-400 decoration-dotted decoration-emerald-500/80 dark:decoration-emerald-400/80 hover:text-emerald-900 dark:hover:text-emerald-200 hover:decoration-solid'
                   }`}
-                  title={`${matchedVocab.word} (${matchedVocab.meaning}) - বিস্তারিত দেখতে ক্লিক করুন`}
+                  title={isHoverMode ? undefined : `${matchedVocab.word} (${matchedVocab.meaning}) - বিস্তারিত দেখতে ক্লিক করুন`}
                 >
                   {part}
                 </button>
@@ -1232,6 +1420,27 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                   type="button"
                   onClick={() => {
                     haptics.selection();
+                    setIsHoverMode(prev => !prev);
+                  }}
+                  aria-pressed={isHoverMode}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-2xs ${
+                    isHoverMode
+                      ? 'bg-indigo-600 hover:bg-indigo-700 text-white border-indigo-600'
+                      : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-transparent'
+                  }`}
+                  title={isHoverMode ? 'Hover On চালু আছে — যেকোনো শব্দের উপর মাউস রাখলেই সাথে সাথে অর্থ ও Synonym/Antonym দেখাবে' : 'Hover On চালু করুন — ক্লিক ছাড়াই শুধু শব্দের উপর মাউস রাখলে অর্থ ও Synonym/Antonym দেখাবে'}
+                >
+                  <MousePointer2 className="w-3.5 h-3.5" />
+                  <span>Hover On</span>
+                  {isHoverMode && (
+                    <span className="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px] font-black uppercase">ON</span>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptics.selection();
                     setIsBeginnerMode(prev => !prev);
                   }}
                   aria-pressed={isBeginnerMode}
@@ -1613,6 +1822,70 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
               )}
             </div>
           </div>
+        </div>
+      )}
+      {/* CURSOR-TRACKING HOVER TOOLTIP (MEANINGS + SYNONYMS/ANTONYMS ONLY) */}
+      {isHoverMode && hoverPreview && !selectedWord && (
+        <div
+          ref={hoverBoxRef}
+          role="tooltip"
+          className="fixed top-0 left-0 z-50 pointer-events-none will-change-transform w-[285px] sm:w-[310px] rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/90 dark:border-slate-700/90 shadow-xl p-3.5 space-y-2.5"
+        >
+          <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
+            <span className="text-base font-black text-slate-900 dark:text-white font-sans truncate">
+              {hoverPreview.word}
+            </span>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-sans shrink-0">
+              {hoverPreview.pos || 'word'}
+            </span>
+          </div>
+
+          <div className="bg-emerald-50/75 dark:bg-emerald-950/40 px-3 py-2 rounded-xl border border-emerald-100 dark:border-emerald-900/60">
+            <p className="text-sm font-bold text-emerald-950 dark:text-emerald-200 font-bangla leading-snug">
+              {hoverPreview.meaning}
+            </p>
+          </div>
+
+          {((hoverPreview.synonyms && hoverPreview.synonyms.length > 0) ||
+            (hoverPreview.antonyms && hoverPreview.antonyms.length > 0)) && (
+            <div className="space-y-1.5 pt-0.5">
+              {hoverPreview.synonyms && hoverPreview.synonyms.length > 0 && (
+                <div>
+                  <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block mb-1">
+                    Synonyms
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {hoverPreview.synonyms.slice(0, 5).map((syn, idx) => (
+                      <span
+                        key={idx}
+                        className="px-1.5 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 text-[11px] font-semibold font-sans border border-emerald-200/70 dark:border-emerald-800/60"
+                      >
+                        {syn}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {hoverPreview.antonyms && hoverPreview.antonyms.length > 0 && (
+                <div>
+                  <span className="text-[10px] font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider block mb-1">
+                    Antonyms
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {hoverPreview.antonyms.slice(0, 5).map((ant, idx) => (
+                      <span
+                        key={idx}
+                        className="px-1.5 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/70 text-rose-900 dark:text-rose-200 text-[11px] font-semibold font-sans border border-rose-200/70 dark:border-rose-800/60"
+                      >
+                        {ant}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
