@@ -12,7 +12,7 @@ export const unit04: UnitInfo = {
       id: 'u4_assimilation_1',
       unitId: 4,
       word: 'Assimilation',
-      banglaMeaning: 'আত্মীকরণ , সমাজে বিলীন হওয়া',
+      banglaMeaning: 'আত্মীকরণ , সমাজে বিলীন হওয়া , আত্তীকরণ , পরিপাক',
       pronunciation: '/əˌsɪm.ɪˈleɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit04: UnitInfo = {
       id: 'u4_anachronism_2',
       unitId: 4,
       word: 'Anachronism',
-      banglaMeaning: 'কালভ্রম , সময়ের সাথে বেমানান বিষয়',
+      banglaMeaning: 'কালভ্রম , সময়ের সাথে বেমানান বিষয় , একযুগের বস্তু , ব্যক্তি',
       pronunciation: '/əˈnæk.rə.nɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit04: UnitInfo = {
       id: 'u4_bureaucracy_3',
       unitId: 4,
       word: 'Bureaucracy',
-      banglaMeaning: 'আমলাতন্ত্র , দাপ্তরিক জটিল শাসনব্যবস্থা',
+      banglaMeaning: 'আমলাতন্ত্র , দাপ্তরিক জটিল শাসনব্যবস্থা , আমলাশ্রেণী , আমলাতান্ত্রিকতা',
       pronunciation: '/bjʊəˈrɒk.rə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit04: UnitInfo = {
       id: 'u4_demographic_5',
       unitId: 4,
       word: 'Demographic',
-      banglaMeaning: 'জনমিতিক , জনসংখ্যা সংক্রান্ত',
+      banglaMeaning: 'জনমিতিক , জনসংখ্যা সংক্রান্ত , জনতাত্ত্বিক',
       pronunciation: '/ˌdem.əˈɡræf.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -102,7 +102,7 @@ export const unit04: UnitInfo = {
       id: 'u4_egalitarian_6',
       unitId: 4,
       word: 'Egalitarian',
-      banglaMeaning: 'সাম্যবাদী , সকলের সমান অধিকারে বিশ্বাসী',
+      banglaMeaning: 'সাম্যবাদী , সকলের সমান অধিকারে বিশ্বাসী , সমানাধিকারী , সমমাত্রিক',
       pronunciation: '/ɪˌɡæl.ɪˈteə.ri.ən/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit04: UnitInfo = {
       id: 'u4_feudal_7',
       unitId: 4,
       word: 'Feudal',
-      banglaMeaning: 'সামন্ততান্ত্রিক',
+      banglaMeaning: 'সামন্ততান্ত্রিক , সামন্তীয়',
       pronunciation: '/ˈfjuː.dəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -138,7 +138,7 @@ export const unit04: UnitInfo = {
       id: 'u4_hegemony_8',
       unitId: 4,
       word: 'Hegemony',
-      banglaMeaning: 'আধিপত্য , অন্য সম্প্রদায়ের উপর কর্তৃত্ব',
+      banglaMeaning: 'আধিপত্য , অন্য সম্প্রদায়ের উপর কর্তৃত্ব , নেতৃত্ব',
       pronunciation: '/hɪˈɡem.ə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit04: UnitInfo = {
       id: 'u4_indigenous_9',
       unitId: 4,
       word: 'Indigenous',
-      banglaMeaning: 'আদিবাসী , দেশীয়',
+      banglaMeaning: 'আদিবাসী , দেশীয় , দেশজ , দিশি',
       pronunciation: '/ɪnˈdɪdʒ.ɪ.nəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit04: UnitInfo = {
       id: 'u4_juxtaposition_10',
       unitId: 4,
       word: 'Juxtaposition',
-      banglaMeaning: 'পাশাপাশি স্থাপন করে বৈসাদৃশ্য দেখানো',
+      banglaMeaning: 'পাশাপাশি স্থাপন করে বৈসাদৃশ্য দেখানো , সন্নিধি , পাশাপাশি অবস্থান',
       pronunciation: '/ˌdʒʌk.stə.pəˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit04: UnitInfo = {
       id: 'u4_kinfolk_11',
       unitId: 4,
       word: 'Kinfolk',
-      banglaMeaning: 'জ্ঞাতিগোষ্ঠী , আত্মীয়স্বজন',
+      banglaMeaning: 'জ্ঞাতিগোষ্ঠী , আত্মীয়স্বজন , বলতো-',
       pronunciation: '/ˈkɪn.fəʊk/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit04: UnitInfo = {
       id: 'u4_lineage_12',
       unitId: 4,
       word: 'Lineage',
-      banglaMeaning: 'বংশপরম্পরা , কুলমর্যাদা',
+      banglaMeaning: 'বংশপরম্পরা , কুলমর্যাদা , ঘর',
       pronunciation: '/ˈlɪn.i.ɪdʒ/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit04: UnitInfo = {
       id: 'u4_nuance_14',
       unitId: 4,
       word: 'Nuance',
-      banglaMeaning: 'সূক্ষ্ম পার্থক্য , অর্থ বা সুরের সামান্য তারতম্য',
+      banglaMeaning: 'সূক্ষ্ম পার্থক্য , অর্থ বা সুরের সামান্য তারতম্য , অতি সূক্ষ্ম তারতম্য , সামান্য পার্থক্য',
       pronunciation: '/ˈnjuː.ɑːns/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit04: UnitInfo = {
       id: 'u4_ostracize_15',
       unitId: 4,
       word: 'Ostracize',
-      banglaMeaning: 'সমাজচ্যুত করা , একঘরে করা',
+      banglaMeaning: 'সমাজচ্যুত করা , একঘরে করা , সমাজ থেকে নির্বাসিত , বহিষ্কার করা',
       pronunciation: '/ˈɒs.trə.saɪz/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit04: UnitInfo = {
       id: 'u4_patriarchy_16',
       unitId: 4,
       word: 'Patriarchy',
-      banglaMeaning: 'পিতৃতান্ত্রিক সমাজব্যবস্থা',
+      banglaMeaning: 'পিতৃতান্ত্রিক সমাজব্যবস্থা , পিতৃতন্ত্র , গোষ্ঠীপতিশাসিত সমাজ',
       pronunciation: '/ˈpeɪ.tri.ɑː.ki/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit04: UnitInfo = {
       id: 'u4_ritualistic_18',
       unitId: 4,
       word: 'Ritualistic',
-      banglaMeaning: 'আনুষ্ঠানিক , চিরাচরিত প্রথা অনুযায়ী কৃত',
+      banglaMeaning: 'আনুষ্ঠানিক , চিরাচরিত প্রথা অনুযায়ী কৃত , আচারনিষ্ঠ',
       pronunciation: '/ˌrɪtʃ.u.əˈlɪs.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit04: UnitInfo = {
       id: 'u4_sovereignty_19',
       unitId: 4,
       word: 'Sovereignty',
-      banglaMeaning: 'সার্বভৌমত্ব , চূড়ান্ত রাষ্ট্রীয় কর্তৃত্ব',
+      banglaMeaning: 'সার্বভৌমত্ব , চূড়ান্ত রাষ্ট্রীয় কর্তৃত্ব , শ্রেষ্ঠতা , সার্বভৌম ক্ষমতা',
       pronunciation: '/ˈsɒv.rɪn.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit04: UnitInfo = {
       id: 'u4_taboo_20',
       unitId: 4,
       word: 'Taboo',
-      banglaMeaning: 'সামাজিক নিষেধাজ্ঞা , নিষিদ্ধ বিষয়',
+      banglaMeaning: 'সামাজিক নিষেধাজ্ঞা , নিষিদ্ধ বিষয় , নিষিদ্ধকরণ , অলঙ্ঘনীয়',
       pronunciation: '/təˈbuː/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit04: UnitInfo = {
       id: 'u4_venerable_22',
       unitId: 4,
       word: 'Venerable',
-      banglaMeaning: 'শ্রদ্ধেয় , বয়স ও প্রজ্ঞার কারণে সম্মানিত',
+      banglaMeaning: 'শ্রদ্ধেয় , বয়স ও প্রজ্ঞার কারণে সম্মানিত , নমস্য , পূজ্য',
       pronunciation: '/ˈven.ər.ə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit04: UnitInfo = {
       id: 'u4_xenophobia_23',
       unitId: 4,
       word: 'Xenophobia',
-      banglaMeaning: 'বিদেশী বা অপরিচিতদের প্রতি অযৌক্তিক ভীতি ও ঘৃণা',
+      banglaMeaning: 'বিদেশী বা অপরিচিতদের প্রতি অযৌক্তিক ভীতি ও ঘৃণা , বিদেশাতঙ্ক',
       pronunciation: '/ˌzen.əˈfəʊ.bi.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit04: UnitInfo = {
       id: 'u4_artifact_24',
       unitId: 4,
       word: 'Artifact',
-      banglaMeaning: 'প্রাচীন প্রত্নতাত্ত্বিক নিদর্শন',
+      banglaMeaning: 'প্রাচীন প্রত্নতাত্ত্বিক নিদর্শন , প্রত্নবস্তু , শিল্পকর্ম , হস্তনির্মিত বস্তু',
       pronunciation: '/ˈɑː.tɪ.fækt/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit04: UnitInfo = {
       id: 'u4_collectivism_25',
       unitId: 4,
       word: 'Collectivism',
-      banglaMeaning: 'সমষ্টিবাদ , ব্যক্তির চেয়ে সমষ্টিকে প্রাধান্য',
+      banglaMeaning: 'সমষ্টিবাদ , ব্যক্তির চেয়ে সমষ্টিকে প্রাধান্য , সংহতিবাদ',
       pronunciation: '/kəˈlek.tɪ.vɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit04: UnitInfo = {
       id: 'u4_diaspora_26',
       unitId: 4,
       word: 'Diaspora',
-      banglaMeaning: 'অভিবাসী জনসমষ্টি , মাতৃভূমি ছেড়ে ছড়িয়ে পড়া জাতি',
+      banglaMeaning: 'অভিবাসী জনসমষ্টি , মাতৃভূমি ছেড়ে ছড়িয়ে পড়া জাতি , ডিঅস্পর',
       pronunciation: '/daɪˈæs.pər.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit04: UnitInfo = {
       id: 'u4_ethnocentric_27',
       unitId: 4,
       word: 'Ethnocentric',
-      banglaMeaning: 'স্বজাতিকেন্দ্রিক , নিজ সংস্কৃতিকে শ্রেষ্ঠ মনে করা',
+      banglaMeaning: 'স্বজাতিকেন্দ্রিক , নিজ সংস্কৃতিকে শ্রেষ্ঠ মনে করা , স্বজাতি-অভিমানী',
       pronunciation: '/ˌeθ.nəʊˈsen.trɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit04: UnitInfo = {
       id: 'u4_hierarchy_29',
       unitId: 4,
       word: 'Hierarchy',
-      banglaMeaning: 'পদক্রম , স্তরবিন্যাস',
+      banglaMeaning: 'পদক্রম , স্তরবিন্যাস , দেবদূতগণ , যাজকতন্ত্র',
       pronunciation: '/ˈhaɪə.rɑː.ki/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit04: UnitInfo = {
       id: 'u4_marginalize_30',
       unitId: 4,
       word: 'Marginalize',
-      banglaMeaning: 'প্রান্তিকীকরণ করা , ক্ষমতাহীন করা',
+      banglaMeaning: 'প্রান্তিকীকরণ করা , ক্ষমতাহীন করা , অকিঞ্চিত্কর করে তোলা',
       pronunciation: '/ˈmɑː.dʒɪ.nəl.aɪz/',
       partOfSpeech: 'verb',
       examples: [
@@ -552,7 +552,7 @@ export const unit04: UnitInfo = {
       id: 'u4_mores_31',
       unitId: 4,
       word: 'Mores',
-      banglaMeaning: 'কঠোর সামাজিক প্রথা ও রীতিনীতি',
+      banglaMeaning: 'কঠোর সামাজিক প্রথা ও রীতিনীতি , আচার-আচরণ',
       pronunciation: '/ˈmɔː.reɪz/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit04: UnitInfo = {
       id: 'u4_orthodoxy_32',
       unitId: 4,
       word: 'Orthodoxy',
-      banglaMeaning: 'সনাতন বিশ্বাস বা গোঁড়ামি',
+      banglaMeaning: 'সনাতন বিশ্বাস বা গোঁড়ামি , সনাতনপন্থা , মতে দৃঢ় বিশ্বাস , প্রগাঢ় নিষ্ঠা',
       pronunciation: '/ˈɔː.θə.dɒk.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit04: UnitInfo = {
       id: 'u4_pluralism_33',
       unitId: 4,
       word: 'Pluralism',
-      banglaMeaning: 'বহুত্ববাদ , বৈচিত্র্যময় মতবাদের সহাবস্থান',
+      banglaMeaning: 'বহুত্ববাদ , বৈচিত্র্যময় মতবাদের সহাবস্থান , একাধিকত্ব , বহুতত্ব',
       pronunciation: '/ˈplʊə.rəl.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit04: UnitInfo = {
       id: 'u4_secularism_34',
       unitId: 4,
       word: 'Secularism',
-      banglaMeaning: 'ধর্মনিরপেক্ষতা',
+      banglaMeaning: 'ধর্মনিরপেক্ষতা , ধর্মনিরপেক্ষ মতবাদ , ইহজাগতিকতা',
       pronunciation: '/ˈsek.jə.lə.rɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [

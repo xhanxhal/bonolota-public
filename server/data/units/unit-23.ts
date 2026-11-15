@@ -12,7 +12,7 @@ export const unit23: UnitInfo = {
       id: 'u23_appetizer_1',
       unitId: 23,
       word: 'Appetizer',
-      banglaMeaning: 'ক্ষুধাবর্ধক খাবার বা স্টার্টার',
+      banglaMeaning: 'ক্ষুধাবর্ধক খাবার বা স্টার্টার , এপেটাইজার , ক্ষুধাবর্ধক বস্তু , ক্ষুধা উদ্রেককর বস্তু',
       pronunciation: '/ˈæp.ə.taɪ.zər/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit23: UnitInfo = {
       id: 'u23_delicacy_4',
       unitId: 23,
       word: 'Delicacy',
-      banglaMeaning: 'সুস্বাদু ও দুর্লভ উপাদেয় খাদ্য',
+      banglaMeaning: 'সুস্বাদু ও দুর্লভ উপাদেয় খাদ্য , লাবণ্য , মাধুর্য , ক্ষীণতা',
       pronunciation: '/ˈdel.ɪ.kə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit23: UnitInfo = {
       id: 'u23_entree_5',
       unitId: 23,
       word: 'Entree',
-      banglaMeaning: 'ভোজের মূল পদ বা প্রধান খাদ্য',
+      banglaMeaning: 'ভোজের মূল পদ বা প্রধান খাদ্য , প্রবেশাধিকার',
       pronunciation: '/ˈɒn.treɪ/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit23: UnitInfo = {
       id: 'u23_fermentation_6',
       unitId: 23,
       word: 'Fermentation',
-      banglaMeaning: 'গাঁজন প্রক্রিয়া , ব্যাকটেরিয়া বা ইস্ট দ্বারা প্রক্রিয়াকরণ',
+      banglaMeaning: 'গাঁজন প্রক্রিয়া , ব্যাকটেরিয়া বা ইস্ট দ্বারা প্রক্রিয়াকরণ , উৎসেচন , সন্ধান',
       pronunciation: '/ˌfɜː.menˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit23: UnitInfo = {
       id: 'u23_gourmet_7',
       unitId: 23,
       word: 'Gourmet',
-      banglaMeaning: 'সুস্বাদু খাদ্যরসিক বা উচ্চমানের খাবার',
+      banglaMeaning: 'সুস্বাদু খাদ্যরসিক বা উচ্চমানের খাবার , পানভোজনবিলাসী , খাইয়ে লোক , পানভোজনে বিশেষজ্ঞ',
       pronunciation: '/ˈɡɔː.meɪ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -156,7 +156,7 @@ export const unit23: UnitInfo = {
       id: 'u23_ingredient_9',
       unitId: 23,
       word: 'Ingredient',
-      banglaMeaning: 'রান্নার উপাদান বা উপকরণ',
+      banglaMeaning: 'রান্নার উপাদান বা উপকরণ , অঙ্গ , মৌলিক পদার্থ',
       pronunciation: '/ɪnˈɡriː.di.ənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit23: UnitInfo = {
       id: 'u23_juicy_10',
       unitId: 23,
       word: 'Juicy',
-      banglaMeaning: 'রসালো ও সুস্বাদু',
+      banglaMeaning: 'রসালো ও সুস্বাদু , রসযুক্ত , সরস , নধর',
       pronunciation: '/ˈdʒuː.si/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit23: UnitInfo = {
       id: 'u23_knead_11',
       unitId: 23,
       word: 'Knead',
-      banglaMeaning: 'হাত দিয়ে আটা বা ময়দা ছানা বা ঠাসা',
+      banglaMeaning: 'হাত দিয়ে আটা বা ময়দা ছানা বা ঠাসা , ফেটানো , পিষা , দলাই মলাই করা',
       pronunciation: '/niːd/',
       partOfSpeech: 'verb',
       examples: [
@@ -210,7 +210,7 @@ export const unit23: UnitInfo = {
       id: 'u23_luscious_12',
       unitId: 23,
       word: 'Luscious',
-      banglaMeaning: 'অত্যন্ত সুস্বাদু , লোভনীয় ও তৃপ্তিদায়ক',
+      banglaMeaning: 'অত্যন্ত সুস্বাদু , লোভনীয় ও তৃপ্তিদায়ক , সুমিষ্ট , মধুর',
       pronunciation: '/ˈlʌʃ.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit23: UnitInfo = {
       id: 'u23_marinade_13',
       unitId: 23,
       word: 'Marinade',
-      banglaMeaning: 'মশলার মিশ্রণ যাতে মাংস বা মাছ ভিজিয়ে রাখা হয়',
+      banglaMeaning: 'মশলার মিশ্রণ যাতে মাংস বা মাছ ভিজিয়ে রাখা হয় , মসলার প্রলেপ',
       pronunciation: '/ˌmær.ɪˈneɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit23: UnitInfo = {
       id: 'u23_nutritious_14',
       unitId: 23,
       word: 'Nutritious',
-      banglaMeaning: 'পুষ্টিকর বা পুষ্টিগুণে সমৃদ্ধ',
+      banglaMeaning: 'পুষ্টিকর বা পুষ্টিগুণে সমৃদ্ধ , পুষ্টিবিধায়ক , পুষ্টিসংক্রান্ত',
       pronunciation: '/njuːˈtrɪʃ.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit23: UnitInfo = {
       id: 'u23_organic_15',
       unitId: 23,
       word: 'Organic',
-      banglaMeaning: 'জৈব সার বা কীটনাশকহীন প্রাকৃতিক পদ্ধতিতে উৎপাদিত',
+      banglaMeaning: 'জৈব সার বা কীটনাশকহীন প্রাকৃতিক পদ্ধতিতে উৎপাদিত , দেহযন্ত্রসংক্রান্ত , আঙ্গিক , যান্ত্রিক',
       pronunciation: '/ɔːˈɡæn.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit23: UnitInfo = {
       id: 'u23_palatable_16',
       unitId: 23,
       word: 'Palatable',
-      banglaMeaning: 'সুস্বাদু বা খাওয়ার যোগ্য',
+      banglaMeaning: 'সুস্বাদু বা খাওয়ার যোগ্য , রুচিকর , প্রীতিকর , অকটু',
       pronunciation: '/ˈpæl.ə.tə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit23: UnitInfo = {
       id: 'u23_quench_17',
       unitId: 23,
       word: 'Quench',
-      banglaMeaning: 'তৃষ্ণা নিবারণ করা বা নিভিয়ে দেওয়া',
+      banglaMeaning: 'তৃষ্ণা নিবারণ করা বা নিভিয়ে দেওয়া , নেভান , তৃপ্ত করা , থামান',
       pronunciation: '/kwentʃ/',
       partOfSpeech: 'verb',
       examples: [
@@ -318,7 +318,7 @@ export const unit23: UnitInfo = {
       id: 'u23_roast_18',
       unitId: 23,
       word: 'Roast',
-      banglaMeaning: 'আগুনে বা ওভেনে সেঁকা বা ঝলসানো',
+      banglaMeaning: 'আগুনে বা ওভেনে সেঁকা বা ঝলসানো , মাংসের কাবাব , ভাজা , ঝলসিয়া যাওয়া',
       pronunciation: '/rəʊst/',
       partOfSpeech: 'verb',
       examples: [
@@ -336,7 +336,7 @@ export const unit23: UnitInfo = {
       id: 'u23_savory_19',
       unitId: 23,
       word: 'Savory',
-      banglaMeaning: 'ঝাল-নোনতা সুস্বাদু বা মুখরোচক খাবার',
+      banglaMeaning: 'ঝাল-নোনতা সুস্বাদু বা মুখরোচক খাবার , সুতার , মসলাদার , সুগন্ধ',
       pronunciation: '/ˈseɪ.vər.i/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit23: UnitInfo = {
       id: 'u23_tastebud_20',
       unitId: 23,
       word: 'Tastebud',
-      banglaMeaning: 'জিহ্বার স্বাদমুকুল',
+      banglaMeaning: 'জিহ্বার স্বাদমুকুল , স্বাদগ্রন্থি',
       pronunciation: '/ˈteɪst.bʌd/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit23: UnitInfo = {
       id: 'u23_vegetarian_22',
       unitId: 23,
       word: 'Vegetarian',
-      banglaMeaning: 'নিরামিষাশী',
+      banglaMeaning: 'নিরামিষাশী , নিরামিষভোজী , উদ্ভিদ্ভোজী , উদ্ভিজ্জাশী',
       pronunciation: '/ˌvedʒ.ɪˈteə.ri.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit23: UnitInfo = {
       id: 'u23_wholesome_23',
       unitId: 23,
       word: 'Wholesome',
-      banglaMeaning: 'স্বাস্থ্যসম্মত , ভেজালহীন ও পুষ্টিকর',
+      banglaMeaning: 'স্বাস্থ্যসম্মত , ভেজালহীন ও পুষ্টিকর , পথ্য',
       pronunciation: '/ˈhəʊl.səm/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit23: UnitInfo = {
       id: 'u23_zest_24',
       unitId: 23,
       word: 'Zest',
-      banglaMeaning: 'লেবুর খোসার ঝাঁজালো সুগন্ধযুক্ত অংশ বা প্রবল আগ্রহ',
+      banglaMeaning: 'লেবুর খোসার ঝাঁজালো সুগন্ধযুক্ত অংশ বা প্রবল আগ্রহ , নিবিড়তা , প্রবল উদ্যম , প্রাণবন্ততা',
       pronunciation: '/zest/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit23: UnitInfo = {
       id: 'u23_artisanal_25',
       unitId: 23,
       word: 'Artisanal',
-      banglaMeaning: 'ঐতিহ্যবাহী হাতে তৈরি বা খাঁটি কারিগরি পদ্ধতিতে প্রস্তুত',
+      banglaMeaning: 'ঐতিহ্যবাহী হাতে তৈরি বা খাঁটি কারিগরি পদ্ধতিতে প্রস্তুত , হস্তশিল্পজাত , কারুকার্যময়',
       pronunciation: '/ˌɑː.tɪˈzæn.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit23: UnitInfo = {
       id: 'u23_braise_26',
       unitId: 23,
       word: 'Braise',
-      banglaMeaning: 'অল্প আঁচে ঢেকে মৃদু ঝোলে দীর্ঘক্ষণ রান্না করা',
+      banglaMeaning: 'অল্প আঁচে ঢেকে মৃদু ঝোলে দীর্ঘক্ষণ রান্না করা , ভাপে সিদ্ধ করা',
       pronunciation: '/breɪz/',
       partOfSpeech: 'verb',
       examples: [
@@ -480,7 +480,7 @@ export const unit23: UnitInfo = {
       id: 'u23_caramelize_27',
       unitId: 23,
       word: 'Caramelize',
-      banglaMeaning: 'চিনির উত্তাপে বাদামী ও সুস্বাদু ক্যারামেল হওয়া',
+      banglaMeaning: 'চিনির উত্তাপে বাদামী ও সুস্বাদু ক্যারামেল হওয়া , বাদামি করে ভাজা',
       pronunciation: '/ˈkær.ə.məl.aɪz/',
       partOfSpeech: 'verb',
       examples: [
@@ -516,7 +516,7 @@ export const unit23: UnitInfo = {
       id: 'u23_epicure_29',
       unitId: 23,
       word: 'Epicure',
-      banglaMeaning: 'উন্নত মানের খাদ্য ও পানীয়ের রসিক সমঝদার',
+      banglaMeaning: 'উন্নত মানের খাদ্য ও পানীয়ের রসিক সমঝদার , পান-ভোজনবিলাসী',
       pronunciation: '/ˈep.ɪ.kjʊər/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit23: UnitInfo = {
       id: 'u23_gastronomy_31',
       unitId: 23,
       word: 'Gastronomy',
-      banglaMeaning: 'রন্ধনকলা ও ভোজনতত্ত্বের বিজ্ঞান',
+      banglaMeaning: 'রন্ধনকলা ও ভোজনতত্ত্বের বিজ্ঞান , উত্তম পানভোজনবিদ্যা , উত্তম ভোজনবিলাসকলা',
       pronunciation: '/ɡæsˈtrɒn.ə.mi/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit23: UnitInfo = {
       id: 'u23_infusion_32',
       unitId: 23,
       word: 'Infusion',
-      banglaMeaning: 'গরম পানিতে গুলিয়ে বা ডুবিয়ে নির্যাস তৈরির প্রক্রিয়া',
+      banglaMeaning: 'গরম পানিতে গুলিয়ে বা ডুবিয়ে নির্যাস তৈরির প্রক্রিয়া , গলানো , গলন , ভেজানো',
       pronunciation: '/ɪnˈfjuː.ʒən/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit23: UnitInfo = {
       id: 'u23_piquant_33',
       unitId: 23,
       word: 'Piquant',
-      banglaMeaning: 'ঝাঁজালো , মুখরোচক ও তীব্র সুস্বাদু',
+      banglaMeaning: 'ঝাঁজালো , মুখরোচক ও তীব্র সুস্বাদু , কুট , মনোরম তীব্রতাপূর্ণ',
       pronunciation: '/ˈpiː.kənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit23: UnitInfo = {
       id: 'u23_saute_34',
       unitId: 23,
       word: 'Saute',
-      banglaMeaning: 'অল্প তেলে দ্রুত নেড়েচেড়ে ভাজা',
+      banglaMeaning: 'অল্প তেলে দ্রুত নেড়েচেড়ে ভাজা , সাঁতলানোর ক্রিয়া',
       pronunciation: '/ˈsəʊ.teɪ/',
       partOfSpeech: 'verb',
       examples: [

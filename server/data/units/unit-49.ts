@@ -12,7 +12,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cower_1',
       unitId: 49,
       word: 'Cower',
-      banglaMeaning: 'গুড়ি মারা, ভয়ে জড়সড় হত্তয়া',
+      banglaMeaning: 'গুড়ি মারা, ভয়ে জড়সড় হওয়া',
       pronunciation: '/ˈcower/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit49: UnitInfo = {
       id: 'u49_craft_2',
       unitId: 49,
       word: 'Craft',
-      banglaMeaning: 'নৈপুণ্য, শঠতা',
+      banglaMeaning: 'নৈপুণ্য, শঠতা , কারুকর্ম , কারুশিল্প',
       pronunciation: '/ˈcraft/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit49: UnitInfo = {
       id: 'u49_crass_3',
       unitId: 49,
       word: 'Crass',
-      banglaMeaning: 'সংবেদনহীন, অনুভূতিশূন্য',
+      banglaMeaning: 'সংবেদনহীন, অনুভূতিশূন্য , নিতান্ত , অতিমাত্রায়',
       pronunciation: '/ˈcrass/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit49: UnitInfo = {
       id: 'u49_craven_4',
       unitId: 49,
       word: 'Craven',
-      banglaMeaning: 'নীচ, কাপুরূষ',
+      banglaMeaning: 'নীচ, কাপুরূষ , ভীরু',
       pronunciation: '/ˈcraven/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit49: UnitInfo = {
       id: 'u49_crestfallen_9',
       unitId: 49,
       word: 'Crestfallen',
-      banglaMeaning: 'বিমর্ষ, হতাশ',
+      banglaMeaning: 'বিমর্ষ, হতাশ , বিষণ্ণ',
       pronunciation: '/ˈcrestfallen/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit49: UnitInfo = {
       id: 'u49_crux_11',
       unitId: 49,
       word: 'Crux',
-      banglaMeaning: 'জটিল সমস্যা, মূল কথা',
+      banglaMeaning: 'জটিল সমস্যা, মূল কথা , কঠিন সমস্যা , আসল ব্যাপার',
       pronunciation: '/ˈcrux/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cryptic_12',
       unitId: 49,
       word: 'Cryptic',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , গুপ্ত , রহস্যময় , দুর্বোধ্য',
       pronunciation: '/ˈcryptic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit49: UnitInfo = {
       id: 'u49_culpable_13',
       unitId: 49,
       word: 'Culpable',
-      banglaMeaning: 'নিন্দনীয়, অপরাধমূলক',
+      banglaMeaning: 'নিন্দনীয়, অপরাধমূলক , দূষণীয় , দণ্ডনীয়',
       pronunciation: '/ˈculpable/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit49: UnitInfo = {
       id: 'u49_culprit_14',
       unitId: 49,
       word: 'Culprit',
-      banglaMeaning: 'অপরাধী ব্যক্তি, অভিযুক্ত ব্যক্তি',
+      banglaMeaning: 'অপরাধী ব্যক্তি, অভিযুক্ত ব্যক্তি , আসামি , দোষী ব্যক্তি',
       pronunciation: '/ˈculprit/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cumbersome_15',
       unitId: 49,
       word: 'Cumbersome',
-      banglaMeaning: 'কষ্টকর, ভারী',
+      banglaMeaning: 'কষ্টকর, ভারী , দুর্বহ , অসুবিধাজনক',
       pronunciation: '/ˈcumbersome/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cumulative_16',
       unitId: 49,
       word: 'Cumulative',
-      banglaMeaning: 'সংযোজন বা পরিশিষ্ট',
+      banglaMeaning: 'সংযোজন বা পরিশিষ্ট , সঞ্চয়প্রবণ , ক্রমসঞ্চিত',
       pronunciation: '/ˈcumulative/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cunning_17',
       unitId: 49,
       word: 'Cunning',
-      banglaMeaning: 'ধূর্ত, সুচতুর',
+      banglaMeaning: 'ধূর্ত, সুচতুর , ফন্দিবাজ , চাতুরি',
       pronunciation: '/ˈcunning/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cupidity_18',
       unitId: 49,
       word: 'Cupidity',
-      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি',
+      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি , লোভ , লালসা , অর্থলোলুপতা',
       pronunciation: '/ˈcupidity/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit49: UnitInfo = {
       id: 'u49_curative_19',
       unitId: 49,
       word: 'Curative',
-      banglaMeaning: 'আরোগ্যক্ষম, রোগ নিরাময়কারী',
+      banglaMeaning: 'আরোগ্যক্ষম, রোগ নিরাময়কারী , আরোগ্যদায়ক',
       pronunciation: '/ˈcurative/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit49: UnitInfo = {
       id: 'u49_curmudgeon_20',
       unitId: 49,
       word: 'Curmudgeon',
-      banglaMeaning: 'বদমেজাজি লোক, খিটখিটে লোক',
+      banglaMeaning: 'বদমেজাজি লোক, খিটখিটে লোক , কিপটে লোক',
       pronunciation: '/ˈcurmudgeon/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cursory_21',
       unitId: 49,
       word: 'Cursory',
-      banglaMeaning: 'দ্রুত, ভাসা-ভাসা',
+      banglaMeaning: 'দ্রুত, ভাসা-ভাসা , উপরিগত',
       pronunciation: '/ˈcursory/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit49: UnitInfo = {
       id: 'u49_curtail_22',
       unitId: 49,
       word: 'Curtail',
-      banglaMeaning: 'সংক্ষিপ্ত বা ছোট করা',
+      banglaMeaning: 'সংক্ষিপ্ত বা ছোট করা , কমানো',
       pronunciation: '/ˈcurtail/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cynical_23',
       unitId: 49,
       word: 'Cynical',
-      banglaMeaning: 'বিদ্রূপকারী, রুঢ়প্রকৃতি',
+      banglaMeaning: 'বিদ্রূপকারী, রুঢ়প্রকৃতি , মানববিদ্বেষী , নাক-সিটকানো',
       pronunciation: '/ˈcynical/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit49: UnitInfo = {
       id: 'u49_cynosure_24',
       unitId: 49,
       word: 'Cynosure',
-      banglaMeaning: 'ধ্রুবতারা, ধ্রুবনক্ষত্র',
+      banglaMeaning: 'ধ্রুবতারা, ধ্রুবনক্ষত্র , মনোযোগের কেন্দ্রস্থল',
       pronunciation: '/ˈcynosure/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit49: UnitInfo = {
       id: 'u49_dabble_25',
       unitId: 49,
       word: 'Dabble',
-      banglaMeaning: 'সিক্ত করা, ভেজান করা',
+      banglaMeaning: 'সিক্ত করা, ভেজান করা , হাত-পা ছোঁড়া',
       pronunciation: '/ˈdabble/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit49: UnitInfo = {
       id: 'u49_dank_27',
       unitId: 49,
       word: 'Dank',
-      banglaMeaning: 'স্যাঁতসেঁতে, কুয়াশাচ্ছন্ন',
+      banglaMeaning: 'স্যাঁতসেঁতে, কুয়াশাচ্ছন্ন , ভিজে , স্যাঁতা',
       pronunciation: '/ˈdank/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit49: UnitInfo = {
       id: 'u49_daunt_28',
       unitId: 49,
       word: 'Daunt',
-      banglaMeaning: 'ভীত করা, দমন করা',
+      banglaMeaning: 'ভীত করা, দমন করা , দমানো , ভয় দেখানো',
       pronunciation: '/ˈdaunt/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit49: UnitInfo = {
       id: 'u49_dearth_29',
       unitId: 49,
       word: 'Dearth',
-      banglaMeaning: 'অভাব, দুর্ভিক্ষ',
+      banglaMeaning: 'অভাব, দুর্ভিক্ষ , ক্ষুধা , অপ্রাচুর্য',
       pronunciation: '/ˈdearth/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit49: UnitInfo = {
       id: 'u49_debacle_30',
       unitId: 49,
       word: 'Debacle',
-      banglaMeaning: 'ছত্রভঙ্গ, ধ্বংস',
+      banglaMeaning: 'ছত্রভঙ্গ, ধ্বংস , আকস্মিক পতন , বিপর্যয়',
       pronunciation: '/ˈdebacle/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit49: UnitInfo = {
       id: 'u49_debase_31',
       unitId: 49,
       word: 'Debase',
-      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অধঃপতিত করা বা সম্মানহানি করা',
+      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অধঃপতিত করা বা সম্মানহানি করা , খাদ মেশানো',
       pronunciation: '/ˈdebase/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit49: UnitInfo = {
       id: 'u49_debilitate_32',
       unitId: 49,
       word: 'Debilitate',
-      banglaMeaning: 'দুর্বল করা, দুর্বল হত্তয়া',
+      banglaMeaning: 'দুর্বল করা, দুর্বল হওয়া , বলহীন করা , নিস্তেজ করা',
       pronunciation: '/ˈdebilitate/',
       partOfSpeech: 'verb',
       examples: [
@@ -588,7 +588,7 @@ export const unit49: UnitInfo = {
       id: 'u49_debunk_33',
       unitId: 49,
       word: 'Debunk',
-      banglaMeaning: 'অনাবৃত করা, লম্বাই চত্তড়াই থামান',
+      banglaMeaning: 'অনাবৃত করা, লম্বাই চত্তড়াই থামান , কোনো ব্যক্তি',
       pronunciation: '/ˈdebunk/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit49: UnitInfo = {
       id: 'u49_decadence_34',
       unitId: 49,
       word: 'Decadence',
-      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা',
+      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অবক্ষয় , ডেকাদন্স্ , পতন',
       pronunciation: '/ˈdecadence/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit49: UnitInfo = {
       id: 'u49_decimate_35',
       unitId: 49,
       word: 'Decimate',
-      banglaMeaning: 'ধ্বংস বা নির্মূল করা',
+      banglaMeaning: 'ধ্বংস বা নির্মূল করা , বহু লোকক্ষয় করা , ধ্বংস করা',
       pronunciation: '/ˈdecimate/',
       partOfSpeech: 'verb',
       examples: [
@@ -660,7 +660,7 @@ export const unit49: UnitInfo = {
       id: 'u49_decorous_37',
       unitId: 49,
       word: 'Decorous',
-      banglaMeaning: 'সুন্দর, উপযুক্ত',
+      banglaMeaning: 'সুন্দর, উপযুক্ত , শোভন , শালীন',
       pronunciation: '/ˈdecorous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -678,7 +678,7 @@ export const unit49: UnitInfo = {
       id: 'u49_decorum_38',
       unitId: 49,
       word: 'Decorum',
-      banglaMeaning: 'শালীনতা, ভদ্রতা',
+      banglaMeaning: 'শালীনতা, ভদ্রতা , শোভনতা , ভব্যতা',
       pronunciation: '/ˈdecorum/',
       partOfSpeech: 'noun',
       examples: [

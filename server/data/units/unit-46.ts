@@ -48,7 +48,7 @@ export const unit46: UnitInfo = {
       id: 'u46_circumvent_3',
       unitId: 46,
       word: 'Circumvent',
-      banglaMeaning: 'ফাঁদে ফেলা, পরিবেষ্টন করা',
+      banglaMeaning: 'ফাঁদে ফেলা, পরিবেষ্টন করা , বোকা বানানো',
       pronunciation: '/ˈcircumvent/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit46: UnitInfo = {
       id: 'u46_citadel_4',
       unitId: 46,
       word: 'Citadel',
-      banglaMeaning: 'দুর্গ, আশ্রয়স্থল',
+      banglaMeaning: 'দুর্গ, আশ্রয়স্থল , ভরসাস্থল',
       pronunciation: '/ˈcitadel/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit46: UnitInfo = {
       id: 'u46_cite_5',
       unitId: 46,
       word: 'Cite',
-      banglaMeaning: 'উদ্ধৃত করা, উদাহরণ দেত্তয়া',
+      banglaMeaning: 'উদ্ধৃত করা, উদাহরণ দেওয়া',
       pronunciation: '/ˈcite/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit46: UnitInfo = {
       id: 'u46_civil_6',
       unitId: 46,
       word: 'Civil',
-      banglaMeaning: 'ভদ্র ও সদাচারী',
+      banglaMeaning: 'ভদ্র ও সদাচারী , মানবসমাজ সংক্রান্ত , অসামরিক , দেওয়ানি',
       pronunciation: '/ˈcivil/',
       partOfSpeech: 'adjective',
       examples: [
@@ -156,7 +156,7 @@ export const unit46: UnitInfo = {
       id: 'u46_clandestine_9',
       unitId: 46,
       word: 'Clandestine',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , গুপ্ত , লুকোনো , চোরাগোপ্তা',
       pronunciation: '/ˈclandestine/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit46: UnitInfo = {
       id: 'u46_clemency_11',
       unitId: 46,
       word: 'Clemency',
-      banglaMeaning: 'সহানুভূতি, ক্ষমাশীলতা',
+      banglaMeaning: 'সহানুভূতি, ক্ষমাশীলতা , অনুকম্পা , দয়া',
       pronunciation: '/ˈclemency/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit46: UnitInfo = {
       id: 'u46_cliche_12',
       unitId: 46,
       word: 'Cliche',
-      banglaMeaning: 'সস্তা, গতানুগতিক',
+      banglaMeaning: 'সস্তা, গতানুগতিক , বহুব্যবহারে জীর্ণ ভাব',
       pronunciation: '/ˈcliche/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit46: UnitInfo = {
       id: 'u46_climactic_14',
       unitId: 46,
       word: 'Climactic',
-      banglaMeaning: 'চূড়ান্ত পরিণতি বা শীর্ষ',
+      banglaMeaning: 'চূড়ান্ত পরিণতি বা শীর্ষ , চরম পরিণতিমূলক',
       pronunciation: '/ˈclimactic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit46: UnitInfo = {
       id: 'u46_clique_15',
       unitId: 46,
       word: 'Clique',
-      banglaMeaning: 'উপদল, গোষ্ঠী',
+      banglaMeaning: 'উপদল, গোষ্ঠী , ক্ষুদ্র দল',
       pronunciation: '/ˈclique/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit46: UnitInfo = {
       id: 'u46_clout_16',
       unitId: 46,
       word: 'Clout',
-      banglaMeaning: 'মাথায় চাঁটি, ছিন্ন বস্ত্র',
+      banglaMeaning: 'মাথায় চাঁটি, ছিন্ন বস্ত্র , কাপড়ের টুকরো',
       pronunciation: '/ˈclout/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit46: UnitInfo = {
       id: 'u46_codify_18',
       unitId: 46,
       word: 'Codify',
-      banglaMeaning: 'আইন বদ্ধ করা, সারসংগ্রহ করা',
+      banglaMeaning: 'আইন বদ্ধ করা, সারসংগ্রহ করা , বিধিবদ্ধ করা',
       pronunciation: '/ˈcodify/',
       partOfSpeech: 'verb',
       examples: [
@@ -336,7 +336,7 @@ export const unit46: UnitInfo = {
       id: 'u46_coercion_19',
       unitId: 46,
       word: 'Coercion',
-      banglaMeaning: 'বাধ্যতা, নিগ্রহ',
+      banglaMeaning: 'বাধ্যতা, নিগ্রহ , বলপ্রয়োগ',
       pronunciation: '/ˈcoercion/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit46: UnitInfo = {
       id: 'u46_cognizance_21',
       unitId: 46,
       word: 'Cognizance',
-      banglaMeaning: 'জ্ঞান, স্বীকার',
+      banglaMeaning: 'জ্ঞান, স্বীকার , অবগতি , বিচারাধিকার',
       pronunciation: '/ˈcognizance/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit46: UnitInfo = {
       id: 'u46_cohesion_22',
       unitId: 46,
       word: 'Cohesion',
-      banglaMeaning: 'সংসক্তি, যুক্তিসিদ্ধ সম্বন্ধ',
+      banglaMeaning: 'সংসক্তি, যুক্তিসিদ্ধ সম্বন্ধ , সংলগ্নতা',
       pronunciation: '/ˈcohesion/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit46: UnitInfo = {
       id: 'u46_collusion_25',
       unitId: 46,
       word: 'Collusion',
-      banglaMeaning: 'সাজশ, গোপন চুক্তি',
+      banglaMeaning: 'সাজশ, গোপন চুক্তি , অশুভ আঁতাত , তলায় তলায় বোঝাপড়া',
       pronunciation: '/ˈcollusion/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit46: UnitInfo = {
       id: 'u46_colossal_26',
       unitId: 46,
       word: 'Colossal',
-      banglaMeaning: 'প্রকাণ্ড, বিশাল',
+      banglaMeaning: 'প্রকাণ্ড, বিশাল , বিরাট , বিপুল',
       pronunciation: '/ˈcolossal/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit46: UnitInfo = {
       id: 'u46_combustible_28',
       unitId: 46,
       word: 'Combustible',
-      banglaMeaning: 'দাহ্য, জ্বলনশীল',
+      banglaMeaning: 'দাহ্য, জ্বলনশীল , উত্তেজণাপ্রবণ',
       pronunciation: '/ˈcombustible/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit46: UnitInfo = {
       id: 'u46_comely_29',
       unitId: 46,
       word: 'Comely',
-      banglaMeaning: 'সুশ্রী, লাবণ্যযুক্ত',
+      banglaMeaning: 'সুশ্রী, লাবণ্যযুক্ত , সুদর্শন , শোভন',
       pronunciation: '/ˈcomely/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit46: UnitInfo = {
       id: 'u46_commemorate_30',
       unitId: 46,
       word: 'Commemorate',
-      banglaMeaning: 'স্মৃতিরক্ষা করা, স্মরণার্থ উত্সব করা',
+      banglaMeaning: 'স্মৃতিরক্ষা করা, স্মরণার্থ উত্সব করা , স্মারক হওয়া , স্মৃতিচিহ্ন হওয়া',
       pronunciation: '/ˈcommemorate/',
       partOfSpeech: 'verb',
       examples: [
@@ -552,7 +552,7 @@ export const unit46: UnitInfo = {
       id: 'u46_commensurate_31',
       unitId: 46,
       word: 'Commensurate',
-      banglaMeaning: 'তুল্য, সমান',
+      banglaMeaning: 'তুল্য, সমান , সমবিস্তার',
       pronunciation: '/ˈcommensurate/',
       partOfSpeech: 'verb',
       examples: [
@@ -570,7 +570,7 @@ export const unit46: UnitInfo = {
       id: 'u46_commiserate_32',
       unitId: 46,
       word: 'Commiserate',
-      banglaMeaning: 'দয়া করা, সহানুভূতি প্রকাশ করা',
+      banglaMeaning: 'দয়া করা, সহানুভূতি প্রকাশ করা , সমবেদনা অনুভব করা , সমবেদনা প্রকাশ করা',
       pronunciation: '/ˈcommiserate/',
       partOfSpeech: 'verb',
       examples: [
@@ -588,7 +588,7 @@ export const unit46: UnitInfo = {
       id: 'u46_commodious_33',
       unitId: 46,
       word: 'Commodious',
-      banglaMeaning: 'সুবিধাজনক, প্রশস্ত',
+      banglaMeaning: 'সুবিধাজনক, প্রশস্ত , সুপরিসর , উপযোগী',
       pronunciation: '/ˈcommodious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit46: UnitInfo = {
       id: 'u46_commonplace_34',
       unitId: 46,
       word: 'Commonplace',
-      banglaMeaning: 'প্রাকৃত, তুচ্ছ',
+      banglaMeaning: 'প্রাকৃত, তুচ্ছ , সাধারণ , প্রচলিত',
       pronunciation: '/ˈcommonplace/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit46: UnitInfo = {
       id: 'u46_communal_35',
       unitId: 46,
       word: 'Communal',
-      banglaMeaning: 'সাম্প্রদায়িক, সামাজিক',
+      banglaMeaning: 'সাম্প্রদায়িক, সামাজিক , সম্প্রদায়-সম্পর্কিত',
       pronunciation: '/ˈcommunal/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit46: UnitInfo = {
       id: 'u46_compact_36',
       unitId: 46,
       word: 'Compact',
-      banglaMeaning: 'নিচ্ছিদ্র, নিবিড়',
+      banglaMeaning: 'নিচ্ছিদ্র, নিবিড় , পারস্পরিক শর্ত , বাহুল্যবর্জিত',
       pronunciation: '/ˈcompact/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit46: UnitInfo = {
       id: 'u46_compatible_37',
       unitId: 46,
       word: 'Compatible',
-      banglaMeaning: 'সামঞ্জস্যপূর্ণ, একযোগে ব্যবহারযোগ্য',
+      banglaMeaning: 'সামঞ্জস্যপূর্ণ, একযোগে ব্যবহারযোগ্য , সংগতিপূর্ণ',
       pronunciation: '/ˈcompatible/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit46: UnitInfo = {
       id: 'u46_compendium_39',
       unitId: 46,
       word: 'Compendium',
-      banglaMeaning: 'সংক্ষিপ্তসার, সারমর্ম',
+      banglaMeaning: 'সংক্ষিপ্তসার, সারমর্ম , সারসংক্ষেপ',
       pronunciation: '/ˈcompendium/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit46: UnitInfo = {
       id: 'u46_complement_40',
       unitId: 46,
       word: 'Complement',
-      banglaMeaning: 'পূরক, অনুপূরক',
+      banglaMeaning: 'পূরক, অনুপূরক , সম্পূর্ণ করা',
       pronunciation: '/ˈcomplement/',
       partOfSpeech: 'verb',
       examples: [

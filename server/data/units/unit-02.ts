@@ -12,7 +12,7 @@ export const unit02: UnitInfo = {
       id: 'u2_altruistic_1',
       unitId: 2,
       word: 'Altruistic',
-      banglaMeaning: 'পরোপকারী , নিঃস্বার্থ',
+      banglaMeaning: 'পরোপকারী , নিঃস্বার্থ , পরার্থবাদী , পরহিতব্রতী',
       pronunciation: '/ˌæl.truˈɪs.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -30,7 +30,7 @@ export const unit02: UnitInfo = {
       id: 'u2_belligerent_2',
       unitId: 2,
       word: 'Belligerent',
-      banglaMeaning: 'যুদ্ধংদেহী , মারমুখী স্বভাবের',
+      banglaMeaning: 'যুদ্ধংদেহী , মারমুখী স্বভাবের , যুদ্ধভাবাপন্ন',
       pronunciation: '/bəˈlɪdʒ.ər.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit02: UnitInfo = {
       id: 'u2_demure_4',
       unitId: 2,
       word: 'Demure',
-      banglaMeaning: 'বিনম্র , শান্ত ও লাজুক',
+      banglaMeaning: 'বিনম্র , শান্ত ও লাজুক , গম্ভীর , অচপল',
       pronunciation: '/dɪˈmjʊər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit02: UnitInfo = {
       id: 'u2_effusive_5',
       unitId: 2,
       word: 'Effusive',
-      banglaMeaning: 'উচ্ছ্বসিত , অতিরিক্ত আবেগপ্রবণ',
+      banglaMeaning: 'উচ্ছ্বসিত , অতিরিক্ত আবেগপ্রবণ , অবাধে নির্গমনশীল , অগ্ন্যুদ্গীরক',
       pronunciation: '/ɪˈfjuː.sɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -102,7 +102,7 @@ export const unit02: UnitInfo = {
       id: 'u2_fastidious_6',
       unitId: 2,
       word: 'Fastidious',
-      banglaMeaning: 'খুঁতখুঁতে , অতি সতর্ক',
+      banglaMeaning: 'খুঁতখুঁতে , অতি সতর্ক , রুচিবাগীশ , অতিসুক্ষ্ম রুচিসম্পন্ন',
       pronunciation: '/fæsˈtɪd.i.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit02: UnitInfo = {
       id: 'u2_gregarious_7',
       unitId: 2,
       word: 'Gregarious',
-      banglaMeaning: 'মিশুক , দলপ্রিয়',
+      banglaMeaning: 'মিশুক , দলপ্রিয় , যূথচর , যূথচারী',
       pronunciation: '/ɡrɪˈɡeə.ri.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -138,7 +138,7 @@ export const unit02: UnitInfo = {
       id: 'u2_haughty_8',
       unitId: 2,
       word: 'Haughty',
-      banglaMeaning: 'উদ্ধত , অহংকারী',
+      banglaMeaning: 'উদ্ধত , অহংকারী , গর্বিত , ধৃষ্ট',
       pronunciation: '/ˈhɔː.ti/',
       partOfSpeech: 'adjective',
       examples: [
@@ -156,7 +156,7 @@ export const unit02: UnitInfo = {
       id: 'u2_insolent_9',
       unitId: 2,
       word: 'Insolent',
-      banglaMeaning: 'বেয়াদব , ধৃষ্টতাপূর্ণ',
+      banglaMeaning: 'বেয়াদব , ধৃষ্টতাপূর্ণ , অপমানজনক , অশিষ্ট',
       pronunciation: '/ˈɪn.səl.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit02: UnitInfo = {
       id: 'u2_jocular_10',
       unitId: 2,
       word: 'Jocular',
-      banglaMeaning: 'রসিক , কৌতুকপূর্ণ',
+      banglaMeaning: 'রসিক , কৌতুকপূর্ণ , রহস্যপ্রিয় , স্ফূর্তিবাজ',
       pronunciation: '/ˈdʒɒk.jə.lər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit02: UnitInfo = {
       id: 'u2_loquacious_11',
       unitId: 2,
       word: 'Loquacious',
-      banglaMeaning: 'বাচাল , অত্যন্ত বাকপটু',
+      banglaMeaning: 'বাচাল , অত্যন্ত বাকপটু , কলনাদিনী , কলভাষিণী',
       pronunciation: '/ləˈkweɪ.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -210,7 +210,7 @@ export const unit02: UnitInfo = {
       id: 'u2_magnanimous_12',
       unitId: 2,
       word: 'Magnanimous',
-      banglaMeaning: 'মহানুভব , উদারচিত্ত',
+      banglaMeaning: 'মহানুভব , উদারচিত্ত , মহৎ , উচ্চাশয়',
       pronunciation: '/mæɡˈnæn.ɪ.məs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit02: UnitInfo = {
       id: 'u2_nefarious_13',
       unitId: 2,
       word: 'Nefarious',
-      banglaMeaning: 'ঘৃণ্য , কুখ্যাত ও অপকর্মযুক্ত',
+      banglaMeaning: 'ঘৃণ্য , কুখ্যাত ও অপকর্মযুক্ত , দুষ্ট , অসাধু',
       pronunciation: '/nɪˈfeə.ri.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit02: UnitInfo = {
       id: 'u2_obsequious_14',
       unitId: 2,
       word: 'Obsequious',
-      banglaMeaning: 'চাটুকার , তোষামোদকারী',
+      banglaMeaning: 'চাটুকার , তোষামোদকারী , তোয়াজ , খোশামুদে',
       pronunciation: '/əbˈsiː.kwi.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit02: UnitInfo = {
       id: 'u2_pugnacious_15',
       unitId: 2,
       word: 'Pugnacious',
-      banglaMeaning: 'মারমুখী , কলহপ্রিয় স্বভাবের',
+      banglaMeaning: 'মারমুখী , কলহপ্রিয় স্বভাবের , লড়াইপ্রিয় , ঋগড়াটে',
       pronunciation: '/pʌɡˈneɪ.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit02: UnitInfo = {
       id: 'u2_quixotic_16',
       unitId: 2,
       word: 'Quixotic',
-      banglaMeaning: 'বাস্তবজ্ঞানহীন ভাবালু , কল্পনাবিলাসী',
+      banglaMeaning: 'বাস্তবজ্ঞানহীন ভাবালু , কল্পনাবিলাসী , অত্যধিক উদার , ভাববিলাসী',
       pronunciation: '/kwɪkˈsɒt.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit02: UnitInfo = {
       id: 'u2_reticent_17',
       unitId: 2,
       word: 'Reticent',
-      banglaMeaning: 'স্বল্পভাষী , চাপা স্বভাবের',
+      banglaMeaning: 'স্বল্পভাষী , চাপা স্বভাবের , মিতবাক , স্বল্পোক্তিপ্রবণ',
       pronunciation: '/ˈret.ɪ.sənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -318,7 +318,7 @@ export const unit02: UnitInfo = {
       id: 'u2_scrupulous_18',
       unitId: 2,
       word: 'Scrupulous',
-      banglaMeaning: 'নীতিনিষ্ঠ , অত্যন্ত সতর্ক ও নিখুঁত',
+      banglaMeaning: 'নীতিনিষ্ঠ , অত্যন্ত সতর্ক ও নিখুঁত , নীতিপরায়ণ , বিবেকী',
       pronunciation: '/ˈskruː.pjə.ləs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit02: UnitInfo = {
       id: 'u2_taciturn_19',
       unitId: 2,
       word: 'Taciturn',
-      banglaMeaning: 'মৌনপ্রিয় , সচরাচর কথা বলে না এমন',
+      banglaMeaning: 'মৌনপ্রিয় , সচরাচর কথা বলে না এমন , অল্পভাষী , কথা বলিতে অনিচ্ছুক',
       pronunciation: '/ˈtæs.ɪ.tɜːn/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit02: UnitInfo = {
       id: 'u2_vindictive_20',
       unitId: 2,
       word: 'Vindictive',
-      banglaMeaning: 'প্রতিহিংসাপরায়ণ , প্রতিহিংসামূলক',
+      banglaMeaning: 'প্রতিহিংসাপরায়ণ , প্রতিহিংসামূলক , প্রতিহিংসাপূর্ণ , শাস্তিমূলক',
       pronunciation: '/vɪnˈdɪk.tɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -372,7 +372,7 @@ export const unit02: UnitInfo = {
       id: 'u2_capricious_21',
       unitId: 2,
       word: 'Capricious',
-      banglaMeaning: 'খামখেয়ালী , অস্থিরমতি',
+      banglaMeaning: 'খামখেয়ালী , অস্থিরমতি , চঞ্চল , অনিয়মিত',
       pronunciation: '/kəˈprɪʃ.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -390,7 +390,7 @@ export const unit02: UnitInfo = {
       id: 'u2_meticulous_22',
       unitId: 2,
       word: 'Meticulous',
-      banglaMeaning: 'খুবই সতর্ক , অতি যত্নবান',
+      banglaMeaning: 'খুবই সতর্ক , অতি যত্নবান , অতিরিক্ত যত্নবান , নির্ভুল',
       pronunciation: '/məˈtɪk.jə.ləs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit02: UnitInfo = {
       id: 'u2_affable_23',
       unitId: 2,
       word: 'Affable',
-      banglaMeaning: 'ভদ্র ও সদালাপী , মিশুক',
+      banglaMeaning: 'ভদ্র ও সদালাপী , মিশুক , অমায়িক',
       pronunciation: '/ˈæf.ə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit02: UnitInfo = {
       id: 'u2_candid_24',
       unitId: 2,
       word: 'Candid',
-      banglaMeaning: 'অকপট , স্পষ্টবাদী',
+      banglaMeaning: 'অকপট , স্পষ্টবাদী , সাদাসিধে , পক্ষপাতহীন',
       pronunciation: '/ˈkæn.dɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit02: UnitInfo = {
       id: 'u2_astute_25',
       unitId: 2,
       word: 'Astute',
-      banglaMeaning: 'চতুর , তীক্ষ্ণ বুদ্ধিসম্পন্ন',
+      banglaMeaning: 'চতুর , তীক্ষ্ণ বুদ্ধিসম্পন্ন , বিচক্ষণ , ধূর্ত',
       pronunciation: '/əˈstjuːt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit02: UnitInfo = {
       id: 'u2_callous_26',
       unitId: 2,
       word: 'Callous',
-      banglaMeaning: 'কঠোর , অনুভূতিহীন ও নির্দয়',
+      banglaMeaning: 'কঠোর , অনুভূতিহীন ও নির্দয় , কঠিনীভূত , জমাট বাঁধা',
       pronunciation: '/ˈkæl.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit02: UnitInfo = {
       id: 'u2_diligent_27',
       unitId: 2,
       word: 'Diligent',
-      banglaMeaning: 'পরিশ্রমী , যত্নবান',
+      banglaMeaning: 'পরিশ্রমী , যত্নবান , অধ্যবসায় , অনলস',
       pronunciation: '/ˈdɪl.ɪ.dʒənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit02: UnitInfo = {
       id: 'u2_facetious_28',
       unitId: 2,
       word: 'Facetious',
-      banglaMeaning: 'গুরুতর বিষয়ে অপ্রাসঙ্গিক রসিকতা করে এমন',
+      banglaMeaning: 'গুরুতর বিষয়ে অপ্রাসঙ্গিক রসিকতা করে এমন , মজার , মজা-করা , চ্যাংড়া',
       pronunciation: '/fəˈsiː.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit02: UnitInfo = {
       id: 'u2_garrulous_29',
       unitId: 2,
       word: 'Garrulous',
-      banglaMeaning: 'অপ্রয়োজনীয় কথায় বাচাল',
+      banglaMeaning: 'অপ্রয়োজনীয় কথায় বাচাল , প্রগলভ , বাক্যবাগীশ , জল্পক',
       pronunciation: '/ˈɡær.əl.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit02: UnitInfo = {
       id: 'u2_impetuous_31',
       unitId: 2,
       word: 'Impetuous',
-      banglaMeaning: 'হঠকারী , চিন্তা না করে দ্রুত সিদ্ধান্ত নেওয়া',
+      banglaMeaning: 'হঠকারী , চিন্তা না করে দ্রুত সিদ্ধান্ত নেওয়া , বেগবান , দুর্বার',
       pronunciation: '/ɪmˈpetʃ.u.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -570,7 +570,7 @@ export const unit02: UnitInfo = {
       id: 'u2_judicious_32',
       unitId: 2,
       word: 'Judicious',
-      banglaMeaning: 'বিচক্ষণ , ন্যায়নিষ্ঠ ও সুচিন্তিত',
+      banglaMeaning: 'বিচক্ষণ , ন্যায়নিষ্ঠ ও সুচিন্তিত , জ্ঞানী , সুবিজ্ঞ',
       pronunciation: '/dʒuːˈdɪʃ.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit02: UnitInfo = {
       id: 'u2_lethargic_33',
       unitId: 2,
       word: 'Lethargic',
-      banglaMeaning: 'অলস , ক্লান্ত ও উদ্যমহীন',
+      banglaMeaning: 'অলস , ক্লান্ত ও উদ্যমহীন , নিশ্চেষ্ট , জড়িমাগ্রস্ত',
       pronunciation: '/ləˈθɑː.dʒɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit02: UnitInfo = {
       id: 'u2_munificent_34',
       unitId: 2,
       word: 'Munificent',
-      banglaMeaning: 'অত্যন্ত দানশীল , মুক্তহস্ত',
+      banglaMeaning: 'অত্যন্ত দানশীল , মুক্তহস্ত , উদার , বদান্য',
       pronunciation: '/mjuːˈnɪf.ɪ.sənt/',
       partOfSpeech: 'adjective',
       examples: [

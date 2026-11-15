@@ -12,7 +12,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anemia_1',
       unitId: 35,
       word: 'Anemia',
-      banglaMeaning: 'রক্তাল্পতা, রক্তহীনতা',
+      banglaMeaning: 'রক্তাল্পতা, রক্তহীনতা , রক্তশূন্যতা',
       pronunciation: '/ˈanemia/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit35: UnitInfo = {
       id: 'u35_angular_3',
       unitId: 35,
       word: 'Angular',
-      banglaMeaning: 'এক বা একাধিক কোণযুক্ত, কোণাচে',
+      banglaMeaning: 'এক বা একাধিক কোণযুক্ত, কোণাচে , কৌণিক , চোখা',
       pronunciation: '/ˈangular/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit35: UnitInfo = {
       id: 'u35_animadversion_4',
       unitId: 35,
       word: 'Animadversion',
-      banglaMeaning: 'ব্যাখ্যামূলক মন্তব্য করা',
+      banglaMeaning: 'ব্যাখ্যামূলক মন্তব্য করা , সমালোচনা , বিরূপ মন্তব্য',
       pronunciation: '/ˈanimadversion/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit35: UnitInfo = {
       id: 'u35_animated_5',
       unitId: 35,
       word: 'Animated',
-      banglaMeaning: 'প্রাণবন্ত, সঁজীবিত',
+      banglaMeaning: 'প্রাণবন্ত, সঁজীবিত , প্রাণিত , প্রাণময়',
       pronunciation: '/ˈanimated/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit35: UnitInfo = {
       id: 'u35_animosity_6',
       unitId: 35,
       word: 'Animosity',
-      banglaMeaning: 'বিদ্বেষ, শত্রুতা',
+      banglaMeaning: 'বিদ্বেষ, শত্রুতা , বৈরিতা , শত্রুমনোভাব',
       pronunciation: '/ˈanimosity/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit35: UnitInfo = {
       id: 'u35_animus_7',
       unitId: 35,
       word: 'Animus',
-      banglaMeaning: 'শত্রুতা বা বিরোধিতা',
+      banglaMeaning: 'শত্রুতা বা বিরোধিতা , শত্রুভাব , বৈরিভাব , বিদ্বেষভাব',
       pronunciation: '/ˈanimus/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anneal_9',
       unitId: 35,
       word: 'Anneal',
-      banglaMeaning: 'উন্নতিসাধন বা সংস্কার করা',
+      banglaMeaning: 'উন্নতিসাধন বা সংস্কার করা , তপ্তশীতলায়ন ঘটানো',
       pronunciation: '/ˈanneal/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit35: UnitInfo = {
       id: 'u35_annex_10',
       unitId: 35,
       word: 'Annex',
-      banglaMeaning: 'পরিশিষ্ট, বর্ধন',
+      banglaMeaning: 'পরিশিষ্ট, বর্ধন , নেওয়া , পাওয়া',
       pronunciation: '/ˈannex/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit35: UnitInfo = {
       id: 'u35_annihilate_11',
       unitId: 35,
       word: 'Annihilate',
-      banglaMeaning: 'ধ্বংস বা নির্মূল করা',
+      banglaMeaning: 'ধ্বংস বা নির্মূল করা , নিমূল করা , ধ্বংস করা , খতম করা',
       pronunciation: '/ˈannihilate/',
       partOfSpeech: 'verb',
       examples: [
@@ -210,7 +210,7 @@ export const unit35: UnitInfo = {
       id: 'u35_annotate_12',
       unitId: 35,
       word: 'Annotate',
-      banglaMeaning: 'ব্যাখ্যামূলক মন্তব্য করা',
+      banglaMeaning: 'ব্যাখ্যামূলক মন্তব্য করা , টীকা যোগ করা , মন্তব্য লিপিবদ্ধ করা',
       pronunciation: '/ˈannotate/',
       partOfSpeech: 'verb',
       examples: [
@@ -246,7 +246,7 @@ export const unit35: UnitInfo = {
       id: 'u35_annul_14',
       unitId: 35,
       word: 'Annul',
-      banglaMeaning: 'রদ করা, বিনাশ করা',
+      banglaMeaning: 'রদ করা, বিনাশ করা , খণ্ডিত করা , উলটান',
       pronunciation: '/ˈannul/',
       partOfSpeech: 'verb',
       examples: [
@@ -264,7 +264,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anodyne_15',
       unitId: 35,
       word: 'Anodyne',
-      banglaMeaning: 'বেদনানাশক, রোগনাশক',
+      banglaMeaning: 'বেদনানাশক, রোগনাশক , প্রাণশক্তিহীন',
       pronunciation: '/ˈanodyne/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anoint_16',
       unitId: 35,
       word: 'Anoint',
-      banglaMeaning: 'পবিত্র বা উৎসর্গ করা',
+      banglaMeaning: 'পবিত্র বা উৎসর্গ করা , লেপা , মাখান',
       pronunciation: '/ˈanoint/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anomaly_17',
       unitId: 35,
       word: 'Anomaly',
-      banglaMeaning: 'ব্যত্যয়, ব্যতিক্রম',
+      banglaMeaning: 'ব্যত্যয়, ব্যতিক্রম , অসংগতি , অস্বাভাবিকতা',
       pronunciation: '/ˈanomaly/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anonymity_18',
       unitId: 35,
       word: 'Anonymity',
-      banglaMeaning: 'নামহীনতা, অপ্রকাশিতনামা অবস্থা',
+      banglaMeaning: 'নামহীনতা, অপ্রকাশিতনামা অবস্থা , ছদ্মনামযুক্ত অবস্থা',
       pronunciation: '/ˈanonymity/',
       partOfSpeech: 'verb',
       examples: [
@@ -336,7 +336,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antagonism_19',
       unitId: 35,
       word: 'Antagonism',
-      banglaMeaning: 'প্রতিপক্ষ বা শত্রু , শত্রুতা বা বিরোধিতা',
+      banglaMeaning: 'প্রতিপক্ষ বা শত্রু , শত্রুতা বা বিরোধিতা , বৈরিতা , বিরুদ্ধাচরণ',
       pronunciation: '/ˈantagonism/',
       partOfSpeech: 'verb',
       examples: [
@@ -354,7 +354,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antecede_20',
       unitId: 35,
       word: 'Antecede',
-      banglaMeaning: 'পূর্ববর্তী হত্তয়া, অগ্রবর্তী হত্তয়া',
+      banglaMeaning: 'পূর্ববর্তী হওয়া, অগ্রবর্তী হওয়া , আগে ঘটা',
       pronunciation: '/ˈantecede/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antecedents_21',
       unitId: 35,
       word: 'Antecedents',
-      banglaMeaning: 'পরিচয়, প্রাক্পরিচয়',
+      banglaMeaning: 'পরিচয়, প্রাক্পরিচয় , পূর্ববর্তী নীতি আচরণ , পূর্ববর্তী নীতি ইতিহাস',
       pronunciation: '/ˈantecedents/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antediluvian_22',
       unitId: 35,
       word: 'Antediluvian',
-      banglaMeaning: 'অতি প্রাচীন বা সেকেলে',
+      banglaMeaning: 'অতি প্রাচীন বা সেকেলে , একেবারে সেকেলে , বহুপ্রাচীন , প্রাগৈতিহাসিক',
       pronunciation: '/ˈantediluvian/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anthem_23',
       unitId: 35,
       word: 'Anthem',
-      banglaMeaning: 'প্রশংসা করা বা সাধুবাদ জানানো',
+      banglaMeaning: 'প্রশংসা করা বা সাধুবাদ জানানো , বন্দনাগীতি , প্রশংসাগীতি , স্তবগান',
       pronunciation: '/ˈanthem/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anthology_24',
       unitId: 35,
       word: 'Anthology',
-      banglaMeaning: 'সংহিতা, চয়ন',
+      banglaMeaning: 'সংহিতা, চয়ন , সাহিত্যসংকলন , রচনাসংগ্রহ',
       pronunciation: '/ˈanthology/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anthropoid_25',
       unitId: 35,
       word: 'Anthropoid',
-      banglaMeaning: 'নরাকার, নরাকার পশু',
+      banglaMeaning: 'নরাকার, নরাকার পশু , মানবাকৃতি , মানবাকার',
       pronunciation: '/ˈanthropoid/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anticlimax_28',
       unitId: 35,
       word: 'Anticlimax',
-      banglaMeaning: 'পবর্তের মূষিকপ্রসব, মহত্ বা গুরুগম্ভীর ভাব থেকে তুচ্ছ বা অকিঞ্চিতকরভাবে আকস্মিক রূপান্তর বা অবতরণ',
+      banglaMeaning: 'পবর্তের মূষিকপ্রসব, মহত্ বা গুরুগম্ভীর ভাব থেকে তুচ্ছ বা অকিঞ্চিতকরভাবে আকস্মিক রূপান্তর বা অবতরণ , ভাবাবরোহ',
       pronunciation: '/ˈanticlimax/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antidote_29',
       unitId: 35,
       word: 'Antidote',
-      banglaMeaning: 'প্রতিষেধক, প্রতিষেধক দ্রব্য',
+      banglaMeaning: 'প্রতিষেধক, প্রতিষেধক দ্রব্য , বিষনাশক দ্রব্য , অগদ',
       pronunciation: '/ˈantidote/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antipathy_30',
       unitId: 35,
       word: 'Antipathy',
-      banglaMeaning: 'অনীহা বা তীব্র বিতৃষ্ণা',
+      banglaMeaning: 'অনীহা বা তীব্র বিতৃষ্ণা , অনাসক্তি , বিকর্ষণ , বিরাগ',
       pronunciation: '/ˈantipathy/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antiquated_31',
       unitId: 35,
       word: 'Antiquated',
-      banglaMeaning: 'অপ্রচলিত বা সেকেলে',
+      banglaMeaning: 'অপ্রচলিত বা সেকেলে , মান্ধাতার আমলের , পুরোনো বলে অচল',
       pronunciation: '/ˈantiquated/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antique_32',
       unitId: 35,
       word: 'Antique',
-      banglaMeaning: 'বহুকালের, পুরাকালের',
+      banglaMeaning: 'বহুকালের, পুরাকালের , সেকেল , প্রাচীন',
       pronunciation: '/ˈantique/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antiquity_33',
       unitId: 35,
       word: 'Antiquity',
-      banglaMeaning: 'অতি প্রাচীন বা সেকেলে',
+      banglaMeaning: 'অতি প্রাচীন বা সেকেলে , প্রাচীনত্ব , প্রাচীনতা , প্রাচীন যুগ',
       pronunciation: '/ˈantiquity/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antiseptic_34',
       unitId: 35,
       word: 'Antiseptic',
-      banglaMeaning: 'বীজবারক, পচনবারক',
+      banglaMeaning: 'বীজবারক, পচনবারক , জীবাণুমুক্ত , বীজাণুবারক',
       pronunciation: '/ˈantiseptic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -624,7 +624,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antithesis_35',
       unitId: 35,
       word: 'Antithesis',
-      banglaMeaning: 'বৈসাদৃশ্য বা বিপরীত ভাব',
+      banglaMeaning: 'বৈসাদৃশ্য বা বিপরীত ভাব , বিরোধ , দ্বন্দ্ব , বৈপরীত্য',
       pronunciation: '/ˈantithesis/',
       partOfSpeech: 'adjective',
       examples: [
@@ -642,7 +642,7 @@ export const unit35: UnitInfo = {
       id: 'u35_antler_36',
       unitId: 35,
       word: 'Antler',
-      banglaMeaning: 'ক্রমবৃদ্ধি বা সঞ্চয়ন',
+      banglaMeaning: 'ক্রমবৃদ্ধি বা সঞ্চয়ন , হরিণের সশাখ শৃঙ্গ',
       pronunciation: '/ˈantler/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit35: UnitInfo = {
       id: 'u35_anvil_37',
       unitId: 35,
       word: 'Anvil',
-      banglaMeaning: 'নেহাই, কামারের নেহাই',
+      banglaMeaning: 'নেহাই, কামারের নেহাই , নিহাই',
       pronunciation: '/ˈanvil/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit35: UnitInfo = {
       id: 'u35_ape_38',
       unitId: 35,
       word: 'Ape',
-      banglaMeaning: 'অনুকরণ বা নকল করা',
+      banglaMeaning: 'অনুকরণ বা নকল করা , লাঙ্গুলহীন বানর , বনমানুষ , ভাঁড়',
       pronunciation: '/ˈape/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit35: UnitInfo = {
       id: 'u35_aperture_39',
       unitId: 35,
       word: 'Aperture',
-      banglaMeaning: 'ছিদ্র বা রন্ধ্রপথ',
+      banglaMeaning: 'ছিদ্র বা রন্ধ্রপথ , ছ্যাঁদা , ফুটো , ফাঁক',
       pronunciation: '/ˈaperture/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit35: UnitInfo = {
       id: 'u35_apex_40',
       unitId: 35,
       word: 'Apex',
-      banglaMeaning: 'চূড়ান্ত পরিণতি বা শীর্ষ',
+      banglaMeaning: 'চূড়ান্ত পরিণতি বা শীর্ষ , সর্বোচ্চ স্থান , শিখর , ঊর্ধবিন্দু',
       pronunciation: '/ˈapex/',
       partOfSpeech: 'noun',
       examples: [

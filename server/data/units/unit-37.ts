@@ -12,7 +12,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arcade_1',
       unitId: 37,
       word: 'Arcade',
-      banglaMeaning: 'তোরণ-শ্রেণী, তোরণ-শোভিত পথ',
+      banglaMeaning: 'তোরণ-শ্রেণী, তোরণ-শোভিত পথ , খিলানে ঢাকা পথ , বিপণিশোভিত আচ্ছাদিত পথ',
       pronunciation: '/ˈarcade/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arcane_2',
       unitId: 37,
       word: 'Arcane',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , নিগূঢ় , গূঢ়-রহস্যময় , সংগুপ্ত',
       pronunciation: '/ˈarcane/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit37: UnitInfo = {
       id: 'u37_archaeology_4',
       unitId: 37,
       word: 'Archaeology',
-      banglaMeaning: 'পুরাতত্ত্ব, প্রত্নবিদ্যা',
+      banglaMeaning: 'পুরাতত্ত্ব, প্রত্নবিদ্যা , প্রত্নতত্ত্ব',
       pronunciation: '/ˈarchaeology/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit37: UnitInfo = {
       id: 'u37_archaic_5',
       unitId: 37,
       word: 'Archaic',
-      banglaMeaning: 'প্রাচীন, সেকেলে',
+      banglaMeaning: 'প্রাচীন, সেকেলে , আদিম , পুরাকালের',
       pronunciation: '/ˈarchaic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit37: UnitInfo = {
       id: 'u37_ardor_7',
       unitId: 37,
       word: 'Ardor',
-      banglaMeaning: 'ব্যগ্রতা, আকুলতা',
+      banglaMeaning: 'ব্যগ্রতা, আকুলতা , আকুতি , আবেগের তীব্রতা',
       pronunciation: '/ˈardor/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arduous_8',
       unitId: 37,
       word: 'Arduous',
-      banglaMeaning: 'শ্রমসাধ্য, কষ্টসাধ্য',
+      banglaMeaning: 'শ্রমসাধ্য, কষ্টসাধ্য , দুরারোহ , দুঃসাধ্য',
       pronunciation: '/ˈarduous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit37: UnitInfo = {
       id: 'u37_aria_10',
       unitId: 37,
       word: 'Aria',
-      banglaMeaning: 'গীত, গীতিনাট্যে একক কণ্ঠসঙ্গীত',
+      banglaMeaning: 'গীত, গীতিনাট্যে একক কণ্ঠসঙ্গীত , বায়ু , অপেরার গীত',
       pronunciation: '/ˈaria/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arid_11',
       unitId: 37,
       word: 'Arid',
-      banglaMeaning: 'শুষ্ক, অনুর্বর',
+      banglaMeaning: 'শুষ্ক, অনুর্বর , শুকনো , তাপদগ্ধ',
       pronunciation: '/ˈarid/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit37: UnitInfo = {
       id: 'u37_aristocracy_12',
       unitId: 37,
       word: 'Aristocracy',
-      banglaMeaning: 'অভিজাত-তন্ত্র, অভিজন',
+      banglaMeaning: 'অভিজাত-তন্ত্র, অভিজন , উচ্চশ্রেণী , অভিজাত বর্গ',
       pronunciation: '/ˈaristocracy/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit37: UnitInfo = {
       id: 'u37_aromatic_14',
       unitId: 37,
       word: 'Aromatic',
-      banglaMeaning: 'আনন্দদায়ক বা মনোরঞ্জনমূলক',
+      banglaMeaning: 'আনন্দদায়ক বা মনোরঞ্জনমূলক , সুগন্ধযুক্ত , সুরভিত , সুগন্ধি',
       pronunciation: '/ˈaromatic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit37: UnitInfo = {
       id: 'u37_array_16',
       unitId: 37,
       word: 'Array',
-      banglaMeaning: 'বিন্যাস, শ্রেণীবিন্যাস',
+      banglaMeaning: 'বিন্যাস, শ্রেণীবিন্যাস , সৈন্যশ্রেণী , সন্নিবেশ',
       pronunciation: '/ˈarray/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arrhythmic_18',
       unitId: 37,
       word: 'Arrhythmic',
-      banglaMeaning: 'ছন্দ বা নিয়মিততার অভাব',
+      banglaMeaning: 'ছন্দ বা নিয়মিততার অভাব , ছন্দহীন , অনিয়মিত',
       pronunciation: '/ˈarrhythmic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arrogance_19',
       unitId: 37,
       word: 'Arrogance',
-      banglaMeaning: 'দাম্ভিকতা, অহংকার',
+      banglaMeaning: 'দাম্ভিকতা, অহংকার , গর্ব , ঔদ্ধত্য',
       pronunciation: '/ˈarrogance/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arroyo_20',
       unitId: 37,
       word: 'Arroyo',
-      banglaMeaning: 'সংকীর্ণ খাত বা নালা, বড়ো ছোরা',
+      banglaMeaning: 'সংকীর্ণ খাত বা নালা, বড়ো ছোরা , আরোইও',
       pronunciation: '/ˈarroyo/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit37: UnitInfo = {
       id: 'u37_arsenal_21',
       unitId: 37,
       word: 'Arsenal',
-      banglaMeaning: 'অস্ত্রাগার, শস্ত্র',
+      banglaMeaning: 'অস্ত্রাগার, শস্ত্র , আয়ুধশালা , সেলাখানা',
       pronunciation: '/ˈarsenal/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit37: UnitInfo = {
       id: 'u37_artery_22',
       unitId: 37,
       word: 'Artery',
-      banglaMeaning: 'ধমনী, শিরা',
+      banglaMeaning: 'ধমনী, শিরা , নাড়ি , নলিকা',
       pronunciation: '/ˈartery/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit37: UnitInfo = {
       id: 'u37_artful_23',
       unitId: 37,
       word: 'Artful',
-      banglaMeaning: 'চতুর, দক্ষ',
+      banglaMeaning: 'চতুর, দক্ষ , ছলনাময় , কৌশলী',
       pronunciation: '/ˈartful/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit37: UnitInfo = {
       id: 'u37_artisan_26',
       unitId: 37,
       word: 'Artisan',
-      banglaMeaning: 'কারিকর, শিল্পী',
+      banglaMeaning: 'কারিকর, শিল্পী , কারিগর , খলিফা',
       pronunciation: '/ˈartisan/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit37: UnitInfo = {
       id: 'u37_ascendancy_28',
       unitId: 37,
       word: 'Ascendancy',
-      banglaMeaning: 'কর্তৃত্ব, প্রভাব',
+      banglaMeaning: 'কর্তৃত্ব, প্রভাব , উত্থান , অভ্যুত্থান',
       pronunciation: '/ˈascendancy/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit37: UnitInfo = {
       id: 'u37_ascertain_29',
       unitId: 37,
       word: 'Ascertain',
-      banglaMeaning: 'অবধারণ করা, নিরূপণ করা',
+      banglaMeaning: 'অবধারণ করা, নিরূপণ করা , নিশ্চিত করে জানা , নিশ্চিত হওয়া',
       pronunciation: '/ˈascertain/',
       partOfSpeech: 'verb',
       examples: [
@@ -534,7 +534,7 @@ export const unit37: UnitInfo = {
       id: 'u37_ascetic_30',
       unitId: 37,
       word: 'Ascetic',
-      banglaMeaning: 'তপস্বী, সাধু',
+      banglaMeaning: 'তপস্বী, সাধু , যোগী , তাপস',
       pronunciation: '/ˈascetic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -570,7 +570,7 @@ export const unit37: UnitInfo = {
       id: 'u37_aseptic_32',
       unitId: 37,
       word: 'Aseptic',
-      banglaMeaning: 'নির্বীজ, অপচনশীল',
+      banglaMeaning: 'নির্বীজ, অপচনশীল , রোগ-জীবাণুমুক্ত',
       pronunciation: '/ˈaseptic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit37: UnitInfo = {
       id: 'u37_ashen_33',
       unitId: 37,
       word: 'Ashen',
-      banglaMeaning: 'ছাইরঙা, ধূসর',
+      banglaMeaning: 'ছাইরঙা, ধূসর , পাংশুবর্ণ , বিবর্ণ',
       pronunciation: '/ˈashen/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit37: UnitInfo = {
       id: 'u37_asinine_34',
       unitId: 37,
       word: 'Asinine',
-      banglaMeaning: 'গর্দভের, গর্দভতুল্য',
+      banglaMeaning: 'গর্দভের, গর্দভতুল্য , গর্দভসংক্রান্ত , রাসভতুল্য',
       pronunciation: '/ˈasinine/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit37: UnitInfo = {
       id: 'u37_askance_35',
       unitId: 37,
       word: 'Askance',
-      banglaMeaning: 'বক্রভাবে, তেরছা',
+      banglaMeaning: 'বক্রভাবে, তেরছা , তির্যকভাবে , আড়চোখে',
       pronunciation: '/ˈaskance/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit37: UnitInfo = {
       id: 'u37_askew_36',
       unitId: 37,
       word: 'Askew',
-      banglaMeaning: 'বাঁকাভাবে, তেরচাভাবে',
+      banglaMeaning: 'বাঁকাভাবে, তেরচাভাবে , তির্যগ্ভাবে',
       pronunciation: '/ˈaskew/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit37: UnitInfo = {
       id: 'u37_asperity_37',
       unitId: 37,
       word: 'Asperity',
-      banglaMeaning: 'তীক্ষ্ণতা বা সূক্ষ্ম বুদ্ধি',
+      banglaMeaning: 'তীক্ষ্ণতা বা সূক্ষ্ম বুদ্ধি , দারূণ শৈত্য , বন্ধুরতা , কঠোরতা',
       pronunciation: '/ˈasperity/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit37: UnitInfo = {
       id: 'u37_aspirant_39',
       unitId: 37,
       word: 'Aspirant',
-      banglaMeaning: 'উচ্চাকাঙ্ক্ষী, পদপ্রার্থী',
+      banglaMeaning: 'উচ্চাকাঙ্ক্ষী, পদপ্রার্থী , উচ্চাভিলাষী',
       pronunciation: '/ˈaspirant/',
       partOfSpeech: 'noun',
       examples: [

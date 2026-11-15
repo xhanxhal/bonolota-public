@@ -12,7 +12,7 @@ export const unit06: UnitInfo = {
       id: 'u6_articulate_1',
       unitId: 6,
       word: 'Articulate',
-      banglaMeaning: 'স্পষ্টভাবে বক্তব্য প্রকাশ করতে সক্ষম',
+      banglaMeaning: 'স্পষ্টভাবে বক্তব্য প্রকাশ করতে সক্ষম , গ্রন্থিবদ্ধ , স্পষ্টভাবে উচ্চারণ বলা , সন্ধিযুক্ত',
       pronunciation: '/ɑːˈtɪk.jə.lət/',
       partOfSpeech: 'adjective',
       examples: [
@@ -30,7 +30,7 @@ export const unit06: UnitInfo = {
       id: 'u6_bombastic_2',
       unitId: 6,
       word: 'Bombastic',
-      banglaMeaning: 'গম্ভীর ও ফাঁপা বড় বড় কথায় পূর্ণ',
+      banglaMeaning: 'গম্ভীর ও ফাঁপা বড় বড় কথায় পূর্ণ , শব্দাড়ম্বরপূর্ণ',
       pronunciation: '/bɒmˈbæs.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit06: UnitInfo = {
       id: 'u6_circumlocution_3',
       unitId: 6,
       word: 'Circumlocution',
-      banglaMeaning: 'ঘুরিয়ে পেঁচিয়ে কথা বলা',
+      banglaMeaning: 'ঘুরিয়ে পেঁচিয়ে কথা বলা , অনর্থক বাক্যবিস্তার , বাগাড়ম্বর',
       pronunciation: '/ˌsɜː.kəm.ləˈkjuː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit06: UnitInfo = {
       id: 'u6_eloquent_4',
       unitId: 6,
       word: 'Eloquent',
-      banglaMeaning: 'বাগ্মী , মধুর ও সাবলীল বক্তা',
+      banglaMeaning: 'বাগ্মী , মধুর ও সাবলীল বক্তা , বলিয়ে , বাক্যবাগীশ',
       pronunciation: '/ˈel.ə.kwənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit06: UnitInfo = {
       id: 'u6_grandiloquent_5',
       unitId: 6,
       word: 'Grandiloquent',
-      banglaMeaning: 'বাগাড়ম্বরপূর্ণ , অতিরিক্ত ভাবাবেগ ও উচ্চ শব্দযুক্ত',
+      banglaMeaning: 'বাগাড়ম্বরপূর্ণ , অতিরিক্ত ভাবাবেগ ও উচ্চ শব্দযুক্ত , শব্দঝংকৃত',
       pronunciation: '/ɡrænˈdɪl.ə.kwənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit06: UnitInfo = {
       id: 'u6_invective_7',
       unitId: 6,
       word: 'Invective',
-      banglaMeaning: 'কটূক্তিপূর্ণ তিরস্কার , তীব্র গালাগাল',
+      banglaMeaning: 'কটূক্তিপূর্ণ তিরস্কার , তীব্র গালাগাল , তিরস্কারপূর্ণ ভাষা , নিন্দাবাক্য',
       pronunciation: '/ɪnˈvek.tɪv/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit06: UnitInfo = {
       id: 'u6_laconic_8',
       unitId: 6,
       word: 'Laconic',
-      banglaMeaning: 'স্বল্পভাষী কিন্তু অর্থপূর্ণ , সংক্ষিপ্ত',
+      banglaMeaning: 'স্বল্পভাষী কিন্তু অর্থপূর্ণ , সংক্ষিপ্ত , অল্পকথায় অর্থপূর্ণ',
       pronunciation: '/ləˈkɒn.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -156,7 +156,7 @@ export const unit06: UnitInfo = {
       id: 'u6_mellifluous_9',
       unitId: 6,
       word: 'Mellifluous',
-      banglaMeaning: 'মধুর ও শ্রুতিমধুর কণ্ঠস্বর',
+      banglaMeaning: 'মধুর ও শ্রুতিমধুর কণ্ঠস্বর , মধুপ্রদ',
       pronunciation: '/məˈlɪf.lu.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit06: UnitInfo = {
       id: 'u6_nuanced_10',
       unitId: 6,
       word: 'Nuanced',
-      banglaMeaning: 'সূক্ষ্ম ব্যঞ্জনাময় বা অর্থপূর্ণ',
+      banglaMeaning: 'সূক্ষ্ম ব্যঞ্জনাময় বা অর্থপূর্ণ , সূক্ষ্ম পার্থক্যযুক্ত , সূক্ষ্মতাপূর্ণ',
       pronunciation: '/ˈnjuː.ɑːnst/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit06: UnitInfo = {
       id: 'u6_oratory_11',
       unitId: 6,
       word: 'Oratory',
-      banglaMeaning: 'বক্তৃতাকলা , সুবচন দক্ষতা',
+      banglaMeaning: 'বক্তৃতাকলা , সুবচন দক্ষতা , বাগ্মিতা , বাকপটুতা',
       pronunciation: '/ˈɒr.ə.tər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit06: UnitInfo = {
       id: 'u6_pithy_12',
       unitId: 6,
       word: 'Pithy',
-      banglaMeaning: 'সংক্ষিপ্ত অথচ গভীর অর্থবোধক',
+      banglaMeaning: 'সংক্ষিপ্ত অথচ গভীর অর্থবোধক , বলিষ্ঠ , সারবান , মজ্জাপূর্ণ',
       pronunciation: '/ˈpɪθ.i/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit06: UnitInfo = {
       id: 'u6_rhetoric_13',
       unitId: 6,
       word: 'Rhetoric',
-      banglaMeaning: 'অলঙ্কারবহুল প্রকাশভঙ্গি , বাগ্মিতা',
+      banglaMeaning: 'অলঙ্কারবহুল প্রকাশভঙ্গি , বাগ্মিতা , অলঙ্কারশাস্ত্র , বক্তৃতাদাননিদ্যা',
       pronunciation: '/ˈret.ər.ɪk/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit06: UnitInfo = {
       id: 'u6_succinct_14',
       unitId: 6,
       word: 'Succinct',
-      banglaMeaning: 'সংক্ষেপিত ও সুনির্দিষ্ট',
+      banglaMeaning: 'সংক্ষেপিত ও সুনির্দিষ্ট , সংক্ষিপ্ত , পরিবেষ্টিত , আঁটসাঁট',
       pronunciation: '/səkˈsɪŋkt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit06: UnitInfo = {
       id: 'u6_tirade_15',
       unitId: 6,
       word: 'Tirade',
-      banglaMeaning: 'সুদীর্ঘ ক্রোধপূর্ণ বক্তৃতা বা গালাগাল',
+      banglaMeaning: 'সুদীর্ঘ ক্রোধপূর্ণ বক্তৃতা বা গালাগাল , সুদীর্ঘ বক্তৃতা , প্রচণ্ড তিরস্কার',
       pronunciation: '/taɪˈreɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit06: UnitInfo = {
       id: 'u6_verbose_16',
       unitId: 6,
       word: 'Verbose',
-      banglaMeaning: 'শব্দবহুল , অপ্রয়োজনীয় কথায় ভরা',
+      banglaMeaning: 'শব্দবহুল , অপ্রয়োজনীয় কথায় ভরা , বাগাড়ম্বরপূর্ণ , বাগ্বহুল',
       pronunciation: '/vɜːˈbəʊs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit06: UnitInfo = {
       id: 'u6_vociferous_17',
       unitId: 6,
       word: 'Vociferous',
-      banglaMeaning: 'উচ্চকণ্ঠ ও জোরদার প্রতিবাদকারী',
+      banglaMeaning: 'উচ্চকণ্ঠ ও জোরদার প্রতিবাদকারী , চিৎকারকারী , গোলমালকারী , সমুচ্চ',
       pronunciation: '/vəˈsɪf.ər.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -318,7 +318,7 @@ export const unit06: UnitInfo = {
       id: 'u6_diatribe_18',
       unitId: 6,
       word: 'Diatribe',
-      banglaMeaning: 'তীব্র তিক্ত আক্রমণাত্মক সমালোচনা',
+      banglaMeaning: 'তীব্র তিক্ত আক্রমণাত্মক সমালোচনা , তীব্র সমালোচনা , গালিগালাজ',
       pronunciation: '/ˈdaɪ.ə.traɪb/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit06: UnitInfo = {
       id: 'u6_eulogy_19',
       unitId: 6,
       word: 'Eulogy',
-      banglaMeaning: 'গুণকীর্তনমূলক প্রশস্তিগাথা , প্রশংসাসূচক স্তুতি',
+      banglaMeaning: 'গুণকীর্তনমূলক প্রশস্তিগাথা , প্রশংসাসূচক স্তুতি , বাখান , প্রশংসাত্মক উক্তি',
       pronunciation: '/ˈjuː.lə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit06: UnitInfo = {
       id: 'u6_grandiloquence_20',
       unitId: 6,
       word: 'Grandiloquence',
-      banglaMeaning: 'বাগাড়ম্বর , বাগাড়ম্বরপূর্ণ কথাবার্তা',
+      banglaMeaning: 'বাগাড়ম্বর , বাগাড়ম্বরপূর্ণ কথাবার্তা , শব্দাডম্বর',
       pronunciation: '/ɡrænˈdɪl.ə.kwəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit06: UnitInfo = {
       id: 'u6_monologue_21',
       unitId: 6,
       word: 'Monologue',
-      banglaMeaning: 'একক সংলাপ , স্বগতোক্তি',
+      banglaMeaning: 'একক সংলাপ , স্বগতোক্তি , নাটকাদি',
       pronunciation: '/ˈmɒn.ə.lɒɡ/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit06: UnitInfo = {
       id: 'u6_panegyric_22',
       unitId: 6,
       word: 'Panegyric',
-      banglaMeaning: 'উচ্চ প্রশংসাসূচক বক্তব্য বা স্তুতিগান',
+      banglaMeaning: 'উচ্চ প্রশংসাসূচক বক্তব্য বা স্তুতিগান , প্রশংসাবাদ , স্তুতিবাদ , প্রশস্তি',
       pronunciation: '/ˌpæn.əˈdʒɪr.ɪk/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit06: UnitInfo = {
       id: 'u6_prolix_23',
       unitId: 6,
       word: 'Prolix',
-      banglaMeaning: 'অপ্রয়োজনীয় দীর্ঘ ও বিরক্তিকর',
+      banglaMeaning: 'অপ্রয়োজনীয় দীর্ঘ ও বিরক্তিকর , দীর্ঘ ও শব্দবহুল',
       pronunciation: '/ˈprəʊ.lɪks/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit06: UnitInfo = {
       id: 'u6_rambling_24',
       unitId: 6,
       word: 'Rambling',
-      banglaMeaning: 'লক্ষ্যহীনভাবে বিস্তৃত বা এলোমেলো কথা',
+      banglaMeaning: 'লক্ষ্যহীনভাবে বিস্তৃত বা এলোমেলো কথা , অসংলগ্ন , ভ্রমণরত , অনিয়মিত',
       pronunciation: '/ˈræm.blɪŋ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit06: UnitInfo = {
       id: 'u6_retort_25',
       unitId: 6,
       word: 'Retort',
-      banglaMeaning: 'মোক্ষম জবাব দেওয়া , তাৎক্ষণিক প্রত্যুত্তর',
+      banglaMeaning: 'মোক্ষম জবাব দেওয়া , তাৎক্ষণিক প্রত্যুত্তর , বকযন্ত্র , প্রতিশোধ',
       pronunciation: '/rɪˈtɔːt/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit06: UnitInfo = {
       id: 'u6_salient_26',
       unitId: 6,
       word: 'Salient',
-      banglaMeaning: 'সর্বাধিক লক্ষণীয় , প্রধান ও গুরুত্বপূর্ণ',
+      banglaMeaning: 'সর্বাধিক লক্ষণীয় , প্রধান ও গুরুত্বপূর্ণ , বিশিষ্ট , লাফানে',
       pronunciation: '/ˈseɪ.li.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit06: UnitInfo = {
       id: 'u6_tautology_27',
       unitId: 6,
       word: 'Tautology',
-      banglaMeaning: 'একই অর্থবোধক শব্দের নিরর্থক পুনরাবৃত্তি',
+      banglaMeaning: 'একই অর্থবোধক শব্দের নিরর্থক পুনরাবৃত্তি , পুনরুক্তি , শব্দবাহুল্য , অনুলাপ',
       pronunciation: '/tɔːˈtɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit06: UnitInfo = {
       id: 'u6_vituperative_28',
       unitId: 6,
       word: 'Vituperative',
-      banglaMeaning: 'চরম অপবাদমূলক ও গালাগালপূর্ণ',
+      banglaMeaning: 'চরম অপবাদমূলক ও গালাগালপূর্ণ , অপবাদসূচক',
       pronunciation: '/vaɪˈtjuː.pər.ə.tɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit06: UnitInfo = {
       id: 'u6_disquisition_30',
       unitId: 6,
       word: 'Disquisition',
-      banglaMeaning: 'গবেষণাধর্মী বিশদ আলোচনা বা প্রবন্ধ',
+      banglaMeaning: 'গবেষণাধর্মী বিশদ আলোচনা বা প্রবন্ধ , দীর্ঘ',
       pronunciation: '/ˌdɪs.kwɪˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit06: UnitInfo = {
       id: 'u6_glib_32',
       unitId: 6,
       word: 'Glib',
-      banglaMeaning: 'সাবলীল কিন্তু অগভীর ও আন্তরিকতাহীন',
+      banglaMeaning: 'সাবলীল কিন্তু অগভীর ও আন্তরিকতাহীন , অনর্গল , স্বচ্ছন্দ , সদাপ্রস্তুত',
       pronunciation: '/ɡlɪb/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit06: UnitInfo = {
       id: 'u6_peroration_33',
       unitId: 6,
       word: 'Peroration',
-      banglaMeaning: 'বক্তৃতার চূড়ান্ত সমাপ্তি বা উপসংহার',
+      banglaMeaning: 'বক্তৃতার চূড়ান্ত সমাপ্তি বা উপসংহার , বক্তৃতার উপসংহার , সবিস্তার ভাষণ',
       pronunciation: '/ˌper.əˈreɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit06: UnitInfo = {
       id: 'u6_soliloquy_34',
       unitId: 6,
       word: 'Soliloquy',
-      banglaMeaning: 'নাটকে একাকী স্বগতোক্তি',
+      banglaMeaning: 'নাটকে একাকী স্বগতোক্তি , আপনা-আপনি কথা',
       pronunciation: '/səˈlɪl.ə.kwi/',
       partOfSpeech: 'noun',
       examples: [

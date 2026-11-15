@@ -12,7 +12,7 @@ export const unit18: UnitInfo = {
       id: 'u18_anachronism_1',
       unitId: 18,
       word: 'Anachronism',
-      banglaMeaning: 'কালভ্রম বা সময়ের অনুপযুক্ত বস্তু',
+      banglaMeaning: 'কালভ্রম বা সময়ের অনুপযুক্ত বস্তু , একযুগের বস্তু , ব্যক্তি , বস্তু বা রীতিনীতি',
       pronunciation: '/əˈnæk.rə.nɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit18: UnitInfo = {
       id: 'u18_diurnal_3',
       unitId: 18,
       word: 'Diurnal',
-      banglaMeaning: 'দিবাচর , দিনে ঘটে এমন বা দৈনিক',
+      banglaMeaning: 'দিবাচর , দিনে ঘটে এমন বা দৈনিক , আহ্নিক , দিবাসংক্রান্ত',
       pronunciation: '/daɪˈɜː.nəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit18: UnitInfo = {
       id: 'u18_ephemeral_4',
       unitId: 18,
       word: 'Ephemeral',
-      banglaMeaning: 'ক্ষণস্থায়ী , ক্ষণভঙ্গুর',
+      banglaMeaning: 'ক্ষণস্থায়ী , ক্ষণভঙ্গুর , ক্ষণজীবী , একদিবসজীবী',
       pronunciation: '/ɪˈfem.ər.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit18: UnitInfo = {
       id: 'u18_fleeting_5',
       unitId: 18,
       word: 'Fleeting',
-      banglaMeaning: 'পলক ফেলা মাত্র মুছে যাওয়া , দ্রুত অপসৃয়মাণ',
+      banglaMeaning: 'পলক ফেলা মাত্র মুছে যাওয়া , দ্রুত অপসৃয়মাণ , দ্রুতগামী , দ্রুত ধাবমান',
       pronunciation: '/ˈfliː.tɪŋ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -102,7 +102,7 @@ export const unit18: UnitInfo = {
       id: 'u18_generation_6',
       unitId: 18,
       word: 'Generation',
-      banglaMeaning: 'প্রজন্ম , একটি নির্দিষ্ট যুগের মানুষ',
+      banglaMeaning: 'প্রজন্ম , একটি নির্দিষ্ট যুগের মানুষ , প্রজনন , সৃজন',
       pronunciation: '/ˌdʒen.əˈreɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit18: UnitInfo = {
       id: 'u18_historical_7',
       unitId: 18,
       word: 'Historical',
-      banglaMeaning: 'ঐতিহাসিক বা ইতিহাস সংক্রান্ত',
+      banglaMeaning: 'ঐতিহাসিক বা ইতিহাস সংক্রান্ত , ইতিহাস-অনুযায়ী',
       pronunciation: '/hɪˈstɒr.ɪ.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit18: UnitInfo = {
       id: 'u18_kaleidoscopic_10',
       unitId: 18,
       word: 'Kaleidoscopic',
-      banglaMeaning: 'বহুরূপী , ক্রমাগত পরিবর্তনশীল বিচিত্র রূপ',
+      banglaMeaning: 'বহুরূপী , ক্রমাগত পরিবর্তনশীল বিচিত্র রূপ , বিচিত্র চলচ্ছবির মতো',
       pronunciation: '/kəˌlaɪ.dəˈskɒp.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit18: UnitInfo = {
       id: 'u18_longevity_11',
       unitId: 18,
       word: 'Longevity',
-      banglaMeaning: 'দীর্ঘায়ু বা দীর্ঘ স্থায়িত্বকাল',
+      banglaMeaning: 'দীর্ঘায়ু বা দীর্ঘ স্থায়িত্বকাল , আয়ু , পরমায়ু , বৃদ্ধ বয়স',
       pronunciation: '/lɒnˈdʒev.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit18: UnitInfo = {
       id: 'u18_nocturnal_13',
       unitId: 18,
       word: 'Nocturnal',
-      banglaMeaning: 'নিশাচর , রাতের বেলা ঘটে এমন',
+      banglaMeaning: 'নিশাচর , রাতের বেলা ঘটে এমন , রাত্রিসংক্রান্ত , রাত্রের',
       pronunciation: '/nɒkˈtɜː.nəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit18: UnitInfo = {
       id: 'u18_obsolete_14',
       unitId: 18,
       word: 'Obsolete',
-      banglaMeaning: 'অপ্রচলিত বা সেকেলে হয়ে যাওয়া',
+      banglaMeaning: 'অপ্রচলিত বা সেকেলে হয়ে যাওয়া , পুরান , অচল , লুপ্ত',
       pronunciation: '/ˈɒb.səl.iːt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit18: UnitInfo = {
       id: 'u18_perennial_15',
       unitId: 18,
       word: 'Perennial',
-      banglaMeaning: 'বহুবর্ষজীবী বা চিরন্তন',
+      banglaMeaning: 'বহুবর্ষজীবী বা চিরন্তন , চিরজীবী , বারমেসে',
       pronunciation: '/pəˈren.i.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit18: UnitInfo = {
       id: 'u18_quinquennial_16',
       unitId: 18,
       word: 'Quinquennial',
-      banglaMeaning: 'পঞ্চবার্ষিক বা প্রতি পাঁচ বছর অন্তর ঘটে এমন',
+      banglaMeaning: 'পঞ্চবার্ষিক বা প্রতি পাঁচ বছর অন্তর ঘটে এমন , পঁচবার্ষিক',
       pronunciation: '/kwɪŋˈkwen.i.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -318,7 +318,7 @@ export const unit18: UnitInfo = {
       id: 'u18_simultaneous_18',
       unitId: 18,
       word: 'Simultaneous',
-      banglaMeaning: 'একযোগে বা একই সময়ে সংঘটিত',
+      banglaMeaning: 'একযোগে বা একই সময়ে সংঘটিত , যুগপত , এককালীন , সমকালীন',
       pronunciation: '/ˌsɪm.əlˈteɪ.ni.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit18: UnitInfo = {
       id: 'u18_transient_19',
       unitId: 18,
       word: 'Transient',
-      banglaMeaning: 'ক্ষণস্থায়ী বা ক্ষণিকের অতিথি',
+      banglaMeaning: 'ক্ষণস্থায়ী বা ক্ষণিকের অতিথি , অস্থায়ী , অনিত্য় , ক্ষণজীবী',
       pronunciation: '/ˈtræn.zi.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit18: UnitInfo = {
       id: 'u18_unprecedented_20',
       unitId: 18,
       word: 'Unprecedented',
-      banglaMeaning: 'নজিরবিহীন বা অতীতে কখনো ঘটেনি এমন',
+      banglaMeaning: 'নজিরবিহীন বা অতীতে কখনো ঘটেনি এমন , অভূতপূর্ব , অপূর্ব , নজিরহীন',
       pronunciation: '/ʌnˈpres.ɪ.den.tɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -372,7 +372,7 @@ export const unit18: UnitInfo = {
       id: 'u18_vestige_21',
       unitId: 18,
       word: 'Vestige',
-      banglaMeaning: 'বিলুপ্ত কিছুর সামান্য অবশিষ্ট চিহ্ন বা নিদর্শন',
+      banglaMeaning: 'বিলুপ্ত কিছুর সামান্য অবশিষ্ট চিহ্ন বা নিদর্শন , পদচিহ্ন , কণা , সাক্ষ্য',
       pronunciation: '/ˈves.tɪdʒ/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit18: UnitInfo = {
       id: 'u18_waning_22',
       unitId: 18,
       word: 'Waning',
-      banglaMeaning: 'ক্রমহ্রাসমান বা ভাটা পড়া',
+      banglaMeaning: 'ক্রমহ্রাসমান বা ভাটা পড়া , ক্ষীয়মাণ',
       pronunciation: '/weɪn.ɪŋ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit18: UnitInfo = {
       id: 'u18_waxing_23',
       unitId: 18,
       word: 'Waxing',
-      banglaMeaning: 'ক্রমবর্ধমান বা বৃদ্ধি পাওয়া (চাঁদের আলো)',
+      banglaMeaning: 'ক্রমবর্ধমান বা বৃদ্ধি পাওয়া (চাঁদের আলো) , ওয়াক্সিং',
       pronunciation: '/wæks.ɪŋ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit18: UnitInfo = {
       id: 'u18_youthful_24',
       unitId: 18,
       word: 'Youthful',
-      banglaMeaning: 'তারুণ্যদীপ্ত বা যৌবনসুলভ',
+      banglaMeaning: 'তারুণ্যদীপ্ত বা যৌবনসুলভ , তরূণ , তারুণ্যে ভরপুর , যৌবনোচ্ছল',
       pronunciation: '/ˈjuːθ.fəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit18: UnitInfo = {
       id: 'u18_epoch_25',
       unitId: 18,
       word: 'Epoch',
-      banglaMeaning: 'যুগ বা ইতিহাসের তাৎপর্যপূর্ণ কালপর্ব',
+      banglaMeaning: 'যুগ বা ইতিহাসের তাৎপর্যপূর্ণ কালপর্ব , অধিযুগ',
       pronunciation: '/ˈiː.pɒk/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit18: UnitInfo = {
       id: 'u18_evanescent_26',
       unitId: 18,
       word: 'Evanescent',
-      banglaMeaning: 'বাষ্পের মতো মিলিয়ে যাওয়া , ক্ষণস্থায়ী',
+      banglaMeaning: 'বাষ্পের মতো মিলিয়ে যাওয়া , ক্ষণস্থায়ী , বিলীয়মান',
       pronunciation: '/ˌev.əˈnes.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit18: UnitInfo = {
       id: 'u18_fugacious_27',
       unitId: 18,
       word: 'Fugacious',
-      banglaMeaning: 'দ্রুত পলায়নপর বা ক্ষণভঙ্গুর',
+      banglaMeaning: 'দ্রুত পলায়নপর বা ক্ষণভঙ্গুর , চপল , অস্থির , অধরা',
       pronunciation: '/fjuːˈɡeɪ.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit18: UnitInfo = {
       id: 'u18_immutable_28',
       unitId: 18,
       word: 'Immutable',
-      banglaMeaning: 'অপরিবর্তনীয় ও চিরন্তন সত্য',
+      banglaMeaning: 'অপরিবর্তনীয় ও চিরন্তন সত্য , ধ্রুব , নিত্য , অবিকারী',
       pronunciation: '/ɪˈmjuː.tə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit18: UnitInfo = {
       id: 'u18_interim_29',
       unitId: 18,
       word: 'Interim',
-      banglaMeaning: 'অন্তর্বর্তীকালীন সময়',
+      banglaMeaning: 'অন্তর্বর্তীকালীন সময় , মধ্যবর্তী , অন্তর্বতী সময় কাল , মধ্যকাল',
       pronunciation: '/ˈɪn.tər.ɪm/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit18: UnitInfo = {
       id: 'u18_mutable_30',
       unitId: 18,
       word: 'Mutable',
-      banglaMeaning: 'পরিবর্তনশীল বা রূপান্তরযোগ্য',
+      banglaMeaning: 'পরিবর্তনশীল বা রূপান্তরযোগ্য , চপল , পরিবর্তনীয় , অস্থির',
       pronunciation: '/ˈmjuː.tə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit18: UnitInfo = {
       id: 'u18_permutation_31',
       unitId: 18,
       word: 'Permutation',
-      banglaMeaning: 'বিন্যাস বা ক্রমপরিবর্তন',
+      banglaMeaning: 'বিন্যাস বা ক্রমপরিবর্তন , বিনিময়',
       pronunciation: '/ˌpɜː.mjuːˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit18: UnitInfo = {
       id: 'u18_temporal_32',
       unitId: 18,
       word: 'Temporal',
-      banglaMeaning: 'পার্থিব বা সময় সংক্রান্ত',
+      banglaMeaning: 'পার্থিব বা সময় সংক্রান্ত , সময়গত',
       pronunciation: '/ˈtem.pər.əl/',
       partOfSpeech: 'adjective',
       examples: [

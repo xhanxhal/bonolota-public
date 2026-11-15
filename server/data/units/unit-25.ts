@@ -12,7 +12,7 @@ export const unit25: UnitInfo = {
       id: 'u25_archetype_1',
       unitId: 25,
       word: 'Archetype',
-      banglaMeaning: 'আদিম প্রতীক বা সর্বজনীন মানসিক প্রতিরূপ',
+      banglaMeaning: 'আদিম প্রতীক বা সর্বজনীন মানসিক প্রতিরূপ , আদিপ্রতিমা , আদিরূপ , মূল',
       pronunciation: '/ˈɑː.kɪ.taɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit25: UnitInfo = {
       id: 'u25_behaviorism_2',
       unitId: 25,
       word: 'Behaviorism',
-      banglaMeaning: 'আচরণবাদ , বাহ্যিক আচরণ পর্যবেক্ষণ ভিত্তিক মনস্তত্ত্ব',
+      banglaMeaning: 'আচরণবাদ , বাহ্যিক আচরণ পর্যবেক্ষণ ভিত্তিক মনস্তত্ত্ব , চেষ্টিতবাদ',
       pronunciation: '/bɪˈheɪ.vjər.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit25: UnitInfo = {
       id: 'u25_cognition_3',
       unitId: 25,
       word: 'Cognition',
-      banglaMeaning: 'জ্ঞানার্জন বা উপলব্ধি করার মানসিক প্রক্রিয়া',
+      banglaMeaning: 'জ্ঞানার্জন বা উপলব্ধি করার মানসিক প্রক্রিয়া , অবগতি , চেতনা',
       pronunciation: '/kɒɡˈnɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit25: UnitInfo = {
       id: 'u25_delusion_4',
       unitId: 25,
       word: 'Delusion',
-      banglaMeaning: 'ভ্রান্ত বিশ্বাস বা অমূলক ধারণা',
+      banglaMeaning: 'ভ্রান্ত বিশ্বাস বা অমূলক ধারণা , ভ্রান্তি উৎপাদন , বিভ্রম , মায়া',
       pronunciation: '/dɪˈluː.ʒən/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit25: UnitInfo = {
       id: 'u25_ego_5',
       unitId: 25,
       word: 'Ego',
-      banglaMeaning: 'অহংবোধ বা নিজের সম্পর্কে সচেতন মানসিক সত্তা',
+      banglaMeaning: 'অহংবোধ বা নিজের সম্পর্কে সচেতন মানসিক সত্তা , আমি , আত্মা',
       pronunciation: '/ˈiː.ɡəʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit25: UnitInfo = {
       id: 'u25_fixation_6',
       unitId: 25,
       word: 'Fixation',
-      banglaMeaning: 'অস্বাভাবিক আকর্ষণ বা অতিরিক্ত আসক্তি',
+      banglaMeaning: 'অস্বাভাবিক আকর্ষণ বা অতিরিক্ত আসক্তি , আবেশ , স্থায়ীকরণ , ঘনীভবন',
       pronunciation: '/fɪkˈseɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit25: UnitInfo = {
       id: 'u25_gestalt_7',
       unitId: 25,
       word: 'Gestalt',
-      banglaMeaning: 'সামগ্রিক রূপ , যা খণ্ডাংশের যোগফলের চেয়েও বড় কিছু',
+      banglaMeaning: 'সামগ্রিক রূপ , যা খণ্ডাংশের যোগফলের চেয়েও বড় কিছু , ধাঁচ',
       pronunciation: '/ɡəˈʃtælt/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit25: UnitInfo = {
       id: 'u25_hallucination_8',
       unitId: 25,
       word: 'Hallucination',
-      banglaMeaning: 'মায়াভ্রম , বাস্তবে নেই এমন কিছু দেখা বা শোনা',
+      banglaMeaning: 'মায়াভ্রম , বাস্তবে নেই এমন কিছু দেখা বা শোনা , অমূলপ্রত্যক্ষ',
       pronunciation: '/həˌluː.sɪˈneɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit25: UnitInfo = {
       id: 'u25_juxtaposition_10',
       unitId: 25,
       word: 'Juxtaposition',
-      banglaMeaning: 'অবচেতন ও চেতন মনের ধারণার পাশাপাশি বৈসাদৃশ্য',
+      banglaMeaning: 'অবচেতন ও চেতন মনের ধারণার পাশাপাশি বৈসাদৃশ্য , সন্নিধি , পাশাপাশি অবস্থান , পাশাপাশি স্থাপন',
       pronunciation: '/ˌdʒʌk.stə.pəˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit25: UnitInfo = {
       id: 'u25_kleptomania_11',
       unitId: 25,
       word: 'Kleptomania',
-      banglaMeaning: 'চুরি করার অদম্য মানসিক বাতিক',
+      banglaMeaning: 'চুরি করার অদম্য মানসিক বাতিক , চুরি রোগ , চুরি করার বাতিক , চুরির বাতিকগ্রস্ত লোক',
       pronunciation: '/ˌklep.təˈmeɪ.ni.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit25: UnitInfo = {
       id: 'u25_libido_12',
       unitId: 25,
       word: 'Libido',
-      banglaMeaning: 'মানসিক জীবনশক্তি বা কামশক্তি',
+      banglaMeaning: 'মানসিক জীবনশক্তি বা কামশক্তি , যৌনকামনা বা তাড়না',
       pronunciation: '/lɪˈbiː.dəʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit25: UnitInfo = {
       id: 'u25_neurosis_14',
       unitId: 25,
       word: 'Neurosis',
-      banglaMeaning: 'স্নায়ুরোগজনিত অতিরিক্ত উদ্বেগ বা মানসিক অস্থিরতা',
+      banglaMeaning: 'স্নায়ুরোগজনিত অতিরিক্ত উদ্বেগ বা মানসিক অস্থিরতা , উদ্বায়ু রোগ , বাতিক , বাতুলতা',
       pronunciation: '/njʊəˈrəʊ.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit25: UnitInfo = {
       id: 'u25_obsession_15',
       unitId: 25,
       word: 'Obsession',
-      banglaMeaning: 'মনে কোনো চিন্তা আচ্ছন্ন হয়ে থাকা বা শুচিবায়ু',
+      banglaMeaning: 'মনে কোনো চিন্তা আচ্ছন্ন হয়ে থাকা বা শুচিবায়ু , আবেশ , অনুক্ষণের চিন্তা , বদ্ধসংস্কার',
       pronunciation: '/əbˈseʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit25: UnitInfo = {
       id: 'u25_psychiatry_16',
       unitId: 25,
       word: 'Psychiatry',
-      banglaMeaning: 'মনোরোগবিদ্যা বা মানসিক রোগের চিকিৎসা বিজ্ঞান',
+      banglaMeaning: 'মনোরোগবিদ্যা বা মানসিক রোগের চিকিৎসা বিজ্ঞান , মানসিক রোগের চিকিত্সা',
       pronunciation: '/saɪˈkaɪə.tri/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit25: UnitInfo = {
       id: 'u25_quirk_17',
       unitId: 25,
       word: 'Quirk',
-      banglaMeaning: 'স্বভাবের অদ্ভুত বৈশিষ্ট্য বা খামখেয়ালিপনা',
+      banglaMeaning: 'স্বভাবের অদ্ভুত বৈশিষ্ট্য বা খামখেয়ালিপনা , পরিহাস , সরস জবাব , ছল',
       pronunciation: '/kwɜːk/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit25: UnitInfo = {
       id: 'u25_repression_18',
       unitId: 25,
       word: 'Repression',
-      banglaMeaning: 'মন থেকে অপ্রীতিকর স্মৃতি বা অনুভূতি অবদমন',
+      banglaMeaning: 'মন থেকে অপ্রীতিকর স্মৃতি বা অনুভূতি অবদমন , নিপীড়ন , নিগ্রহ , নিরোধ',
       pronunciation: '/rɪˈpreʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit25: UnitInfo = {
       id: 'u25_subconscious_19',
       unitId: 25,
       word: 'Subconscious',
-      banglaMeaning: 'অবচেতন মন',
+      banglaMeaning: 'অবচেতন মন , অর্ধসচেতন , অন্তর্জ্ঞানীয় , অর্ধচেতন',
       pronunciation: '/ˌsʌbˈkɒn.ʃəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit25: UnitInfo = {
       id: 'u25_trauma_20',
       unitId: 25,
       word: 'Trauma',
-      banglaMeaning: 'তীব্র মানসিক আঘাত বা বেদনাদায়ক অভিজ্ঞতা',
+      banglaMeaning: 'তীব্র মানসিক আঘাত বা বেদনাদায়ক অভিজ্ঞতা , দৈহিক অসুস্থতা',
       pronunciation: '/ˈtrɔː.mə/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit25: UnitInfo = {
       id: 'u25_unconscious_21',
       unitId: 25,
       word: 'Unconscious',
-      banglaMeaning: 'অচেতন মন , যেখানে চাপা ইচ্ছা জমা থাকে',
+      banglaMeaning: 'অচেতন মন , যেখানে চাপা ইচ্ছা জমা থাকে , মনের নিজ্র্ঞাত স্তর',
       pronunciation: '/ʌnˈkɒn.ʃəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit25: UnitInfo = {
       id: 'u25_vent_22',
       unitId: 25,
       word: 'Vent',
-      banglaMeaning: 'মনের ক্ষোভ বা আবেগ প্রকাশ করে হালকা হওয়া',
+      banglaMeaning: 'মনের ক্ষোভ বা আবেগ প্রকাশ করে হালকা হওয়া , বায়ু , উচ্চারণ , নির্গমন-পথ',
       pronunciation: '/vent/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit25: UnitInfo = {
       id: 'u25_wishful_23',
       unitId: 25,
       word: 'Wishful',
-      banglaMeaning: 'বাস্তবতা ভুলে মনের মতো হবে বলে আশা করা',
+      banglaMeaning: 'বাস্তবতা ভুলে মনের মতো হবে বলে আশা করা , ব্যগ্র',
       pronunciation: '/ˈwɪʃ.fəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit25: UnitInfo = {
       id: 'u25_xenophobia_24',
       unitId: 25,
       word: 'Xenophobia',
-      banglaMeaning: 'অপরিচিত বা বিদেশীদের প্রতি মানসিক ভীতি ও ঘৃণা',
+      banglaMeaning: 'অপরিচিত বা বিদেশীদের প্রতি মানসিক ভীতি ও ঘৃণা , বিদেশাতঙ্ক',
       pronunciation: '/ˌzen.əˈfəʊ.bi.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit25: UnitInfo = {
       id: 'u25_ambivalence_25',
       unitId: 25,
       word: 'Ambivalence',
-      banglaMeaning: 'একই সময়ে দুই বিপরীত অনুভূতি থাকা (প্রেম ও ঘৃণা)',
+      banglaMeaning: 'একই সময়ে দুই বিপরীত অনুভূতি থাকা (প্রেম ও ঘৃণা) , বিরোধ , উভয়বল , বৈপরীত্য',
       pronunciation: '/æmˈbɪv.ə.ləns/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit25: UnitInfo = {
       id: 'u25_catharsis_26',
       unitId: 25,
       word: 'Catharsis',
-      banglaMeaning: 'কান্না বা শিল্পের মাধ্যমে মানসিক আবেগ খালাস',
+      banglaMeaning: 'কান্না বা শিল্পের মাধ্যমে মানসিক আবেগ খালাস , রেচন',
       pronunciation: '/kəˈθɑː.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit25: UnitInfo = {
       id: 'u25_cognitive_27',
       unitId: 25,
       word: 'Cognitive',
-      banglaMeaning: 'উপলব্ধিমূলক বা জ্ঞান আহরণ সংক্রান্ত',
+      banglaMeaning: 'উপলব্ধিমূলক বা জ্ঞান আহরণ সংক্রান্ত , জ্ঞানীয়',
       pronunciation: '/ˈkɒɡ.nə.tɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit25: UnitInfo = {
       id: 'u25_dissonance_28',
       unitId: 25,
       word: 'Dissonance',
-      banglaMeaning: 'কাজের সাথে বিশ্বাসের অমিলজনিত মানসিক অস্বস্তি',
+      banglaMeaning: 'কাজের সাথে বিশ্বাসের অমিলজনিত মানসিক অস্বস্তি , বেসুর , অসংগতি',
       pronunciation: '/ˈdɪs.ə.nəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit25: UnitInfo = {
       id: 'u25_empathy_29',
       unitId: 25,
       word: 'Empathy',
-      banglaMeaning: 'অন্যের কষ্ট নিজের মনে অনুভব করার ক্ষমতা',
+      banglaMeaning: 'অন্যের কষ্ট নিজের মনে অনুভব করার ক্ষমতা , সহানুভূতি',
       pronunciation: '/ˈem.pə.θi/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit25: UnitInfo = {
       id: 'u25_hysteria_30',
       unitId: 25,
       word: 'Hysteria',
-      banglaMeaning: 'অতিরিক্ত আতঙ্ক বা তীব্র উন্মত্ত আবেগ',
+      banglaMeaning: 'অতিরিক্ত আতঙ্ক বা তীব্র উন্মত্ত আবেগ , মৃগীরোগী , হিস্টরিয়া',
       pronunciation: '/hɪˈstɪə.ri.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit25: UnitInfo = {
       id: 'u25_introversion_31',
       unitId: 25,
       word: 'Introversion',
-      banglaMeaning: 'অন্তর্মুখিতা , নিভৃতে সময় কাটানোর প্রবণতা',
+      banglaMeaning: 'অন্তর্মুখিতা , নিভৃতে সময় কাটানোর প্রবণতা , অন্তমুর্খিনতা',
       pronunciation: '/ˌɪn.trəˈvɜː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit25: UnitInfo = {
       id: 'u25_narcissism_32',
       unitId: 25,
       word: 'Narcissism',
-      banglaMeaning: 'আত্মপ্রেম , নিজেকে অতি সুন্দর বা শ্রেষ্ঠ ভাবার অহংকার',
+      banglaMeaning: 'আত্মপ্রেম , নিজেকে অতি সুন্দর বা শ্রেষ্ঠ ভাবার অহংকার , আত্মমুগ্ধতা , আত্মমগ্নতা',
       pronunciation: '/ˈnɑː.sɪ.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit25: UnitInfo = {
       id: 'u25_phobia_33',
       unitId: 25,
       word: 'Phobia',
-      banglaMeaning: 'কোনো কিছুর প্রতি তীব্র ও অযৌক্তিক ভয়',
+      banglaMeaning: 'কোনো কিছুর প্রতি তীব্র ও অযৌক্তিক ভয় , আতঙ্ক , বিতৃষ্ণা , ঘৃণা',
       pronunciation: '/ˈfəʊ.bi.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit25: UnitInfo = {
       id: 'u25_psychosis_34',
       unitId: 25,
       word: 'Psychosis',
-      banglaMeaning: 'বাস্তবতার সাথে সম্পূর্ণ সম্পর্কচ্ছেদ ঘটে এমন চরম মানসিক রোগ',
+      banglaMeaning: 'বাস্তবতার সাথে সম্পূর্ণ সম্পর্কচ্ছেদ ঘটে এমন চরম মানসিক রোগ , মনোব্যাধি',
       pronunciation: '/saɪˈkəʊ.sɪs/',
       partOfSpeech: 'noun',
       examples: [

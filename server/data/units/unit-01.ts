@@ -12,7 +12,7 @@ export const unit01: UnitInfo = {
       id: 'u1_aberrant',
       unitId: 1,
       word: 'Aberrant',
-      banglaMeaning: 'বিপদগামী , অস্বাভাবিক',
+      banglaMeaning: 'বিপদগামী , অস্বাভাবিক , বিচ্যুত , বিপথগামী',
       pronunciation: '/əˈber.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -34,7 +34,7 @@ export const unit01: UnitInfo = {
       id: 'u1_aberration',
       unitId: 1,
       word: 'Aberration',
-      banglaMeaning: 'বিপদগামিতা , নীতিচ্যুতি',
+      banglaMeaning: 'বিপদগামিতা , নীতিচ্যুতি , বিপথগামিতা , সাময়িক স্মৃতিভ্রংশ',
       pronunciation: '/ˌæb.əˈreɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -56,7 +56,7 @@ export const unit01: UnitInfo = {
       id: 'u1_meteorological',
       unitId: 1,
       word: 'Meteorological',
-      banglaMeaning: 'আবহাওয়া সংক্রান্ত',
+      banglaMeaning: 'আবহাওয়া সংক্রান্ত , জলবায়ুগত , বায়ুমণ্ডলীয়',
       pronunciation: '/ˌmiː.ti.ər.əˈlɒdʒ.ɪ.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -78,7 +78,7 @@ export const unit01: UnitInfo = {
       id: 'u1_phenomenon',
       unitId: 1,
       word: 'Phenomenon',
-      banglaMeaning: 'ঘটনা , প্রাকৃতিক বিষয়',
+      banglaMeaning: 'ঘটনা , প্রাকৃতিক বিষয় , বাহ্যমূর্তি বা চেহারা , প্রপঞ্চ',
       pronunciation: '/fəˈnɒm.ɪ.nən/',
       partOfSpeech: 'noun',
       examples: [
@@ -100,7 +100,7 @@ export const unit01: UnitInfo = {
       id: 'u1_arrant',
       unitId: 1,
       word: 'Arrant',
-      banglaMeaning: 'খারাপ ব্যক্তি / চরম / ডাহা',
+      banglaMeaning: 'খারাপ ব্যক্তি / চরম / ডাহা , কুখ্যাত , নিছক',
       pronunciation: '/ˈær.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -122,7 +122,7 @@ export const unit01: UnitInfo = {
       id: 'u1_transparent',
       unitId: 1,
       word: 'Transparent',
-      banglaMeaning: 'স্বচ্ছ , পরিষ্কার',
+      banglaMeaning: 'স্বচ্ছ , পরিষ্কার , আলোকভেদ্য , ফটিক',
       pronunciation: '/trænˈspær.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -144,7 +144,7 @@ export const unit01: UnitInfo = {
       id: 'u1_unmitigated',
       unitId: 1,
       word: 'Unmitigated',
-      banglaMeaning: 'চরম , অপরিবর্তিত , নিরঙ্কুশ',
+      banglaMeaning: 'চরম , অপরিবর্তিত , নিরঙ্কুশ , অপ্রশমিত , সম্পূর্ণ',
       pronunciation: '/ʌnˈmɪt.ɪ.ɡeɪ.tɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -166,7 +166,7 @@ export const unit01: UnitInfo = {
       id: 'u1_errant',
       unitId: 1,
       word: 'Errant',
-      banglaMeaning: 'ভ্রান্ত , পথভ্রষ্ট , বিপথগামী',
+      banglaMeaning: 'ভ্রান্ত , পথভ্রষ্ট , বিপথগামী , ভ্রমণরত , অসভ্য',
       pronunciation: '/ˈer.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -188,7 +188,7 @@ export const unit01: UnitInfo = {
       id: 'u1_circumscribed',
       unitId: 1,
       word: 'Circumscribed',
-      banglaMeaning: 'সীমিত , সীমাবদ্ধ',
+      banglaMeaning: 'সীমিত , সীমাবদ্ধ , চারিদিকে রেখা টানা',
       pronunciation: '/ˈsɜː.kəm.skraɪbd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -210,7 +210,7 @@ export const unit01: UnitInfo = {
       id: 'u1_petulant',
       unitId: 1,
       word: 'Petulant',
-      banglaMeaning: 'সহজেই বিরক্ত হয় এমন , খিটখিটে',
+      banglaMeaning: 'সহজেই বিরক্ত হয় এমন , খিটখিটে , প্রগল্ভ , ধৈর্যহীন',
       pronunciation: '/ˈpetʃ.ə.lənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -232,7 +232,7 @@ export const unit01: UnitInfo = {
       id: 'u1_impetuous',
       unitId: 1,
       word: 'Impetuous',
-      banglaMeaning: 'হুটহাট কাজ করে এমন , আবেগতাড়িত',
+      banglaMeaning: 'হুটহাট কাজ করে এমন , আবেগতাড়িত , বেগবান , দুর্বার',
       pronunciation: '/ɪmˈpetʃ.u.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -254,7 +254,7 @@ export const unit01: UnitInfo = {
       id: 'u1_poignant',
       unitId: 1,
       word: 'Poignant',
-      banglaMeaning: 'দুঃখ কষ্টের অনুভূতি নিয়ে তীক্ষ্ণ , হৃদয়স্পর্শী',
+      banglaMeaning: 'দুঃখ কষ্টের অনুভূতি নিয়ে তীক্ষ্ণ , হৃদয়স্পর্শী , তীব্র , কটু',
       pronunciation: '/ˈpɔɪ.njənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -276,7 +276,7 @@ export const unit01: UnitInfo = {
       id: 'u1_supply',
       unitId: 1,
       word: 'Supply',
-      banglaMeaning: 'সরবরাহ করা , জোগান দেওয়া',
+      banglaMeaning: 'সরবরাহ করা , জোগান দেওয়া , অনুপূরণ করা , প্রতিবিধান করা',
       pronunciation: '/səˈplaɪ/',
       partOfSpeech: 'verb',
       examples: [
@@ -298,7 +298,7 @@ export const unit01: UnitInfo = {
       id: 'u1_supplant',
       unitId: 1,
       word: 'Supplant',
-      banglaMeaning: 'স্থান দখল করা , হটিয়ে স্থান নেওয়া',
+      banglaMeaning: 'স্থান দখল করা , হটিয়ে স্থান নেওয়া , উচ্ছিন্ন করা , স্থানচ্যুত করা',
       pronunciation: '/səˈplɑːnt/',
       partOfSpeech: 'verb',
       examples: [
@@ -320,7 +320,7 @@ export const unit01: UnitInfo = {
       id: 'u1_itinerant',
       unitId: 1,
       word: 'Itinerant',
-      banglaMeaning: 'ভ্রমণশীল , যাযাবর',
+      banglaMeaning: 'ভ্রমণশীল , যাযাবর , ভ্রাম্যমাণ , ভ্রমণকারী',
       pronunciation: '/aɪˈtɪn.ər.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -342,7 +342,7 @@ export const unit01: UnitInfo = {
       id: 'u1_itinerary',
       unitId: 1,
       word: 'Itinerary',
-      banglaMeaning: 'ভ্রমণের পরিকল্পনা / কর্মসূচি',
+      banglaMeaning: 'ভ্রমণের পরিকল্পনা / কর্মসূচি , ভ্রমণপথ , ভ্রমণবৃত্তান্ত',
       pronunciation: '/aɪˈtɪn.ər.ər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -364,7 +364,7 @@ export const unit01: UnitInfo = {
       id: 'u1_visionary',
       unitId: 1,
       word: 'Visionary',
-      banglaMeaning: 'স্বাপ্নিক , দূরদর্শী',
+      banglaMeaning: 'স্বাপ্নিক , দূরদর্শী , কাল্পনিক , অবাস্তব',
       pronunciation: '/ˈvɪʒ.ən.ri/',
       partOfSpeech: 'adjective',
       examples: [
@@ -386,7 +386,7 @@ export const unit01: UnitInfo = {
       id: 'u1_adamant',
       unitId: 1,
       word: 'Adamant',
-      banglaMeaning: 'অনমনীয় , দৃঢ়সংকল্প',
+      banglaMeaning: 'অনমনীয় , দৃঢ়সংকল্প , কঠোর , অনড়',
       pronunciation: '/ˈæd.ə.mənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit01: UnitInfo = {
       id: 'u1_error',
       unitId: 1,
       word: 'Error',
-      banglaMeaning: 'ভুল , ত্রুটি',
+      banglaMeaning: 'ভুল , ত্রুটি , বিভ্রম , ভুল ধারণা',
       pronunciation: '/ˈer.ər/',
       partOfSpeech: 'noun',
       examples: [
@@ -430,7 +430,7 @@ export const unit01: UnitInfo = {
       id: 'u1_erroneous',
       unitId: 1,
       word: 'Erroneous',
-      banglaMeaning: 'ভ্রান্ত , ভুল ধারণাপ্রসূত',
+      banglaMeaning: 'ভ্রান্ত , ভুল ধারণাপ্রসূত , ভ্রমাত্মক , ভ্রমপূর্ণ',
       pronunciation: '/ɪˈrəʊ.ni.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -452,7 +452,7 @@ export const unit01: UnitInfo = {
       id: 'u1_erratic',
       unitId: 1,
       word: 'Erratic',
-      banglaMeaning: 'অনিয়মিত , অপ্রত্যাশিত',
+      banglaMeaning: 'অনিয়মিত , অপ্রত্যাশিত , ভ্রমণরত , অনিশ্চিত',
       pronunciation: '/ɪˈræt.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -474,7 +474,7 @@ export const unit01: UnitInfo = {
       id: 'u1_accede',
       unitId: 1,
       word: 'Accede',
-      banglaMeaning: 'রাজি হওয়া , মেনে নেওয়া',
+      banglaMeaning: 'রাজি হওয়া , মেনে নেওয়া , সম্মত হওয়া , অঙ্গীভূত হওয়া',
       pronunciation: '/əkˈsiːd/',
       partOfSpeech: 'verb',
       examples: [
@@ -496,7 +496,7 @@ export const unit01: UnitInfo = {
       id: 'u1_concede',
       unitId: 1,
       word: 'Concede',
-      banglaMeaning: 'মেনে নেওয়া , পরাজয় স্বীকার করা',
+      banglaMeaning: 'মেনে নেওয়া , পরাজয় স্বীকার করা , মঞ্জুর করা',
       pronunciation: '/kənˈsiːd/',
       partOfSpeech: 'verb',
       examples: [
@@ -562,7 +562,7 @@ export const unit01: UnitInfo = {
       id: 'u1_illicit',
       unitId: 1,
       word: 'Illicit',
-      banglaMeaning: 'নিষিদ্ধ , বেআইনি',
+      banglaMeaning: 'নিষিদ্ধ , বেআইনি , অবৈধ , বিধিবিরুদ্ধ',
       pronunciation: '/ɪˈlɪs.ɪt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -584,7 +584,7 @@ export const unit01: UnitInfo = {
       id: 'u1_elicit',
       unitId: 1,
       word: 'Elicit',
-      banglaMeaning: 'প্রকাশ করাতে বাধ্য করা , বের করে আনা',
+      banglaMeaning: 'প্রকাশ করাতে বাধ্য করা , বের করে আনা , সিদ্ধান্ত করা',
       pronunciation: '/ɪˈlɪs.ɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -606,7 +606,7 @@ export const unit01: UnitInfo = {
       id: 'u1_admonish',
       unitId: 1,
       word: 'Admonish',
-      banglaMeaning: 'সতর্ক করে দেওয়া , মৃদু তিরস্কার করা',
+      banglaMeaning: 'সতর্ক করে দেওয়া , মৃদু তিরস্কার করা , ধমক দেওয়া , সাবধান করে দেওয়া',
       pronunciation: '/ədˈmɒn.ɪʃ/',
       partOfSpeech: 'verb',
       examples: [
@@ -650,7 +650,7 @@ export const unit01: UnitInfo = {
       id: 'u1_prom',
       unitId: 1,
       word: 'Prom',
-      banglaMeaning: 'ছাত্র-ছাত্রীদের আনুষ্ঠানিক নাচ ও উৎসব',
+      banglaMeaning: 'ছাত্র-ছাত্রীদের আনুষ্ঠানিক নাচ ও উৎসব , আনন্দনৃত্য',
       pronunciation: '/prɒm/',
       partOfSpeech: 'noun',
       examples: [
@@ -672,7 +672,7 @@ export const unit01: UnitInfo = {
       id: 'u1_abstruse',
       unitId: 1,
       word: 'Abstruse',
-      banglaMeaning: 'দুর্বোধ্য , বুঝতে কঠিন',
+      banglaMeaning: 'দুর্বোধ্য , বুঝতে কঠিন , দুর্জ্ঞেয়',
       pronunciation: '/æbˈstruːs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -694,7 +694,7 @@ export const unit01: UnitInfo = {
       id: 'u1_uninitiated',
       unitId: 1,
       word: 'Uninitiated',
-      banglaMeaning: 'অনভিজ্ঞ , দীক্ষাহীন',
+      banglaMeaning: 'অনভিজ্ঞ , দীক্ষাহীন , অদীক্ষিত',
       pronunciation: '/ˌʌn.ɪˈnɪʃ.i.eɪ.tɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -716,7 +716,7 @@ export const unit01: UnitInfo = {
       id: 'u1_abstain',
       unitId: 1,
       word: 'Abstain',
-      banglaMeaning: 'বিরত থাকা , পরিহার করা',
+      banglaMeaning: 'বিরত থাকা , পরিহার করা , নিজেকে নিবৃত্ত করা',
       pronunciation: '/əbˈsteɪn/',
       partOfSpeech: 'verb',
       examples: [
@@ -760,7 +760,7 @@ export const unit01: UnitInfo = {
       id: 'u1_abstemious',
       unitId: 1,
       word: 'Abstemious',
-      banglaMeaning: 'সংযত , মিতাচারী , পানাহারে পরিমিত',
+      banglaMeaning: 'সংযত , মিতাচারী , পানাহারে পরিমিত , সংযমী',
       pronunciation: '/æbˈstiː.mi.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -782,7 +782,7 @@ export const unit01: UnitInfo = {
       id: 'u1_accolade',
       unitId: 1,
       word: 'Accolade',
-      banglaMeaning: 'খেতাব , প্রশংসা , স্বীকৃতি',
+      banglaMeaning: 'খেতাব , প্রশংসা , স্বীকৃতি , সাধুবাদ , তারিফ',
       pronunciation: '/ˈæk.ə.leɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -804,7 +804,7 @@ export const unit01: UnitInfo = {
       id: 'u1_acid',
       unitId: 1,
       word: 'Acid',
-      banglaMeaning: 'অম্ল , অ্যাসিড',
+      banglaMeaning: 'অম্ল , অ্যাসিড , আম্লিক , প্রখর',
       pronunciation: '/ˈæs.ɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -870,7 +870,7 @@ export const unit01: UnitInfo = {
       id: 'u1_acrid',
       unitId: 1,
       word: 'Acrid',
-      banglaMeaning: 'তীব্র ঝাঁঝালো গন্ধ বা স্বাদ',
+      banglaMeaning: 'তীব্র ঝাঁঝালো গন্ধ বা স্বাদ , উগ্র , কটু , ঝাঁজালো',
       pronunciation: '/ˈæk.rɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -892,7 +892,7 @@ export const unit01: UnitInfo = {
       id: 'u1_acrimony',
       unitId: 1,
       word: 'Acrimony',
-      banglaMeaning: 'উগ্রতা , তিক্ততা , বিদ্বেষ',
+      banglaMeaning: 'উগ্রতা , তিক্ততা , বিদ্বেষ , স্বভাবের রুক্ষতা , মেজাজের রুক্ষতা',
       pronunciation: '/ˈæk.rɪ.mə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -914,7 +914,7 @@ export const unit01: UnitInfo = {
       id: 'u1_acrimonious',
       unitId: 1,
       word: 'Acrimonious',
-      banglaMeaning: 'কটূ / তিক্ত / কলহপ্রিয়',
+      banglaMeaning: 'কটূ / তিক্ত / কলহপ্রিয় , বদমেজাজি , ঝাঁজালো',
       pronunciation: '/ˌæk.rɪˈməʊ.ni.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -936,7 +936,7 @@ export const unit01: UnitInfo = {
       id: 'u1_aesthete',
       unitId: 1,
       word: 'Aesthete',
-      banglaMeaning: 'সৌন্দর্য বোঝে এমন , রসগ্রাহী ব্যক্তি',
+      banglaMeaning: 'সৌন্দর্য বোঝে এমন , রসগ্রাহী ব্যক্তি , সুন্দরের পূজারী',
       pronunciation: '/ˈiːs.θiːt/',
       partOfSpeech: 'noun',
       examples: [
@@ -958,7 +958,7 @@ export const unit01: UnitInfo = {
       id: 'u1_estate',
       unitId: 1,
       word: 'Estate',
-      banglaMeaning: 'ভূ-সম্পত্তি , বিশাল সম্পত্তি',
+      banglaMeaning: 'ভূ-সম্পত্তি , বিশাল সম্পত্তি , জমিদারি , অস্থাবর সম্পত্তি',
       pronunciation: '/ɪˈsteɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -980,7 +980,7 @@ export const unit01: UnitInfo = {
       id: 'u1_aesthetic',
       unitId: 1,
       word: 'Aesthetic',
-      banglaMeaning: 'নান্দনিক , সৌন্দর্যসংক্রান্ত / নতুনত্ব',
+      banglaMeaning: 'নান্দনিক , সৌন্দর্যসংক্রান্ত / নতুনত্ব , সৌন্দর্যবোধ সংক্রান্ত , শিল্পরুচিসম্মত',
       pronunciation: '/esˈθet.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -1002,7 +1002,7 @@ export const unit01: UnitInfo = {
       id: 'u1_peculiar',
       unitId: 1,
       word: 'Peculiar',
-      banglaMeaning: 'অদ্ভুত , বিশেষ , সচরাচর দেখা যায় না এমন',
+      banglaMeaning: 'অদ্ভুত , বিশেষ , সচরাচর দেখা যায় না এমন , নিজস্ব , বৈশিষ্ট্যসূচক',
       pronunciation: '/pɪˈkjuː.li.ər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -1024,7 +1024,7 @@ export const unit01: UnitInfo = {
       id: 'u1_coalesce',
       unitId: 1,
       word: 'Coalesce',
-      banglaMeaning: 'একত্রিত হওয়া , মিলিত হওয়া',
+      banglaMeaning: 'একত্রিত হওয়া , মিলিত হওয়া , একসঙ্গে বেড়ে ওঠা , সংযুক্ত হওয়া',
       pronunciation: '/ˌkəʊ.əˈles/',
       partOfSpeech: 'verb',
       examples: [
@@ -1046,7 +1046,7 @@ export const unit01: UnitInfo = {
       id: 'u1_amalgamate',
       unitId: 1,
       word: 'Amalgamate',
-      banglaMeaning: 'মিলিত করা , যুক্ত করা , সংমিশ্রণ করা',
+      banglaMeaning: 'মিলিত করা , যুক্ত করা , সংমিশ্রণ করা , জোড়া লাগানো , একত্রিত করা',
       pronunciation: '/əˈmæl.ɡə.meɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -1068,7 +1068,7 @@ export const unit01: UnitInfo = {
       id: 'u1_amalgam',
       unitId: 1,
       word: 'Amalgam',
-      banglaMeaning: 'বিভিন্ন জিনিসের মিশ্রণ , সংমিশ্রণ',
+      banglaMeaning: 'বিভিন্ন জিনিসের মিশ্রণ , সংমিশ্রণ , পারদসংকর , সংযোগ',
       pronunciation: '/əˈmæl.ɡəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -1090,7 +1090,7 @@ export const unit01: UnitInfo = {
       id: 'u1_promulgate',
       unitId: 1,
       word: 'Promulgate',
-      banglaMeaning: 'প্রচার করা , সরকারিভাবে জারি করা',
+      banglaMeaning: 'প্রচার করা , সরকারিভাবে জারি করা , জাহির করা',
       pronunciation: '/ˈprɒm.əl.ɡeɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -1112,7 +1112,7 @@ export const unit01: UnitInfo = {
       id: 'u1_conflate',
       unitId: 1,
       word: 'Conflate',
-      banglaMeaning: 'মিশ্রিত করা , গুলিয়ে ফেলা',
+      banglaMeaning: 'মিশ্রিত করা , গুলিয়ে ফেলা , গলিয়ে মিশিয়ে দেওয়া',
       pronunciation: '/kənˈfleɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -1134,7 +1134,7 @@ export const unit01: UnitInfo = {
       id: 'u1_ambidextrous',
       unitId: 1,
       word: 'Ambidextrous',
-      banglaMeaning: 'যার দুই হাত সমান দক্ষতায় চলে , সব্যসাচী',
+      banglaMeaning: 'যার দুই হাত সমান দক্ষতায় চলে , সব্যসাচী , অপূর্ব কুশলী , প্রতারণাপূর্ণ',
       pronunciation: '/ˌæm.bɪˈdek.strəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -1178,7 +1178,7 @@ export const unit01: UnitInfo = {
       id: 'u1_dextrous',
       unitId: 1,
       word: 'Dextrous',
-      banglaMeaning: 'হাতের কাজে দক্ষ , কৌশলী',
+      banglaMeaning: 'হাতের কাজে দক্ষ , কৌশলী , নিশুণ , ক্ষেত্রজ্ঞ',
       pronunciation: '/ˈdek.strəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -1200,7 +1200,7 @@ export const unit01: UnitInfo = {
       id: 'u1_ambiguous',
       unitId: 1,
       word: 'Ambiguous',
-      banglaMeaning: 'দ্ব্যর্থক , অস্পষ্ট , একাধিক অর্থবোধক',
+      banglaMeaning: 'দ্ব্যর্থক , অস্পষ্ট , একাধিক অর্থবোধক , দুর্বোধ্য , দ্ব্যর্থবোধক',
       pronunciation: '/æmˈbɪɡ.ju.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -1222,7 +1222,7 @@ export const unit01: UnitInfo = {
       id: 'u1_ambiguity',
       unitId: 1,
       word: 'Ambiguity',
-      banglaMeaning: 'দ্ব্যর্থকতা , অস্পষ্টতা',
+      banglaMeaning: 'দ্ব্যর্থকতা , অস্পষ্টতা , রহস্যময়তা , দ্ব্যর্থতা',
       pronunciation: '/ˌæm.bɪˈɡjuː.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -1244,7 +1244,7 @@ export const unit01: UnitInfo = {
       id: 'u1_ambivalence',
       unitId: 1,
       word: 'Ambivalence',
-      banglaMeaning: 'বিপরীত দুটি অনুভূতির যুগপৎ অবস্থান , দ্বিধা',
+      banglaMeaning: 'বিপরীত দুটি অনুভূতির যুগপৎ অবস্থান , দ্বিধা , বিরোধ , উভয়বল',
       pronunciation: '/æmˈbɪv.ə.ləns/',
       partOfSpeech: 'noun',
       examples: [
@@ -1266,7 +1266,7 @@ export const unit01: UnitInfo = {
       id: 'u1_equivocal',
       unitId: 1,
       word: 'Equivocal',
-      banglaMeaning: 'দ্ব্যর্থবোধক , বিভ্রান্তিকর , সন্দেহজনক',
+      banglaMeaning: 'দ্ব্যর্থবোধক , বিভ্রান্তিকর , সন্দেহজনক , দ্বার্থক , দ্ব্যর্থক',
       pronunciation: '/ɪˈkwɪv.ə.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -1310,7 +1310,7 @@ export const unit01: UnitInfo = {
       id: 'u1_equivocate',
       unitId: 1,
       word: 'Equivocate',
-      banglaMeaning: 'দ্ব্যর্থবোধকভাবে কথা বলা , চাতুর্যের সাথে এড়িয়ে যাওয়া',
+      banglaMeaning: 'দ্ব্যর্থবোধকভাবে কথা বলা , চাতুর্যের সাথে এড়িয়ে যাওয়া , বাক্চাতুরী করা',
       pronunciation: '/ɪˈkwɪv.ə.keɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -1332,7 +1332,7 @@ export const unit01: UnitInfo = {
       id: 'u1_amelioration',
       unitId: 1,
       word: 'Amelioration',
-      banglaMeaning: 'উন্নত / ভালো অবস্থা , উৎকর্ষ সাধন',
+      banglaMeaning: 'উন্নত / ভালো অবস্থা , উৎকর্ষ সাধন , উন্নয়ন , উত্কর্ষসাধন',
       pronunciation: '/əˌmiː.li.əˈreɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -1354,7 +1354,7 @@ export const unit01: UnitInfo = {
       id: 'u1_ameliorate',
       unitId: 1,
       word: 'Ameliorate',
-      banglaMeaning: 'উন্নত / ভালো করা , লাঘব করা',
+      banglaMeaning: 'উন্নত / ভালো করা , লাঘব করা , উত্কর্ষ সাধন করা , ভালো হওয়া',
       pronunciation: '/əˈmiː.li.ə.reɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -1376,7 +1376,7 @@ export const unit01: UnitInfo = {
       id: 'u1_delineate',
       unitId: 1,
       word: 'Delineate',
-      banglaMeaning: 'চিত্রিত / বর্ণিত করা , সুনির্দিষ্টভাবে রূপরেখা দেওয়া',
+      banglaMeaning: 'চিত্রিত / বর্ণিত করা , সুনির্দিষ্টভাবে রূপরেখা দেওয়া , বর্ণনা করা , বর্ণা করা',
       pronunciation: '/dɪˈlɪn.i.eɪt/',
       partOfSpeech: 'verb',
       examples: [

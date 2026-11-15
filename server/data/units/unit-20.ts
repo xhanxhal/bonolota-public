@@ -12,7 +12,7 @@ export const unit20: UnitInfo = {
       id: 'u20_academic_1',
       unitId: 20,
       word: 'Academic',
-      banglaMeaning: 'একাডেমিক বা বিদ্যায়তনিক',
+      banglaMeaning: 'একাডেমিক বা বিদ্যায়তনিক , অধ্যয়ন বিষয়ক , পাণ্ডিত্যপূর্ণ , কেতাবি',
       pronunciation: '/ˌæk.əˈdem.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit20: UnitInfo = {
       id: 'u20_dissertation_3',
       unitId: 20,
       word: 'Dissertation',
-      banglaMeaning: 'গবেষণাপত্র বা পিএইচডি থিসিস',
+      banglaMeaning: 'গবেষণাপত্র বা পিএইচডি থিসিস , গবেষণামূলক প্রবন্ধ , তত্ত্বালোচনা , নিবন্ধ',
       pronunciation: '/ˌdɪs.əˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit20: UnitInfo = {
       id: 'u20_erudite_4',
       unitId: 20,
       word: 'Erudite',
-      banglaMeaning: 'মহাজ্ঞানী , গভীর পাণ্ডিত্যের অধিকারী',
+      banglaMeaning: 'মহাজ্ঞানী , গভীর পাণ্ডিত্যের অধিকারী , পাণ্ডিতাপূর্ণ , বিদ্বান্',
       pronunciation: '/ˈer.ʊ.daɪt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit20: UnitInfo = {
       id: 'u20_faculty_5',
       unitId: 20,
       word: 'Faculty',
-      banglaMeaning: 'অনুষদ বা শিক্ষক পরিষদ',
+      banglaMeaning: 'অনুষদ বা শিক্ষক পরিষদ , ইচ্ছা , কাজ করার ক্ষমতা , কার্যক্ষমতা',
       pronunciation: '/ˈfæk.əl.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit20: UnitInfo = {
       id: 'u20_graduation_6',
       unitId: 20,
       word: 'Graduation',
-      banglaMeaning: 'সমাবর্তন বা স্নাতক ডিগ্রি অর্জন',
+      banglaMeaning: 'সমাবর্তন বা স্নাতক ডিগ্রি অর্জন , স্নাতকত্ব লাভ , স্নাতকের',
       pronunciation: '/ˌɡrædʒ.uˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit20: UnitInfo = {
       id: 'u20_honorary_7',
       unitId: 20,
       word: 'Honorary',
-      banglaMeaning: 'সম্মানসূচক ডিগ্রি বা পদ',
+      banglaMeaning: 'সম্মানসূচক ডিগ্রি বা পদ , অবৈতনিক , বিনাবেতনে',
       pronunciation: '/ˈɒn.ər.ər.i/',
       partOfSpeech: 'adjective',
       examples: [
@@ -138,7 +138,7 @@ export const unit20: UnitInfo = {
       id: 'u20_institute_8',
       unitId: 20,
       word: 'Institute',
-      banglaMeaning: 'ইনস্টিটিউট বা উচ্চশিক্ষা প্রতিষ্ঠান',
+      banglaMeaning: 'ইনস্টিটিউট বা উচ্চশিক্ষা প্রতিষ্ঠান , ঠাওরান , প্রতিষ্ঠানভবন , সমিতিগৃহ',
       pronunciation: '/ˈɪn.stɪ.tʃuːt/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit20: UnitInfo = {
       id: 'u20_jurisprudence_9',
       unitId: 20,
       word: 'Jurisprudence',
-      banglaMeaning: 'আইনবিদ্যা বা আইনের তাত্ত্বিক গবেষণা',
+      banglaMeaning: 'আইনবিদ্যা বা আইনের তাত্ত্বিক গবেষণা , ব্যবহারতত্ত্ব , আইন বিজ্ঞান',
       pronunciation: '/ˌdʒʊə.rɪsˈpruː.dəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit20: UnitInfo = {
       id: 'u20_knowledge_10',
       unitId: 20,
       word: 'Knowledge',
-      banglaMeaning: 'জ্ঞান বা অর্জিত প্রজ্ঞা',
+      banglaMeaning: 'জ্ঞান বা অর্জিত প্রজ্ঞা , বোধ , বিদ্যাবত্তা , জ্ঞানহরণ',
       pronunciation: '/ˈnɒl.ɪdʒ/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit20: UnitInfo = {
       id: 'u20_monograph_12',
       unitId: 20,
       word: 'Monograph',
-      banglaMeaning: 'কোনো বিশেষ বিষয়ে বিশদ একক গবেষণামূলক বই',
+      banglaMeaning: 'কোনো বিশেষ বিষয়ে বিশদ একক গবেষণামূলক বই , প্রকরণগ্রন্থ',
       pronunciation: '/ˈmɒn.ə.ɡrɑːf/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit20: UnitInfo = {
       id: 'u20_oral_14',
       unitId: 20,
       word: 'Oral',
-      banglaMeaning: 'মৌখিক পরীক্ষা বা বক্তৃতা সংক্রান্ত',
+      banglaMeaning: 'মৌখিক পরীক্ষা বা বক্তৃতা সংক্রান্ত , বাচিক , কথ্য , কথিত',
       pronunciation: '/ˈɔː.rəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit20: UnitInfo = {
       id: 'u20_pedagogy_15',
       unitId: 20,
       word: 'Pedagogy',
-      banglaMeaning: 'শিক্ষাদান পদ্ধতি ও বিদ্যা',
+      banglaMeaning: 'শিক্ষাদান পদ্ধতি ও বিদ্যা , শিক্ষাবিজ্ঞান , শিক্ষানীতি , পণ্ডিতিপনা',
       pronunciation: '/ˈped.ə.ɡɒdʒ.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit20: UnitInfo = {
       id: 'u20_qualification_16',
       unitId: 20,
       word: 'Qualification',
-      banglaMeaning: 'যোগ্যতা বা প্রাতিষ্ঠানিক সনদ',
+      banglaMeaning: 'যোগ্যতা বা প্রাতিষ্ঠানিক সনদ , প্রয়োজনমাফিক পরিবর্তন , অপরিহার্য শর্ত , বৈশিষ্ট্য',
       pronunciation: '/ˌkwɒl.ɪ.fɪˈkeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit20: UnitInfo = {
       id: 'u20_rote_17',
       unitId: 20,
       word: 'Rote',
-      banglaMeaning: 'না বুঝে মুখস্থ করার অভ্যাস',
+      banglaMeaning: 'না বুঝে মুখস্থ করার অভ্যাস , নিছক মুখস্থ করে , আবৃত্তি , পাঠ',
       pronunciation: '/rəʊt/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit20: UnitInfo = {
       id: 'u20_scholarship_18',
       unitId: 20,
       word: 'Scholarship',
-      banglaMeaning: 'বৃত্তি বা গভীর পাণ্ডিত্য',
+      banglaMeaning: 'বৃত্তি বা গভীর পাণ্ডিত্য , বিদ্যাবত্তা , ছাত্রবৃত্তি , জলপানি',
       pronunciation: '/ˈskɒl.ə.ʃɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit20: UnitInfo = {
       id: 'u20_thesis_19',
       unitId: 20,
       word: 'Thesis',
-      banglaMeaning: 'গবেষণামূলক মূল প্রবন্ধ বা থিসিস',
+      banglaMeaning: 'গবেষণামূলক মূল প্রবন্ধ বা থিসিস , গবেষণামূলক প্রবন্ধ , মাত্রার হ্রস্বতা , সুরের অবদমন',
       pronunciation: '/ˈθiː.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit20: UnitInfo = {
       id: 'u20_university_20',
       unitId: 20,
       word: 'University',
-      banglaMeaning: 'বিশ্ববিদ্যালয়',
+      banglaMeaning: 'বিশ্ববিদ্যালয় , ইউনিভার্সিটি',
       pronunciation: '/ˌjuː.nɪˈvɜː.sə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit20: UnitInfo = {
       id: 'u20_viva_21',
       unitId: 20,
       word: 'Viva',
-      banglaMeaning: 'মৌখিক পরীক্ষা বা ভাইভা',
+      banglaMeaning: 'মৌখিক পরীক্ষা বা ভাইভা , চিরজীবী হউন',
       pronunciation: '/ˈvaɪ.və/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit20: UnitInfo = {
       id: 'u20_workshop_22',
       unitId: 20,
       word: 'Workshop',
-      banglaMeaning: 'ব্যবহারিক কর্মশালা',
+      banglaMeaning: 'ব্যবহারিক কর্মশালা , কারখানা',
       pronunciation: '/ˈwɜːk.ʃɒp/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit20: UnitInfo = {
       id: 'u20_alumnus_23',
       unitId: 20,
       word: 'Alumnus',
-      banglaMeaning: 'কোনো শিক্ষা প্রতিষ্ঠানের প্রাক্তন শিক্ষার্থী',
+      banglaMeaning: 'কোনো শিক্ষা প্রতিষ্ঠানের প্রাক্তন শিক্ষার্থী , প্রাক্তন ছাত্র',
       pronunciation: '/əˈlʌm.nəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit20: UnitInfo = {
       id: 'u20_dean_25',
       unitId: 20,
       word: 'Dean',
-      banglaMeaning: 'অনুষদ প্রধান বা ডিন',
+      banglaMeaning: 'অনুষদ প্রধান বা ডিন , যাজক , ডীন্ , পুরোহিত',
       pronunciation: '/diːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit20: UnitInfo = {
       id: 'u20_endowment_26',
       unitId: 20,
       word: 'Endowment',
-      banglaMeaning: 'শিক্ষা বা গবেষণার উদ্দেশ্যে স্থায়ী দান বা তহবিল',
+      banglaMeaning: 'শিক্ষা বা গবেষণার উদ্দেশ্যে স্থায়ী দান বা তহবিল , প্রতিভা , বৃত্তিদান , জন্মগত গুণ',
       pronunciation: '/ɪnˈdaʊ.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit20: UnitInfo = {
       id: 'u20_fellowship_27',
       unitId: 20,
       word: 'Fellowship',
-      banglaMeaning: 'গবেষণা ফেলোশিপ বা বিশেষ ফেলো পদমর্যাদা',
+      banglaMeaning: 'গবেষণা ফেলোশিপ বা বিশেষ ফেলো পদমর্যাদা , সৌহার্দ্য , বন্ধুতা , গোষ্ঠী',
       pronunciation: '/ˈfel.əʊ.ʃɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit20: UnitInfo = {
       id: 'u20_grammar_28',
       unitId: 20,
       word: 'Grammar',
-      banglaMeaning: 'ব্যাকরণ বা ভাষার গঠন প্রণালী',
+      banglaMeaning: 'ব্যাকরণ বা ভাষার গঠন প্রণালী , ব্যাকরণশাস্ত্র',
       pronunciation: '/ˈɡræm.ər/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit20: UnitInfo = {
       id: 'u20_plagiarism_32',
       unitId: 20,
       word: 'Plagiarism',
-      banglaMeaning: 'কুম্ভীলকবৃত্তি , অন্যের লেখা চুরি করে নিজের বলে চালানো',
+      banglaMeaning: 'কুম্ভীলকবৃত্তি , অন্যের লেখা চুরি করে নিজের বলে চালানো , রচনাচুরি',
       pronunciation: '/ˈpleɪ.dʒər.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit20: UnitInfo = {
       id: 'u20_sabbatical_33',
       unitId: 20,
       word: 'Sabbatical',
-      banglaMeaning: 'গবেষণার জন্য বেতনসহ দীর্ঘ অবকাশ বা ছুটি',
+      banglaMeaning: 'গবেষণার জন্য বেতনসহ দীর্ঘ অবকাশ বা ছুটি , বিশ্রামদিবস-সংক্রান্ত',
       pronunciation: '/səˈbæt.ɪ.kəl/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit20: UnitInfo = {
       id: 'u20_syllabus_34',
       unitId: 20,
       word: 'Syllabus',
-      banglaMeaning: 'পাঠ্যসূচির সংক্ষিপ্ত রূপরেখা',
+      banglaMeaning: 'পাঠ্যসূচির সংক্ষিপ্ত রূপরেখা , পাঠ্যনির্ঘণ্ট , পাঠ্যক্রম , পাঠ্যতালিকা',
       pronunciation: '/ˈsɪl.ə.bəs/',
       partOfSpeech: 'noun',
       examples: [

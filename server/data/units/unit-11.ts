@@ -12,7 +12,7 @@ export const unit11: UnitInfo = {
       id: 'u11_algorithm_1',
       unitId: 11,
       word: 'Algorithm',
-      banglaMeaning: 'অ্যালগরিদম , সমস্যা সমাধানের ধাপে ধাপে সুনির্দিষ্ট নিয়মাবলি',
+      banglaMeaning: 'অ্যালগরিদম , সমস্যা সমাধানের ধাপে ধাপে সুনির্দিষ্ট নিয়মাবলি , কলনবিধি , সমাধানপদ্ধতি',
       pronunciation: '/ˈæl.ɡə.rɪ.ðəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit11: UnitInfo = {
       id: 'u11_bandwidth_2',
       unitId: 11,
       word: 'Bandwidth',
-      banglaMeaning: 'ব্যান্ডউইথ , তথ্য প্রেরণের গতি ও ধারণক্ষমতা',
+      banglaMeaning: 'ব্যান্ডউইথ , তথ্য প্রেরণের গতি ও ধারণক্ষমতা , ব্যান্ডপ্রস্থ',
       pronunciation: '/ˈbænd.wɪtθ/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit11: UnitInfo = {
       id: 'u11_cryptography_3',
       unitId: 11,
       word: 'Cryptography',
-      banglaMeaning: 'গুপ্তলেখন বিদ্যা বা সংকেতবিদ্যা',
+      banglaMeaning: 'গুপ্তলেখন বিদ্যা বা সংকেতবিদ্যা , সংকেতলিপি রচনার বিদ্যা',
       pronunciation: '/krɪpˈtɒɡ.rə.fi/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit11: UnitInfo = {
       id: 'u11_database_4',
       unitId: 11,
       word: 'Database',
-      banglaMeaning: 'উপাত্তের সুসংগঠিত ভাণ্ডার বা তথ্যভাণ্ডার',
+      banglaMeaning: 'উপাত্তের সুসংগঠিত ভাণ্ডার বা তথ্যভাণ্ডার , ডাটাবেস , উপাদানসংগ্রহ , ডেইটাবেইস',
       pronunciation: '/ˈdeɪ.tə.beɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit11: UnitInfo = {
       id: 'u11_framework_6',
       unitId: 11,
       word: 'Framework',
-      banglaMeaning: 'সফটওয়্যার কাঠামোগত ভিত্তি বা ফ্রেমওয়ার্ক',
+      banglaMeaning: 'সফটওয়্যার কাঠামোগত ভিত্তি বা ফ্রেমওয়ার্ক , কাঠাম-গঠন , ঠাট',
       pronunciation: '/ˈfreɪm.wɜːk/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit11: UnitInfo = {
       id: 'u11_hardware_8',
       unitId: 11,
       word: 'Hardware',
-      banglaMeaning: 'কম্পিউটারের দৃশ্যমান যন্ত্রাংশ',
+      banglaMeaning: 'কম্পিউটারের দৃশ্যমান যন্ত্রাংশ , হার্ডওয়্যার , লোহালক্কড়',
       pronunciation: '/ˈhɑːd.weər/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit11: UnitInfo = {
       id: 'u11_interface_9',
       unitId: 11,
       word: 'Interface',
-      banglaMeaning: 'সংযোগস্থল বা মিথস্ক্রিয়া পর্দা',
+      banglaMeaning: 'সংযোগস্থল বা মিথস্ক্রিয়া পর্দা , ইন্টারফেস',
       pronunciation: '/ˈɪn.tə.feɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit11: UnitInfo = {
       id: 'u11_kernel_11',
       unitId: 11,
       word: 'Kernel',
-      banglaMeaning: 'অপারেটিং সিস্টেমের মূল কেন্দ্র',
+      banglaMeaning: 'অপারেটিং সিস্টেমের মূল কেন্দ্র , শাঁস , শস্য , কেন্দ্রস্থল',
       pronunciation: '/ˈkɜː.nəl/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit11: UnitInfo = {
       id: 'u11_latency_12',
       unitId: 11,
       word: 'Latency',
-      banglaMeaning: 'বিলম্বকাল , সংকেত পৌঁছাতে যে সময় লাগে',
+      banglaMeaning: 'বিলম্বকাল , সংকেত পৌঁছাতে যে সময় লাগে , অদৃশ্যতা',
       pronunciation: '/ˈleɪ.tən.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit11: UnitInfo = {
       id: 'u11_metadata_13',
       unitId: 11,
       word: 'Metadata',
-      banglaMeaning: 'উপাত্ত সংক্রান্ত অতিরিক্ত তথ্য',
+      banglaMeaning: 'উপাত্ত সংক্রান্ত অতিরিক্ত তথ্য , তথ্যের বিবরণী , সহায়ক তথ্য',
       pronunciation: '/ˈmet.əˌdeɪ.tə/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit11: UnitInfo = {
       id: 'u11_neural_14',
       unitId: 11,
       word: 'Neural',
-      banglaMeaning: 'স্নায়বিক বা স্নায়ুজাল সদৃশ',
+      banglaMeaning: 'স্নায়বিক বা স্নায়ুজাল সদৃশ , স্নায়ুসংক্রান্ত , স্নায়ুঘটিত , স্নায়বীয়',
       pronunciation: '/ˈnjʊə.rəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit11: UnitInfo = {
       id: 'u11_protocol_16',
       unitId: 11,
       word: 'Protocol',
-      banglaMeaning: 'যোগাযোগের নিয়ম বা প্রটোকল',
+      banglaMeaning: 'যোগাযোগের নিয়ম বা প্রটোকল , আদি লেখা , দলিলের খসড়া , মুসাবিদা',
       pronunciation: '/ˈprəʊ.tə.kɒl/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit11: UnitInfo = {
       id: 'u11_throughput_20',
       unitId: 11,
       word: 'Throughput',
-      banglaMeaning: 'কার্যক্ষমতা বা প্রক্রিয়াকরণের হার',
+      banglaMeaning: 'কার্যক্ষমতা বা প্রক্রিয়াকরণের হার , উৎপাদন ক্ষমতা , কার্যসম্পাদন হার',
       pronunciation: '/ˈθruː.pʊt/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit11: UnitInfo = {
       id: 'u11_wearable_23',
       unitId: 11,
       word: 'Wearable',
-      banglaMeaning: 'পরিধানযোগ্য প্রযুক্তি গ্যাজেট',
+      banglaMeaning: 'পরিধানযোগ্য প্রযুক্তি গ্যাজেট , পরিধেয়',
       pronunciation: '/ˈweə.rə.bəl/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit11: UnitInfo = {
       id: 'u11_deprecate_25',
       unitId: 11,
       word: 'Deprecate',
-      banglaMeaning: 'সফটওয়্যারের সংস্করণ অকার্যকর বা অপ্রচলিত ঘোষণা করা',
+      banglaMeaning: 'সফটওয়্যারের সংস্করণ অকার্যকর বা অপ্রচলিত ঘোষণা করা , সায় না দেওয়া , অনুমোদন না করা',
       pronunciation: '/ˈdep.rɪ.keɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -480,7 +480,7 @@ export const unit11: UnitInfo = {
       id: 'u11_cybersecurity_27',
       unitId: 11,
       word: 'Cybersecurity',
-      banglaMeaning: 'সাইবার নিরাপত্তা',
+      banglaMeaning: 'সাইবার নিরাপত্তা , তথ্য-নিরাপত্তা , ডিজিটাল সুরক্ষা',
       pronunciation: '/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit11: UnitInfo = {
       id: 'u11_heuristic_30',
       unitId: 11,
       word: 'Heuristic',
-      banglaMeaning: 'অভিজ্ঞতাভিত্তিক দ্রুত অনুসন্ধান পদ্ধতি',
+      banglaMeaning: 'অভিজ্ঞতাভিত্তিক দ্রুত অনুসন্ধান পদ্ধতি , অনুসন্ধানমূলক , আবিষ্কারমূলক',
       pronunciation: '/hjuəˈrɪs.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit11: UnitInfo = {
       id: 'u11_iteration_31',
       unitId: 11,
       word: 'Iteration',
-      banglaMeaning: 'পুনরাবৃত্তি বা উন্নয়ন চক্র',
+      banglaMeaning: 'পুনরাবৃত্তি বা উন্নয়ন চক্র , পুনরাবৃত্তির',
       pronunciation: '/ˌɪt.ərˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit11: UnitInfo = {
       id: 'u11_scalability_33',
       unitId: 11,
       word: 'Scalability',
-      banglaMeaning: 'বর্ধনশীল সক্ষমতা , লোড বাড়লেও কাজ চালিয়ে যাওয়ার সামর্থ্য',
+      banglaMeaning: 'বর্ধনশীল সক্ষমতা , লোড বাড়লেও কাজ চালিয়ে যাওয়ার সামর্থ্য , বৃদ্ধির উদ্দেশ্যে',
       pronunciation: '/ˌskeɪ.ləˈbɪl.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit11: UnitInfo = {
       id: 'u11_telemetry_34',
       unitId: 11,
       word: 'Telemetry',
-      banglaMeaning: 'দূরবর্তী তথ্য সংগ্রহ ও পর্যবেক্ষণ ব্যবস্থা',
+      banglaMeaning: 'দূরবর্তী তথ্য সংগ্রহ ও পর্যবেক্ষণ ব্যবস্থা , দূরমাপন',
       pronunciation: '/təˈlem.ə.tri/',
       partOfSpeech: 'noun',
       examples: [

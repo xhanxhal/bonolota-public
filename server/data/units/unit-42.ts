@@ -12,7 +12,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blare_1',
       unitId: 42,
       word: 'Blare',
-      banglaMeaning: 'কঠোর বা তীব্র রূঢ়',
+      banglaMeaning: 'কঠোর বা তীব্র রূঢ় , তূর্যনিনাদ',
       pronunciation: '/ˈblare/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blase_2',
       unitId: 42,
       word: 'Blase',
-      banglaMeaning: 'আর আমোদ-প্রমোদ চাহে না এমন, আনন্দ বা অপচয়ের সাথে বিরক্ত',
+      banglaMeaning: 'আর আমোদ-প্রমোদ চাহে না এমন, আনন্দ বা অপচয়ের সাথে বিরক্ত , বীতস্পৃহ',
       pronunciation: '/ˈblase/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blasphemy_3',
       unitId: 42,
       word: 'Blasphemy',
-      banglaMeaning: 'ধর্মনিন্দা, শ্বরনিন্দা',
+      banglaMeaning: 'ধর্মনিন্দা, শ্বরনিন্দা , অধার্মিক কথাবার্তা',
       pronunciation: '/ˈblasphemy/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blatant_4',
       unitId: 42,
       word: 'Blatant',
-      banglaMeaning: 'স্থূল, ভয়ানক',
+      banglaMeaning: 'স্থূল, ভয়ানক , হৈহট্টগোল ভরা , অশোভন',
       pronunciation: '/ˈblatant/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bleak_5',
       unitId: 42,
       word: 'Bleak',
-      banglaMeaning: 'নিরানন্দ, বর্ণহীন',
+      banglaMeaning: 'নিরানন্দ, বর্ণহীন , হিমশীতল , জনশূন্য',
       pronunciation: '/ˈbleak/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blemish_6',
       unitId: 42,
       word: 'Blemish',
-      banglaMeaning: 'কলঙ্ক, খুঁত',
+      banglaMeaning: 'কলঙ্ক, খুঁত , শারীরিক ত্রুটিবিচ্যুতি , কালিমা',
       pronunciation: '/ˈblemish/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blight_7',
       unitId: 42,
       word: 'Blight',
-      banglaMeaning: 'ধ্বংস বা নির্মূল করা',
+      banglaMeaning: 'ধ্বংস বা নির্মূল করা , গাছপালার রোগ , রহস্যময় অশুভ প্রভাব , ক্ষয়কর পদার্থ',
       pronunciation: '/ˈblight/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blighted_8',
       unitId: 42,
       word: 'Blighted',
-      banglaMeaning: 'ক্ষয় করা, বাধা দেত্তয়া',
+      banglaMeaning: 'ক্ষয় করা, বাধা দেওয়া',
       pronunciation: '/ˈblighted/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blithe_9',
       unitId: 42,
       word: 'Blithe',
-      banglaMeaning: 'প্রফুল্ল, ভাবনাহীন',
+      banglaMeaning: 'প্রফুল্ল, ভাবনাহীন , উদাসীন , আমুদে',
       pronunciation: '/ˈblithe/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bloated_10',
       unitId: 42,
       word: 'Bloated',
-      banglaMeaning: 'স্ফীত, গর্বিত',
+      banglaMeaning: 'স্ফীত, গর্বিত , থলথলে , মেদবহুল',
       pronunciation: '/ˈbloated/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blotch_11',
       unitId: 42,
       word: 'Blotch',
-      banglaMeaning: 'ফুস্কুড়ি, ব্রণ',
+      banglaMeaning: 'ফুস্কুড়ি, ব্রণ , দাগ লাগানো , জড়ুল',
       pronunciation: '/ˈblotch/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blowhard_12',
       unitId: 42,
       word: 'Blowhard',
-      banglaMeaning: 'কথাবার্তা অহংকারী',
+      banglaMeaning: 'কথাবার্তা অহংকারী , গল্পবাজ',
       pronunciation: '/ˈblowhard/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blue_14',
       unitId: 42,
       word: 'Blue',
-      banglaMeaning: 'নীল, অশ্লীল',
+      banglaMeaning: 'নীল, অশ্লীল , নিরাশ , নীল রঙ',
       pronunciation: '/ˈblue/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blues_15',
       unitId: 42,
       word: 'Blues',
-      banglaMeaning: 'নীল, নীল রঙ',
+      banglaMeaning: 'নীল, নীল রঙ , ব্লুজ , নীলবর্ণ করা',
       pronunciation: '/ˈblues/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bluff_16',
       unitId: 42,
       word: 'Bluff',
-      banglaMeaning: 'ধাপ্পাবাজি, ধাপ্পা',
+      banglaMeaning: 'ধাপ্পাবাজি, ধাপ্পা , অন্তরীপ , আন্তরিক',
       pronunciation: '/ˈbluff/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blunder_17',
       unitId: 42,
       word: 'Blunder',
-      banglaMeaning: 'সাঙ্ঘাতিক ভুল, ভুল',
+      banglaMeaning: 'সাঙ্ঘাতিক ভুল, ভুল , ভুল বোঝা , পথ হাতড়াইয়া ফেরা',
       pronunciation: '/ˈblunder/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blunt_18',
       unitId: 42,
       word: 'Blunt',
-      banglaMeaning: 'ভোঁতা, কাঠখোট্টা',
+      banglaMeaning: 'ভোঁতা, কাঠখোট্টা , অল্পবুদ্ধি , স্পষ্টবাদী',
       pronunciation: '/ˈblunt/',
       partOfSpeech: 'verb',
       examples: [
@@ -354,7 +354,7 @@ export const unit42: UnitInfo = {
       id: 'u42_blush_20',
       unitId: 42,
       word: 'Blush',
-      banglaMeaning: 'বক্তিমাভা, লজ্জাজনিত রক্তিমা',
+      banglaMeaning: 'বক্তিমাভা, লজ্জাজনিত রক্তিমা , লাল ছোপ , গোলাপী আভা',
       pronunciation: '/ˈblush/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bode_22',
       unitId: 42,
       word: 'Bode',
-      banglaMeaning: 'পূর্বাভাস দেত্তয়া, পূর্বলক্ষণ প্রকাশ করা',
+      banglaMeaning: 'পূর্বাভাস দেওয়া, পূর্বলক্ষণ প্রকাশ করা',
       pronunciation: '/ˈbode/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bog_23',
       unitId: 42,
       word: 'Bog',
-      banglaMeaning: 'পায়খানা, জলাভূমি',
+      banglaMeaning: 'পায়খানা, জলাভূমি , ভিজে নরম মাটি , বাধা',
       pronunciation: '/ˈbog/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bogus_24',
       unitId: 42,
       word: 'Bogus',
-      banglaMeaning: 'বাজে, মিথ্যা',
+      banglaMeaning: 'বাজে, মিথ্যা , মেকি , জাল',
       pronunciation: '/ˈbogus/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bohemian_25',
       unitId: 42,
       word: 'Bohemian',
-      banglaMeaning: 'নান্দনিক বা শিল্পসম্মত',
+      banglaMeaning: 'নান্দনিক বা শিল্পসম্মত , ভবঘুরে ধরনের লোক , বেদে',
       pronunciation: '/ˈbohemian/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit42: UnitInfo = {
       id: 'u42_boisterous_26',
       unitId: 42,
       word: 'Boisterous',
-      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া',
+      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া , প্রবল , ফুর্তিবাজ , ভীম',
       pronunciation: '/ˈboisterous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bolster_27',
       unitId: 42,
       word: 'Bolster',
-      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা',
+      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা , লম্বা বালিশ , তাকিয়া , খাড়া করান',
       pronunciation: '/ˈbolster/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bolt_28',
       unitId: 42,
       word: 'Bolt',
-      banglaMeaning: 'বল্টু, অর্গল',
+      banglaMeaning: 'বল্টু, অর্গল , খিল , বজ্র',
       pronunciation: '/ˈbolt/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit42: UnitInfo = {
       id: 'u42_boon_32',
       unitId: 42,
       word: 'Boon',
-      banglaMeaning: 'বর, আশীর্বাদ',
+      banglaMeaning: 'বর, আশীর্বাদ , অনুগ্রহ , প্রার্থনা',
       pronunciation: '/ˈboon/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit42: UnitInfo = {
       id: 'u42_boor_33',
       unitId: 42,
       word: 'Boor',
-      banglaMeaning: 'চাষী, চাষা',
+      banglaMeaning: 'চাষী, চাষা , গেঁয়ো ভূত , বর্বর',
       pronunciation: '/ˈboor/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit42: UnitInfo = {
       id: 'u42_boorish_34',
       unitId: 42,
       word: 'Boorish',
-      banglaMeaning: 'চাষাড়ে, বর্বর',
+      banglaMeaning: 'চাষাড়ে, বর্বর , অভদ্র , গেঁয়ে',
       pronunciation: '/ˈboorish/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit42: UnitInfo = {
       id: 'u42_boost_35',
       unitId: 42,
       word: 'Boost',
-      banglaMeaning: 'সাহায্য, উত্সাহদান',
+      banglaMeaning: 'সাহায্য, উত্সাহদান , উত্তোলন , উন্নতিসাধন',
       pronunciation: '/ˈboost/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit42: UnitInfo = {
       id: 'u42_botch_36',
       unitId: 42,
       word: 'Botch',
-      banglaMeaning: 'কলঙ্কচিহ্ন, ফুসকুড়ি',
+      banglaMeaning: 'কলঙ্কচিহ্ন, ফুসকুড়ি , জোড়াতাপ্পি , তালগোল পাকান',
       pronunciation: '/ˈbotch/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bound_37',
       unitId: 42,
       word: 'Bound',
-      banglaMeaning: 'আবদ্ধ, বাধ্য',
+      banglaMeaning: 'আবদ্ধ, বাধ্য , সীমা , সীমিত',
       pronunciation: '/ˈbound/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bountiful_38',
       unitId: 42,
       word: 'Bountiful',
-      banglaMeaning: 'উদার বা পরোপকারী',
+      banglaMeaning: 'উদার বা পরোপকারী , অকৃপণ , অপর্যাপ্ত , দানী',
       pronunciation: '/ˈbountiful/',
       partOfSpeech: 'adjective',
       examples: [
@@ -696,7 +696,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bourgeois_39',
       unitId: 42,
       word: 'Bourgeois',
-      banglaMeaning: 'সংরক্ষণশীল, মধ্যাবিত্ত',
+      banglaMeaning: 'সংরক্ষণশীল, মধ্যাবিত্ত , মধ্যবিত্ত শ্রেণীর লোক , শিল্পপতি',
       pronunciation: '/ˈbourgeois/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit42: UnitInfo = {
       id: 'u42_bout_40',
       unitId: 42,
       word: 'Bout',
-      banglaMeaning: 'পালা, খেপ',
+      banglaMeaning: 'পালা, খেপ , দফা , শক্ত পরীক্ষা',
       pronunciation: '/ˈbout/',
       partOfSpeech: 'noun',
       examples: [

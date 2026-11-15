@@ -12,7 +12,7 @@ export const unit21: UnitInfo = {
       id: 'u21_apprentice_1',
       unitId: 21,
       word: 'Apprentice',
-      banglaMeaning: 'শিক্ষানবিস , ওস্তাদের কাছে কাজ শিখছে এমন ব্যক্তি',
+      banglaMeaning: 'শিক্ষানবিস , ওস্তাদের কাছে কাজ শিখছে এমন ব্যক্তি , শিক্ষানবিশ , শিক্ষার্থী',
       pronunciation: '/əˈpren.tɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit21: UnitInfo = {
       id: 'u21_bluecollar_2',
       unitId: 21,
       word: 'Blue-collar',
-      banglaMeaning: 'শারীরিক বা কায়িক শ্রমের পেশা সংক্রান্ত',
+      banglaMeaning: 'শারীরিক বা কায়িক শ্রমের পেশা সংক্রান্ত , নীল বাবু',
       pronunciation: '/ˌbluːˈkɒl.ər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit21: UnitInfo = {
       id: 'u21_compensation_3',
       unitId: 21,
       word: 'Compensation',
-      banglaMeaning: 'পারিশ্রমিক , ক্ষতিপূরণ বা বেতন ভাতা',
+      banglaMeaning: 'পারিশ্রমিক , ক্ষতিপূরণ বা বেতন ভাতা , প্রতিদান , খেসারৎ',
       pronunciation: '/ˌkɒm.penˈseɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit21: UnitInfo = {
       id: 'u21_deadline_4',
       unitId: 21,
       word: 'Deadline',
-      banglaMeaning: 'কাজের নির্ধারিত শেষ সময় বা সময়সীমা',
+      banglaMeaning: 'কাজের নির্ধারিত শেষ সময় বা সময়সীমা , নির্দিষ্ট সময়সীমা',
       pronunciation: '/ˈded.laɪn/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit21: UnitInfo = {
       id: 'u21_entrepreneur_5',
       unitId: 21,
       word: 'Entrepreneur',
-      banglaMeaning: 'উদ্যোক্তা , ঝুঁকি নিয়ে ব্যবসা শুরুকারী ব্যক্তি',
+      banglaMeaning: 'উদ্যোক্তা , ঝুঁকি নিয়ে ব্যবসা শুরুকারী ব্যক্তি , ব্যবসায়ে ঝুঁকিদার',
       pronunciation: '/ˌɒn.trə.prəˈnɜːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit21: UnitInfo = {
       id: 'u21_freelance_6',
       unitId: 21,
       word: 'Freelance',
-      banglaMeaning: 'মুক্তপেশাজীবী বা স্বাধীনভাবে চুক্তিতে কাজ করা',
+      banglaMeaning: 'মুক্তপেশাজীবী বা স্বাধীনভাবে চুক্তিতে কাজ করা , ফ্রিল্যান্স',
       pronunciation: '/ˈfriː.lɑːns/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit21: UnitInfo = {
       id: 'u21_gig_7',
       unitId: 21,
       word: 'Gig',
-      banglaMeaning: 'স্বল্পমেয়াদী স্বাধীন চুক্তিভিত্তিক কাজ',
+      banglaMeaning: 'স্বল্পমেয়াদী স্বাধীন চুক্তিভিত্তিক কাজ , এক্কা গাড়ি , মাছ ধরা কোঁচ , দ্বিচক্রযানবিশেষ',
       pronunciation: '/ɡɪɡ/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit21: UnitInfo = {
       id: 'u21_hierarchy_8',
       unitId: 21,
       word: 'Hierarchy',
-      banglaMeaning: 'কর্মক্ষেত্রে পদের ক্রমবিন্যাস বা স্তর',
+      banglaMeaning: 'কর্মক্ষেত্রে পদের ক্রমবিন্যাস বা স্তর , দেবদূতগণ , যাজকতন্ত্র , পুরোহিতগণকর্তৃক শাসন',
       pronunciation: '/ˈhaɪə.rɑː.ki/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit21: UnitInfo = {
       id: 'u21_incentive_9',
       unitId: 21,
       word: 'Incentive',
-      banglaMeaning: 'প্রণোদনা , কাজের উৎসাহ বৃদ্ধির পুরস্কার',
+      banglaMeaning: 'প্রণোদনা , কাজের উৎসাহ বৃদ্ধির পুরস্কার , উদ্দীপক , প্রবর্তক',
       pronunciation: '/ɪnˈsen.tɪv/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit21: UnitInfo = {
       id: 'u21_kinship_11',
       unitId: 21,
       word: 'Kinship',
-      banglaMeaning: 'কর্মক্ষেত্রে সৌহার্দ্যপূর্ণ পারস্পরিক বন্ধন',
+      banglaMeaning: 'কর্মক্ষেত্রে সৌহার্দ্যপূর্ণ পারস্পরিক বন্ধন , আত্মীয়তা , জ্ঞাতিত্ব , সম্পর্ক',
       pronunciation: '/ˈkɪn.ʃɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit21: UnitInfo = {
       id: 'u21_laborintensive_12',
       unitId: 21,
       word: 'Labor-intensive',
-      banglaMeaning: 'শ্রমঘন , যেখানে প্রচুর জনবলের প্রয়োজন হয়',
+      banglaMeaning: 'শ্রমঘন , যেখানে প্রচুর জনবলের প্রয়োজন হয় , শ্রমসাধ্য',
       pronunciation: '/ˈleɪ.bər ɪnˌten.sɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit21: UnitInfo = {
       id: 'u21_mentorship_13',
       unitId: 21,
       word: 'Mentorship',
-      banglaMeaning: 'দিকনির্দেশনা ও অভিভাবকত্ব',
+      banglaMeaning: 'দিকনির্দেশনা ও অভিভাবকত্ব , পরামর্শদান , পথপ্রদর্শন',
       pronunciation: '/ˈmen.tɔː.ʃɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit21: UnitInfo = {
       id: 'u21_networking_14',
       unitId: 21,
       word: 'Networking',
-      banglaMeaning: 'পেশাগত যোগাযোগ ও নেটওয়ার্ক গড়ে তোলা',
+      banglaMeaning: 'পেশাগত যোগাযোগ ও নেটওয়ার্ক গড়ে তোলা , নেটওয়ার্কিং',
       pronunciation: '/ˈnet.wɜː.kɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit21: UnitInfo = {
       id: 'u21_overtime_15',
       unitId: 21,
       word: 'Overtime',
-      banglaMeaning: 'নির্ধারিত সময়ের অতিরিক্ত কাজ বা ওভারটাইম',
+      banglaMeaning: 'নির্ধারিত সময়ের অতিরিক্ত কাজ বা ওভারটাইম , অতিরিক্ত সময় , বাড়তি সময় , অধিকাল',
       pronunciation: '/ˈəʊ.və.taɪm/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit21: UnitInfo = {
       id: 'u21_promotion_16',
       unitId: 21,
       word: 'Promotion',
-      banglaMeaning: 'পদোন্নতি , উচ্চতর পদে উন্নীতকরণ',
+      banglaMeaning: 'পদোন্নতি , উচ্চতর পদে উন্নীতকরণ , উন্নয়ন , অগ্রগতি',
       pronunciation: '/prəˈməʊ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit21: UnitInfo = {
       id: 'u21_quota_17',
       unitId: 21,
       word: 'Quota',
-      banglaMeaning: 'কাজের নির্ধারিত লক্ষ্য বা কোটা',
+      banglaMeaning: 'কাজের নির্ধারিত লক্ষ্য বা কোটা , ভাগ , অংশ , খণ্ড',
       pronunciation: '/ˈkwəʊ.tə/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit21: UnitInfo = {
       id: 'u21_remuneration_18',
       unitId: 21,
       word: 'Remuneration',
-      banglaMeaning: 'পারিশ্রমিক বা কাজের ন্যায্য পাওনা',
+      banglaMeaning: 'পারিশ্রমিক বা কাজের ন্যায্য পাওনা , দক্ষিণা , মজুরি , পুরস্কার',
       pronunciation: '/rɪˌmjuː.nərˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit21: UnitInfo = {
       id: 'u21_stipend_19',
       unitId: 21,
       word: 'Stipend',
-      banglaMeaning: 'ভাতা , ইন্টার্ন বা গবেষকদের জন্য নির্ধারিত অর্থ',
+      banglaMeaning: 'ভাতা , ইন্টার্ন বা গবেষকদের জন্য নির্ধারিত অর্থ , বৃত্তি , বেতন',
       pronunciation: '/ˈstaɪ.pend/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit21: UnitInfo = {
       id: 'u21_tenure_20',
       unitId: 21,
       word: 'Tenure',
-      banglaMeaning: 'স্থায়ী চাকরির নিশ্চয়তা বা স্থায়ী পদমর্যাদা',
+      banglaMeaning: 'স্থায়ী চাকরির নিশ্চয়তা বা স্থায়ী পদমর্যাদা , অধিকার , ভোগদখল , শর্তাবলী',
       pronunciation: '/ˈten.jʊər/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit21: UnitInfo = {
       id: 'u21_union_21',
       unitId: 21,
       word: 'Union',
-      banglaMeaning: 'শ্রমিক ইউনিয়ন বা ট্রেড ইউনিয়ন',
+      banglaMeaning: 'শ্রমিক ইউনিয়ন বা ট্রেড ইউনিয়ন , সঙ্ঘ , মিলন , যুক্তরাষ্ট্র',
       pronunciation: '/ˈjuː.njən/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit21: UnitInfo = {
       id: 'u21_vocation_22',
       unitId: 21,
       word: 'Vocation',
-      banglaMeaning: 'মনের মতো পেশা বা জীবনের ব্রত',
+      banglaMeaning: 'মনের মতো পেশা বা জীবনের ব্রত , কারবার , বৃত্তি , ঈশ্বর কর্তৃক আহ্বান',
       pronunciation: '/vəʊˈkeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit21: UnitInfo = {
       id: 'u21_whitecollar_23',
       unitId: 21,
       word: 'White-collar',
-      banglaMeaning: 'দাপ্তরিক বা পেশাদার শ্রেণির কাজ সংক্রান্ত',
+      banglaMeaning: 'দাপ্তরিক বা পেশাদার শ্রেণির কাজ সংক্রান্ত , অফিস-কেন্দ্রিক , মানসিক শ্রমনির্ভর',
       pronunciation: '/ˌwaɪtˈkɒl.ər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit21: UnitInfo = {
       id: 'u21_yield_24',
       unitId: 21,
       word: 'Yield',
-      banglaMeaning: 'কাজের উৎপাদনশীলতা বা কাজের ফলাফল',
+      banglaMeaning: 'কাজের উৎপাদনশীলতা বা কাজের ফলাফল , উত্পাদ , হার মানা , জোগান',
       pronunciation: '/jiːld/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit21: UnitInfo = {
       id: 'u21_bureaucrat_26',
       unitId: 21,
       word: 'Bureaucrat',
-      banglaMeaning: 'আমলা বা সরকারি কর্মকর্তা',
+      banglaMeaning: 'আমলা বা সরকারি কর্মকর্তা , আমলাতন্ত্রবাদী , ক্ষমতাহীন আমলা',
       pronunciation: '/ˈbjʊə.rə.kræt/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit21: UnitInfo = {
       id: 'u21_delegation_28',
       unitId: 21,
       word: 'Delegation',
-      banglaMeaning: 'দায়িত্ব অর্পণ বা ক্ষমতা প্রদান',
+      banglaMeaning: 'দায়িত্ব অর্পণ বা ক্ষমতা প্রদান , প্রত্যভিযোজন , প্রতিনিধিবর্গ , প্রতিনিধিত্ব',
       pronunciation: '/ˌdel.ɪˈɡeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit21: UnitInfo = {
       id: 'u21_emolument_29',
       unitId: 21,
       word: 'Emolument',
-      banglaMeaning: 'উচ্চ পদের আর্থিক সুবিধা ও বেতন ভাতা',
+      banglaMeaning: 'উচ্চ পদের আর্থিক সুবিধা ও বেতন ভাতা , ভাতাদিসহ বেতন',
       pronunciation: '/ɪˈmɒl.jə.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit21: UnitInfo = {
       id: 'u21_furlough_30',
       unitId: 21,
       word: 'Furlough',
-      banglaMeaning: 'কর্মীদের সাময়িক বাধ্যতামূলক অবৈতনিক ছুটি',
+      banglaMeaning: 'কর্মীদের সাময়িক বাধ্যতামূলক অবৈতনিক ছুটি , মঞ্জুর করা ছুটি , ছুটি কাটানো',
       pronunciation: '/ˈfɜː.ləʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit21: UnitInfo = {
       id: 'u21_moonlighting_32',
       unitId: 21,
       word: 'Moonlighting',
-      banglaMeaning: 'মূল চাকরির পাশাপাশি রাতে বা গোপনে দ্বিতীয় কাজ করা',
+      banglaMeaning: 'মূল চাকরির পাশাপাশি রাতে বা গোপনে দ্বিতীয় কাজ করা , মুনলাইটিং',
       pronunciation: '/ˈmuːn.laɪ.tɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit21: UnitInfo = {
       id: 'u21_severance_33',
       unitId: 21,
       word: 'Severance',
-      banglaMeaning: 'চাকরিচ্যুতির সময় এককালীন ক্ষতিপূরণ বা বিদায়ী অর্থ',
+      banglaMeaning: 'চাকরিচ্যুতির সময় এককালীন ক্ষতিপূরণ বা বিদায়ী অর্থ , বিচ্ছেদ , পৃথকীকরণ , পৃথকীভবন',
       pronunciation: '/ˈsev.ər.əns/',
       partOfSpeech: 'noun',
       examples: [

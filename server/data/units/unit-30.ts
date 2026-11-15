@@ -12,7 +12,7 @@ export const unit30: UnitInfo = {
       id: 'u30_acumen_1',
       unitId: 30,
       word: 'Acumen',
-      banglaMeaning: 'তীক্ষ্ণ অন্তর্দৃষ্টি ও বিচারবুদ্ধি',
+      banglaMeaning: 'তীক্ষ্ণ অন্তর্দৃষ্টি ও বিচারবুদ্ধি , সূক্ষ্মদৃষ্টি , সূক্ষ্মদর্শিতা , সূক্ষ্ম বুদ্ধি',
       pronunciation: '/ˈæk.jə.mən/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit30: UnitInfo = {
       id: 'u30_beguile_2',
       unitId: 30,
       word: 'Beguile',
-      banglaMeaning: 'মোহিত করে বিভ্রান্ত করা বা সম্মোহিত করা',
+      banglaMeaning: 'মোহিত করে বিভ্রান্ত করা বা সম্মোহিত করা , ছলনা করা , চিত্তবিনোদন করা , প্রতারণা করা',
       pronunciation: '/bɪˈɡaɪl/',
       partOfSpeech: 'verb',
       examples: [
@@ -48,7 +48,7 @@ export const unit30: UnitInfo = {
       id: 'u30_conundrum_3',
       unitId: 30,
       word: 'Conundrum',
-      banglaMeaning: 'জটিল ধাঁধা বা উভয়সংকটপূর্ণ কঠিন সমস্যা',
+      banglaMeaning: 'জটিল ধাঁধা বা উভয়সংকটপূর্ণ কঠিন সমস্যা , প্রহেলিকা , হেঁয়ালি',
       pronunciation: '/kəˈnʌn.drəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit30: UnitInfo = {
       id: 'u30_demagogue_4',
       unitId: 30,
       word: 'Demagogue',
-      banglaMeaning: 'জনতোষণকারী সুবিধাবাদী বাগ্মী নেতা',
+      banglaMeaning: 'জনতোষণকারী সুবিধাবাদী বাগ্মী নেতা , বক্তৃতাবাজ , জনপ্রিয় নেতা , জননেতা',
       pronunciation: '/ˈdem.ə.ɡɒɡ/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit30: UnitInfo = {
       id: 'u30_equanimity_5',
       unitId: 30,
       word: 'Equanimity',
-      banglaMeaning: 'বিপদেও মনের স্থিরতা ও অবিচল প্রশান্তি',
+      banglaMeaning: 'বিপদেও মনের স্থিরতা ও অবিচল প্রশান্তি , মনের সমতা , কামাবশায়িতা , মনের ধীরতা',
       pronunciation: '/ˌek.wəˈnɪm.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit30: UnitInfo = {
       id: 'u30_fastidious_6',
       unitId: 30,
       word: 'Fastidious',
-      banglaMeaning: 'অতি খুঁতখুঁতে ও পরম নিখুঁতপ্রত্যাশী',
+      banglaMeaning: 'অতি খুঁতখুঁতে ও পরম নিখুঁতপ্রত্যাশী , রুচিবাগীশ , অতিসুক্ষ্ম রুচিসম্পন্ন , ঠেকারে',
       pronunciation: '/fæsˈtɪd.i.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit30: UnitInfo = {
       id: 'u30_garrulous_7',
       unitId: 30,
       word: 'Garrulous',
-      banglaMeaning: 'অপ্রয়োজনীয় কথায় মাত্রাতিরিক্ত বাচাল',
+      banglaMeaning: 'অপ্রয়োজনীয় কথায় মাত্রাতিরিক্ত বাচাল , প্রগলভ , বাক্যবাগীশ , জল্পক',
       pronunciation: '/ˈɡær.əl.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -156,7 +156,7 @@ export const unit30: UnitInfo = {
       id: 'u30_iconoclast_9',
       unitId: 30,
       word: 'Iconoclast',
-      banglaMeaning: 'প্রচলিত বিশ্বাস বা অন্ধ সংস্কার ভেঙে দেওয়া সংস্কারক',
+      banglaMeaning: 'প্রচলিত বিশ্বাস বা অন্ধ সংস্কার ভেঙে দেওয়া সংস্কারক , কালাপাহাড়',
       pronunciation: '/aɪˈkɒn.ə.klæst/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit30: UnitInfo = {
       id: 'u30_juxtaposition_10',
       unitId: 30,
       word: 'Juxtaposition',
-      banglaMeaning: 'বৈসাদৃশ্য স্পষ্ট করতে পাশাপাশি স্থাপন',
+      banglaMeaning: 'বৈসাদৃশ্য স্পষ্ট করতে পাশাপাশি স্থাপন , সন্নিধি , পাশাপাশি অবস্থান',
       pronunciation: '/ˌdʒʌk.stə.pəˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit30: UnitInfo = {
       id: 'u30_knell_11',
       unitId: 30,
       word: 'Knell',
-      banglaMeaning: 'মৃত্যুঘণ্টা বা কোনো কিছুর ধ্বংসের আগাম বার্তা',
+      banglaMeaning: 'মৃত্যুঘণ্টা বা কোনো কিছুর ধ্বংসের আগাম বার্তা , ঘণ্টাধ্বনি',
       pronunciation: '/nel/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit30: UnitInfo = {
       id: 'u30_lugubrious_12',
       unitId: 30,
       word: 'Lugubrious',
-      banglaMeaning: 'অতিরিক্ত বিষাদপূর্ণ ও শোকাবহ',
+      banglaMeaning: 'অতিরিক্ত বিষাদপূর্ণ ও শোকাবহ , বিষণ্ণ , শোকার্ত , কান্দ - কান্দ',
       pronunciation: '/luːˈɡuː.bri.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit30: UnitInfo = {
       id: 'u30_mendacious_13',
       unitId: 30,
       word: 'Mendacious',
-      banglaMeaning: 'মিথ্যাবাদী ও প্রতারণাপূর্ণ',
+      banglaMeaning: 'মিথ্যাবাদী ও প্রতারণাপূর্ণ , অসত্য',
       pronunciation: '/menˈdeɪ.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit30: UnitInfo = {
       id: 'u30_nadir_14',
       unitId: 30,
       word: 'Nadir',
-      banglaMeaning: 'পতনের সর্বনিম্ন স্তর বা জীবনের সবচেয়ে অন্ধকার মুহূর্ত',
+      banglaMeaning: 'পতনের সর্বনিম্ন স্তর বা জীবনের সবচেয়ে অন্ধকার মুহূর্ত , নিম্নতম বিন্দু , পাদবিন্দু , কুবিন্দু',
       pronunciation: '/ˈneɪ.dɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit30: UnitInfo = {
       id: 'u30_obfuscate_15',
       unitId: 30,
       word: 'Obfuscate',
-      banglaMeaning: 'ইচ্ছাকৃতভাবে কোনো বিষয়কে জটিল ও বিভ্রান্তিকর করে তোলা',
+      banglaMeaning: 'ইচ্ছাকৃতভাবে কোনো বিষয়কে জটিল ও বিভ্রান্তিকর করে তোলা , বিভ্রান্ত করা , ধন্দে ফেলা , কিংকর্তব্যবিমূঢ় করা',
       pronunciation: '/ˈɒb.fʌs.keɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit30: UnitInfo = {
       id: 'u30_panacea_16',
       unitId: 30,
       word: 'Panacea',
-      banglaMeaning: 'সর্বব্যাধিহর ওষুধ বা সকল সমস্যার ম্যাজিক সমাধান',
+      banglaMeaning: 'সর্বব্যাধিহর ওষুধ বা সকল সমস্যার ম্যাজিক সমাধান , সর্বরোগহর ঔষধ , সর্বব্যাধিহর ঔষধ , সর্বরোগনিবারক ঔষধ',
       pronunciation: '/ˌpæn.əˈsiː.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit30: UnitInfo = {
       id: 'u30_quagmire_17',
       unitId: 30,
       word: 'Quagmire',
-      banglaMeaning: 'চোরাবালি বা জটিল ফাঁদ যা থেকে সহজে বের হওয়া যায় না',
+      banglaMeaning: 'চোরাবালি বা জটিল ফাঁদ যা থেকে সহজে বের হওয়া যায় না , জলকাদাযর়্ভরা জায়গা , প্যাচপেচে জমি , কর্দমাক্ত জমি',
       pronunciation: '/ˈkwæɡ.maɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit30: UnitInfo = {
       id: 'u30_recalcitrant_18',
       unitId: 30,
       word: 'Recalcitrant',
-      banglaMeaning: 'অবাধ্য ও চরম অনমনীয় স্বভাবের',
+      banglaMeaning: 'অবাধ্য ও চরম অনমনীয় স্বভাবের , কর্তৃত্ব , দুর্বশ্য , বিরুপ',
       pronunciation: '/rɪˈkæl.sɪ.trənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit30: UnitInfo = {
       id: 'u30_sycophant_19',
       unitId: 30,
       word: 'Sycophant',
-      banglaMeaning: 'চাটুকার বা তোষামোদকারী ব্যক্তি',
+      banglaMeaning: 'চাটুকার বা তোষামোদকারী ব্যক্তি , চামচা , মোসায়ের , পরগাছা',
       pronunciation: '/ˈsɪk.ə.fænt/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit30: UnitInfo = {
       id: 'u30_trepidation_20',
       unitId: 30,
       word: 'Trepidation',
-      banglaMeaning: 'ভয়মিশ্রিত বুক দুরুদুরু শঙ্কা ও কম্পন',
+      banglaMeaning: 'ভয়মিশ্রিত বুক দুরুদুরু শঙ্কা ও কম্পন , ধড়্ফড়ানি , কাঁপুনি , সন্ত্রাস',
       pronunciation: '/ˌtrep.ɪˈdeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit30: UnitInfo = {
       id: 'u30_vacillate_22',
       unitId: 30,
       word: 'Vacillate',
-      banglaMeaning: 'সিদ্ধান্তহীনতায় দোদুল্যমান হওয়া',
+      banglaMeaning: 'সিদ্ধান্তহীনতায় দোদুল্যমান হওয়া , আন্দোলিত হওয়া , দোলায়মান হওয়া , স্থির না থাকা',
       pronunciation: '/ˈvæs.ɪ.leɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit30: UnitInfo = {
       id: 'u30_wanton_23',
       unitId: 30,
       word: 'Wanton',
-      banglaMeaning: 'উদ্দাম , বিবেকহীন ও নিষ্ঠুরভাবে অন্যায্য',
+      banglaMeaning: 'উদ্দাম , বিবেকহীন ও নিষ্ঠুরভাবে অন্যায্য , অসচ্চরিত্র , লম্পট',
       pronunciation: '/ˈwɒn.tən/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit30: UnitInfo = {
       id: 'u30_xenophobia_24',
       unitId: 30,
       word: 'Xenophobia',
-      banglaMeaning: 'অপরিচিত বা বিদেশীদের প্রতি তীব্র অমূলক বিদ্বেষ',
+      banglaMeaning: 'অপরিচিত বা বিদেশীদের প্রতি তীব্র অমূলক বিদ্বেষ , বিদেশাতঙ্ক',
       pronunciation: '/ˌzen.əˈfəʊ.bi.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit30: UnitInfo = {
       id: 'u30_yielding_25',
       unitId: 30,
       word: 'Yielding',
-      banglaMeaning: 'নমনীয় ও বাধ্য স্বভাবের',
+      banglaMeaning: 'নমনীয় ও বাধ্য স্বভাবের , প্রদায়ক',
       pronunciation: '/ˈjiːl.dɪŋ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit30: UnitInfo = {
       id: 'u30_zealot_26',
       unitId: 30,
       word: 'Zealot',
-      banglaMeaning: 'ধর্মান্ধ বা অন্ধ গোঁড়া সমর্থক',
+      banglaMeaning: 'ধর্মান্ধ বা অন্ধ গোঁড়া সমর্থক , অতি গোঁড়া লোক',
       pronunciation: '/ˈzel.ət/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit30: UnitInfo = {
       id: 'u30_alacrity_27',
       unitId: 30,
       word: 'Alacrity',
-      banglaMeaning: 'উৎসুক ক্ষিপ্রতা ও আনন্দের সাথে দ্রুত সাড়া দেওয়া',
+      banglaMeaning: 'উৎসুক ক্ষিপ্রতা ও আনন্দের সাথে দ্রুত সাড়া দেওয়া , উত্সাহপূর্ণ , তত্পরতা , সানন্দ',
       pronunciation: '/əˈlæk.rə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit30: UnitInfo = {
       id: 'u30_bellicose_28',
       unitId: 30,
       word: 'Bellicose',
-      banglaMeaning: 'যুদ্ধংদেহী ও কলহপ্রিয়',
+      banglaMeaning: 'যুদ্ধংদেহী ও কলহপ্রিয় , যুদ্ধবাজ',
       pronunciation: '/ˈbel.ɪ.kəʊs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit30: UnitInfo = {
       id: 'u30_capricious_29',
       unitId: 30,
       word: 'Capricious',
-      banglaMeaning: 'খামখেয়ালী ও সম্পূর্ণ অপ্রত্যাশিত',
+      banglaMeaning: 'খামখেয়ালী ও সম্পূর্ণ অপ্রত্যাশিত , চঞ্চল , অনিয়মিত , অনির্ভরযোগ্য',
       pronunciation: '/kəˈprɪʃ.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit30: UnitInfo = {
       id: 'u30_deleterious_30',
       unitId: 30,
       word: 'Deleterious',
-      banglaMeaning: 'মারাত্মক ক্ষতিকর ও অনিষ্টকর',
+      banglaMeaning: 'মারাত্মক ক্ষতিকর ও অনিষ্টকর , হানিকর , ক্ষতিকারক , অনিষ্টজনক',
       pronunciation: '/ˌdel.ɪˈtɪə.ri.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit30: UnitInfo = {
       id: 'u30_ephemeral_31',
       unitId: 30,
       word: 'Ephemeral',
-      banglaMeaning: 'ক্ষণস্থায়ী ও দ্রুত মিলিয়ে যায় এমন',
+      banglaMeaning: 'ক্ষণস্থায়ী ও দ্রুত মিলিয়ে যায় এমন , অল্পক্ষণস্থায়ী , ক্ষণজীবী , একদিবসজীবী',
       pronunciation: '/ɪˈfem.ər.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -570,7 +570,7 @@ export const unit30: UnitInfo = {
       id: 'u30_grandiloquent_32',
       unitId: 30,
       word: 'Grandiloquent',
-      banglaMeaning: 'অতিরিক্ত ভারী ভারী শব্দে ভরা ফাঁপা বাগাড়ম্বরপূর্ণ',
+      banglaMeaning: 'অতিরিক্ত ভারী ভারী শব্দে ভরা ফাঁপা বাগাড়ম্বরপূর্ণ , শব্দঝংকৃত',
       pronunciation: '/ɡrænˈdɪl.ə.kwənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit30: UnitInfo = {
       id: 'u30_inchoate_33',
       unitId: 30,
       word: 'Inchoate',
-      banglaMeaning: 'কেবলমাত্র শুরু হয়েছে এমন , অপরিণত ও অস্পষ্ট',
+      banglaMeaning: 'কেবলমাত্র শুরু হয়েছে এমন , অপরিণত ও অস্পষ্ট , সদ্য-আরদ্ধ , অনতিস্ফুত',
       pronunciation: '/ɪnˈkəʊ.eɪt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit30: UnitInfo = {
       id: 'u30_juxtapose_34',
       unitId: 30,
       word: 'Juxtapose',
-      banglaMeaning: 'বৈসাদৃশ্য তুলে ধরতে পাশাপাশি রেখে তুলনা করা',
+      banglaMeaning: 'বৈসাদৃশ্য তুলে ধরতে পাশাপাশি রেখে তুলনা করা , পাশাপাশি স্থাপন করা',
       pronunciation: '/ˌdʒʌk.stəˈpəʊz/',
       partOfSpeech: 'verb',
       examples: [

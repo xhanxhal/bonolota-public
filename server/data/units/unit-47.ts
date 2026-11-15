@@ -12,7 +12,7 @@ export const unit47: UnitInfo = {
       id: 'u47_compliant_1',
       unitId: 47,
       word: 'Compliant',
-      banglaMeaning: 'অনুবর্তী, বিনয়ী',
+      banglaMeaning: 'অনুবর্তী, বিনয়ী , বাধ্য , বশংবদ',
       pronunciation: '/ˈcompliant/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit47: UnitInfo = {
       id: 'u47_component_2',
       unitId: 47,
       word: 'Component',
-      banglaMeaning: 'উপাদান, অঙ্গ',
+      banglaMeaning: 'উপাদান, অঙ্গ , অংশস্বরূপ , গঠনকারী অংশ',
       pronunciation: '/ˈcomponent/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit47: UnitInfo = {
       id: 'u47_composure_3',
       unitId: 47,
       word: 'Composure',
-      banglaMeaning: 'ধৈর্য, আত্মস্থতা',
+      banglaMeaning: 'ধৈর্য, আত্মস্থতা , শান্ত ভাব , আত্মসংযম',
       pronunciation: '/ˈcomposure/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit47: UnitInfo = {
       id: 'u47_compound_4',
       unitId: 47,
       word: 'Compound',
-      banglaMeaning: 'একত্রিত বা সম্মিলিত করা',
+      banglaMeaning: 'একত্রিত বা সম্মিলিত করা , মিশ্র পদার্থ , যৌগিক পদার্থ',
       pronunciation: '/ˈcompound/',
       partOfSpeech: 'verb',
       examples: [
@@ -102,7 +102,7 @@ export const unit47: UnitInfo = {
       id: 'u47_comprehensive_6',
       unitId: 47,
       word: 'Comprehensive',
-      banglaMeaning: 'ব্যাপক, বিস্তীর্ণ',
+      banglaMeaning: 'ব্যাপক, বিস্তীর্ণ , বিস্তৃত , সর্বাঙ্গীণ',
       pronunciation: '/ˈcomprehensive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit47: UnitInfo = {
       id: 'u47_compromise_7',
       unitId: 47,
       word: 'Compromise',
-      banglaMeaning: 'আপস, মিটমাট',
+      banglaMeaning: 'আপস, মিটমাট , রফা , সমঝোতা',
       pronunciation: '/ˈcompromise/',
       partOfSpeech: 'adjective',
       examples: [
@@ -138,7 +138,7 @@ export const unit47: UnitInfo = {
       id: 'u47_compulsion_8',
       unitId: 47,
       word: 'Compulsion',
-      banglaMeaning: 'বাধ্যবাধকতা, বলপ্রয়োগ',
+      banglaMeaning: 'বাধ্যবাধকতা, বলপ্রয়োগ , চাপ',
       pronunciation: '/ˈcompulsion/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit47: UnitInfo = {
       id: 'u47_compulsory_9',
       unitId: 47,
       word: 'Compulsory',
-      banglaMeaning: 'বাধ্যতামূলক, আবশি্যক',
+      banglaMeaning: 'বাধ্যতামূলক, আবশি্যক , আবশ্যিক , অবশ্যকরণীয়',
       pronunciation: '/ˈcompulsory/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conceit_11',
       unitId: 47,
       word: 'Conceit',
-      banglaMeaning: 'গভীরভাবে ভালোবাসা বা শ্রদ্ধা করা',
+      banglaMeaning: 'গভীরভাবে ভালোবাসা বা শ্রদ্ধা করা , অহমিকা , আত্মশ্লাঘা , দাম্ভিকতা',
       pronunciation: '/ˈconceit/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conclave_13',
       unitId: 47,
       word: 'Conclave',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , গোপন মন্ত্রণাসভা',
       pronunciation: '/ˈconclave/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conclusive_14',
       unitId: 47,
       word: 'Conclusive',
-      banglaMeaning: 'চূড়ান্ত, অকাট্য',
+      banglaMeaning: 'চূড়ান্ত, অকাট্য , তর্কাতীত , প্রামাণ্য',
       pronunciation: '/ˈconclusive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit47: UnitInfo = {
       id: 'u47_concomitant_16',
       unitId: 47,
       word: 'Concomitant',
-      banglaMeaning: 'সহগামী, সংযুক্ত',
+      banglaMeaning: 'সহগামী, সংযুক্ত , সহবর্তী , সহচারী',
       pronunciation: '/ˈconcomitant/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit47: UnitInfo = {
       id: 'u47_concord_17',
       unitId: 47,
       word: 'Concord',
-      banglaMeaning: 'অন্বয়, ঐক্য',
+      banglaMeaning: 'অন্বয়, ঐক্য , মিল , সংগতি',
       pronunciation: '/ˈconcord/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit47: UnitInfo = {
       id: 'u47_concur_18',
       unitId: 47,
       word: 'Concur',
-      banglaMeaning: 'একমত বা সম্মত হওয়া',
+      banglaMeaning: 'একমত বা সম্মত হওয়া , একসঙ্গে ঘটা',
       pronunciation: '/ˈconcur/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit47: UnitInfo = {
       id: 'u47_condescend_19',
       unitId: 47,
       word: 'Condescend',
-      banglaMeaning: 'নামিয়া আসা, প্রসন্ন হত্তয়া',
+      banglaMeaning: 'নামিয়া আসা, প্রসন্ন হওয়া',
       pronunciation: '/ˈcondescend/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit47: UnitInfo = {
       id: 'u47_condone_20',
       unitId: 47,
       word: 'Condone',
-      banglaMeaning: 'মকুব করা, ক্ষমা করা',
+      banglaMeaning: 'মকুব করা, ক্ষমা করা , ক্ষমার',
       pronunciation: '/ˈcondone/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit47: UnitInfo = {
       id: 'u47_confluence_23',
       unitId: 47,
       word: 'Confluence',
-      banglaMeaning: 'জনতা, উদ্ভেদ',
+      banglaMeaning: 'জনতা, উদ্ভেদ , সংগমস্থল , বিপুল জনসমাবেশ',
       pronunciation: '/ˈconfluence/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit47: UnitInfo = {
       id: 'u47_confound_24',
       unitId: 47,
       word: 'Confound',
-      banglaMeaning: 'হতবুদ্ধি করা, মিশ্রিত করা',
+      banglaMeaning: 'হতবুদ্ধি করা, মিশ্রিত করা , বিশৃঙ্খলা ঘটানো',
       pronunciation: '/ˈconfound/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit47: UnitInfo = {
       id: 'u47_congeal_25',
       unitId: 47,
       word: 'Congeal',
-      banglaMeaning: 'ঘন হত্তয়া, জমাট বাঁধান',
+      banglaMeaning: 'ঘন হওয়া, জমাট বাঁধান , ঠাণ্ডায় জমাট বাঁধা , শিলীভবন ঘটা',
       pronunciation: '/ˈcongeal/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit47: UnitInfo = {
       id: 'u47_congenial_26',
       unitId: 47,
       word: 'Congenial',
-      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন , আনন্দদায়ক বা মনোরঞ্জনমূলক',
+      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন , আনন্দদায়ক বা মনোরঞ্জনমূলক , সমপ্রকৃতিবিশিষ্ট , সমমনস্ক',
       pronunciation: '/ˈcongenial/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conjugal_28',
       unitId: 47,
       word: 'Conjugal',
-      banglaMeaning: 'দাম্পত্য, বৈবাহিক',
+      banglaMeaning: 'দাম্পত্য, বৈবাহিক , বিবাহিত জীবন সম্পর্কিত',
       pronunciation: '/ˈconjugal/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conjure_29',
       unitId: 47,
       word: 'Conjure',
-      banglaMeaning: 'ভেলকি দেখান, ভূতপ্রেত ডাকা',
+      banglaMeaning: 'ভেলকি দেখান, ভূতপ্রেত ডাকা , সনির্বন্ধ অনুরোধ করা , মিনতি করা',
       pronunciation: '/ˈconjure/',
       partOfSpeech: 'verb',
       examples: [
@@ -534,7 +534,7 @@ export const unit47: UnitInfo = {
       id: 'u47_connoisseur_30',
       unitId: 47,
       word: 'Connoisseur',
-      banglaMeaning: 'রসপণ্ডিত, শিল্পকলা প্রভৃতির সমঝদার',
+      banglaMeaning: 'রসপণ্ডিত, শিল্পকলা প্রভৃতির সমঝদার , রসজ্ঞ ব্যক্তি',
       pronunciation: '/ˈconnoisseur/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit47: UnitInfo = {
       id: 'u47_connotation_31',
       unitId: 47,
       word: 'Connotation',
-      banglaMeaning: 'সংজ্ঞা, অর্থ',
+      banglaMeaning: 'সংজ্ঞা, অর্থ , পদার্থ , জাত্যর্থ',
       pronunciation: '/ˈconnotation/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conscientious_32',
       unitId: 47,
       word: 'Conscientious',
-      banglaMeaning: 'ন্যায়বান, ধর্মভীরূ',
+      banglaMeaning: 'ন্যায়বান, ধর্মভীরূ , ধর্মবুদ্ধিচালিত , কর্তব্যবোধে চালিত',
       pronunciation: '/ˈconscientious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit47: UnitInfo = {
       id: 'u47_consecrate_33',
       unitId: 47,
       word: 'Consecrate',
-      banglaMeaning: 'পবিত্র, দেবসেবার উত্সর্গ করা',
+      banglaMeaning: 'পবিত্র, দেবসেবার উত্সর্গ করা , দেবসেবায় নিবেদন করা',
       pronunciation: '/ˈconsecrate/',
       partOfSpeech: 'verb',
       examples: [
@@ -606,7 +606,7 @@ export const unit47: UnitInfo = {
       id: 'u47_consensus_34',
       unitId: 47,
       word: 'Consensus',
-      banglaMeaning: 'ঐক্যমত্য, সর্বসম্মতি',
+      banglaMeaning: 'ঐক্যমত্য, সর্বসম্মতি , অধিকাংশের মত , সংখ্যাগরিষ্ঠের মত',
       pronunciation: '/ˈconsensus/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit47: UnitInfo = {
       id: 'u47_consequential_35',
       unitId: 47,
       word: 'Consequential',
-      banglaMeaning: 'অনুবর্তী, অনুবন্ধী',
+      banglaMeaning: 'অনুবর্তী, অনুবন্ধী , আনুষঙ্গিক , হামবড়া',
       pronunciation: '/ˈconsequential/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit47: UnitInfo = {
       id: 'u47_consistency_36',
       unitId: 47,
       word: 'Consistency',
-      banglaMeaning: 'দৃঢ়তা, ঐক্য',
+      banglaMeaning: 'দৃঢ়তা, ঐক্য , সংগতি , সামঞ্জস্য',
       pronunciation: '/ˈconsistency/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit47: UnitInfo = {
       id: 'u47_console_37',
       unitId: 47,
       word: 'Console',
-      banglaMeaning: 'সান্ত্বনা দেত্তয়া, সান্ত্বনা করা',
+      banglaMeaning: 'সান্ত্বনা দেওয়া, সান্ত্বনা করা , সহানুভূতি জানানো',
       pronunciation: '/ˈconsole/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit47: UnitInfo = {
       id: 'u47_consonance_38',
       unitId: 47,
       word: 'Consonance',
-      banglaMeaning: 'অন্বয়, ঐক্য',
+      banglaMeaning: 'অন্বয়, ঐক্য , ধ্বনি , অর্থ',
       pronunciation: '/ˈconsonance/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conspicuous_39',
       unitId: 47,
       word: 'Conspicuous',
-      banglaMeaning: 'সুস্পষ্ট, প্রসিদ্ধ',
+      banglaMeaning: 'সুস্পষ্ট, প্রসিদ্ধ , দৃষ্টি-আকর্ষণকারী , স্পষ্টলক্ষিত',
       pronunciation: '/ˈconspicuous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -714,7 +714,7 @@ export const unit47: UnitInfo = {
       id: 'u47_conspiracy_40',
       unitId: 47,
       word: 'Conspiracy',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , ষড়যন্ত্র , চক্রান্ত',
       pronunciation: '/ˈconspiracy/',
       partOfSpeech: 'noun',
       examples: [

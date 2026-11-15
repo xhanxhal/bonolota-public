@@ -12,7 +12,7 @@ export const unit33: UnitInfo = {
       id: 'u33_adverse_1',
       unitId: 33,
       word: 'Adverse',
-      banglaMeaning: 'প্রতিকূল বা ক্ষতিকর',
+      banglaMeaning: 'প্রতিকূল বা ক্ষতিকর , বিরোধী , পরিপন্থী , বিমুখ',
       pronunciation: '/ˈadverse/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit33: UnitInfo = {
       id: 'u33_adversity_2',
       unitId: 33,
       word: 'Adversity',
-      banglaMeaning: 'দুর্দশা বা চরম সংকট',
+      banglaMeaning: 'দুর্দশা বা চরম সংকট , দুর্ভোগ , দুস্থতা , দুরবস্থা',
       pronunciation: '/ˈadversity/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit33: UnitInfo = {
       id: 'u33_advert_3',
       unitId: 33,
       word: 'Advert',
-      banglaMeaning: 'উল্লেখ বা নির্দেশ করা',
+      banglaMeaning: 'উল্লেখ বা নির্দেশ করা , বিজ্ঞাপন',
       pronunciation: '/ˈadvert/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit33: UnitInfo = {
       id: 'u33_advocacy_4',
       unitId: 33,
       word: 'Advocacy',
-      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা',
+      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা , ওকালতি , পক্ষসমর্থন , প্রচার',
       pronunciation: '/ˈadvocacy/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit33: UnitInfo = {
       id: 'u33_advocate_5',
       unitId: 33,
       word: 'Advocate',
-      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা',
+      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা , অধিবক্তা , প্রবক্তা , ওকালতি করা',
       pronunciation: '/ˈadvocate/',
       partOfSpeech: 'verb',
       examples: [
@@ -102,7 +102,7 @@ export const unit33: UnitInfo = {
       id: 'u33_aegis_6',
       unitId: 33,
       word: 'Aegis',
-      banglaMeaning: 'সুরক্ষামূলক অভিভাবকত্ব',
+      banglaMeaning: 'সুরক্ষামূলক অভিভাবকত্ব , উদ্যোগ , সমর্থন , আশ্রয়',
       pronunciation: '/ˈaegis/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit33: UnitInfo = {
       id: 'u33_affected_8',
       unitId: 33,
       word: 'Affected',
-      banglaMeaning: 'কৃত্রিম বা অস্বাভাবিক ভান',
+      banglaMeaning: 'কৃত্রিম বা অস্বাভাবিক ভান , আক্রান্ত , প্রভাবিত , পরিব্যাপ্ত',
       pronunciation: '/ˈaffected/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit33: UnitInfo = {
       id: 'u33_affiliation_9',
       unitId: 33,
       word: 'Affiliation',
-      banglaMeaning: 'অন্তর্ভুক্তি, সম্মিলন',
+      banglaMeaning: 'অন্তর্ভুক্তি, সম্মিলন , সংযুক্তিকরণ , সংযোজন',
       pronunciation: '/ˈaffiliation/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit33: UnitInfo = {
       id: 'u33_affirmation_10',
       unitId: 33,
       word: 'Affirmation',
-      banglaMeaning: 'কথন, বিবৃতি',
+      banglaMeaning: 'কথন, বিবৃতি , সুনিশ্চিত স্বীকৃতি , প্রমাণ',
       pronunciation: '/ˈaffirmation/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit33: UnitInfo = {
       id: 'u33_affliction_11',
       unitId: 33,
       word: 'Affliction',
-      banglaMeaning: 'পুড়ানি, পরিতাপ',
+      banglaMeaning: 'পুড়ানি, পরিতাপ , যন্ত্রণা , দুর্দশা',
       pronunciation: '/ˈaffliction/',
       partOfSpeech: 'verb',
       examples: [
@@ -210,7 +210,7 @@ export const unit33: UnitInfo = {
       id: 'u33_affluence_12',
       unitId: 33,
       word: 'Affluence',
-      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি',
+      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি , প্রাচুর্য , ঐশ্বর্য , ধনধান্য',
       pronunciation: '/ˈaffluence/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit33: UnitInfo = {
       id: 'u33_affront_13',
       unitId: 33,
       word: 'Affront',
-      banglaMeaning: 'অপমান বা তাচ্ছিল্য করা',
+      banglaMeaning: 'অপমান বা তাচ্ছিল্য করা , কারো শালীনতাবোধে আঘাত , প্রকাশ্য অপমান',
       pronunciation: '/ˈaffront/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit33: UnitInfo = {
       id: 'u33_afterlife_14',
       unitId: 33,
       word: 'Afterlife',
-      banglaMeaning: 'পরকাল, শেষ জীবন',
+      banglaMeaning: 'পরকাল, শেষ জীবন , ভবিষ্যৎ জীবন',
       pronunciation: '/ˈafterlife/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agape_15',
       unitId: 33,
       word: 'Agape',
-      banglaMeaning: 'মুখ হাঁ করিয়া, মুখ হাঁ করিয়া আছে এমন',
+      banglaMeaning: 'মুখ হাঁ করিয়া, মুখ হাঁ করিয়া আছে এমন , হাঁ করে',
       pronunciation: '/ˈagape/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agenda_16',
       unitId: 33,
       word: 'Agenda',
-      banglaMeaning: 'বিষয়সূচি, সভায় আলোচ্য বিষয়সূচি',
+      banglaMeaning: 'বিষয়সূচি, সভায় আলোচ্য বিষয়সূচি , সম্পাদ্য কার্যাবলী',
       pronunciation: '/ˈagenda/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agglomeration_17',
       unitId: 33,
       word: 'Agglomeration',
-      banglaMeaning: 'স্তূপ বা পুঞ্জীভূত সংগ্রহ',
+      banglaMeaning: 'স্তূপ বা পুঞ্জীভূত সংগ্রহ , পিণ্ডীকরণ',
       pronunciation: '/ˈagglomeration/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit33: UnitInfo = {
       id: 'u33_aggrandize_18',
       unitId: 33,
       word: 'Aggrandize',
-      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি',
+      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি , শক্তি , সম্মান বৃদ্ধি করা',
       pronunciation: '/ˈaggrandize/',
       partOfSpeech: 'verb',
       examples: [
@@ -336,7 +336,7 @@ export const unit33: UnitInfo = {
       id: 'u33_aggregate_19',
       unitId: 33,
       word: 'Aggregate',
-      banglaMeaning: 'জমা হওয়া বা পুঞ্জীভূত হওয়া',
+      banglaMeaning: 'জমা হওয়া বা পুঞ্জীভূত হওয়া , মোট , সমষ্টিগত , রাশিকৃত',
       pronunciation: '/ˈaggregate/',
       partOfSpeech: 'verb',
       examples: [
@@ -354,7 +354,7 @@ export const unit33: UnitInfo = {
       id: 'u33_aghast_20',
       unitId: 33,
       word: 'Aghast',
-      banglaMeaning: 'আতঙ্কগ্রস্ত বা স্তম্ভিত',
+      banglaMeaning: 'আতঙ্কগ্রস্ত বা স্তম্ভিত , ভয়ার্ত , বিস্ময়বিমূঢ় , বিস্ময়ে হতবুদ্ধি',
       pronunciation: '/ˈaghast/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agility_21',
       unitId: 33,
       word: 'Agility',
-      banglaMeaning: 'চটপটে ভাব বা ক্ষিপ্রতা',
+      banglaMeaning: 'চটপটে ভাব বা ক্ষিপ্রতা , দ্রুতমননশীলতা , দ্রুততা , তত্পরতা',
       pronunciation: '/ˈagility/',
       partOfSpeech: 'adverb',
       examples: [
@@ -390,7 +390,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agitate_22',
       unitId: 33,
       word: 'Agitate',
-      banglaMeaning: 'বিক্ষুব্ধ বা উত্তেজিত করা',
+      banglaMeaning: 'বিক্ষুব্ধ বা উত্তেজিত করা , আলোড়িত করা , আন্দোলিত করা , ঝাঁকি দেওয়া',
       pronunciation: '/ˈagitate/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agnostic_23',
       unitId: 33,
       word: 'Agnostic',
-      banglaMeaning: 'অজ্ঞানবাদী, অজ্ঞাবাদী',
+      banglaMeaning: 'অজ্ঞানবাদী, অজ্ঞাবাদী , অজ্ঞেয়বাদ',
       pronunciation: '/ˈagnostic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agog_24',
       unitId: 33,
       word: 'Agog',
-      banglaMeaning: 'উত্তেজনাপূর্ণ ব্যগ্রতাপূর্ণ, গমনোদ্যত',
+      banglaMeaning: 'উত্তেজনাপূর্ণ ব্যগ্রতাপূর্ণ, গমনোদ্যত , আকুল , অস্থির',
       pronunciation: '/ˈagog/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit33: UnitInfo = {
       id: 'u33_agrarian_25',
       unitId: 33,
       word: 'Agrarian',
-      banglaMeaning: 'ভূস্বামী, ভূমিসম্বন্ধীয় কার্য',
+      banglaMeaning: 'ভূস্বামী, ভূমিসম্বন্ধীয় কার্য , কৃষিসম্পর্কীয়',
       pronunciation: '/ˈagrarian/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit33: UnitInfo = {
       id: 'u33_airy_26',
       unitId: 33,
       word: 'Airy',
-      banglaMeaning: 'বায়বীয়, উড়া উড়া',
+      banglaMeaning: 'বায়বীয়, উড়া উড়া , বাতাস খেলে এমন , চপল',
       pronunciation: '/ˈairy/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alcove_28',
       unitId: 33,
       word: 'Alcove',
-      banglaMeaning: 'তাক, একান্ত স্থান',
+      banglaMeaning: 'তাক, একান্ত স্থান , কুঞ্জকুটির , ছায়াকুঁজ',
       pronunciation: '/ˈalcove/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alias_29',
       unitId: 33,
       word: 'Alias',
-      banglaMeaning: 'ওরফে, অন্য নাম',
+      banglaMeaning: 'ওরফে, অন্য নাম , আর এক নাম , ছদ্মনাম',
       pronunciation: '/ˈalias/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alienate_30',
       unitId: 33,
       word: 'Alienate',
-      banglaMeaning: 'উদাসীন, বিচ্ছিন্ন বা শত্রুভাবাপন্ন করে তোলা',
+      banglaMeaning: 'উদাসীন, বিচ্ছিন্ন বা শত্রুভাবাপন্ন করে তোলা , দূরে সরিয়ে দেওয়া , ঘুরিয়ে দেওয়া',
       pronunciation: '/ˈalienate/',
       partOfSpeech: 'verb',
       examples: [
@@ -552,7 +552,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alimentary_31',
       unitId: 33,
       word: 'Alimentary',
-      banglaMeaning: 'পৌষ্টিক, পুষ্টিকারক',
+      banglaMeaning: 'পৌষ্টিক, পুষ্টিকারক , পুষ্টিবিষয়ক',
       pronunciation: '/ˈalimentary/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alimony_32',
       unitId: 33,
       word: 'Alimony',
-      banglaMeaning: 'স্ত্রীর খোরপোষ, বিবাহবিচ্ছেদের পরে বা বিচ্ছেদের মামলা চলাকালীন স্বামীর আয় বা সম্পত্তি থেকে স্ত্রীর গ্রাসাচ্ছাদনের জন্য দেয় বৃত্তি',
+      banglaMeaning: 'স্ত্রীর খোরপোষ, বিবাহবিচ্ছেদের পরে বা বিচ্ছেদের মামলা চলাকালীন স্বামীর আয় বা সম্পত্তি থেকে স্ত্রীর গ্রাসাচ্ছাদনের জন্য দেয় বৃত্তি , ভরণপোষণ , খোরপোশ',
       pronunciation: '/ˈalimony/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit33: UnitInfo = {
       id: 'u33_allay_33',
       unitId: 33,
       word: 'Allay',
-      banglaMeaning: 'শান্ত বা উপশম করা',
+      banglaMeaning: 'শান্ত বা উপশম করা , কমান , জুড়ান',
       pronunciation: '/ˈallay/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit33: UnitInfo = {
       id: 'u33_allege_34',
       unitId: 33,
       word: 'Allege',
-      banglaMeaning: 'সপক্ষে যুক্তি দেখান, বিপখে যুক্তি দেখান',
+      banglaMeaning: 'সপক্ষে যুক্তি দেখান, বিপখে যুক্তি দেখান , ঘোষণা করা , নজির দেখান',
       pronunciation: '/ˈallege/',
       partOfSpeech: 'verb',
       examples: [
@@ -624,7 +624,7 @@ export const unit33: UnitInfo = {
       id: 'u33_allegiance_35',
       unitId: 33,
       word: 'Allegiance',
-      banglaMeaning: 'আনুগত্য বা বিশ্বস্ততা',
+      banglaMeaning: 'আনুগত্য বা বিশ্বস্ততা , যথাযোগ্য সম্মানবোধ , বশ্যতা',
       pronunciation: '/ˈallegiance/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alleviate_36',
       unitId: 33,
       word: 'Alleviate',
-      banglaMeaning: 'লাঘব বা উপশম করা',
+      banglaMeaning: 'লাঘব বা উপশম করা , লাঘব করা , সহনীয় করে তোলা , কমানো',
       pronunciation: '/ˈalleviate/',
       partOfSpeech: 'verb',
       examples: [
@@ -660,7 +660,7 @@ export const unit33: UnitInfo = {
       id: 'u33_allocate_37',
       unitId: 33,
       word: 'Allocate',
-      banglaMeaning: 'বরাদ্দ বা নির্দিষ্ট করা',
+      banglaMeaning: 'বরাদ্দ বা নির্দিষ্ট করা , বণ্টন করা , বেঁটে দেওয়া , বরাদ্দ করা',
       pronunciation: '/ˈallocate/',
       partOfSpeech: 'verb',
       examples: [
@@ -678,7 +678,7 @@ export const unit33: UnitInfo = {
       id: 'u33_alloy_38',
       unitId: 33,
       word: 'Alloy',
-      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , সংমিশ্রণ বা সংকর ধাতু',
+      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , সংমিশ্রণ বা সংকর ধাতু , মিশ্র ধাতু , খাদ',
       pronunciation: '/ˈalloy/',
       partOfSpeech: 'verb',
       examples: [
@@ -696,7 +696,7 @@ export const unit33: UnitInfo = {
       id: 'u33_allude_39',
       unitId: 33,
       word: 'Allude',
-      banglaMeaning: 'উল্লেখ বা নির্দেশ করা',
+      banglaMeaning: 'উল্লেখ বা নির্দেশ করা , নজির দেখান',
       pronunciation: '/ˈallude/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit33: UnitInfo = {
       id: 'u33_allure_40',
       unitId: 33,
       word: 'Allure',
-      banglaMeaning: 'আকর্ষণ বা প্রলুব্ধ করা',
+      banglaMeaning: 'আকর্ষণ বা প্রলুব্ধ করা , ফুসলানো , সম্মোহন , লোভ দেখান',
       pronunciation: '/ˈallure/',
       partOfSpeech: 'noun',
       examples: [

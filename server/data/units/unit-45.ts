@@ -30,7 +30,7 @@ export const unit45: UnitInfo = {
       id: 'u45_carnal_2',
       unitId: 45,
       word: 'Carnal',
-      banglaMeaning: 'জাগতিক, ইঁদ্রি়-সংবঁধীয়',
+      banglaMeaning: 'জাগতিক, ইঁদ্রি়-সংবঁধীয় , দেহজ , যৌন',
       pronunciation: '/ˈcarnal/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit45: UnitInfo = {
       id: 'u45_carnivorous_3',
       unitId: 45,
       word: 'Carnivorous',
-      banglaMeaning: 'মাংসাশী, কীটভূক্',
+      banglaMeaning: 'মাংসাশী, কীটভূক্ , আমিষভুক , কীটভোজী',
       pronunciation: '/ˈcarnivorous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -102,7 +102,7 @@ export const unit45: UnitInfo = {
       id: 'u45_carrion_6',
       unitId: 45,
       word: 'Carrion',
-      banglaMeaning: 'গলিত মাংস, পচা মাংস',
+      banglaMeaning: 'গলিত মাংস, পচা মাংস , আবর্জনা',
       pronunciation: '/ˈcarrion/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit45: UnitInfo = {
       id: 'u45_cartographer_7',
       unitId: 45,
       word: 'Cartographer',
-      banglaMeaning: 'মানচিত্রকার, মানচিত্রনির্মাতা',
+      banglaMeaning: 'মানচিত্রকার, মানচিত্রনির্মাতা , মানচিত্রবিদ',
       pronunciation: '/ˈcartographer/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit45: UnitInfo = {
       id: 'u45_castigate_9',
       unitId: 45,
       word: 'Castigate',
-      banglaMeaning: 'শাস্তি দেত্তয়া, শাস্তি দেওয়া',
+      banglaMeaning: 'শাস্তি দেওয়া, শাস্তি দেওয়া',
       pronunciation: '/ˈcastigate/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit45: UnitInfo = {
       id: 'u45_catastrophe_11',
       unitId: 45,
       word: 'Catastrophe',
-      banglaMeaning: 'বিপর্যয়কারী ঘটনা, কুগ্রহ',
+      banglaMeaning: 'বিপর্যয়কারী ঘটনা, কুগ্রহ , আকস্মিক বিপর্যয় , সর্বনাশ',
       pronunciation: '/ˈcatastrophe/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit45: UnitInfo = {
       id: 'u45_catholic_12',
       unitId: 45,
       word: 'Catholic',
-      banglaMeaning: 'উদারনৈতিক, গোঁড়া',
+      banglaMeaning: 'উদারনৈতিক, গোঁড়া , উদারচেতা , বিশ্বজনীন',
       pronunciation: '/ˈcatholic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit45: UnitInfo = {
       id: 'u45_caustic_13',
       unitId: 45,
       word: 'Caustic',
-      banglaMeaning: 'দগ্ধকারক, শ্লেষাত্মক',
+      banglaMeaning: 'দগ্ধকারক, শ্লেষাত্মক , ক্ষয়কারী বস্তু',
       pronunciation: '/ˈcaustic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit45: UnitInfo = {
       id: 'u45_cavalier_14',
       unitId: 45,
       word: 'Cavalier',
-      banglaMeaning: 'অশ্বারোহী, বীর',
+      banglaMeaning: 'অশ্বারোহী, বীর , দাম্ভিক',
       pronunciation: '/ˈcavalier/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit45: UnitInfo = {
       id: 'u45_cavil_15',
       unitId: 45,
       word: 'Cavil',
-      banglaMeaning: 'তুচ্ছ আপত্তি, কথায় খুন্ত ধরা',
+      banglaMeaning: 'তুচ্ছ আপত্তি, কথায় খুন্ত ধরা , দোষ ধরা',
       pronunciation: '/ˈcavil/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit45: UnitInfo = {
       id: 'u45_celerity_16',
       unitId: 45,
       word: 'Celerity',
-      banglaMeaning: 'বেগ, দ্রুততা',
+      banglaMeaning: 'বেগ, দ্রুততা , ক্ষিপ্রতা',
       pronunciation: '/ˈcelerity/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit45: UnitInfo = {
       id: 'u45_certitude_20',
       unitId: 45,
       word: 'Certitude',
-      banglaMeaning: 'নিশ্চয়তা বা স্থিরবিশ্বাস',
+      banglaMeaning: 'নিশ্চয়তা বা স্থিরবিশ্বাস , নিশ্চিন্ততার ভাব , দৃঢ় বিশ্বাস',
       pronunciation: '/ˈcertitude/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit45: UnitInfo = {
       id: 'u45_cessation_21',
       unitId: 45,
       word: 'Cessation',
-      banglaMeaning: 'বিরতি বা সমাপ্তি',
+      banglaMeaning: 'বিরতি বা সমাপ্তি , নিবৃত্তি , বিরাম , অবসান',
       pronunciation: '/ˈcessation/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chafe_22',
       unitId: 45,
       word: 'Chafe',
-      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের',
+      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের , ক্রুদ্ধ হওয়া',
       pronunciation: '/ˈchafe/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chagrin_23',
       unitId: 45,
       word: 'Chagrin',
-      banglaMeaning: 'বিরক্তি, মর্মবেদনা',
+      banglaMeaning: 'বিরক্তি, মর্মবেদনা , হতাশা',
       pronunciation: '/ˈchagrin/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit45: UnitInfo = {
       id: 'u45_champion_24',
       unitId: 45,
       word: 'Champion',
-      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা',
+      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা , বীর , যোদ্ধা , বিজয়ী',
       pronunciation: '/ˈchampion/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit45: UnitInfo = {
       id: 'u45_charlatan_27',
       unitId: 45,
       word: 'Charlatan',
-      banglaMeaning: 'হাতুড়ে ডাক্তার, বাগাড়ম্বরকারী',
+      banglaMeaning: 'হাতুড়ে ডাক্তার, বাগাড়ম্বরকারী , চালিয়াত',
       pronunciation: '/ˈcharlatan/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chary_28',
       unitId: 45,
       word: 'Chary',
-      banglaMeaning: 'মিতব্যয়ী বা মিতাহারী , সতর্ক বা দ্বিধান্বিত',
+      banglaMeaning: 'মিতব্যয়ী বা মিতাহারী , সতর্ক বা দ্বিধান্বিত , সাবধানী , লাজুক',
       pronunciation: '/ˈchary/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chasm_29',
       unitId: 45,
       word: 'Chasm',
-      banglaMeaning: 'ফাটল, গহ্বর',
+      banglaMeaning: 'ফাটল, গহ্বর , গভীর খাদ , অনেক তফাৎ',
       pronunciation: '/ˈchasm/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chaste_30',
       unitId: 45,
       word: 'Chaste',
-      banglaMeaning: 'সতী, শুদ্ধ',
+      banglaMeaning: 'সতী, শুদ্ধ , নির্মলচিত্ত , সংযত',
       pronunciation: '/ˈchaste/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chastise_32',
       unitId: 45,
       word: 'Chastise',
-      banglaMeaning: 'তাড়ন করা, শাস্তি দেত্তয়া',
+      banglaMeaning: 'তাড়ন করা, শাস্তি দেওয়া',
       pronunciation: '/ˈchastise/',
       partOfSpeech: 'adverb',
       examples: [
@@ -606,7 +606,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chicanery_34',
       unitId: 45,
       word: 'Chicanery',
-      banglaMeaning: 'ছল, চাতুরী',
+      banglaMeaning: 'ছল, চাতুরী , প্রতারণা',
       pronunciation: '/ˈchicanery/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chimerical_36',
       unitId: 45,
       word: 'Chimerical',
-      banglaMeaning: 'কাল্পনিক, অলীক',
+      banglaMeaning: 'কাল্পনিক, অলীক , কল্পনাপ্রসূত',
       pronunciation: '/ˈchimerical/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit45: UnitInfo = {
       id: 'u45_chivalrous_37',
       unitId: 45,
       word: 'Chivalrous',
-      banglaMeaning: 'ভদ্র ও সদাচারী',
+      banglaMeaning: 'ভদ্র ও সদাচারী , সাহসী , রমণীরঁজক',
       pronunciation: '/ˈchivalrous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -678,7 +678,7 @@ export const unit45: UnitInfo = {
       id: 'u45_choleric_38',
       unitId: 45,
       word: 'Choleric',
-      banglaMeaning: 'দজ্জাল, বিরক্ত',
+      banglaMeaning: 'দজ্জাল, বিরক্ত , রাগী',
       pronunciation: '/ˈcholeric/',
       partOfSpeech: 'adjective',
       examples: [
@@ -696,7 +696,7 @@ export const unit45: UnitInfo = {
       id: 'u45_cipher_39',
       unitId: 45,
       word: 'Cipher',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , শূন্য , সামান্য ব্যক্তি',
       pronunciation: '/ˈcipher/',
       partOfSpeech: 'noun',
       examples: [

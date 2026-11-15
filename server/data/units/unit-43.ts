@@ -12,7 +12,7 @@ export const unit43: UnitInfo = {
       id: 'u43_bovine_1',
       unitId: 43,
       word: 'Bovine',
-      banglaMeaning: 'শান্ত বা উপশম করা',
+      banglaMeaning: 'শান্ত বা উপশম করা , নির্বোধ , জড়বুদ্ধি , গবাদি পশুর ন্যায়',
       pronunciation: '/ˈbovine/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brag_4',
       unitId: 43,
       word: 'Brag',
-      banglaMeaning: 'জাঁক, পটপটি',
+      banglaMeaning: 'জাঁক, পটপটি , আফসান , কুঁদা',
       pronunciation: '/ˈbrag/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit43: UnitInfo = {
       id: 'u43_braggart_6',
       unitId: 43,
       word: 'Braggart',
-      banglaMeaning: 'দম্ভপূর্ণ, অসার দম্ভকারী',
+      banglaMeaning: 'দম্ভপূর্ণ, অসার দম্ভকারী , দাম্ভিক লোক , দম্ভী',
       pronunciation: '/ˈbraggart/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit43: UnitInfo = {
       id: 'u43_braid_7',
       unitId: 43,
       word: 'Braid',
-      banglaMeaning: 'বিনুনি, রজ্জু',
+      banglaMeaning: 'বিনুনি, রজ্জু , ফিতে , পাকানো',
       pronunciation: '/ˈbraid/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brand_8',
       unitId: 43,
       word: 'Brand',
-      banglaMeaning: 'গোপন করা বা লুকিয়ে থাকা',
+      banglaMeaning: 'গোপন করা বা লুকিয়ে থাকা , পোড়া কাঠের খণ্ড , তপ্ত লোহার ছ্যাঁকা , মশাল',
       pronunciation: '/ˈbrand/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brandish_9',
       unitId: 43,
       word: 'Brandish',
-      banglaMeaning: 'ভাঁজা, আস্ফালন করা',
+      banglaMeaning: 'ভাঁজা, আস্ফালন করা , ঘোরান',
       pronunciation: '/ˈbrandish/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brave_10',
       unitId: 43,
       word: 'Brave',
-      banglaMeaning: 'সাহসী, নির্ভীক',
+      banglaMeaning: 'সাহসী, নির্ভীক , ঝলমলে , অশঙ্ক',
       pronunciation: '/ˈbrave/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brawl_11',
       unitId: 43,
       word: 'Brawl',
-      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া , কলহ বা মতবিরোধ',
+      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া , কলহ বা মতবিরোধ , তর্জনগর্জনসহ ঝগড়া , তোলপাড়',
       pronunciation: '/ˈbrawl/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brawn_12',
       unitId: 43,
       word: 'Brawn',
-      banglaMeaning: 'মাংসপেশী, বল',
+      banglaMeaning: 'মাংসপেশী, বল , শক্তি , জরান শূকর-মাংস',
       pronunciation: '/ˈbrawn/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brawny_13',
       unitId: 43,
       word: 'Brawny',
-      banglaMeaning: 'পেশীবহুল, শক্তিশালী',
+      banglaMeaning: 'পেশীবহুল, শক্তিশালী , পেশল , দৃঢ় মাংসবেশীবিশিষ্ট',
       pronunciation: '/ˈbrawny/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brazen_14',
       unitId: 43,
       word: 'Brazen',
-      banglaMeaning: 'নির্লজ্জ, বেহায়া',
+      banglaMeaning: 'নির্লজ্জ, বেহায়া , পিতলের তৈরি , পিত্তলে নির্মিত',
       pronunciation: '/ˈbrazen/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit43: UnitInfo = {
       id: 'u43_breach_15',
       unitId: 43,
       word: 'Breach',
-      banglaMeaning: 'ছিদ্র বা রন্ধ্রপথ',
+      banglaMeaning: 'ছিদ্র বা রন্ধ্রপথ , খেলাপ , লঙ্ঘন , ভঙ্গ',
       pronunciation: '/ˈbreach/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit43: UnitInfo = {
       id: 'u43_breadth_16',
       unitId: 43,
       word: 'Breadth',
-      banglaMeaning: 'পানা, প্রসার',
+      banglaMeaning: 'পানা, প্রসার , প্রস্থ , উদারতা',
       pronunciation: '/ˈbreadth/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit43: UnitInfo = {
       id: 'u43_breed_17',
       unitId: 43,
       word: 'Breed',
-      banglaMeaning: 'শাবক, সন্তান',
+      banglaMeaning: 'শাবক, সন্তান , উদ্ভূত করান , বংশ',
       pronunciation: '/ˈbreed/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brevity_18',
       unitId: 43,
       word: 'Brevity',
-      banglaMeaning: 'সংক্ষিপ্ততা, সংক্ষেপ',
+      banglaMeaning: 'সংক্ষিপ্ততা, সংক্ষেপ , ক্ষণিকতা , স্বল্পস্থায়িতা',
       pronunciation: '/ˈbrevity/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit43: UnitInfo = {
       id: 'u43_bridle_19',
       unitId: 43,
       word: 'Bridle',
-      banglaMeaning: 'ঘোড়ার লাগাম বা নিয়ন্ত্রণ করা',
+      banglaMeaning: 'ঘোড়ার লাগাম বা নিয়ন্ত্রণ করা , সংযম , লাগাম পরানো , রশ্মি',
       pronunciation: '/ˈbridle/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brim_20',
       unitId: 43,
       word: 'Brim',
-      banglaMeaning: 'ধারি, টুপির প্রান্ত',
+      banglaMeaning: 'ধারি, টুপির প্রান্ত , কাপ , বাটি প্রভৃতির কানা',
       pronunciation: '/ˈbrim/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brink_22',
       unitId: 43,
       word: 'Brink',
-      banglaMeaning: 'কিনারা, প্রান্ত',
+      banglaMeaning: 'কিনারা, প্রান্ত , অজানিত , পার্শ্ব',
       pronunciation: '/ˈbrink/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brisk_23',
       unitId: 43,
       word: 'Brisk',
-      banglaMeaning: 'প্রাণবন্ত, কর্মঠ',
+      banglaMeaning: 'প্রাণবন্ত, কর্মঠ , টাটকা , দ্রুতগামী',
       pronunciation: '/ˈbrisk/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit43: UnitInfo = {
       id: 'u43_bristle_24',
       unitId: 43,
       word: 'Bristle',
-      banglaMeaning: 'কূর্চ, ক্ষুদ্র শক্ত লোম',
+      banglaMeaning: 'কূর্চ, ক্ষুদ্র শক্ত লোম , পশুলোম',
       pronunciation: '/ˈbristle/',
       partOfSpeech: 'adverb',
       examples: [
@@ -444,7 +444,7 @@ export const unit43: UnitInfo = {
       id: 'u43_bristling_25',
       unitId: 43,
       word: 'Bristling',
-      banglaMeaning: 'ক্রোধ প্রকাশ করা, অন্তরায়-কণ্টক্তি হত্তয়া',
+      banglaMeaning: 'ক্রোধ প্রকাশ করা, অন্তরায়-কণ্টক্তি হওয়া',
       pronunciation: '/ˈbristling/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brittle_26',
       unitId: 43,
       word: 'Brittle',
-      banglaMeaning: 'ভঙ্গুর, পলকা',
+      banglaMeaning: 'ভঙ্গুর, পলকা , ঠুনকো , অব্যবস্থিত',
       pronunciation: '/ˈbrittle/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit43: UnitInfo = {
       id: 'u43_broach_27',
       unitId: 43,
       word: 'Broach',
-      banglaMeaning: 'উচ্চারণ করা, ছিদ্র করা',
+      banglaMeaning: 'উচ্চারণ করা, ছিদ্র করা , ফোড়নকাঠি',
       pronunciation: '/ˈbroach/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brochure_28',
       unitId: 43,
       word: 'Brochure',
-      banglaMeaning: 'প্রচারপত্র, ইস্তাহার',
+      banglaMeaning: 'প্রচারপত্র, ইস্তাহার , ক্ষুদ্র পুস্তিকা',
       pronunciation: '/ˈbrochure/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit43: UnitInfo = {
       id: 'u43_broil_29',
       unitId: 43,
       word: 'Broil',
-      banglaMeaning: 'বচসা, কলহ',
+      banglaMeaning: 'বচসা, কলহ , ঝলসানো',
       pronunciation: '/ˈbroil/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit43: UnitInfo = {
       id: 'u43_bromide_30',
       unitId: 43,
       word: 'Bromide',
-      banglaMeaning: 'শান্ত বা উপশম করা',
+      banglaMeaning: 'শান্ত বা উপশম করা , গতানুগতিক নীরস মন্তব্য',
       pronunciation: '/ˈbromide/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brood_32',
       unitId: 43,
       word: 'Brood',
-      banglaMeaning: 'শাবক, সন্তানসন্ততি',
+      banglaMeaning: 'শাবক, সন্তানসন্ততি , অণ্ডজ প্রাণী , কুল',
       pronunciation: '/ˈbrood/',
       partOfSpeech: 'adverb',
       examples: [
@@ -588,7 +588,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brook_33',
       unitId: 43,
       word: 'Brook',
-      banglaMeaning: 'সহ্য বা সহ্য করা',
+      banglaMeaning: 'সহ্য বা সহ্য করা , ছোটো নদী',
       pronunciation: '/ˈbrook/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit43: UnitInfo = {
       id: 'u43_browbeat_34',
       unitId: 43,
       word: 'Browbeat',
-      banglaMeaning: 'শাসান, চোখ রাঙ্গাইয়া বাগে আনা',
+      banglaMeaning: 'শাসান, চোখ রাঙ্গাইয়া বাগে আনা , মেজাজ দেখানো , চোখ রাঙ্গান',
       pronunciation: '/ˈbrowbeat/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit43: UnitInfo = {
       id: 'u43_browse_35',
       unitId: 43,
       word: 'Browse',
-      banglaMeaning: 'বৃক্ষের শাখাপল্লব, বই ঘাঁটা',
+      banglaMeaning: 'বৃক্ষের শাখাপল্লব, বই ঘাঁটা , ব্রাউজ',
       pronunciation: '/ˈbrowse/',
       partOfSpeech: 'adverb',
       examples: [
@@ -642,7 +642,7 @@ export const unit43: UnitInfo = {
       id: 'u43_bruise_36',
       unitId: 43,
       word: 'Bruise',
-      banglaMeaning: 'কালশিটে, কালশিটে দাগ',
+      banglaMeaning: 'কালশিটে, কালশিটে দাগ , চোট , থেঁতলান',
       pronunciation: '/ˈbruise/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brunt_37',
       unitId: 43,
       word: 'Brunt',
-      banglaMeaning: 'ধকল, আসল ধাক্কা',
+      banglaMeaning: 'ধকল, আসল ধাক্কা , আসল আঘাত , আসল চাপ',
       pronunciation: '/ˈbrunt/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit43: UnitInfo = {
       id: 'u43_brusque_38',
       unitId: 43,
       word: 'Brusque',
-      banglaMeaning: 'অসভ্য, অশিষ্ট',
+      banglaMeaning: 'অসভ্য, অশিষ্ট , রূঢ় , স্থূল',
       pronunciation: '/ˈbrusque/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit43: UnitInfo = {
       id: 'u43_buccaneer_39',
       unitId: 43,
       word: 'Buccaneer',
-      banglaMeaning: 'জলদসু্য, জলদস্যু',
+      banglaMeaning: 'জলদসু্য, জলদস্যু , বোম্বেটে',
       pronunciation: '/ˈbuccaneer/',
       partOfSpeech: 'noun',
       examples: [

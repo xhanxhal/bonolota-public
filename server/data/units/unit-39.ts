@@ -12,7 +12,7 @@ export const unit39: UnitInfo = {
       id: 'u39_autonomous_1',
       unitId: 39,
       word: 'Autonomous',
-      banglaMeaning: 'স্বশাসিত, স্বশাসনিক',
+      banglaMeaning: 'স্বশাসিত, স্বশাসনিক , স্বাধীন',
       pronunciation: '/ˈautonomous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -30,7 +30,7 @@ export const unit39: UnitInfo = {
       id: 'u39_autopsy_2',
       unitId: 39,
       word: 'Autopsy',
-      banglaMeaning: 'ময়না, ময়না তদন্ত',
+      banglaMeaning: 'ময়না, ময়না তদন্ত , স্বচক্ষে পরিদর্শন , স্বচক্ষে পরীক্ষা',
       pronunciation: '/ˈautopsy/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit39: UnitInfo = {
       id: 'u39_avalanche_4',
       unitId: 39,
       word: 'Avalanche',
-      banglaMeaning: 'ধ্বস, হিমবাহ',
+      banglaMeaning: 'ধ্বস, হিমবাহ , হিমানী-সম্প্রপাত',
       pronunciation: '/ˈavalanche/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit39: UnitInfo = {
       id: 'u39_avantgarde_5',
       unitId: 39,
       word: 'Avantgarde',
-      banglaMeaning: 'সেনাবাহিনীর অগ্রবর্তী দল, প্রগতির পুরোধা',
+      banglaMeaning: 'সেনাবাহিনীর অগ্রবর্তী দল, প্রগতির পুরোধা , অগ্রদূত , নবীন ধারার পথিকৃৎ',
       pronunciation: '/ˈavantgarde/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit39: UnitInfo = {
       id: 'u39_avarice_6',
       unitId: 39,
       word: 'Avarice',
-      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি',
+      banglaMeaning: 'প্রচুর সম্পদ বা সমৃদ্ধি , অর্থলালসা , অর্থগৃধ্নুত , অর্থলিপ্সা',
       pronunciation: '/ˈavarice/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit39: UnitInfo = {
       id: 'u39_aver_8',
       unitId: 39,
       word: 'Aver',
-      banglaMeaning: 'বলা, কায়েম করা',
+      banglaMeaning: 'বলা, কায়েম করা , নিশ্চিতভাবে বলা',
       pronunciation: '/ˈaver/',
       partOfSpeech: 'verb',
       examples: [
@@ -156,7 +156,7 @@ export const unit39: UnitInfo = {
       id: 'u39_averse_9',
       unitId: 39,
       word: 'Averse',
-      banglaMeaning: 'বিমুখ, বিরুপ',
+      banglaMeaning: 'বিমুখ, বিরুপ , বিরোধী , অনিচ্ছুক',
       pronunciation: '/ˈaverse/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit39: UnitInfo = {
       id: 'u39_aversion_10',
       unitId: 39,
       word: 'Aversion',
-      banglaMeaning: 'অনীহা বা তীব্র বিতৃষ্ণা',
+      banglaMeaning: 'অনীহা বা তীব্র বিতৃষ্ণা , ঘোর অপছন্দ , বিরাগ , বিমুখতা',
       pronunciation: '/ˈaversion/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit39: UnitInfo = {
       id: 'u39_avert_11',
       unitId: 39,
       word: 'Avert',
-      banglaMeaning: 'ঠেকানো, আটকানো',
+      banglaMeaning: 'ঠেকানো, আটকানো , চোখ , এড়ানো',
       pronunciation: '/ˈavert/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit39: UnitInfo = {
       id: 'u39_aviary_12',
       unitId: 39,
       word: 'Aviary',
-      banglaMeaning: 'পক্ষিশালা, পাখি রাখিবার জন্য কাটরা',
+      banglaMeaning: 'পক্ষিশালা, পাখি রাখিবার জন্য কাটরা , পাখিঘর , পক্ষীরালয়',
       pronunciation: '/ˈaviary/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit39: UnitInfo = {
       id: 'u39_avid_13',
       unitId: 39,
       word: 'Avid',
-      banglaMeaning: 'লোভী, আগ্রহী',
+      banglaMeaning: 'লোভী, আগ্রহী , উত্সুক , উদগ্র',
       pronunciation: '/ˈavid/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit39: UnitInfo = {
       id: 'u39_avuncular_16',
       unitId: 39,
       word: 'Avuncular',
-      banglaMeaning: 'পিতৃব্য সম্পর্কিত, মাতুল সম্পর্কিত',
+      banglaMeaning: 'পিতৃব্য সম্পর্কিত, মাতুল সম্পর্কিত , মামাতো , খুড়তুত',
       pronunciation: '/ˈavuncular/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit39: UnitInfo = {
       id: 'u39_awe_17',
       unitId: 39,
       word: 'Awe',
-      banglaMeaning: 'সম্ভ্রম, ভয়',
+      banglaMeaning: 'সম্ভ্রম, ভয় , সমীহ , সশ্রদ্ধ ভয়',
       pronunciation: '/ˈawe/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit39: UnitInfo = {
       id: 'u39_awful_18',
       unitId: 39,
       word: 'Awful',
-      banglaMeaning: 'ভয়াবহ, ভয়ঙ্কর',
+      banglaMeaning: 'ভয়াবহ, ভয়ঙ্কর , অভিভূত-করা , সম্ভ্রম-জাগানো',
       pronunciation: '/ˈawful/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit39: UnitInfo = {
       id: 'u39_awry_20',
       unitId: 39,
       word: 'Awry',
-      banglaMeaning: 'টেরা, তেরছা',
+      banglaMeaning: 'টেরা, তেরছা , স্থানভ্রষ্ট হয়ে , বক্রভাবে',
       pronunciation: '/ˈawry/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit39: UnitInfo = {
       id: 'u39_babble_22',
       unitId: 39,
       word: 'Babble',
-      banglaMeaning: 'কলকল, কলধ্বনি',
+      banglaMeaning: 'কলকল, কলধ্বনি , বাজে বকা , কুলকুল শব্দ করা',
       pronunciation: '/ˈbabble/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bacchanal_23',
       unitId: 39,
       word: 'Bacchanal',
-      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া',
+      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া , উন্মত্ত , পানোন্মত্ত , মাতাল',
       pronunciation: '/ˈbacchanal/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bacchanalia_24',
       unitId: 39,
       word: 'Bacchanalia',
-      banglaMeaning: 'অতি প্রাচীন বা সেকেলে',
+      banglaMeaning: 'অতি প্রাচীন বা সেকেলে , মদ খাওয়ার তাণ্ডব',
       pronunciation: '/ˈbacchanalia/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bacchanalian_25',
       unitId: 39,
       word: 'Bacchanalian',
-      banglaMeaning: 'লম্পট, অসচ্চরিত্র',
+      banglaMeaning: 'লম্পট, অসচ্চরিত্র , প্রমত্ত',
       pronunciation: '/ˈbacchanalian/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit39: UnitInfo = {
       id: 'u39_backwards_27',
       unitId: 39,
       word: 'Backwards',
-      banglaMeaning: 'পিছে, ফিরিয়া',
+      banglaMeaning: 'পিছে, ফিরিয়া , অবনতির দিকে , অতীতের দিকে',
       pronunciation: '/ˈbackwards/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit39: UnitInfo = {
       id: 'u39_badinage_29',
       unitId: 39,
       word: 'Badinage',
-      banglaMeaning: 'হাসিঠাট্টা, হাল্কা হাসিতামাসা',
+      banglaMeaning: 'হাসিঠাট্টা, হাল্কা হাসিতামাসা , রঙ্গতামাশা , ঠাট্টামস্করা',
       pronunciation: '/ˈbadinage/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit39: UnitInfo = {
       id: 'u39_baffle_30',
       unitId: 39,
       word: 'Baffle',
-      banglaMeaning: 'বিফল করা, হতবুদ্ধি করা',
+      banglaMeaning: 'বিফল করা, হতবুদ্ধি করা , দ্বিধাগ্রস্ত',
       pronunciation: '/ˈbaffle/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bait_31',
       unitId: 39,
       word: 'Bait',
-      banglaMeaning: 'প্রলোভন, লোভনীয় বস্তু',
+      banglaMeaning: 'প্রলোভন, লোভনীয় বস্তু , টোপ , টোপ ঠোকরান',
       pronunciation: '/ˈbait/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit39: UnitInfo = {
       id: 'u39_baleful_32',
       unitId: 39,
       word: 'Baleful',
-      banglaMeaning: 'বিপর্যয়কর, অসঙ্গলপূর্ণ',
+      banglaMeaning: 'বিপর্যয়কর, অসঙ্গলপূর্ণ , অমঙ্গলসূচক , অনিষ্টকর',
       pronunciation: '/ˈbaleful/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit39: UnitInfo = {
       id: 'u39_balk_33',
       unitId: 39,
       word: 'Balk',
-      banglaMeaning: 'কড়িকাঠ, বাধা',
+      banglaMeaning: 'কড়িকাঠ, বাধা , বর্গা , বিলম্বের কারণ',
       pronunciation: '/ˈbalk/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit39: UnitInfo = {
       id: 'u39_ballast_34',
       unitId: 39,
       word: 'Ballast',
-      banglaMeaning: 'নুড়ি, ব্যাল্যাস্ট',
+      banglaMeaning: 'নুড়ি, ব্যাল্যাস্ট , ভারসাম্য আনা , মানসিক',
       pronunciation: '/ˈballast/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit39: UnitInfo = {
       id: 'u39_balm_35',
       unitId: 39,
       word: 'Balm',
-      banglaMeaning: 'আনন্দদায়ক বা মনোরঞ্জনমূলক',
+      banglaMeaning: 'আনন্দদায়ক বা মনোরঞ্জনমূলক , সান্তনা , আরাম , সুগন্ধ পদার্থ',
       pronunciation: '/ˈbalm/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit39: UnitInfo = {
       id: 'u39_balmy_36',
       unitId: 39,
       word: 'Balmy',
-      banglaMeaning: 'সুবাসিত, প্রশমনকারী',
+      banglaMeaning: 'সুবাসিত, প্রশমনকারী , সুগন্ধি , ভেষজ',
       pronunciation: '/ˈbalmy/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit39: UnitInfo = {
       id: 'u39_banal_37',
       unitId: 39,
       word: 'Banal',
-      banglaMeaning: 'গতানুগতিক, তুচ্ছ',
+      banglaMeaning: 'গতানুগতিক, তুচ্ছ , সাধারণ , অকিঞ্চিত্কর',
       pronunciation: '/ˈbanal/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bandy_38',
       unitId: 39,
       word: 'Bandy',
-      banglaMeaning: 'কলহ বা মতবিরোধ',
+      banglaMeaning: 'কলহ বা মতবিরোধ , এক ধরনের খেলা , হকিখেলা , বক্র',
       pronunciation: '/ˈbandy/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bane_39',
       unitId: 39,
       word: 'Bane',
-      banglaMeaning: 'সর্বনাশ, বিষ',
+      banglaMeaning: 'সর্বনাশ, বিষ , ধ্বংসের কারণ , দুঃখদুর্দশা',
       pronunciation: '/ˈbane/',
       partOfSpeech: 'verb',
       examples: [
@@ -714,7 +714,7 @@ export const unit39: UnitInfo = {
       id: 'u39_bank_40',
       unitId: 39,
       word: 'Bank',
-      banglaMeaning: 'ব্যাংক, ব্যাঙ্ক',
+      banglaMeaning: 'ব্যাংক, ব্যাঙ্ক , নদী ইত্যাদির পাড় , তটভূমি',
       pronunciation: '/ˈbank/',
       partOfSpeech: 'noun',
       examples: [

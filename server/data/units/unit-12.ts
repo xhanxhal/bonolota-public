@@ -12,7 +12,7 @@ export const unit12: UnitInfo = {
       id: 'u12_aesthetic_1',
       unitId: 12,
       word: 'Aesthetic',
-      banglaMeaning: 'নান্দনিক , সৌন্দর্য ও শিল্প সংক্রান্ত',
+      banglaMeaning: 'নান্দনিক , সৌন্দর্য ও শিল্প সংক্রান্ত , সৌন্দর্যবোধ সংক্রান্ত , শিল্পরুচিসম্মত',
       pronunciation: '/esˈθet.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit12: UnitInfo = {
       id: 'u12_dissonance_3',
       unitId: 12,
       word: 'Dissonance',
-      banglaMeaning: 'সুরহীনতা বা কর্ণে কটূ শোনায় এমন বেসুরো ধ্বনি',
+      banglaMeaning: 'সুরহীনতা বা কর্ণে কটূ শোনায় এমন বেসুরো ধ্বনি , অসংগতি',
       pronunciation: '/ˈdɪs.ə.nəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit12: UnitInfo = {
       id: 'u12_eclectic_4',
       unitId: 12,
       word: 'Eclectic',
-      banglaMeaning: 'বহু উৎস থেকে সংগৃহীত বা মিশ্র রুচিসম্পন্ন',
+      banglaMeaning: 'বহু উৎস থেকে সংগৃহীত বা মিশ্র রুচিসম্পন্ন , সারগ্রাহী',
       pronunciation: '/ekˈlek.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit12: UnitInfo = {
       id: 'u12_fresco_5',
       unitId: 12,
       word: 'Fresco',
-      banglaMeaning: 'দেয়ালে কাঁচা প্লাস্টারের উপর অঙ্কিত দেয়ালচিত্র',
+      banglaMeaning: 'দেয়ালে কাঁচা প্লাস্টারের উপর অঙ্কিত দেয়ালচিত্র , দেওয়াল চিত্র , ফ্রেস্কো',
       pronunciation: '/ˈfres.kəʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit12: UnitInfo = {
       id: 'u12_genre_6',
       unitId: 12,
       word: 'Genre',
-      banglaMeaning: 'শিল্প বা সাহিত্যের বিশেষ ধারা',
+      banglaMeaning: 'শিল্প বা সাহিত্যের বিশেষ ধারা , ধরণ , শৈলী , গোত্র',
       pronunciation: '/ˈʒɑ̃ː.rə/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit12: UnitInfo = {
       id: 'u12_harmony_7',
       unitId: 12,
       word: 'Harmony',
-      banglaMeaning: 'সুরেলা ঐক্য বা সামঞ্জস্য',
+      banglaMeaning: 'সুরেলা ঐক্য বা সামঞ্জস্য , সাদৃশ্য , সঙ্গতি , ঐকতান',
       pronunciation: '/ˈhɑː.mə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit12: UnitInfo = {
       id: 'u12_iconography_8',
       unitId: 12,
       word: 'Iconography',
-      banglaMeaning: 'চিত্রকর্মের প্রতীকী নিদর্শন ও তার ব্যাখ্যা',
+      banglaMeaning: 'চিত্রকর্মের প্রতীকী নিদর্শন ও তার ব্যাখ্যা , মূর্র্তিশিল্প',
       pronunciation: '/ˌaɪ.kəˈnɒɡ.rə.fi/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit12: UnitInfo = {
       id: 'u12_juxtaposition_9',
       unitId: 12,
       word: 'Juxtaposition',
-      banglaMeaning: 'বৈসাদৃশ্য দেখানোর জন্য দুটি রঙের পাশাপাশি বিন্যাস',
+      banglaMeaning: 'বৈসাদৃশ্য দেখানোর জন্য দুটি রঙের পাশাপাশি বিন্যাস , সন্নিধি , পাশাপাশি অবস্থান , পাশাপাশি স্থাপন',
       pronunciation: '/ˌdʒʌk.stə.pəˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit12: UnitInfo = {
       id: 'u12_kinetic_10',
       unitId: 12,
       word: 'Kinetic',
-      banglaMeaning: 'গতিময় বা চলমান ভাস্কর্য সংক্রান্ত',
+      banglaMeaning: 'গতিময় বা চলমান ভাস্কর্য সংক্রান্ত , গতিসম্পর্কিত',
       pronunciation: '/kɪˈnet.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit12: UnitInfo = {
       id: 'u12_leitmotif_11',
       unitId: 12,
       word: 'Leitmotif',
-      banglaMeaning: 'বারংবার পুনরাবৃত্ত মূল সুর বা কেন্দ্রীয় ভাব',
+      banglaMeaning: 'বারংবার পুনরাবৃত্ত মূল সুর বা কেন্দ্রীয় ভাব , মূল ভাবধারা , পুনরাবৃত্ত সুর',
       pronunciation: '/ˈlaɪt.məʊˌtiːf/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit12: UnitInfo = {
       id: 'u12_nuance_13',
       unitId: 12,
       word: 'Nuance',
-      banglaMeaning: 'রং বা সুরের অতি সূক্ষ্ম তারতম্য',
+      banglaMeaning: 'রং বা সুরের অতি সূক্ষ্ম তারতম্য , সামান্য পার্থক্য',
       pronunciation: '/ˈnjuː.ɑːns/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit12: UnitInfo = {
       id: 'u12_opus_14',
       unitId: 12,
       word: 'Opus',
-      banglaMeaning: 'স্রষ্টার রচিত প্রধান শিল্পকর্ম বা সঙ্গীতকর্ম',
+      banglaMeaning: 'স্রষ্টার রচিত প্রধান শিল্পকর্ম বা সঙ্গীতকর্ম , রচনা',
       pronunciation: '/ˈəʊ.pəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit12: UnitInfo = {
       id: 'u12_palette_15',
       unitId: 12,
       word: 'Palette',
-      banglaMeaning: 'রঙের তালিকা বা চিত্রশিল্পীর রঙের পাত্র',
+      banglaMeaning: 'রঙের তালিকা বা চিত্রশিল্পীর রঙের পাত্র , প্যালেট',
       pronunciation: '/ˈpæl.ət/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit12: UnitInfo = {
       id: 'u12_renaissance_16',
       unitId: 12,
       word: 'Renaissance',
-      banglaMeaning: 'শিল্প ও সাহিত্যের নবজাগরণ',
+      banglaMeaning: 'শিল্প ও সাহিত্যের নবজাগরণ , রেনেসাঁস',
       pronunciation: '/rəˈneɪ.səns/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit12: UnitInfo = {
       id: 'u12_sonata_17',
       unitId: 12,
       word: 'Sonata',
-      banglaMeaning: 'একক বা দ্বৈত বাদ্যযন্ত্রের ধ্রুপদী সঙ্গীতরূপ',
+      banglaMeaning: 'একক বা দ্বৈত বাদ্যযন্ত্রের ধ্রুপদী সঙ্গীতরূপ , যন্ত্রসঙ্গীতবিশেষ',
       pronunciation: '/səˈnɑː.tə/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit12: UnitInfo = {
       id: 'u12_tapestry_18',
       unitId: 12,
       word: 'Tapestry',
-      banglaMeaning: 'সূক্ষ্ম নকশাদার বয়নচিত্র বা চিত্রখচিত পর্দা',
+      banglaMeaning: 'সূক্ষ্ম নকশাদার বয়নচিত্র বা চিত্রখচিত পর্দা , ট্যাপেষ্ট্রি',
       pronunciation: '/ˈtæp.ɪ.stri/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit12: UnitInfo = {
       id: 'u12_virtuoso_19',
       unitId: 12,
       word: 'Virtuoso',
-      banglaMeaning: 'কোনো শিল্পে চরম নৈপুণ্যসম্পন্ন ওস্তাদ শিল্পী',
+      banglaMeaning: 'কোনো শিল্পে চরম নৈপুণ্যসম্পন্ন ওস্তাদ শিল্পী , শিল্পাদিকৌশলে দক্ষ',
       pronunciation: '/ˌvɜː.tʃuˈəʊ.səʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit12: UnitInfo = {
       id: 'u12_avantgarde_21',
       unitId: 12,
       word: 'Avant-garde',
-      banglaMeaning: 'প্রথাভাঙা ও যুগান্তকারী নতুন শিল্পরীতি',
+      banglaMeaning: 'প্রথাভাঙা ও যুগান্তকারী নতুন শিল্পরীতি , প্রগতির পুরোধা , সেনাদলের অগ্রবাহিনী',
       pronunciation: '/ˌæv.ɑ̃ːˈɡɑːd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit12: UnitInfo = {
       id: 'u12_etching_25',
       unitId: 12,
       word: 'Etching',
-      banglaMeaning: 'ধাতুর পাতে অ্যাসিডের সাহায্যে খোদাই করা চিত্র',
+      banglaMeaning: 'ধাতুর পাতে অ্যাসিডের সাহায্যে খোদাই করা চিত্র , নকশাকাটা',
       pronunciation: '/ˈetʃ.ɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit12: UnitInfo = {
       id: 'u12_gargoyle_26',
       unitId: 12,
       word: 'Gargoyle',
-      banglaMeaning: 'বৃষ্টির জল নিষ্কাশনের জন্য নির্মিত দানবাকৃতির পাথুরে মূর্তি',
+      banglaMeaning: 'বৃষ্টির জল নিষ্কাশনের জন্য নির্মিত দানবাকৃতির পাথুরে মূর্তি , মর্কট',
       pronunciation: '/ˈɡɑː.ɡɔɪl/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit12: UnitInfo = {
       id: 'u12_silhouette_32',
       unitId: 12,
       word: 'Silhouette',
-      banglaMeaning: 'কালো ছায়ামূর্তি বা রূপরেখা',
+      banglaMeaning: 'কালো ছায়ামূর্তি বা রূপরেখা , মসীবর্ণ ছায়া-পরিলেখ , সিলুয়েট',
       pronunciation: '/ˌsɪl.uˈet/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit12: UnitInfo = {
       id: 'u12_vignette_34',
       unitId: 12,
       word: 'Vignette',
-      banglaMeaning: 'ক্ষুদ্র চিত্র বা সাহিত্যের ছোট দৃশ্যচিত্র',
+      banglaMeaning: 'ক্ষুদ্র চিত্র বা সাহিত্যের ছোট দৃশ্যচিত্র , চরিত্রচিত্র , সংক্ষিপ্ত বর্ণনা , সংক্ষিপ্ত বিবরণ',
       pronunciation: '/vɪnˈjet/',
       partOfSpeech: 'noun',
       examples: [

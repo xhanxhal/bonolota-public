@@ -12,7 +12,7 @@ export const unit17: UnitInfo = {
       id: 'u17_altruism_1',
       unitId: 17,
       word: 'Altruism',
-      banglaMeaning: 'পরার্থপরতা , নিঃস্বার্থ জনকল্যাণ চেতনা',
+      banglaMeaning: 'পরার্থপরতা , নিঃস্বার্থ জনকল্যাণ চেতনা , পরহিতৈষণা , পরার্থবাদ',
       pronunciation: '/ˈæl.tru.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit17: UnitInfo = {
       id: 'u17_categorical_2',
       unitId: 17,
       word: 'Categorical',
-      banglaMeaning: 'শর্তহীন , পরম ও অবিসংবাদিত (নৈতিক কর্তব্য)',
+      banglaMeaning: 'শর্তহীন , পরম ও অবিসংবাদিত (নৈতিক কর্তব্য) , নিঃশর্ত , অনাপেক্ষিক',
       pronunciation: '/ˌkæt.əˈɡɒr.ɪ.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit17: UnitInfo = {
       id: 'u17_fatalism_5',
       unitId: 17,
       word: 'Fatalism',
-      banglaMeaning: 'ভাগ্যবাদ , যা ঘটবে তা আগে থেকেই নির্ধারিত এমন বিশ্বাস',
+      banglaMeaning: 'ভাগ্যবাদ , যা ঘটবে তা আগে থেকেই নির্ধারিত এমন বিশ্বাস , অদৃষ্টবাদ , নিয়তিবাদ',
       pronunciation: '/ˈfeɪ.təl.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit17: UnitInfo = {
       id: 'u17_hedonism_6',
       unitId: 17,
       word: 'Hedonism',
-      banglaMeaning: 'ভোগবাদ , সুখ অন্বেষণই জীবনের মূল লক্ষ্য এমন দর্শন',
+      banglaMeaning: 'ভোগবাদ , সুখ অন্বেষণই জীবনের মূল লক্ষ্য এমন দর্শন , আনন্দবাদ , বিধান',
       pronunciation: '/ˈhiː.dən.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit17: UnitInfo = {
       id: 'u17_idealism_7',
       unitId: 17,
       word: 'Idealism',
-      banglaMeaning: 'ভাববাদ বা আদর্শবাদ',
+      banglaMeaning: 'ভাববাদ বা আদর্শবাদ , আদর্শবাদিতা , আদর্শচিন্তা , আদর্শধ্যান',
       pronunciation: '/aɪˈdɪə.lɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit17: UnitInfo = {
       id: 'u17_justice_8',
       unitId: 17,
       word: 'Justice',
-      banglaMeaning: 'ন্যায়পরায়ণতা বা সুবিচার',
+      banglaMeaning: 'ন্যায়পরায়ণতা বা সুবিচার , ন্যায়বিচার , বিচারপতি , বিচারক',
       pronunciation: '/ˈdʒʌs.tɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit17: UnitInfo = {
       id: 'u17_karma_9',
       unitId: 17,
       word: 'Karma',
-      banglaMeaning: 'কর্মফল তত্ত্ব',
+      banglaMeaning: 'কর্মফল তত্ত্ব , নিয়তি , বরাত',
       pronunciation: '/ˈkɑː.mə/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit17: UnitInfo = {
       id: 'u17_logic_10',
       unitId: 17,
       word: 'Logic',
-      banglaMeaning: 'যুক্তিবিদ্যা',
+      banglaMeaning: 'যুক্তিবিদ্যা , ন্যায়শাস্ত্র , তর্ক',
       pronunciation: '/ˈlɒdʒ.ɪk/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit17: UnitInfo = {
       id: 'u17_metaphysics_11',
       unitId: 17,
       word: 'Metaphysics',
-      banglaMeaning: 'অধিবিদ্যা , অস্তিত্ব ও বাস্তবতার স্বরূপের দর্শন',
+      banglaMeaning: 'অধিবিদ্যা , অস্তিত্ব ও বাস্তবতার স্বরূপের দর্শন , সাধারণ দর্শনশাস্ত্র',
       pronunciation: '/ˌmet.əˈfɪz.ɪks/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit17: UnitInfo = {
       id: 'u17_nihilism_12',
       unitId: 17,
       word: 'Nihilism',
-      banglaMeaning: 'শূন্যবাদ , জীবনের কোনো অর্থ বা মূল্য নেই এমন মতবাদ',
+      banglaMeaning: 'শূন্যবাদ , জীবনের কোনো অর্থ বা মূল্য নেই এমন মতবাদ , চূড়ান্ত নাস্তিবাদ',
       pronunciation: '/ˈnaɪ.ɪ.lɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit17: UnitInfo = {
       id: 'u17_pragmatism_14',
       unitId: 17,
       word: 'Pragmatism',
-      banglaMeaning: 'বাস্তববাদ , প্রায়োগিক ফলের ভিত্তিতে সত্য নিরূপণ',
+      banglaMeaning: 'বাস্তববাদ , প্রায়োগিক ফলের ভিত্তিতে সত্য নিরূপণ , বাস্তবধর্মিতা , অযথা হস্তক্ষেপ',
       pronunciation: '/ˈpræɡ.mə.tɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit17: UnitInfo = {
       id: 'u17_quintessence_15',
       unitId: 17,
       word: 'Quintessence',
-      banglaMeaning: 'সারবস্তু বা সর্বোৎকৃষ্ট মূল রূপ',
+      banglaMeaning: 'সারবস্তু বা সর্বোৎকৃষ্ট মূল রূপ , সারাংশ , বিশুদ্ধ সারভাগ',
       pronunciation: '/kwɪnˈtes.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit17: UnitInfo = {
       id: 'u17_relativism_16',
       unitId: 17,
       word: 'Relativism',
-      banglaMeaning: 'আপেক্ষিকতাবাদ , সার্বজনীন সত্যের অনস্তিত্বে বিশ্বাস',
+      banglaMeaning: 'আপেক্ষিকতাবাদ , সার্বজনীন সত্যের অনস্তিত্বে বিশ্বাস , অপেক্ষবাদ',
       pronunciation: '/ˈrel.ə.tɪ.vɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit17: UnitInfo = {
       id: 'u17_stoicism_17',
       unitId: 17,
       word: 'Stoicism',
-      banglaMeaning: 'স্থিরতা ও নির্লিপ্ততা , সুখ-দুঃখে নির্বিকার চিত্তের দর্শন',
+      banglaMeaning: 'স্থিরতা ও নির্লিপ্ততা , সুখ-দুঃখে নির্বিকার চিত্তের দর্শন , বৈরাগ্য , জেনোর মতবাদ',
       pronunciation: '/ˈstəʊ.ɪ.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit17: UnitInfo = {
       id: 'u17_teleology_18',
       unitId: 17,
       word: 'Teleology',
-      banglaMeaning: 'উদ্দেশ্যবাদ , কোনো কিছুর চূড়ান্ত পরিণাম বা উদ্দেশ্যের ব্যাখ্যা',
+      banglaMeaning: 'উদ্দেশ্যবাদ , কোনো কিছুর চূড়ান্ত পরিণাম বা উদ্দেশ্যের ব্যাখ্যা , পরমকারণবাদ',
       pronunciation: '/ˌtiː.liˈɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit17: UnitInfo = {
       id: 'u17_utilitarianism_19',
       unitId: 17,
       word: 'Utilitarianism',
-      banglaMeaning: 'উপযোগিতাবাদ , সর্বাধিক মানুষের সর্বাধিক সুখে বিশ্বাসী নীতিশাস্ত্র',
+      banglaMeaning: 'উপযোগিতাবাদ , সর্বাধিক মানুষের সর্বাধিক সুখে বিশ্বাসী নীতিশাস্ত্র , উপযোগবাদ',
       pronunciation: '/juːˌtɪl.ɪˈteə.ri.ə.nɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit17: UnitInfo = {
       id: 'u17_virtue_20',
       unitId: 17,
       word: 'Virtue',
-      banglaMeaning: 'সদ্‌গুণ , নৈতিক উৎকর্ষ',
+      banglaMeaning: 'সদ্‌গুণ , নৈতিক উৎকর্ষ , পুণ্য , উত্কর্ষ',
       pronunciation: '/ˈvɜː.tʃuː/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit17: UnitInfo = {
       id: 'u17_weltanschauung_21',
       unitId: 17,
       word: 'Weltanschauung',
-      banglaMeaning: 'বিশ্ববীক্ষা , সামগ্রিক জগতদর্শন',
+      banglaMeaning: 'বিশ্ববীক্ষা , সামগ্রিক জগতদর্শন , জীবনবেদ',
       pronunciation: '/ˈvelt.ɑːnˌʃaʊ.ʊŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit17: UnitInfo = {
       id: 'u17_asceticism_22',
       unitId: 17,
       word: 'Asceticism',
-      banglaMeaning: 'কৃচ্ছ্রসাধন , আত্মসংযম ও ইন্দ্রিয়সুখ বর্জন',
+      banglaMeaning: 'কৃচ্ছ্রসাধন , আত্মসংযম ও ইন্দ্রিয়সুখ বর্জন , সন্ন্যাস',
       pronunciation: '/əˈset.ɪ.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit17: UnitInfo = {
       id: 'u17_hermeneutics_25',
       unitId: 17,
       word: 'Hermeneutics',
-      banglaMeaning: 'ব্যাখ্যাকলা বা তাৎপর্য অনুধাবনের তত্ত্ব',
+      banglaMeaning: 'ব্যাখ্যাকলা বা তাৎপর্য অনুধাবনের তত্ত্ব , হের্মেনেত্য',
       pronunciation: '/ˌhɜː.məˈnjuː.tɪks/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit17: UnitInfo = {
       id: 'u17_humanism_26',
       unitId: 17,
       word: 'Humanism',
-      banglaMeaning: 'মানবতাবাদ',
+      banglaMeaning: 'মানবতাবাদ , সাহিত্যানুশীলন , মানবধর্ম',
       pronunciation: '/ˈhjuː.mən.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit17: UnitInfo = {
       id: 'u17_materialism_27',
       unitId: 17,
       word: 'Materialism',
-      banglaMeaning: 'বস্তুবাদ , বস্তুর বাস্তব অস্তিত্বই সত্য এমন দর্শন',
+      banglaMeaning: 'বস্তুবাদ , বস্তুর বাস্তব অস্তিত্বই সত্য এমন দর্শন , জড়বাদী , বস্তুতন্ত্র',
       pronunciation: '/məˈtɪə.ri.ə.lɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit17: UnitInfo = {
       id: 'u17_morality_28',
       unitId: 17,
       word: 'Morality',
-      banglaMeaning: 'নৈতিকতা , ভালো-মন্দের বোধ',
+      banglaMeaning: 'নৈতিকতা , ভালো-মন্দের বোধ , নীতি',
       pronunciation: '/məˈræl.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit17: UnitInfo = {
       id: 'u17_nominalism_29',
       unitId: 17,
       word: 'Nominalism',
-      banglaMeaning: 'নামমাত্রবাদ , সাধারণ ধারণা কেবল শব্দের নাম মাত্র এমন মত',
+      banglaMeaning: 'নামমাত্রবাদ , সাধারণ ধারণা কেবল শব্দের নাম মাত্র এমন মত , সংজ্ঞাবাদ',
       pronunciation: '/ˈnɒm.ɪ.nəl.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit17: UnitInfo = {
       id: 'u17_rationalism_31',
       unitId: 17,
       word: 'Rationalism',
-      banglaMeaning: 'যুক্তিবাদ , প্রজ্ঞাই জ্ঞানের প্রধান উৎস এমন দর্শন',
+      banglaMeaning: 'যুক্তিবাদ , প্রজ্ঞাই জ্ঞানের প্রধান উৎস এমন দর্শন , যুক্তির নিরঙ্কুশ শাসন , যুক্তিনিশ্চয়তাবাদ',
       pronunciation: '/ˈræʃ.ən.əl.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit17: UnitInfo = {
       id: 'u17_skepticism_32',
       unitId: 17,
       word: 'Skepticism',
-      banglaMeaning: 'সংশয়বাদ বা সমালোচনামূলক দৃষ্টি',
+      banglaMeaning: 'সংশয়বাদ বা সমালোচনামূলক দৃষ্টি , অবিশ্বাসপ্রবণতা , নাস্তিক্য , সন্দেহপ্রবণতা',
       pronunciation: '/ˈskep.tɪ.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit17: UnitInfo = {
       id: 'u17_solipsism_33',
       unitId: 17,
       word: 'Solipsism',
-      banglaMeaning: 'অহংসর্বস্ব মতবাদ',
+      banglaMeaning: 'অহংসর্বস্ব মতবাদ , আত্মজ্ঞানবাদ',
       pronunciation: '/ˈsɒl.ɪp.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit17: UnitInfo = {
       id: 'u17_teleological_34',
       unitId: 17,
       word: 'Teleological',
-      banglaMeaning: 'উদ্দেশ্যমূলক বা চূড়ান্ত লক্ষ্যমুখী',
+      banglaMeaning: 'উদ্দেশ্যমূলক বা চূড়ান্ত লক্ষ্যমুখী , পরমকারণমূলক',
       pronunciation: '/ˌtiː.li.əˈlɒdʒ.ɪ.kəl/',
       partOfSpeech: 'adjective',
       examples: [

@@ -12,7 +12,7 @@ export const unit32: UnitInfo = {
       id: 'u32_accost_1',
       unitId: 32,
       word: 'Accost',
-      banglaMeaning: 'কাছে যাওয়া বা পথরোধ করা',
+      banglaMeaning: 'কাছে যাওয়া বা পথরোধ করা , খদ্দের ডাকা , সম্বোধন , ভূমিকা',
       pronunciation: '/ˈaccost/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit32: UnitInfo = {
       id: 'u32_accretion_3',
       unitId: 32,
       word: 'Accretion',
-      banglaMeaning: 'ক্রমবৃদ্ধি বা সঞ্চয়ন , সংযোজন বা পরিশিষ্ট',
+      banglaMeaning: 'ক্রমবৃদ্ধি বা সঞ্চয়ন , সংযোজন বা পরিশিষ্ট , পরিবৃদ্ধি',
       pronunciation: '/ˈaccretion/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit32: UnitInfo = {
       id: 'u32_accrue_4',
       unitId: 32,
       word: 'Accrue',
-      banglaMeaning: 'জমা হওয়া বা পুঞ্জীভূত হওয়া , সংযোজন বা পরিশিষ্ট',
+      banglaMeaning: 'জমা হওয়া বা পুঞ্জীভূত হওয়া , সংযোজন বা পরিশিষ্ট , বর্ধিত , পুঁজিত জমা',
       pronunciation: '/ˈaccrue/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit32: UnitInfo = {
       id: 'u32_acerbity_5',
       unitId: 32,
       word: 'Acerbity',
-      banglaMeaning: 'তিক্ততা বা কর্কশ ভাব , তিক্ত বা ঝাঁঝালো',
+      banglaMeaning: 'তিক্ততা বা কর্কশ ভাব , তিক্ত বা ঝাঁঝালো , অম্লতা , কটু স্বাদ',
       pronunciation: '/ˈacerbity/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit32: UnitInfo = {
       id: 'u32_acidulous_7',
       unitId: 32,
       word: 'Acidulous',
-      banglaMeaning: 'টক বা তির্যক স্বভাবের',
+      banglaMeaning: 'টক বা তির্যক স্বভাবের , সামান্য টক্',
       pronunciation: '/ˈacidulous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -156,7 +156,7 @@ export const unit32: UnitInfo = {
       id: 'u32_acme_9',
       unitId: 32,
       word: 'Acme',
-      banglaMeaning: 'সর্বোচ্চ চূড়া বা শিখর',
+      banglaMeaning: 'সর্বোচ্চ চূড়া বা শিখর , সর্বোচ্চ মাত্রা , চরম উৎকর্ষ , শীর্ষ',
       pronunciation: '/ˈacme/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit32: UnitInfo = {
       id: 'u32_acne_10',
       unitId: 32,
       word: 'Acne',
-      banglaMeaning: 'ব্রণ, ব্রণরোগ',
+      banglaMeaning: 'ব্রণ, ব্রণরোগ , বয়স-ফোঁড়া',
       pronunciation: '/ˈacne/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit32: UnitInfo = {
       id: 'u32_acoustics_11',
       unitId: 32,
       word: 'Acoustics',
-      banglaMeaning: 'ধ্বনিবিজ্ঞান, নাদবিদ্যা',
+      banglaMeaning: 'ধ্বনিবিজ্ঞান, নাদবিদ্যা , শ্রবণশক্তি , শব্দবিজ্ঞান',
       pronunciation: '/ˈacoustics/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit32: UnitInfo = {
       id: 'u32_actuarial_14',
       unitId: 32,
       word: 'Actuarial',
-      banglaMeaning: 'গণক, হিসাবী',
+      banglaMeaning: 'গণক, হিসাবী , বিমার',
       pronunciation: '/ˈactuarial/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit32: UnitInfo = {
       id: 'u32_actuate_16',
       unitId: 32,
       word: 'Actuate',
-      banglaMeaning: 'সক্রিয় করা, কর্মপ্রেরণা দেত্তয়া',
+      banglaMeaning: 'সক্রিয় করা, কর্মপ্রেরণা দেওয়া',
       pronunciation: '/ˈactuate/',
       partOfSpeech: 'verb',
       examples: [
@@ -300,7 +300,7 @@ export const unit32: UnitInfo = {
       id: 'u32_acuity_17',
       unitId: 32,
       word: 'Acuity',
-      banglaMeaning: 'তীক্ষ্ণতা বা সূক্ষ্ম বুদ্ধি',
+      banglaMeaning: 'তীক্ষ্ণতা বা সূক্ষ্ম বুদ্ধি , উপলব্ধির তীক্ষ্ণতা',
       pronunciation: '/ˈacuity/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adapt_19',
       unitId: 32,
       word: 'Adapt',
-      banglaMeaning: 'রূপান্তর বা পরিবর্তন করা',
+      banglaMeaning: 'রূপান্তর বা পরিবর্তন করা , খাপ খাওয়ানো , অভিযোজিত করা , মানিয়ে নেওয়া',
       pronunciation: '/ˈadapt/',
       partOfSpeech: 'verb',
       examples: [
@@ -372,7 +372,7 @@ export const unit32: UnitInfo = {
       id: 'u32_addiction_21',
       unitId: 32,
       word: 'Addiction',
-      banglaMeaning: 'অনুরতি, প্রবণতা',
+      banglaMeaning: 'অনুরতি, প্রবণতা , আসক্তি , ঝোঁক',
       pronunciation: '/ˈaddiction/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit32: UnitInfo = {
       id: 'u32_addle_22',
       unitId: 32,
       word: 'Addle',
-      banglaMeaning: 'হতবুদ্ধি বা বিভ্রান্ত করা',
+      banglaMeaning: 'হতবুদ্ধি বা বিভ্রান্ত করা , গোলানো , জট-পাকানো , ফাঁকা',
       pronunciation: '/ˈaddle/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit32: UnitInfo = {
       id: 'u32_address_23',
       unitId: 32,
       word: 'Address',
-      banglaMeaning: 'ঠিকানা, ভাষণ',
+      banglaMeaning: 'ঠিকানা, ভাষণ , সম্বোধন করা , বক্তৃতা দেওয়া',
       pronunciation: '/ˈaddress/',
       partOfSpeech: 'verb',
       examples: [
@@ -426,7 +426,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adept_24',
       unitId: 32,
       word: 'Adept',
-      banglaMeaning: 'দক্ষ বা পারদর্শী',
+      banglaMeaning: 'দক্ষ বা পারদর্শী , সুদক্ষ , পাকা , ওস্তাদ',
       pronunciation: '/ˈadept/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adhere_25',
       unitId: 32,
       word: 'Adhere',
-      banglaMeaning: 'লেগে থাকা বা অনুরক্ত থাকা',
+      banglaMeaning: 'লেগে থাকা বা অনুরক্ত থাকা , মেনে চলে',
       pronunciation: '/ˈadhere/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adherent_26',
       unitId: 32,
       word: 'Adherent',
-      banglaMeaning: 'সমর্থক বা অনুসারী',
+      banglaMeaning: 'সমর্থক বা অনুসারী , সংলগ্ন , অনুগত , আসঁজিত বস্তু',
       pronunciation: '/ˈadherent/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adjacent_27',
       unitId: 32,
       word: 'Adjacent',
-      banglaMeaning: 'সন্নিহিত, সংলগ্ন',
+      banglaMeaning: 'সন্নিহিত, সংলগ্ন , লাগোয়া , সমীপবর্তী',
       pronunciation: '/ˈadjacent/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adjourn_29',
       unitId: 32,
       word: 'Adjourn',
-      banglaMeaning: 'স্থগিত রাখা বা ঝুলিয়ে রাখা',
+      banglaMeaning: 'স্থগিত রাখা বা ঝুলিয়ে রাখা , মুলতুবি রাখা , মুলতবি রাখা',
       pronunciation: '/ˈadjourn/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adjunct_30',
       unitId: 32,
       word: 'Adjunct',
-      banglaMeaning: 'উপরি, কর্মপদ',
+      banglaMeaning: 'উপরি, কর্মপদ , আনুষঙ্গিক বিষয় , পরিশিষ্ট',
       pronunciation: '/ˈadjunct/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adjuration_31',
       unitId: 32,
       word: 'Adjuration',
-      banglaMeaning: 'শপথ, প্রতিজ্ঞা',
+      banglaMeaning: 'শপথ, প্রতিজ্ঞা , শপথ গ্রহণ , ঐকান্তিক অনুরোধ',
       pronunciation: '/ˈadjuration/',
       partOfSpeech: 'adverb',
       examples: [
@@ -570,7 +570,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adjutant_32',
       unitId: 32,
       word: 'Adjutant',
-      banglaMeaning: 'সেনাপতির সহকরিবিশেষ, হাড়গিলা-পাখি',
+      banglaMeaning: 'সেনাপতির সহকরিবিশেষ, হাড়গিলা-পাখি , সহায়ক',
       pronunciation: '/ˈadjutant/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adorn_34',
       unitId: 32,
       word: 'Adorn',
-      banglaMeaning: 'অলঙ্কৃত বা সজ্জিত করা',
+      banglaMeaning: 'অলঙ্কৃত বা সজ্জিত করা , সাজানো',
       pronunciation: '/ˈadorn/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adroit_35',
       unitId: 32,
       word: 'Adroit',
-      banglaMeaning: 'নিপুণ বা দক্ষ হস্তসম্পন্ন',
+      banglaMeaning: 'নিপুণ বা দক্ষ হস্তসম্পন্ন , কুশলী , পটু , তত্পর',
       pronunciation: '/ˈadroit/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adulation_36',
       unitId: 32,
       word: 'Adulation',
-      banglaMeaning: 'চাটুকারিতা বা তোষামোদ',
+      banglaMeaning: 'চাটুকারিতা বা তোষামোদ , তোষণ , চাটুবাক্য , টাল',
       pronunciation: '/ˈadulation/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adulterate_37',
       unitId: 32,
       word: 'Adulterate',
-      banglaMeaning: 'ভেজালযুক্ত বা অপবিত্র করা',
+      banglaMeaning: 'ভেজালযুক্ত বা অপবিত্র করা , বিশুদ্ধতা নষ্ট করা , খাদ মেশানো , ভেজাল দেওয়া',
       pronunciation: '/ˈadulterate/',
       partOfSpeech: 'verb',
       examples: [
@@ -678,7 +678,7 @@ export const unit32: UnitInfo = {
       id: 'u32_advent_38',
       unitId: 32,
       word: 'Advent',
-      banglaMeaning: 'শুভাগমন বা আবির্ভাব',
+      banglaMeaning: 'শুভাগমন বা আবির্ভাব , সমাগম , খ্রীষ্টের আবির্ভাব',
       pronunciation: '/ˈadvent/',
       partOfSpeech: 'adjective',
       examples: [
@@ -696,7 +696,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adventitious_39',
       unitId: 32,
       word: 'Adventitious',
-      banglaMeaning: 'আকস্মিক বা অপ্রত্যাশিত',
+      banglaMeaning: 'আকস্মিক বা অপ্রত্যাশিত , বহিরাগত , উটকো , আপতিক',
       pronunciation: '/ˈadventitious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -714,7 +714,7 @@ export const unit32: UnitInfo = {
       id: 'u32_adversary_40',
       unitId: 32,
       word: 'Adversary',
-      banglaMeaning: 'প্রতিপক্ষ বা শত্রু',
+      banglaMeaning: 'প্রতিপক্ষ বা শত্রু , বিপক্ষ , প্রতিদ্বন্দ্বী , দুশ্মন',
       pronunciation: '/ˈadversary/',
       partOfSpeech: 'noun',
       examples: [

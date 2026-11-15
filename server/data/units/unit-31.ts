@@ -12,7 +12,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abase_1',
       unitId: 31,
       word: 'Abase',
-      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অধঃপতিত করা বা সম্মানহানি করা',
+      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অধঃপতিত করা বা সম্মানহানি করা , হীন করা',
       pronunciation: '/ˈabase/',
       partOfSpeech: 'verb',
       examples: [
@@ -48,7 +48,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abate_3',
       unitId: 31,
       word: 'Abate',
-      banglaMeaning: 'তীব্রতা হ্রাস পাওয়া বা থিতিয়ে পড়া , সংযত বা প্রশমিত করা',
+      banglaMeaning: 'তীব্রতা হ্রাস পাওয়া বা থিতিয়ে পড়া , সংযত বা প্রশমিত করা , কমানো , ক্ষীণ করা',
       pronunciation: '/ˈabate/',
       partOfSpeech: 'verb',
       examples: [
@@ -66,7 +66,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abbreviate_4',
       unitId: 31,
       word: 'Abbreviate',
-      banglaMeaning: 'সংক্ষিপ্ত বা ছোট করা',
+      banglaMeaning: 'সংক্ষিপ্ত বা ছোট করা , ছোটো করে দেওয়া , সংক্ষিপ্ত করা , হ্রাস করা',
       pronunciation: '/ˈabbreviate/',
       partOfSpeech: 'verb',
       examples: [
@@ -102,7 +102,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abeyance_6',
       unitId: 31,
       word: 'Abeyance',
-      banglaMeaning: 'স্থগিত বা সাময়িক নিষ্ক্রিয়',
+      banglaMeaning: 'স্থগিত বা সাময়িক নিষ্ক্রিয় , স্থগিতাবস্থা',
       pronunciation: '/ˈabeyance/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abject_9',
       unitId: 31,
       word: 'Abject',
-      banglaMeaning: 'চরম শোচনীয় বা দুর্দশাগ্রস্ত , বিনীত বা হীনাবস্থা',
+      banglaMeaning: 'চরম শোচনীয় বা দুর্দশাগ্রস্ত , বিনীত বা হীনাবস্থা , অধম , পতিত',
       pronunciation: '/ˈabject/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit31: UnitInfo = {
       id: 'u31_ablution_11',
       unitId: 31,
       word: 'Ablution',
-      banglaMeaning: 'ধৌতকরণ বা পবিত্র স্নান',
+      banglaMeaning: 'ধৌতকরণ বা পবিত্র স্নান , পুণ্যস্নান , আচমন',
       pronunciation: '/ˈablution/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abnegation_12',
       unitId: 31,
       word: 'Abnegation',
-      banglaMeaning: 'আত্মত্যাগ বা বর্জন',
+      banglaMeaning: 'আত্মত্যাগ বা বর্জন , অস্বীকার , নামঁজুরি , প্রত্যাখ্যান',
       pronunciation: '/ˈabnegation/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abode_13',
       unitId: 31,
       word: 'Abode',
-      banglaMeaning: 'আবাসস্থল বা নিবাস',
+      banglaMeaning: 'আবাসস্থল বা নিবাস , অধিবাস',
       pronunciation: '/ˈabode/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abolish_14',
       unitId: 31,
       word: 'Abolish',
-      banglaMeaning: 'বাতিল বা রদ করা',
+      banglaMeaning: 'বাতিল বা রদ করা , উঠান , উলটান',
       pronunciation: '/ˈabolish/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abominable_15',
       unitId: 31,
       word: 'Abominable',
-      banglaMeaning: 'ঘৃণ্য ও নিন্দনীয়',
+      banglaMeaning: 'ঘৃণ্য ও নিন্দনীয় , জঘন্য , অধম , নচ্ছার',
       pronunciation: '/ˈabominable/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abominate_16',
       unitId: 31,
       word: 'Abominate',
-      banglaMeaning: 'ঘৃণা করা বা অবজ্ঞা করা , তীব্র ঘৃণা প্রকাশ করা',
+      banglaMeaning: 'ঘৃণা করা বা অবজ্ঞা করা , তীব্র ঘৃণা প্রকাশ করা , মনেপ্রাণে ঘৃণা করা',
       pronunciation: '/ˈabominate/',
       partOfSpeech: 'verb',
       examples: [
@@ -300,7 +300,7 @@ export const unit31: UnitInfo = {
       id: 'u31_aboriginal_17',
       unitId: 31,
       word: 'Aboriginal',
-      banglaMeaning: 'আদিম বা আদিবাসী সংক্রান্ত',
+      banglaMeaning: 'আদিম বা আদিবাসী সংক্রান্ত , আদিবাসীর , বুনো , আদিম অধিবাসী',
       pronunciation: '/ˈaboriginal/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abortive_18',
       unitId: 31,
       word: 'Abortive',
-      banglaMeaning: 'ব্যর্থ বা নিষ্ফল',
+      banglaMeaning: 'ব্যর্থ বা নিষ্ফল , অপরিণত , গর্ভপাতিত , লুপ্ত',
       pronunciation: '/ˈabortive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abrasive_19',
       unitId: 31,
       word: 'Abrasive',
-      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের',
+      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের , ক্ষয়কারী ঘর্ষক',
       pronunciation: '/ˈabrasive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -372,7 +372,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abrogate_21',
       unitId: 31,
       word: 'Abrogate',
-      banglaMeaning: 'বিলুপ্ত করা বা রদ করা',
+      banglaMeaning: 'বিলুপ্ত করা বা রদ করা , বিলোপ করা , খারিজ করা',
       pronunciation: '/ˈabrogate/',
       partOfSpeech: 'verb',
       examples: [
@@ -390,7 +390,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abscission_22',
       unitId: 31,
       word: 'Abscission',
-      banglaMeaning: 'অঙ্গচ্ছেদ বা বিচ্ছিন্নকরণ',
+      banglaMeaning: 'অঙ্গচ্ছেদ বা বিচ্ছিন্নকরণ , কর্তন',
       pronunciation: '/ˈabscission/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abscond_23',
       unitId: 31,
       word: 'Abscond',
-      banglaMeaning: 'গোপন করা বা লুকিয়ে থাকা',
+      banglaMeaning: 'গোপন করা বা লুকিয়ে থাকা , পলান',
       pronunciation: '/ˈabscond/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit31: UnitInfo = {
       id: 'u31_absolute_24',
       unitId: 31,
       word: 'Absolute',
-      banglaMeaning: 'পরম বা শর্তহীন পূর্ণাঙ্গ',
+      banglaMeaning: 'পরম বা শর্তহীন পূর্ণাঙ্গ , অবাধ , চরম , অকাট্য',
       pronunciation: '/ˈabsolute/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abstinence_26',
       unitId: 31,
       word: 'Abstinence',
-      banglaMeaning: 'আত্মনিয়ন্ত্রণ বা সংযম , আনন্দদায়ক বা মনোরঞ্জনমূলক',
+      banglaMeaning: 'আত্মনিয়ন্ত্রণ বা সংযম , আনন্দদায়ক বা মনোরঞ্জনমূলক , উপরতি , বিরতি',
       pronunciation: '/ˈabstinence/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abstract_27',
       unitId: 31,
       word: 'Abstract',
-      banglaMeaning: 'বিমূর্ত বা ভাবগত',
+      banglaMeaning: 'বিমূর্ত বা ভাবগত , বস্তুনিরপেক্ষ , অমূর্ত , ভাবমূলক',
       pronunciation: '/ˈabstract/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abusive_28',
       unitId: 31,
       word: 'Abusive',
-      banglaMeaning: 'গালিগালাজপূর্ণ বা অবমাননাকর',
+      banglaMeaning: 'গালিগালাজপূর্ণ বা অবমাননাকর , অভদ্র , ইতর',
       pronunciation: '/ˈabusive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abysmal_30',
       unitId: 31,
       word: 'Abysmal',
-      banglaMeaning: 'অতলস্পর্শী বা অতল গহ্বর',
+      banglaMeaning: 'অতলস্পর্শী বা অতল গহ্বর , ভয়ঙ্কর , ভয়ানক , ভীষণ',
       pronunciation: '/ˈabysmal/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit31: UnitInfo = {
       id: 'u31_abyss_31',
       unitId: 31,
       word: 'Abyss',
-      banglaMeaning: 'অতলস্পর্শী বা অতল গহ্বর',
+      banglaMeaning: 'অতলস্পর্শী বা অতল গহ্বর , অতলস্পর্শী গহ্বর , রসাতল , নরক',
       pronunciation: '/ˈabyss/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit31: UnitInfo = {
       id: 'u31_accelerate_32',
       unitId: 31,
       word: 'Accelerate',
-      banglaMeaning: 'দ্রুততর করা বা গতি বাড়ানো',
+      banglaMeaning: 'দ্রুততর করা বা গতি বাড়ানো , দ্রুততর হওয়া , গতিবৃদ্ধি করা , দ্রুতগতি করা',
       pronunciation: '/ˈaccelerate/',
       partOfSpeech: 'verb',
       examples: [
@@ -588,7 +588,7 @@ export const unit31: UnitInfo = {
       id: 'u31_accessible_33',
       unitId: 31,
       word: 'Accessible',
-      banglaMeaning: 'কাছে যাওয়া বা পথরোধ করা',
+      banglaMeaning: 'কাছে যাওয়া বা পথরোধ করা , সুগম , প্রবেশযোগ্য , সহজগম্য',
       pronunciation: '/ˈaccessible/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit31: UnitInfo = {
       id: 'u31_accessory_34',
       unitId: 31,
       word: 'Accessory',
-      banglaMeaning: 'আনুষঙ্গিক বস্তু বা সহায়ক',
+      banglaMeaning: 'আনুষঙ্গিক বস্তু বা সহায়ক , টুকিটাকি সাজসরঞ্জাম , উপাঙ্গ , অতিরিক্ত বস্তু',
       pronunciation: '/ˈaccessory/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit31: UnitInfo = {
       id: 'u31_acclaim_35',
       unitId: 31,
       word: 'Acclaim',
-      banglaMeaning: 'প্রশংসা করা বা সাধুবাদ জানানো',
+      banglaMeaning: 'প্রশংসা করা বা সাধুবাদ জানানো , অভিবন্দনা , জয়ধ্বনি , উচ্চ প্রশংসাধ্বনি',
       pronunciation: '/ˈacclaim/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit31: UnitInfo = {
       id: 'u31_accommodate_38',
       unitId: 31,
       word: 'Accommodate',
-      banglaMeaning: 'খাপ খাইয়ে নেওয়া',
+      banglaMeaning: 'খাপ খাইয়ে নেওয়া , স্থান সংকুলান হওয়া , মিটমাট করা , সমন্বয়বিধান করা',
       pronunciation: '/ˈaccommodate/',
       partOfSpeech: 'verb',
       examples: [
@@ -696,7 +696,7 @@ export const unit31: UnitInfo = {
       id: 'u31_accomplice_39',
       unitId: 31,
       word: 'Accomplice',
-      banglaMeaning: 'অপরাধের সহযোগী বা কুসঙ্গী',
+      banglaMeaning: 'অপরাধের সহযোগী বা কুসঙ্গী , অনুচর , সাকরেদ , দুষ্কর্মে সহযোগী',
       pronunciation: '/ˈaccomplice/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit31: UnitInfo = {
       id: 'u31_accord_40',
       unitId: 31,
       word: 'Accord',
-      banglaMeaning: 'সমঝোতা বা চুক্তি',
+      banglaMeaning: 'সমঝোতা বা চুক্তি , স্বেচ্ছায় , সঙ্গতি , প্রণোদনা',
       pronunciation: '/ˈaccord/',
       partOfSpeech: 'noun',
       examples: [

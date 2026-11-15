@@ -12,7 +12,7 @@ export const unit16: UnitInfo = {
       id: 'u16_acquittal_1',
       unitId: 16,
       word: 'Acquittal',
-      banglaMeaning: 'আদালত কর্তৃক নির্দোষ সাব্যস্ত করে খালাস প্রদান',
+      banglaMeaning: 'আদালত কর্তৃক নির্দোষ সাব্যস্ত করে খালাস প্রদান , বেকসুর খালাস , অব্যাহতি , মুক্তি',
       pronunciation: '/əˈkwɪt.əl/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit16: UnitInfo = {
       id: 'u16_affidavit_2',
       unitId: 16,
       word: 'Affidavit',
-      banglaMeaning: 'হলফনামা , শপথপূর্বক লিখিত জবানবন্দি',
+      banglaMeaning: 'হলফনামা , শপথপূর্বক লিখিত জবানবন্দি , শপথপত্র , স্বীকৃতিপত্র',
       pronunciation: '/ˌæf.ɪˈdeɪ.vɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit16: UnitInfo = {
       id: 'u16_bail_3',
       unitId: 16,
       word: 'Bail',
-      banglaMeaning: 'জামিন',
+      banglaMeaning: 'জামিন , বেল , জমানত , প্রতিশ্রুতি',
       pronunciation: '/beɪl/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit16: UnitInfo = {
       id: 'u16_caveat_4',
       unitId: 16,
       word: 'Caveat',
-      banglaMeaning: 'আইনি সতর্কতা বা বিশেষ শর্ত',
+      banglaMeaning: 'আইনি সতর্কতা বা বিশেষ শর্ত , সতর্কীকরণ',
       pronunciation: '/ˈkæv.i.æt/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit16: UnitInfo = {
       id: 'u16_deposition_5',
       unitId: 16,
       word: 'Deposition',
-      banglaMeaning: 'আদালতের বাইরে শপথ নিয়ে দেওয়া সাক্ষ্য',
+      banglaMeaning: 'আদালতের বাইরে শপথ নিয়ে দেওয়া সাক্ষ্য , পদচ্যুতি , গদিচ্যুতি , তলানি',
       pronunciation: '/ˌdep.əˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit16: UnitInfo = {
       id: 'u16_exonerate_6',
       unitId: 16,
       word: 'Exonerate',
-      banglaMeaning: 'দোষমুক্ত ঘোষণা করা বা অভিযোগ থেকে অব্যাহতি দেওয়া',
+      banglaMeaning: 'দোষমুক্ত ঘোষণা করা বা অভিযোগ থেকে অব্যাহতি দেওয়া , পুনর্বাসন করা , দোষক্ষালন করা',
       pronunciation: '/ɪɡˈzɒn.ə.reɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -120,7 +120,7 @@ export const unit16: UnitInfo = {
       id: 'u16_felony_7',
       unitId: 16,
       word: 'Felony',
-      banglaMeaning: 'গুরুতর ফৌজদারি অপরাধ',
+      banglaMeaning: 'গুরুতর ফৌজদারি অপরাধ , লুঠতরাজ , হত্যা , গুরুতর অপরাধ',
       pronunciation: '/ˈfel.ə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit16: UnitInfo = {
       id: 'u16_grievance_8',
       unitId: 16,
       word: 'Grievance',
-      banglaMeaning: 'ন্যায়সঙ্গত ক্ষোভ বা আনুষ্ঠানিক অভিযোগ',
+      banglaMeaning: 'ন্যায়সঙ্গত ক্ষোভ বা আনুষ্ঠানিক অভিযোগ , বিক্ষোভ , নালিশের কারণ , দুর্দশা',
       pronunciation: '/ˈɡriː.vəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit16: UnitInfo = {
       id: 'u16_injunction_10',
       unitId: 16,
       word: 'Injunction',
-      banglaMeaning: 'আদালতের নিষেধাজ্ঞা বা স্থগিতাদেশ',
+      banglaMeaning: 'আদালতের নিষেধাজ্ঞা বা স্থগিতাদেশ , আদালতের স্থগিতাদেশ , আজ্ঞা , অনুশাসন',
       pronunciation: '/ɪnˈdʒʌŋk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit16: UnitInfo = {
       id: 'u16_jurisprudence_11',
       unitId: 16,
       word: 'Jurisprudence',
-      banglaMeaning: 'আইনশাস্ত্র বা আইনের মৌলিক দর্শন',
+      banglaMeaning: 'আইনশাস্ত্র বা আইনের মৌলিক দর্শন , ব্যবহারতত্ত্ব , আইন বিজ্ঞান',
       pronunciation: '/ˌdʒʊə.rɪsˈpruː.dəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit16: UnitInfo = {
       id: 'u16_litigation_12',
       unitId: 16,
       word: 'Litigation',
-      banglaMeaning: 'মামলা মোকদ্দমা',
+      banglaMeaning: 'মামলা মোকদ্দমা , মকদ্দমা',
       pronunciation: '/ˌlɪt.ɪˈɡeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit16: UnitInfo = {
       id: 'u16_misdemeanor_13',
       unitId: 16,
       word: 'Misdemeanor',
-      banglaMeaning: 'লঘু বা তুলনামূলক ছোট অপরাধ',
+      banglaMeaning: 'লঘু বা তুলনামূলক ছোট অপরাধ , অপকর্ম',
       pronunciation: '/ˌmɪs.dɪˈmiː.nər/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit16: UnitInfo = {
       id: 'u16_negligence_14',
       unitId: 16,
       word: 'Negligence',
-      banglaMeaning: 'চরম অবহেলা বা কর্তব্যে গাফিলতি',
+      banglaMeaning: 'চরম অবহেলা বা কর্তব্যে গাফিলতি , অযন্ত , অমনোযোগ , অসাবধানতা',
       pronunciation: '/ˈneɡ.lɪ.dʒəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit16: UnitInfo = {
       id: 'u16_overrule_15',
       unitId: 16,
       word: 'Overrule',
-      banglaMeaning: 'আগের সিদ্ধান্ত বা আপত্তি নাকচ করে দেওয়া',
+      banglaMeaning: 'আগের সিদ্ধান্ত বা আপত্তি নাকচ করে দেওয়া , বাতিল করে দেওয়া , খারিজ করা , নাকচ করা',
       pronunciation: '/ˌəʊ.vəˈruːl/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit16: UnitInfo = {
       id: 'u16_precedent_16',
       unitId: 16,
       word: 'Precedent',
-      banglaMeaning: 'নজির বা পূর্ববর্তী দৃষ্টান্তমূলক বিচারিক সিদ্ধান্ত',
+      banglaMeaning: 'নজির বা পূর্ববর্তী দৃষ্টান্তমূলক বিচারিক সিদ্ধান্ত , রূল , উদাহরণ , নিদর্শন',
       pronunciation: '/ˈpres.ɪ.dənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit16: UnitInfo = {
       id: 'u16_quash_17',
       unitId: 16,
       word: 'Quash',
-      banglaMeaning: 'আদালতের আদেশ বা অভিযোগ বাতিল করা',
+      banglaMeaning: 'আদালতের আদেশ বা অভিযোগ বাতিল করা , রদ করা , রহিত করা , দমন করা',
       pronunciation: '/kwɒʃ/',
       partOfSpeech: 'verb',
       examples: [
@@ -318,7 +318,7 @@ export const unit16: UnitInfo = {
       id: 'u16_restitution_18',
       unitId: 16,
       word: 'Restitution',
-      banglaMeaning: 'ক্ষতিপূরণ বা আগের অধিকার পুনর্বহাল',
+      banglaMeaning: 'ক্ষতিপূরণ বা আগের অধিকার পুনর্বহাল , প্রত্যর্পণ , পুনরুদ্ধার , পূর্বাবস্থা প্রাপ্তি',
       pronunciation: '/ˌres.tɪˈtʃuː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit16: UnitInfo = {
       id: 'u16_statute_19',
       unitId: 16,
       word: 'Statute',
-      banglaMeaning: 'সংসদ বা আইনসভা প্রণীত লিখিত আইন',
+      banglaMeaning: 'সংসদ বা আইনসভা প্রণীত লিখিত আইন , সংবিধি',
       pronunciation: '/ˈstætʃ.uːt/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit16: UnitInfo = {
       id: 'u16_tort_20',
       unitId: 16,
       word: 'Tort',
-      banglaMeaning: 'দেওয়ানি অপরাধ বা ক্ষতি যা মামলাযোগ্য',
+      banglaMeaning: 'দেওয়ানি অপরাধ বা ক্ষতি যা মামলাযোগ্য , অন্যায় , ব্যক্তিগত অপকার',
       pronunciation: '/tɔːt/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit16: UnitInfo = {
       id: 'u16_unconstitutional_21',
       unitId: 16,
       word: 'Unconstitutional',
-      banglaMeaning: 'অসাংবিধানিক বা সংবিধান পরিপন্থী',
+      banglaMeaning: 'অসাংবিধানিক বা সংবিধান পরিপন্থী , সংবিধানবিরূদ্ধ , নিয়মতন্ত্রবিরোধী',
       pronunciation: '/ˌʌn.kɒn.stɪˈtʃuː.ʃən.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -390,7 +390,7 @@ export const unit16: UnitInfo = {
       id: 'u16_verdict_22',
       unitId: 16,
       word: 'Verdict',
-      banglaMeaning: 'আদালতের চূড়ান্ত রায় বা সিদ্ধান্ত',
+      banglaMeaning: 'আদালতের চূড়ান্ত রায় বা সিদ্ধান্ত , নির্ণয় , জুরির মত , জুরির রায়',
       pronunciation: '/ˈvɜː.dɪkt/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit16: UnitInfo = {
       id: 'u16_adjudicate_24',
       unitId: 16,
       word: 'Adjudicate',
-      banglaMeaning: 'আইনত বিচার করে বিরোধ নিষ্পত্তি করা',
+      banglaMeaning: 'আইনত বিচার করে বিরোধ নিষ্পত্তি করা , ন্যায়নির্ণয় করা , বিচারপূর্বক স্থির করা',
       pronunciation: '/əˈdʒuː.dɪ.keɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -444,7 +444,7 @@ export const unit16: UnitInfo = {
       id: 'u16_beneficiary_25',
       unitId: 16,
       word: 'Beneficiary',
-      banglaMeaning: 'উত্তরাধিকারী বা স্বার্থভোগী ব্যক্তি',
+      banglaMeaning: 'উত্তরাধিকারী বা স্বার্থভোগী ব্যক্তি , লাভবান , দানগ্রাহী , স্বত্বার্থী',
       pronunciation: '/ˌben.ɪˈfɪʃ.ər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit16: UnitInfo = {
       id: 'u16_culpability_26',
       unitId: 16,
       word: 'Culpability',
-      banglaMeaning: 'অপরাধে দোষী হওয়ার দায় বা অপরাধযোগ্যতা',
+      banglaMeaning: 'অপরাধে দোষী হওয়ার দায় বা অপরাধযোগ্যতা , নিন্দনীয়তা , দোষাবহতা',
       pronunciation: '/ˌkʌl.pəˈbɪl.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit16: UnitInfo = {
       id: 'u16_defamation_27',
       unitId: 16,
       word: 'Defamation',
-      banglaMeaning: 'মানহানি বা কুৎসা রটনা',
+      banglaMeaning: 'মানহানি বা কুৎসা রটনা , অপবাদ , নিন্দা , ত্রুটি',
       pronunciation: '/ˌdef.əˈmeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit16: UnitInfo = {
       id: 'u16_embezzlement_28',
       unitId: 16,
       word: 'Embezzlement',
-      banglaMeaning: 'সরকারি বা প্রাতিষ্ঠানিক তহবিল আত্মসাৎ',
+      banglaMeaning: 'সরকারি বা প্রাতিষ্ঠানিক তহবিল আত্মসাৎ , তছরুপ , গচ্ছিত ধন অপহরণ , তসরূফ',
       pronunciation: '/ɪmˈbez.əl.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit16: UnitInfo = {
       id: 'u16_fiduciary_29',
       unitId: 16,
       word: 'Fiduciary',
-      banglaMeaning: 'আমানতদারিত্বমূলক দায়িত্বসম্পন্ন',
+      banglaMeaning: 'আমানতদারিত্বমূলক দায়িত্বসম্পন্ন , জিম্মাদার',
       pronunciation: '/fɪˈdjuː.ʃər.i/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit16: UnitInfo = {
       id: 'u16_gavel_30',
       unitId: 16,
       word: 'Gavel',
-      banglaMeaning: 'বিচারকের হাতুড়ি',
+      banglaMeaning: 'বিচারকের হাতুড়ি , সভাপতির হাতুড়ি , নিলামদারের হাতুড়ি , নিলামকারী কাঠের মুগুর',
       pronunciation: '/ˈɡæv.əl/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit16: UnitInfo = {
       id: 'u16_indictment_31',
       unitId: 16,
       word: 'Indictment',
-      banglaMeaning: 'আনুষ্ঠানিক অভিযোগপত্র',
+      banglaMeaning: 'আনুষ্ঠানিক অভিযোগপত্র , আর্জি',
       pronunciation: '/ɪnˈdaɪt.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit16: UnitInfo = {
       id: 'u16_larceny_32',
       unitId: 16,
       word: 'Larceny',
-      banglaMeaning: 'চুরি বা পরস্বাপহরণ',
+      banglaMeaning: 'চুরি বা পরস্বাপহরণ , জোচ্চুরি , অপহরণ',
       pronunciation: '/ˈlɑː.sən.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit16: UnitInfo = {
       id: 'u16_perjury_33',
       unitId: 16,
       word: 'Perjury',
-      banglaMeaning: 'আদালতে হলফ করে মিথ্যা সাক্ষ্য প্রদান',
+      banglaMeaning: 'আদালতে হলফ করে মিথ্যা সাক্ষ্য প্রদান , মিথ্যা হলফ , শপথভঙ্গ',
       pronunciation: '/ˈpɜː.dʒər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit16: UnitInfo = {
       id: 'u16_subpoena_34',
       unitId: 16,
       word: 'Subpoena',
-      banglaMeaning: 'আদালতে হাজির হওয়ার বাধ্যতামূলক সমন',
+      banglaMeaning: 'আদালতে হাজির হওয়ার বাধ্যতামূলক সমন , সপিনা',
       pronunciation: '/səˈpiː.nə/',
       partOfSpeech: 'noun',
       examples: [

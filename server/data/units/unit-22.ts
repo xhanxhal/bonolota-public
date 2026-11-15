@@ -12,7 +12,7 @@ export const unit22: UnitInfo = {
       id: 'u22_arch_1',
       unitId: 22,
       word: 'Arch',
-      banglaMeaning: 'খিলান বা তোরণ',
+      banglaMeaning: 'খিলান বা তোরণ , খিলেন , খিলনাকৃতি তোরণ , দুষ্টবুদ্ধিপূর্ণ',
       pronunciation: '/ɑːtʃ/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit22: UnitInfo = {
       id: 'u22_buttress_2',
       unitId: 22,
       word: 'Buttress',
-      banglaMeaning: 'দেয়াল মজবুত করার বহিরাগত ঠেকা বা স্তম্ভ',
+      banglaMeaning: 'দেয়াল মজবুত করার বহিরাগত ঠেকা বা স্তম্ভ , আশ্রয়স্থল , আলম্ব , ঠেকনো',
       pronunciation: '/ˈbʌt.rəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit22: UnitInfo = {
       id: 'u22_colonnade_3',
       unitId: 22,
       word: 'Colonnade',
-      banglaMeaning: 'সারিবদ্ধ স্তম্ভের সারি বা স্তম্ভশ্রেণি',
+      banglaMeaning: 'সারিবদ্ধ স্তম্ভের সারি বা স্তম্ভশ্রেণি , বৃক্ষের সারি',
       pronunciation: '/ˌkɒl.əˈneɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit22: UnitInfo = {
       id: 'u22_dome_4',
       unitId: 22,
       word: 'Dome',
-      banglaMeaning: 'গম্বুজ , অর্ধবৃত্তাকার ছাদ',
+      banglaMeaning: 'গম্বুজ , অর্ধবৃত্তাকার ছাদ , মুণ্ডু , প্রাসাদ',
       pronunciation: '/dəʊm/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit22: UnitInfo = {
       id: 'u22_elevation_5',
       unitId: 22,
       word: 'Elevation',
-      banglaMeaning: 'ভবনের সামনের দৃশ্যচিত্র বা সম্মুখভাগ',
+      banglaMeaning: 'ভবনের সামনের দৃশ্যচিত্র বা সম্মুখভাগ , উত্তোলন , টিলা , উচ্চতা',
       pronunciation: '/ˌel.ɪˈveɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit22: UnitInfo = {
       id: 'u22_facade_6',
       unitId: 22,
       word: 'Facade',
-      banglaMeaning: 'ভবনের দৃশ্যমান সদর বা সম্মুখভাগ',
+      banglaMeaning: 'ভবনের দৃশ্যমান সদর বা সম্মুখভাগ , বাড়ির সামনের দিক , বাইরের রূপ , ছদ্মরূপ',
       pronunciation: '/fəˈsɑːd/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit22: UnitInfo = {
       id: 'u22_gargoyle_7',
       unitId: 22,
       word: 'Gargoyle',
-      banglaMeaning: 'বৃষ্টির জল নিষ্কাশনের জন্য নির্মিত দানব মূর্তি',
+      banglaMeaning: 'বৃষ্টির জল নিষ্কাশনের জন্য নির্মিত দানব মূর্তি , মর্কট',
       pronunciation: '/ˈɡɑː.ɡɔɪl/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit22: UnitInfo = {
       id: 'u22_highrise_8',
       unitId: 22,
       word: 'High-rise',
-      banglaMeaning: 'বহুতল বিশিষ্ট সুউচ্চ অট্টালিকা',
+      banglaMeaning: 'বহুতল বিশিষ্ট সুউচ্চ অট্টালিকা , উচ্চ বৃদ্ধি',
       pronunciation: '/ˈhaɪ.raɪz/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit22: UnitInfo = {
       id: 'u22_infrastructure_9',
       unitId: 22,
       word: 'Infrastructure',
-      banglaMeaning: 'অবকাঠামো , সেতু, সড়ক ও জনসেবামূলক ভিত্তি',
+      banglaMeaning: 'অবকাঠামো , সেতু, সড়ক ও জনসেবামূলক ভিত্তি , পরিকাঠামো',
       pronunciation: '/ˈɪn.frəˌstrʌk.tʃər/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit22: UnitInfo = {
       id: 'u22_juxtaposition_10',
       unitId: 22,
       word: 'Juxtaposition',
-      banglaMeaning: 'পুরাতন ও আধুনিক স্থাপত্যের পাশাপাশি বৈসাদৃশ্য',
+      banglaMeaning: 'পুরাতন ও আধুনিক স্থাপত্যের পাশাপাশি বৈসাদৃশ্য , সন্নিধি , পাশাপাশি অবস্থান , পাশাপাশি স্থাপন',
       pronunciation: '/ˌdʒʌk.stə.pəˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit22: UnitInfo = {
       id: 'u22_keystone_11',
       unitId: 22,
       word: 'Keystone',
-      banglaMeaning: 'খিলানের মধ্যমণি পাথর , যা পুরো খিলানকে ধরে রাখে',
+      banglaMeaning: 'খিলানের মধ্যমণি পাথর , যা পুরো খিলানকে ধরে রাখে , ঝোঁক',
       pronunciation: '/ˈkiː.stəʊn/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit22: UnitInfo = {
       id: 'u22_lintel_12',
       unitId: 22,
       word: 'Lintel',
-      banglaMeaning: 'দরজা বা জানালার ওপরের আনুভূমিক কড়িকাঠ বা পাথর',
+      banglaMeaning: 'দরজা বা জানালার ওপরের আনুভূমিক কড়িকাঠ বা পাথর , ঝনকাঠ , সরদল',
       pronunciation: '/ˈlɪn.təl/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit22: UnitInfo = {
       id: 'u22_nave_14',
       unitId: 22,
       word: 'Nave',
-      banglaMeaning: 'গির্জার কেন্দ্রীয় দীর্ঘ চত্বর বা প্রধান অংশ',
+      banglaMeaning: 'গির্জার কেন্দ্রীয় দীর্ঘ চত্বর বা প্রধান অংশ , চক্রনাভি',
       pronunciation: '/neɪv/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit22: UnitInfo = {
       id: 'u22_obelisk_15',
       unitId: 22,
       word: 'Obelisk',
-      banglaMeaning: 'চারকোনা লম্বা ও তীক্ষ্ণশীর্ষ পাথরের স্মৃতিস্তম্ভ',
+      banglaMeaning: 'চারকোনা লম্বা ও তীক্ষ্ণশীর্ষ পাথরের স্মৃতিস্তম্ভ , দিকচিহ্ন',
       pronunciation: '/ˈɒb.əl.ɪsk/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit22: UnitInfo = {
       id: 'u22_parapet_16',
       unitId: 22,
       word: 'Parapet',
-      banglaMeaning: 'ছাদ বা সেতুর কিনারার নিচু সুরক্ষাদেয়াল',
+      banglaMeaning: 'ছাদ বা সেতুর কিনারার নিচু সুরক্ষাদেয়াল , প্রাচীর , উন্নত বপ্র',
       pronunciation: '/ˈpær.ə.pet/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit22: UnitInfo = {
       id: 'u22_rotunda_18',
       unitId: 22,
       word: 'Rotunda',
-      banglaMeaning: 'বৃত্তাকার বড় গম্বুজযুক্ত ঘর বা মিলনায়তন',
+      banglaMeaning: 'বৃত্তাকার বড় গম্বুজযুক্ত ঘর বা মিলনায়তন , গম্বুজ - সংবলিত , বৃত্তাকার ছাদযুক্ত ঘর , গোলাকার অট্টালিকা',
       pronunciation: '/rəʊˈtʌn.də/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit22: UnitInfo = {
       id: 'u22_spire_19',
       unitId: 22,
       word: 'Spire',
-      banglaMeaning: 'গির্জা বা সৌধের আকাশচুম্বী চোখা চূড়া',
+      banglaMeaning: 'গির্জা বা সৌধের আকাশচুম্বী চোখা চূড়া , পেঁচান বস্তু , সর্পিল বস্তু , সূচ্যগ্র বস্তু',
       pronunciation: '/spaɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit22: UnitInfo = {
       id: 'u22_transept_20',
       unitId: 22,
       word: 'Transept',
-      banglaMeaning: 'ক্রুশাকৃতি গির্জার মূল হলের সাথে আড়াআড়ি অংশ',
+      banglaMeaning: 'ক্রুশাকৃতি গির্জার মূল হলের সাথে আড়াআড়ি অংশ , গির্জার অংশ',
       pronunciation: '/ˈtræn.sept/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit22: UnitInfo = {
       id: 'u22_urbanization_21',
       unitId: 22,
       word: 'Urbanization',
-      banglaMeaning: 'নগরায়ন , শহরে রূপান্তর বা শহরের বিকাশ',
+      banglaMeaning: 'নগরায়ন , শহরে রূপান্তর বা শহরের বিকাশ , নাগরিকায়ন',
       pronunciation: '/ˌɜː.bən.aɪˈzeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit22: UnitInfo = {
       id: 'u22_vault_22',
       unitId: 22,
       word: 'Vault',
-      banglaMeaning: 'খিলানযুক্ত ছাদ বা ভূগর্ভস্থ শক্ত কক্ষ',
+      banglaMeaning: 'খিলানযুক্ত ছাদ বা ভূগর্ভস্থ শক্ত কক্ষ , লম্ফ , ধনুকাকৃতি ছাদ , ধনুকাকৃতি খিলান',
       pronunciation: '/vɒlt/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit22: UnitInfo = {
       id: 'u22_wing_23',
       unitId: 22,
       word: 'Wing',
-      banglaMeaning: 'মূল ভবনের পাশে বর্ধিত শাখা ভবন বা অংশ',
+      banglaMeaning: 'মূল ভবনের পাশে বর্ধিত শাখা ভবন বা অংশ , ডানা , দল , পাখা',
       pronunciation: '/wɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit22: UnitInfo = {
       id: 'u22_amphitheater_25',
       unitId: 22,
       word: 'Amphitheater',
-      banglaMeaning: 'বৃত্তাকার উন্মুক্ত নাট্যশালা বা স্টেডিয়াম',
+      banglaMeaning: 'বৃত্তাকার উন্মুক্ত নাট্যশালা বা স্টেডিয়াম , অ্যামি্পথিয়েটার , গ্যাল্যারি',
       pronunciation: '/ˈæm.fɪˌθɪə.tər/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit22: UnitInfo = {
       id: 'u22_bastion_26',
       unitId: 22,
       word: 'Bastion',
-      banglaMeaning: 'দুর্গপ্রাচীরের কোণায় বর্ধিত সুরক্ষিত অংশ',
+      banglaMeaning: 'দুর্গপ্রাচীরের কোণায় বর্ধিত সুরক্ষিত অংশ , ঘাঁটি',
       pronunciation: '/ˈbæs.ti.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit22: UnitInfo = {
       id: 'u22_cornice_27',
       unitId: 22,
       word: 'Cornice',
-      banglaMeaning: 'দেয়াল বা ছাদের শীর্ষদেশের অলঙ্কৃত কার্নিশ',
+      banglaMeaning: 'দেয়াল বা ছাদের শীর্ষদেশের অলঙ্কৃত কার্নিশ , কার্নিস',
       pronunciation: '/ˈkɔː.nɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit22: UnitInfo = {
       id: 'u22_frieze_30',
       unitId: 22,
       word: 'Frieze',
-      banglaMeaning: 'দেয়ালের বা স্তম্ভের ওপরের খোদাই করা দীর্ঘ ভাস্কর্যপট্টি',
+      banglaMeaning: 'দেয়ালের বা স্তম্ভের ওপরের খোদাই করা দীর্ঘ ভাস্কর্যপট্টি , মোটা , ছাদের কারুকার্য',
       pronunciation: '/friːz/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit22: UnitInfo = {
       id: 'u22_hypostyle_31',
       unitId: 22,
       word: 'Hypostyle',
-      banglaMeaning: 'অসংখ্য সারিবদ্ধ স্তম্ভের ওপর স্থাপিত ছাদবিশিষ্ট হল',
+      banglaMeaning: 'অসংখ্য সারিবদ্ধ স্তম্ভের ওপর স্থাপিত ছাদবিশিষ্ট হল , হাইপোস্টাইল',
       pronunciation: '/ˈhaɪ.pəʊ.staɪl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -570,7 +570,7 @@ export const unit22: UnitInfo = {
       id: 'u22_mullion_32',
       unitId: 22,
       word: 'Mullion',
-      banglaMeaning: 'জানালার একাধিক পাল্লাকে বিভক্তকারী খাড়া কাঠি বা দণ্ড',
+      banglaMeaning: 'জানালার একাধিক পাল্লাকে বিভক্তকারী খাড়া কাঠি বা দণ্ড , জানালার গরাদে',
       pronunciation: '/ˈmʌl.jən/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit22: UnitInfo = {
       id: 'u22_pilaster_33',
       unitId: 22,
       word: 'Pilaster',
-      banglaMeaning: 'দেয়ালের সাথে গাঁথা সমতল কৃত্রিম স্তম্ভ বা পিলপায়া',
+      banglaMeaning: 'দেয়ালের সাথে গাঁথা সমতল কৃত্রিম স্তম্ভ বা পিলপায়া , আয়তাকার স্তম্ভ',
       pronunciation: '/pɪˈlæs.tər/',
       partOfSpeech: 'noun',
       examples: [

@@ -12,7 +12,7 @@ export const unit19: UnitInfo = {
       id: 'u19_archipelago_1',
       unitId: 19,
       word: 'Archipelago',
-      banglaMeaning: 'দ্বীপপুঞ্জ , সমুদ্রবেষ্টিত বহু দ্বীপের সমষ্টি',
+      banglaMeaning: 'দ্বীপপুঞ্জ , সমুদ্রবেষ্টিত বহু দ্বীপের সমষ্টি , দ্বীপবহুল সমুদ্র , দ্বীপমালা',
       pronunciation: '/ˌɑː.kɪˈpel.ə.ɡəʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit19: UnitInfo = {
       id: 'u19_expedition_4',
       unitId: 19,
       word: 'Expedition',
-      banglaMeaning: 'অভিযান , সুনির্দিষ্ট উদ্দেশ্যে দূরবর্তী ভ্রমণ',
+      banglaMeaning: 'অভিযান , সুনির্দিষ্ট উদ্দেশ্যে দূরবর্তী ভ্রমণ , ত্বরা , তত্পরতা',
       pronunciation: '/ˌek.spəˈdɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit19: UnitInfo = {
       id: 'u19_glacier_6',
       unitId: 19,
       word: 'Glacier',
-      banglaMeaning: 'হিমবাহ , ধীরগতিতে চলমান বরফের নদী',
+      banglaMeaning: 'হিমবাহ , ধীরগতিতে চলমান বরফের নদী , তুষারনদী , হিমনদী',
       pronunciation: '/ˈɡlæs.i.ər/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit19: UnitInfo = {
       id: 'u19_hinterland_7',
       unitId: 19,
       word: 'Hinterland',
-      banglaMeaning: 'পশ্চাৎভূমি , উপকূল বা নদী থেকে দূরবর্তী প্রত্যন্ত অঞ্চল',
+      banglaMeaning: 'পশ্চাৎভূমি , উপকূল বা নদী থেকে দূরবর্তী প্রত্যন্ত অঞ্চল , পশ্চাৎপ্রদেশ , পশ্চাদ্ভূমি',
       pronunciation: '/ˈhɪn.tə.lænd/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit19: UnitInfo = {
       id: 'u19_itinerary_8',
       unitId: 19,
       word: 'Itinerary',
-      banglaMeaning: 'ভ্রমণসূচি , ভ্রমণের বিস্তারিত পরিকল্পনা',
+      banglaMeaning: 'ভ্রমণসূচি , ভ্রমণের বিস্তারিত পরিকল্পনা , ভ্রমণপথ , ভ্রমণবৃত্তান্ত',
       pronunciation: '/aɪˈtɪn.ər.ər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit19: UnitInfo = {
       id: 'u19_junction_9',
       unitId: 19,
       word: 'Junction',
-      banglaMeaning: 'সংযোগস্থল বা মিলনকেন্দ্র',
+      banglaMeaning: 'সংযোগস্থল বা মিলনকেন্দ্র , সংগম , সন্ধিস্থান , রেল জংশন',
       pronunciation: '/ˈdʒʌŋk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit19: UnitInfo = {
       id: 'u19_karst_10',
       unitId: 19,
       word: 'Karst',
-      banglaMeaning: 'চুনাপাথরের গুহা ও ক্ষয়প্রাপ্ত ভৌগোলিক ভূরূপ',
+      banglaMeaning: 'চুনাপাথরের গুহা ও ক্ষয়প্রাপ্ত ভৌগোলিক ভূরূপ , কার্স্ট',
       pronunciation: '/kɑːst/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit19: UnitInfo = {
       id: 'u19_latitude_11',
       unitId: 19,
       word: 'Latitude',
-      banglaMeaning: 'অক্ষাংশ',
+      banglaMeaning: 'অক্ষাংশ , এলাকা , প্রসার , ব্যাপ্তি',
       pronunciation: '/ˈlæt.ɪ.tʃuːd/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit19: UnitInfo = {
       id: 'u19_longitude_12',
       unitId: 19,
       word: 'Longitude',
-      banglaMeaning: 'দ্রাঘিমাংশ',
+      banglaMeaning: 'দ্রাঘিমাংশ , দ্রাঘিমান্তর , দেশান্তর',
       pronunciation: '/ˈlɒŋ.ɡɪ.tʃuːd/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit19: UnitInfo = {
       id: 'u19_meander_13',
       unitId: 19,
       word: 'Meander',
-      banglaMeaning: 'নদীর এঁকেবেঁকে চলা বা সর্পিলাকার পথ',
+      banglaMeaning: 'নদীর এঁকেবেঁকে চলা বা সর্পিলাকার পথ , আঁকাবাঁকা পথ , নদীর আঁকাবাঁকা স্থান , চক্রাকারে ভ্রমণ',
       pronunciation: '/miˈæn.dər/',
       partOfSpeech: 'verb',
       examples: [
@@ -246,7 +246,7 @@ export const unit19: UnitInfo = {
       id: 'u19_navigable_14',
       unitId: 19,
       word: 'Navigable',
-      banglaMeaning: 'নৌ চলাচলের উপযোগী , জাহাজ চলার যোগ্য',
+      banglaMeaning: 'নৌ চলাচলের উপযোগী , জাহাজ চলার যোগ্য , নাব্য , নৌবাহী',
       pronunciation: '/ˈnæv.ɪ.ɡə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit19: UnitInfo = {
       id: 'u19_oasis_15',
       unitId: 19,
       word: 'Oasis',
-      banglaMeaning: 'মরূদ্যান , মরুভূমির ভেতর সবুজ জলাশয়যুক্ত স্থান',
+      banglaMeaning: 'মরূদ্যান , মরুভূমির ভেতর সবুজ জলাশয়যুক্ত স্থান , মরুদ্বীপ , আশ্রয়স্থল',
       pronunciation: '/əʊˈeɪ.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit19: UnitInfo = {
       id: 'u19_quagmire_17',
       unitId: 19,
       word: 'Quagmire',
-      banglaMeaning: 'চোরাবালি বা দুর্গম কর্দমাক্ত জলাভূমি',
+      banglaMeaning: 'চোরাবালি বা দুর্গম কর্দমাক্ত জলাভূমি , জলকাদাযর়্ভরা জায়গা , প্যাচপেচে জমি , কর্দমাক্ত জমি',
       pronunciation: '/ˈkwæɡ.maɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit19: UnitInfo = {
       id: 'u19_reconnaissance_18',
       unitId: 19,
       word: 'Reconnaissance',
-      banglaMeaning: 'সামরিক বা ভৌগোলিক অনুসন্ধান ও নিরীক্ষণ',
+      banglaMeaning: 'সামরিক বা ভৌগোলিক অনুসন্ধান ও নিরীক্ষণ , স্বীকার , পরিদর্শনকরণ , প্রাথমিক নিরীক্ষণ',
       pronunciation: '/rɪˈkɒn.ɪ.səns/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit19: UnitInfo = {
       id: 'u19_strait_19',
       unitId: 19,
       word: 'Strait',
-      banglaMeaning: 'প্রণালী , দুটি সমুদ্রকে সংযুক্তকারী সংকীর্ণ জলপথ',
+      banglaMeaning: 'প্রণালী , দুটি সমুদ্রকে সংযুক্তকারী সংকীর্ণ জলপথ , সঙ্কীর্ণ , কঠোর',
       pronunciation: '/streɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit19: UnitInfo = {
       id: 'u19_topography_20',
       unitId: 19,
       word: 'Topography',
-      banglaMeaning: 'ভূমিরূপ বা ভূপ্রকৃতি',
+      banglaMeaning: 'ভূমিরূপ বা ভূপ্রকৃতি , স্থানবিবরণ , ভূসংস্থান',
       pronunciation: '/təˈpɒɡ.rə.fi/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit19: UnitInfo = {
       id: 'u19_undulating_21',
       unitId: 19,
       word: 'Undulating',
-      banglaMeaning: 'ঢেউ খেলানো বা মৃদু উঁচুনিচু ভূমিরূপ',
+      banglaMeaning: 'ঢেউ খেলানো বা মৃদু উঁচুনিচু ভূমিরূপ , উচ্চাবচ , নতোন্নত , উত্কলিত',
       pronunciation: '/ˈʌn.djʊ.leɪ.tɪŋ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -390,7 +390,7 @@ export const unit19: UnitInfo = {
       id: 'u19_volcanic_22',
       unitId: 19,
       word: 'Volcanic',
-      banglaMeaning: 'আগ্নেয়গিরি সংক্রান্ত বা অগ্ন্যুৎপাতজাত',
+      banglaMeaning: 'আগ্নেয়গিরি সংক্রান্ত বা অগ্ন্যুৎপাতজাত , অগ্ন্যুৎপাত-সংক্রান্ত , আগ্নেয়গিরিতুল্য , আগ্নেয়গিরিময়',
       pronunciation: '/vɒlˈkæn.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit19: UnitInfo = {
       id: 'u19_wilderness_23',
       unitId: 19,
       word: 'Wilderness',
-      banglaMeaning: 'বন্য নির্জন প্রান্তর বা মানুষের স্পর্শহীন প্রকৃতি',
+      banglaMeaning: 'বন্য নির্জন প্রান্তর বা মানুষের স্পর্শহীন প্রকৃতি , মরুভূমি , বিজনপ্রদেশ',
       pronunciation: '/ˈwɪl.də.nəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit19: UnitInfo = {
       id: 'u19_badlands_25',
       unitId: 19,
       word: 'Badlands',
-      banglaMeaning: 'ক্ষয়প্রাপ্ত শুষ্ক ও চাষের অযোগ্য রুক্ষ পাহাড়ি এলাকা',
+      banglaMeaning: 'ক্ষয়প্রাপ্ত শুষ্ক ও চাষের অযোগ্য রুক্ষ পাহাড়ি এলাকা , অনুর্বর জমি',
       pronunciation: '/ˈbæd.lændz/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit19: UnitInfo = {
       id: 'u19_canyon_26',
       unitId: 19,
       word: 'Canyon',
-      banglaMeaning: 'গিরিখাত বা পাহাড়ি গভীর গিরিসংকট',
+      banglaMeaning: 'গিরিখাত বা পাহাড়ি গভীর গিরিসংকট , গভীর গিরিখাত , গভীর খাদ',
       pronunciation: '/ˈkæn.jən/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit19: UnitInfo = {
       id: 'u19_escarpment_27',
       unitId: 19,
       word: 'Escarpment',
-      banglaMeaning: 'খাড়া পাহাড়ি ঢাল বা খাড়া পাহাড়ের দেওয়াল',
+      banglaMeaning: 'খাড়া পাহাড়ি ঢাল বা খাড়া পাহাড়ের দেওয়াল , খাড়া উঁচু পাহাড়',
       pronunciation: '/ɪˈskɑːp.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit19: UnitInfo = {
       id: 'u19_isthmus_29',
       unitId: 19,
       word: 'Isthmus',
-      banglaMeaning: 'যোজক , দুটি বড় ভূখণ্ডকে যুক্তকারী সংকীর্ণ সংকীর্ণ ভূভাগ',
+      banglaMeaning: 'যোজক , দুটি বড় ভূখণ্ডকে যুক্তকারী সংকীর্ণ সংকীর্ণ ভূভাগ , ইশতমুস',
       pronunciation: '/ˈɪs.məs/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit19: UnitInfo = {
       id: 'u19_plateau_31',
       unitId: 19,
       word: 'Plateau',
-      banglaMeaning: 'মালভূমি , সমতল শীর্ষবিশিষ্ট বিস্তৃত উচ্চভূমি',
+      banglaMeaning: 'মালভূমি , সমতল শীর্ষবিশিষ্ট বিস্তৃত উচ্চভূমি , অধিক্যতা , অধিত্যকা',
       pronunciation: '/ˈplæt.əʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit19: UnitInfo = {
       id: 'u19_savanna_32',
       unitId: 19,
       word: 'Savanna',
-      banglaMeaning: 'সাভানা , বিক্ষিপ্ত গাছপালায় ভরা উষ্ণ তৃণভূমি',
+      banglaMeaning: 'সাভানা , বিক্ষিপ্ত গাছপালায় ভরা উষ্ণ তৃণভূমি , নিষ্পাদপ প্রান্তর',
       pronunciation: '/səˈvæn.ə/',
       partOfSpeech: 'noun',
       examples: [

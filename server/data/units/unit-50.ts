@@ -12,7 +12,7 @@ export const unit50: UnitInfo = {
       id: 'u50_deference_1',
       unitId: 50,
       word: 'Deference',
-      banglaMeaning: 'ভদ্র ও সদাচারী',
+      banglaMeaning: 'ভদ্র ও সদাচারী , পরমতবশ্যতা , সশ্রদ্ধ বাধ্যতা , বশ্যতাস্বীকার',
       pronunciation: '/ˈdeference/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit50: UnitInfo = {
       id: 'u50_defiance_2',
       unitId: 50,
       word: 'Defiance',
-      banglaMeaning: 'দ্বন্দ্বার্থ আহ্বান, দ্বন্দ্বার্থ সম্মুখীনতা',
+      banglaMeaning: 'দ্বন্দ্বার্থ আহ্বান, দ্বন্দ্বার্থ সম্মুখীনতা , প্রকাশ্য অবাধ্যতা',
       pronunciation: '/ˈdefiance/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit50: UnitInfo = {
       id: 'u50_definitive_3',
       unitId: 50,
       word: 'Definitive',
-      banglaMeaning: 'সীমানির্দেশক, নির্ধারক',
+      banglaMeaning: 'সীমানির্দেশক, নির্ধারক , নিশ্চিত , চূড়ান্ত',
       pronunciation: '/ˈdefinitive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit50: UnitInfo = {
       id: 'u50_deft_4',
       unitId: 50,
       word: 'Deft',
-      banglaMeaning: 'নিপুণ বা দক্ষ হস্তসম্পন্ন',
+      banglaMeaning: 'নিপুণ বা দক্ষ হস্তসম্পন্ন , কুশল , পটু , চতুর',
       pronunciation: '/ˈdeft/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit50: UnitInfo = {
       id: 'u50_defunct_5',
       unitId: 50,
       word: 'Defunct',
-      banglaMeaning: 'বিলুপ্ত, লুপ্ত',
+      banglaMeaning: 'বিলুপ্ত, লুপ্ত , মৃত , অকেজো',
       pronunciation: '/ˈdefunct/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit50: UnitInfo = {
       id: 'u50_degenerate_6',
       unitId: 50,
       word: 'Degenerate',
-      banglaMeaning: 'অধঃপতিত, স্বধর্মচ্যুত',
+      banglaMeaning: 'অধঃপতিত, স্বধর্মচ্যুত , অবক্ষয়িত , উচ্ছন্নে যাওয়া',
       pronunciation: '/ˈdegenerate/',
       partOfSpeech: 'verb',
       examples: [
@@ -120,7 +120,7 @@ export const unit50: UnitInfo = {
       id: 'u50_degrade_7',
       unitId: 50,
       word: 'Degrade',
-      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অপমানিত করা বা লজ্জিত করা',
+      banglaMeaning: 'মর্যাদা হ্রাস করা বা হেয় করা , অপমানিত করা বা লজ্জিত করা , পদের অবনতি ঘটানো',
       pronunciation: '/ˈdegrade/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit50: UnitInfo = {
       id: 'u50_deify_8',
       unitId: 50,
       word: 'Deify',
-      banglaMeaning: 'দেবতুল্য করা, দেবত্বারোপণ করা',
+      banglaMeaning: 'দেবতুল্য করা, দেবত্বারোপণ করা , দেবত্ব আরোপ করা',
       pronunciation: '/ˈdeify/',
       partOfSpeech: 'verb',
       examples: [
@@ -156,7 +156,7 @@ export const unit50: UnitInfo = {
       id: 'u50_delude_9',
       unitId: 50,
       word: 'Delude',
-      banglaMeaning: 'প্রতারণা করা, অভিভূত করা',
+      banglaMeaning: 'প্রতারণা করা, অভিভূত করা , ভোলানো',
       pronunciation: '/ˈdelude/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit50: UnitInfo = {
       id: 'u50_deluge_10',
       unitId: 50,
       word: 'Deluge',
-      banglaMeaning: 'মহাপ্লাবন, আপ্লাবন',
+      banglaMeaning: 'মহাপ্লাবন, আপ্লাবন , আপ্লব',
       pronunciation: '/ˈdeluge/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit50: UnitInfo = {
       id: 'u50_demeanor_11',
       unitId: 50,
       word: 'Demeanor',
-      banglaMeaning: 'হাবভাব, আচরণ',
+      banglaMeaning: 'হাবভাব, আচরণ , চালচলন , নীত',
       pronunciation: '/ˈdemeanor/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit50: UnitInfo = {
       id: 'u50_demise_12',
       unitId: 50,
       word: 'Demise',
-      banglaMeaning: 'মৃতু্য, মরণ',
+      banglaMeaning: 'মৃতু্য, মরণ , হস্তান্তর , জীবনহানি',
       pronunciation: '/ˈdemise/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit50: UnitInfo = {
       id: 'u50_denigrate_14',
       unitId: 50,
       word: 'Denigrate',
-      banglaMeaning: 'কলঙ্কিত করা, কালিমালিপ্ত করা',
+      banglaMeaning: 'কলঙ্কিত করা, কালিমালিপ্ত করা , হেয় করা',
       pronunciation: '/ˈdenigrate/',
       partOfSpeech: 'verb',
       examples: [
@@ -264,7 +264,7 @@ export const unit50: UnitInfo = {
       id: 'u50_denounce_15',
       unitId: 50,
       word: 'Denounce',
-      banglaMeaning: 'নিন্দা করা, অভিশাপ দেত্তয়া',
+      banglaMeaning: 'নিন্দা করা, অভিশাপ দেওয়া',
       pronunciation: '/ˈdenounce/',
       partOfSpeech: 'adverb',
       examples: [
@@ -336,7 +336,7 @@ export const unit50: UnitInfo = {
       id: 'u50_depravity_19',
       unitId: 50,
       word: 'Depravity',
-      banglaMeaning: 'ভ্রষ্টাচার, অসাধুতা',
+      banglaMeaning: 'ভ্রষ্টাচার, অসাধুতা , বিকৃতরুচি , নৈতিক বিকৃতি',
       pronunciation: '/ˈdepravity/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit50: UnitInfo = {
       id: 'u50_depreciate_20',
       unitId: 50,
       word: 'Depreciate',
-      banglaMeaning: 'মূল্যহ্রাস করা, নিন্দা করা',
+      banglaMeaning: 'মূল্যহ্রাস করা, নিন্দা করা , অবমূল্যায়ন ঘটা , মূল্যহ্রাস হওয়া',
       pronunciation: '/ˈdepreciate/',
       partOfSpeech: 'verb',
       examples: [
@@ -372,7 +372,7 @@ export const unit50: UnitInfo = {
       id: 'u50_deride_21',
       unitId: 50,
       word: 'Deride',
-      banglaMeaning: 'ঠাট্টা করা, বিদ্রূপ করা',
+      banglaMeaning: 'ঠাট্টা করা, বিদ্রূপ করা , উপহাস করা , ভান করা',
       pronunciation: '/ˈderide/',
       partOfSpeech: 'verb',
       examples: [
@@ -390,7 +390,7 @@ export const unit50: UnitInfo = {
       id: 'u50_derision_22',
       unitId: 50,
       word: 'Derision',
-      banglaMeaning: 'ঠাট্টা করা, বিদ্রূপ করা',
+      banglaMeaning: 'ঠাট্টা করা, বিদ্রূপ করা , উপহাস',
       pronunciation: '/ˈderision/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit50: UnitInfo = {
       id: 'u50_derivative_23',
       unitId: 50,
       word: 'Derivative',
-      banglaMeaning: 'ব্যুৎপন্ন, সিদ্ধান্তমুলক',
+      banglaMeaning: 'ব্যুৎপন্ন, সিদ্ধান্তমুলক , অমৌলিক , আহরণ',
       pronunciation: '/ˈderivative/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit50: UnitInfo = {
       id: 'u50_derogatory_24',
       unitId: 50,
       word: 'Derogatory',
-      banglaMeaning: 'হানিকর, খর্বতাসাধক',
+      banglaMeaning: 'হানিকর, খর্বতাসাধক , হ্রাসকর , ক্ষতিকর',
       pronunciation: '/ˈderogatory/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit50: UnitInfo = {
       id: 'u50_desiccate_26',
       unitId: 50,
       word: 'Desiccate',
-      banglaMeaning: 'শুষ্ক করা, শুষ্ক হত্তয়া',
+      banglaMeaning: 'শুষ্ক করা, শুষ্ক হওয়া',
       pronunciation: '/ˈdesiccate/',
       partOfSpeech: 'verb',
       examples: [
@@ -480,7 +480,7 @@ export const unit50: UnitInfo = {
       id: 'u50_desolate_27',
       unitId: 50,
       word: 'Desolate',
-      banglaMeaning: 'জনশূন্য, ঊষর',
+      banglaMeaning: 'জনশূন্য, ঊষর , নিঃসঙ্গ , নিরানন্দ',
       pronunciation: '/ˈdesolate/',
       partOfSpeech: 'verb',
       examples: [
@@ -498,7 +498,7 @@ export const unit50: UnitInfo = {
       id: 'u50_despondent_28',
       unitId: 50,
       word: 'Despondent',
-      banglaMeaning: 'হতাশ, নিরাশ্বাস',
+      banglaMeaning: 'হতাশ, নিরাশ্বাস , মান-মরা',
       pronunciation: '/ˈdespondent/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit50: UnitInfo = {
       id: 'u50_destitute_29',
       unitId: 50,
       word: 'Destitute',
-      banglaMeaning: 'নিঃস্ব, সর্বস্বান্ত',
+      banglaMeaning: 'নিঃস্ব, সর্বস্বান্ত , পরিত্যক্ত , নেংটা',
       pronunciation: '/ˈdestitute/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit50: UnitInfo = {
       id: 'u50_desultory_30',
       unitId: 50,
       word: 'Desultory',
-      banglaMeaning: 'অসংলগ্ন, অবাস্তব',
+      banglaMeaning: 'অসংলগ্ন, অবাস্তব , এলোমেলো',
       pronunciation: '/ˈdesultory/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit50: UnitInfo = {
       id: 'u50_detached_31',
       unitId: 50,
       word: 'Detached',
-      banglaMeaning: 'শান্ত বা উপশম করা',
+      banglaMeaning: 'শান্ত বা উপশম করা , বিচ্ছিন্ন , নিস্পৃহ , নিরপেক্ষ',
       pronunciation: '/ˈdetached/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit50: UnitInfo = {
       id: 'u50_detrimental_33',
       unitId: 50,
       word: 'Detrimental',
-      banglaMeaning: 'ক্ষতিকারক, ক্ষতিকর',
+      banglaMeaning: 'ক্ষতিকারক, ক্ষতিকর , হানিকর',
       pronunciation: '/ˈdetrimental/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit50: UnitInfo = {
       id: 'u50_deviate_34',
       unitId: 50,
       word: 'Deviate',
-      banglaMeaning: 'নড়া, পথভ্রষ্ট করা',
+      banglaMeaning: 'নড়া, পথভ্রষ্ট করা , বিপথগামী হওয়া , পথভ্রষ্ট হওয়া',
       pronunciation: '/ˈdeviate/',
       partOfSpeech: 'verb',
       examples: [
@@ -624,7 +624,7 @@ export const unit50: UnitInfo = {
       id: 'u50_devious_35',
       unitId: 50,
       word: 'Devious',
-      banglaMeaning: 'আঁকাবাঁকা, সর্পিল',
+      banglaMeaning: 'আঁকাবাঁকা, সর্পিল , ঘোরানো , অনিয়মিত',
       pronunciation: '/ˈdevious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -642,7 +642,7 @@ export const unit50: UnitInfo = {
       id: 'u50_devoid_36',
       unitId: 50,
       word: 'Devoid',
-      banglaMeaning: 'বর্জিত, বিহীন',
+      banglaMeaning: 'বর্জিত, বিহীন , শূন্য , খালি',
       pronunciation: '/ˈdevoid/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit50: UnitInfo = {
       id: 'u50_devout_37',
       unitId: 50,
       word: 'Devout',
-      banglaMeaning: 'ধার্মিক বা ধর্মনিষ্ঠ',
+      banglaMeaning: 'ধার্মিক বা ধর্মনিষ্ঠ , ভক্তিমান , গভীরভাবে অনুভূত , আন্তরিকতাপূর্ণ',
       pronunciation: '/ˈdevout/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit50: UnitInfo = {
       id: 'u50_dexterous_38',
       unitId: 50,
       word: 'Dexterous',
-      banglaMeaning: 'নিপুণ বা দক্ষ হস্তসম্পন্ন',
+      banglaMeaning: 'নিপুণ বা দক্ষ হস্তসম্পন্ন , কুশলী , পটু , পারক',
       pronunciation: '/ˈdexterous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -696,7 +696,7 @@ export const unit50: UnitInfo = {
       id: 'u50_didactic_39',
       unitId: 50,
       word: 'Didactic',
-      banglaMeaning: 'নীতিমূলক, উপদেশমূলক',
+      banglaMeaning: 'নীতিমূলক, উপদেশমূলক , শিক্ষামূলক , উপদেশাত্মক',
       pronunciation: '/ˈdidactic/',
       partOfSpeech: 'adjective',
       examples: [

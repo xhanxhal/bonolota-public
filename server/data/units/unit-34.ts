@@ -48,7 +48,7 @@ export const unit34: UnitInfo = {
       id: 'u34_aloft_3',
       unitId: 34,
       word: 'Aloft',
-      banglaMeaning: 'শূন্যে, উচ্চে',
+      banglaMeaning: 'শূন্যে, উচ্চে , ঊর্ধে , উঁচুতে',
       pronunciation: '/ˈaloft/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit34: UnitInfo = {
       id: 'u34_aloof_4',
       unitId: 34,
       word: 'Aloof',
-      banglaMeaning: 'নির্লিপ্ত, দূরে',
+      banglaMeaning: 'নির্লিপ্ত, দূরে , উদাসীন , একান্তে',
       pronunciation: '/ˈaloof/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit34: UnitInfo = {
       id: 'u34_altercation_5',
       unitId: 34,
       word: 'Altercation',
-      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া , কলহ বা মতবিরোধ',
+      banglaMeaning: 'কোলাহলপূর্ণ ঝগড়া , কলহ বা মতবিরোধ , কথাকাটাকাটি , তর্কাতর্কি',
       pronunciation: '/ˈaltercation/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amass_6',
       unitId: 34,
       word: 'Amass',
-      banglaMeaning: 'সংগ্রহ করা বা পুঞ্জীভূত করা',
+      banglaMeaning: 'সংগ্রহ করা বা পুঞ্জীভূত করা , জমানো , জোটান',
       pronunciation: '/ˈamass/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit34: UnitInfo = {
       id: 'u34_ambience_8',
       unitId: 34,
       word: 'Ambience',
-      banglaMeaning: 'পরিবেশ বা পারিপার্শ্বিক আবহ , আনন্দদায়ক বা মনোরঞ্জনমূলক',
+      banglaMeaning: 'পরিবেশ বা পারিপার্শ্বিক আবহ , আনন্দদায়ক বা মনোরঞ্জনমূলক , বেষ্টনী , পরিব্যাপ্তি',
       pronunciation: '/ˈambience/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amble_9',
       unitId: 34,
       word: 'Amble',
-      banglaMeaning: 'স্বচ্ছন্দগতি, অশ্বের স্বচ্ছন্দ পদক্ষেপ',
+      banglaMeaning: 'স্বচ্ছন্দগতি, অশ্বের স্বচ্ছন্দ পদক্ষেপ , মৃদুগতিতে ঘোড়া ছোটানো',
       pronunciation: '/ˈamble/',
       partOfSpeech: 'adverb',
       examples: [
@@ -174,7 +174,7 @@ export const unit34: UnitInfo = {
       id: 'u34_ambrosia_10',
       unitId: 34,
       word: 'Ambrosia',
-      banglaMeaning: 'সুধা, অমিয়',
+      banglaMeaning: 'সুধা, অমিয় , দেবতাদের খাদ্য , অমরতা-দানকারী দেবভোগ',
       pronunciation: '/ˈambrosia/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit34: UnitInfo = {
       id: 'u34_ambush_12',
       unitId: 34,
       word: 'Ambush',
-      banglaMeaning: 'ত্তৎ, ঘাপটি',
+      banglaMeaning: 'ত্তৎ, ঘাপটি , সৈন্যদের গোপনে অবস্থান , তাক',
       pronunciation: '/ˈambush/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amenable_13',
       unitId: 34,
       word: 'Amenable',
-      banglaMeaning: 'বাধ্য বা পরিচালনযোগ্য',
+      banglaMeaning: 'বাধ্য বা পরিচালনযোগ্য , কৈফিয়ত দিতে বাধ্য , অনুকূল , এক্তিয়ারভুক্ত',
       pronunciation: '/ˈamenable/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amend_14',
       unitId: 34,
       word: 'Amend',
-      banglaMeaning: 'সংশোধন বা সংস্কার করা',
+      banglaMeaning: 'সংশোধন বা সংস্কার করা , সারান',
       pronunciation: '/ˈamend/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amiable_16',
       unitId: 34,
       word: 'Amiable',
-      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন',
+      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন , অমায়িক , প্রীতিকর , প্রীতিপদ',
       pronunciation: '/ˈamiable/',
       partOfSpeech: 'adverb',
       examples: [
@@ -300,7 +300,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amicable_17',
       unitId: 34,
       word: 'Amicable',
-      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন , শান্তিপূর্ণ ও সৌহার্দ্যপূর্ণ',
+      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন , শান্তিপূর্ণ ও সৌহার্দ্যপূর্ণ , বন্ধুত্বপূর্ণ , মিত্রভাবাপন্ন',
       pronunciation: '/ˈamicable/',
       partOfSpeech: 'adjective',
       examples: [
@@ -318,7 +318,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amiss_18',
       unitId: 34,
       word: 'Amiss',
-      banglaMeaning: 'পথভ্রষ্ট, বিপথে',
+      banglaMeaning: 'পথভ্রষ্ট, বিপথে , অন্যায় , অসংগত',
       pronunciation: '/ˈamiss/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amity_19',
       unitId: 34,
       word: 'Amity',
-      banglaMeaning: 'শান্তিপূর্ণ ও সৌহার্দ্যপূর্ণ , মৈত্রী বা সৌহার্দ্যপূর্ণ সম্পর্ক',
+      banglaMeaning: 'শান্তিপূর্ণ ও সৌহার্দ্যপূর্ণ , মৈত্রী বা সৌহার্দ্যপূর্ণ সম্পর্ক , বন্ধুত্ব',
       pronunciation: '/ˈamity/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amnesia_20',
       unitId: 34,
       word: 'Amnesia',
-      banglaMeaning: 'স্মৃতিভ্রংশ, স্মৃতিশক্তির বিলুপ্তি',
+      banglaMeaning: 'স্মৃতিভ্রংশ, স্মৃতিশক্তির বিলুপ্তি , স্মৃতিবিলোপ , অস্মার',
       pronunciation: '/ˈamnesia/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amnesty_21',
       unitId: 34,
       word: 'Amnesty',
-      banglaMeaning: 'ক্ষমা করা বা অপরাধমুক্তি দেওয়া',
+      banglaMeaning: 'ক্ষমা করা বা অপরাধমুক্তি দেওয়া , রাজক্ষমা , সমস্ত অপরাধীকে ক্ষমা , আন্তর্জাতিক ক্ষমা',
       pronunciation: '/ˈamnesty/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amok_22',
       unitId: 34,
       word: 'Amok',
-      banglaMeaning: 'ক্ষিপ্তবৎ, উন্মত্ততার সহিত',
+      banglaMeaning: 'ক্ষিপ্তবৎ, উন্মত্ততার সহিত , মারাত্মক উন্মত্ত',
       pronunciation: '/ˈamok/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amoral_23',
       unitId: 34,
       word: 'Amoral',
-      banglaMeaning: 'অনৈতিক, নৈতিকতার সহিত সম্পর্কহীন',
+      banglaMeaning: 'অনৈতিক, নৈতিকতার সহিত সম্পর্কহীন , নৈতিক চেতনা বর্জিত , নীতিহীন',
       pronunciation: '/ˈamoral/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amorous_24',
       unitId: 34,
       word: 'Amorous',
-      banglaMeaning: 'গভীরভাবে ভালোবাসা বা শ্রদ্ধা করা',
+      banglaMeaning: 'গভীরভাবে ভালোবাসা বা শ্রদ্ধা করা , প্রণয়ঘটিত , প্রণয়সংক্রান্ত , কামজনিত',
       pronunciation: '/ˈamorous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amorphous_25',
       unitId: 34,
       word: 'Amorphous',
-      banglaMeaning: 'আকারহীন বা নিরাকার',
+      banglaMeaning: 'আকারহীন বা নিরাকার , নির্দিষ্ট আকারশূন্য , অনিয়তাকার , অকেলাসিত',
       pronunciation: '/ˈamorphous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit34: UnitInfo = {
       id: 'u34_ample_27',
       unitId: 34,
       word: 'Ample',
-      banglaMeaning: 'প্রচুর বা পর্যাপ্ত',
+      banglaMeaning: 'প্রচুর বা পর্যাপ্ত , প্রশস্ত , বড়োসড়ো , সুপরিসর',
       pronunciation: '/ˈample/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amplify_28',
       unitId: 34,
       word: 'Amplify',
-      banglaMeaning: 'প্রসারিত বা বিবর্ধিত করা',
+      banglaMeaning: 'প্রসারিত বা বিবর্ধিত করা , বাড়ানো , প্রশস্ত করা , বিবর্ধন করা',
       pronunciation: '/ˈamplify/',
       partOfSpeech: 'verb',
       examples: [
@@ -516,7 +516,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amputate_29',
       unitId: 34,
       word: 'Amputate',
-      banglaMeaning: 'কেড়ে নেত্তয়া, নেত্তয়া',
+      banglaMeaning: 'কেড়ে নেওয়া, নেওয়া , ব্যবচ্ছেদ করা , অঙ্গচ্ছেদন করা',
       pronunciation: '/ˈamputate/',
       partOfSpeech: 'verb',
       examples: [
@@ -534,7 +534,7 @@ export const unit34: UnitInfo = {
       id: 'u34_amulet_30',
       unitId: 34,
       word: 'Amulet',
-      banglaMeaning: 'মাদুলি, কবচ',
+      banglaMeaning: 'মাদুলি, কবচ , তাবিজ , রক্ষাকবচ ইত্যাদি',
       pronunciation: '/ˈamulet/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit34: UnitInfo = {
       id: 'u34_analgesic_32',
       unitId: 34,
       word: 'Analgesic',
-      banglaMeaning: 'বেদনানাশক, রোগনাশক',
+      banglaMeaning: 'বেদনানাশক, রোগনাশক , বেদনাহর , বেদনানুভূতিনাশক',
       pronunciation: '/ˈanalgesic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit34: UnitInfo = {
       id: 'u34_analogous_33',
       unitId: 34,
       word: 'Analogous',
-      banglaMeaning: 'তুলনীয় বা সদৃশ',
+      banglaMeaning: 'তুলনীয় বা সদৃশ , অনুরূপ , সমবৃত্তি',
       pronunciation: '/ˈanalogous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit34: UnitInfo = {
       id: 'u34_analogy_34',
       unitId: 34,
       word: 'Analogy',
-      banglaMeaning: 'সাদৃশ্য, উপমা',
+      banglaMeaning: 'সাদৃশ্য, উপমা , সমতা , অনুরূপতা',
       pronunciation: '/ˈanalogy/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit34: UnitInfo = {
       id: 'u34_anarchist_35',
       unitId: 34,
       word: 'Anarchist',
-      banglaMeaning: 'নৈরাজ্যবাদী, অরাজকতাবাদী',
+      banglaMeaning: 'নৈরাজ্যবাদী, অরাজকতাবাদী , বিদ্রোহের নায়ক',
       pronunciation: '/ˈanarchist/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit34: UnitInfo = {
       id: 'u34_anathema_36',
       unitId: 34,
       word: 'Anathema',
-      banglaMeaning: 'অভিশাপ, অভিসম্পাত',
+      banglaMeaning: 'অভিশাপ, অভিসম্পাত , গর্হিত কাজ',
       pronunciation: '/ˈanathema/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit34: UnitInfo = {
       id: 'u34_ancestry_37',
       unitId: 34,
       word: 'Ancestry',
-      banglaMeaning: 'পূর্বপুরুষগণ, বংশ',
+      banglaMeaning: 'পূর্বপুরুষগণ, বংশ , পিতৃকুল , প্রাচীন বংশধারা',
       pronunciation: '/ˈancestry/',
       partOfSpeech: 'adjective',
       examples: [
@@ -678,7 +678,7 @@ export const unit34: UnitInfo = {
       id: 'u34_anchor_38',
       unitId: 34,
       word: 'Anchor',
-      banglaMeaning: 'নঙ্গর, নোঙ্গর',
+      banglaMeaning: 'নঙ্গর, নোঙ্গর , নোঙর , আশ্রয়স্থল',
       pronunciation: '/ˈanchor/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit34: UnitInfo = {
       id: 'u34_ancillary_39',
       unitId: 34,
       word: 'Ancillary',
-      banglaMeaning: 'আনুষঙ্গিক, সহায়ক',
+      banglaMeaning: 'আনুষঙ্গিক, সহায়ক , অধীন',
       pronunciation: '/ˈancillary/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit34: UnitInfo = {
       id: 'u34_anecdote_40',
       unitId: 34,
       word: 'Anecdote',
-      banglaMeaning: 'গপ্প, কাহিনী',
+      banglaMeaning: 'গপ্প, কাহিনী , চুটকি , উপাখ্যান',
       pronunciation: '/ˈanecdote/',
       partOfSpeech: 'noun',
       examples: [

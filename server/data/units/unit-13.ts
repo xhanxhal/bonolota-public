@@ -12,7 +12,7 @@ export const unit13: UnitInfo = {
       id: 'u13_aggression_1',
       unitId: 13,
       word: 'Aggression',
-      banglaMeaning: 'আগ্রাসন , আক্রমণাত্মক বৈরিতা',
+      banglaMeaning: 'আগ্রাসন , আক্রমণাত্মক বৈরিতা , বিবাদের সূত্রপাত , যুদ্ধের সূত্রপাত',
       pronunciation: '/əˈɡreʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit13: UnitInfo = {
       id: 'u13_armistice_2',
       unitId: 13,
       word: 'Armistice',
-      banglaMeaning: 'যুদ্ধবিরতি চুক্তি',
+      banglaMeaning: 'যুদ্ধবিরতি চুক্তি , সাময়িক সন্ধি , সাময়িক যুদ্ধবিরতি , অস্ত্রসংবরণ',
       pronunciation: '/ˈɑː.mɪ.stɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit13: UnitInfo = {
       id: 'u13_bellicose_3',
       unitId: 13,
       word: 'Bellicose',
-      banglaMeaning: 'যুদ্ধংদেহী , মারমুখী স্বভাবের',
+      banglaMeaning: 'যুদ্ধংদেহী , মারমুখী স্বভাবের , যুদ্ধবাজ',
       pronunciation: '/ˈbel.ɪ.kəʊs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit13: UnitInfo = {
       id: 'u13_casualty_4',
       unitId: 13,
       word: 'Casualty',
-      banglaMeaning: 'হতাহতের সংখ্যা , যুদ্ধে নিহত বা আহত ব্যক্তি',
+      banglaMeaning: 'হতাহতের সংখ্যা , যুদ্ধে নিহত বা আহত ব্যক্তি , দুর্ঘটনা , ক্ষয়ক্ষতি',
       pronunciation: '/ˈkæʒ.u.əl.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit13: UnitInfo = {
       id: 'u13_demilitarize_5',
       unitId: 13,
       word: 'Demilitarize',
-      banglaMeaning: 'সামরিকীকরণ মুক্ত করা , সেনা প্রত্যাহার করা',
+      banglaMeaning: 'সামরিকীকরণ মুক্ত করা , সেনা প্রত্যাহার করা , ডেমীলীত্রিসস্ন করা',
       pronunciation: '/ˌdiːˈmɪl.ɪ.tər.aɪz/',
       partOfSpeech: 'verb',
       examples: [
@@ -102,7 +102,7 @@ export const unit13: UnitInfo = {
       id: 'u13_espionage_6',
       unitId: 13,
       word: 'Espionage',
-      banglaMeaning: 'গুপ্তচরবৃত্তি , সামরিক গোয়েন্দাগিরি',
+      banglaMeaning: 'গুপ্তচরবৃত্তি , সামরিক গোয়েন্দাগিরি , দৌত্য , দূত-নিয়োগ',
       pronunciation: '/ˈes.pi.ə.nɑːʒ/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit13: UnitInfo = {
       id: 'u13_fortification_7',
       unitId: 13,
       word: 'Fortification',
-      banglaMeaning: 'দুর্গনির্মাণ বা সামরিক প্রতিরক্ষা প্রাচীর',
+      banglaMeaning: 'দুর্গনির্মাণ বা সামরিক প্রতিরক্ষা প্রাচীর , সুরক্ষিতকরণ , দুর্গপ্রাকার , দুর্গনির্মাণবিদ্যা',
       pronunciation: '/ˌfɔː.tɪ.fɪˈkeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit13: UnitInfo = {
       id: 'u13_guerrilla_8',
       unitId: 13,
       word: 'Guerrilla',
-      banglaMeaning: 'গেরিলা বা অনিয়মিত গেরিলা যোদ্ধা',
+      banglaMeaning: 'গেরিলা বা অনিয়মিত গেরিলা যোদ্ধা , গরিলা',
       pronunciation: '/ɡəˈrɪl.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit13: UnitInfo = {
       id: 'u13_hostility_9',
       unitId: 13,
       word: 'Hostility',
-      banglaMeaning: 'শত্রুতা , বৈরিতা',
+      banglaMeaning: 'শত্রুতা , বৈরিতা , প্রতিকূলতা , প্রতিকূলাচরণ',
       pronunciation: '/hɒsˈtɪl.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit13: UnitInfo = {
       id: 'u13_incursion_10',
       unitId: 13,
       word: 'Incursion',
-      banglaMeaning: 'সীমান্ত লঙ্ঘন করে আকস্মিক হানা বা আক্রমণ',
+      banglaMeaning: 'সীমান্ত লঙ্ঘন করে আকস্মিক হানা বা আক্রমণ , শত্রুর অনুপ্রবেশ , হঠাৎ আক্রমণ হানা',
       pronunciation: '/ɪnˈkɜː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit13: UnitInfo = {
       id: 'u13_kinetic_12',
       unitId: 13,
       word: 'Kinetic',
-      banglaMeaning: 'সরাসরি সামরিক শক্তির প্রয়োগ সংক্রান্ত',
+      banglaMeaning: 'সরাসরি সামরিক শক্তির প্রয়োগ সংক্রান্ত , গতিসম্পর্কিত',
       pronunciation: '/kɪˈnet.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit13: UnitInfo = {
       id: 'u13_logistics_13',
       unitId: 13,
       word: 'Logistics',
-      banglaMeaning: 'রসদ সরবরাহ ও সামরিক রণকৌশলগত ব্যবস্থাপনা',
+      banglaMeaning: 'রসদ সরবরাহ ও সামরিক রণকৌশলগত ব্যবস্থাপনা , সৈন্য , যুদ্ধের বিভিন্ন বিদ্যা',
       pronunciation: '/ləˈdʒɪs.tɪks/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit13: UnitInfo = {
       id: 'u13_neutrality_15',
       unitId: 13,
       word: 'Neutrality',
-      banglaMeaning: 'নিরপেক্ষতা , যুদ্ধে কোনো পক্ষ না নেওয়া',
+      banglaMeaning: 'নিরপেক্ষতা , যুদ্ধে কোনো পক্ষ না নেওয়া , সমদর্শিতা , অপক্ষপাত',
       pronunciation: '/njuːˈtræl.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit13: UnitInfo = {
       id: 'u13_occupation_16',
       unitId: 13,
       word: 'Occupation',
-      banglaMeaning: 'পররাষ্ট্র কর্তৃক ভূখণ্ড দখল',
+      banglaMeaning: 'পররাষ্ট্র কর্তৃক ভূখণ্ড দখল , পেশা , বৃত্তি , অধিকার',
       pronunciation: '/ˌɒk.jəˈpeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit13: UnitInfo = {
       id: 'u13_quell_18',
       unitId: 13,
       word: 'Quell',
-      banglaMeaning: 'বিদ্রোহ বা বিশৃঙ্খলা কঠোরভাবে দমন করা',
+      banglaMeaning: 'বিদ্রোহ বা বিশৃঙ্খলা কঠোরভাবে দমন করা , বশে আনা , নেভান , প্রশমিত করা',
       pronunciation: '/kwel/',
       partOfSpeech: 'verb',
       examples: [
@@ -336,7 +336,7 @@ export const unit13: UnitInfo = {
       id: 'u13_reprisal_19',
       unitId: 13,
       word: 'Reprisal',
-      banglaMeaning: 'প্রতিশোধমূলক হামলা বা সামরিক প্রত্যাঘাত',
+      banglaMeaning: 'প্রতিশোধমূলক হামলা বা সামরিক প্রত্যাঘাত , প্রতিশোধমূলক কর্ম , প্রতিহিংসামূলক কর্ম , বদলা',
       pronunciation: '/rɪˈpraɪ.zəl/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit13: UnitInfo = {
       id: 'u13_sanction_20',
       unitId: 13,
       word: 'Sanction',
-      banglaMeaning: 'আন্তর্জাতিক নিষেধাজ্ঞা',
+      banglaMeaning: 'আন্তর্জাতিক নিষেধাজ্ঞা , অনুমোদন , অনুজ্ঞা , অনুমতি',
       pronunciation: '/ˈsæŋk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit13: UnitInfo = {
       id: 'u13_truce_21',
       unitId: 13,
       word: 'Truce',
-      banglaMeaning: 'সাময়িক যুদ্ধবিরতি',
+      banglaMeaning: 'সাময়িক যুদ্ধবিরতি , ক্ষণিক রণাবসান',
       pronunciation: '/truːs/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit13: UnitInfo = {
       id: 'u13_uprising_22',
       unitId: 13,
       word: 'Uprising',
-      banglaMeaning: 'গণঅভ্যুত্থান বা বিদ্রোহ',
+      banglaMeaning: 'গণঅভ্যুত্থান বা বিদ্রোহ , উত্থান , শয্যাত্যাগ',
       pronunciation: '/ˈʌpˌraɪ.zɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit13: UnitInfo = {
       id: 'u13_vanguard_23',
       unitId: 13,
       word: 'Vanguard',
-      banglaMeaning: 'অগ্রবর্তী বাহিনী বা অগ্রদূত',
+      banglaMeaning: 'অগ্রবর্তী বাহিনী বা অগ্রদূত , তেতৃবৃন্দ , অগ্রণী , অগ্রগামী সৈন্য',
       pronunciation: '/ˈvæn.ɡɑːd/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit13: UnitInfo = {
       id: 'u13_warfare_24',
       unitId: 13,
       word: 'Warfare',
-      banglaMeaning: 'যুদ্ধ পরিচালনা বা সমরবিদ্যা',
+      banglaMeaning: 'যুদ্ধ পরিচালনা বা সমরবিদ্যা , যুদ্ধকালীন অবস্থা , যুদ্ধযাত্রা',
       pronunciation: '/ˈwɔː.feər/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit13: UnitInfo = {
       id: 'u13_annexation_25',
       unitId: 13,
       word: 'Annexation',
-      banglaMeaning: 'জোরপূর্বক ভূখণ্ড অন্তর্ভুক্তি বা আত্মসাৎ',
+      banglaMeaning: 'জোরপূর্বক ভূখণ্ড অন্তর্ভুক্তি বা আত্মসাৎ , দখল , অধিকার , আত্মসাত্করণ',
       pronunciation: '/ˌæn.ekˈseɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit13: UnitInfo = {
       id: 'u13_blockade_26',
       unitId: 13,
       word: 'Blockade',
-      banglaMeaning: 'অবরোধ , নৌ বা স্থলপথে যোগাযোগ বিচ্ছিন্নকরণ',
+      banglaMeaning: 'অবরোধ , নৌ বা স্থলপথে যোগাযোগ বিচ্ছিন্নকরণ , ঘেরাত্ত',
       pronunciation: '/blɒkˈeɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit13: UnitInfo = {
       id: 'u13_embargo_29',
       unitId: 13,
       word: 'Embargo',
-      banglaMeaning: 'বাণিজ্যিক নিষেধাজ্ঞা বা পণ্য রপ্তানি বন্ধের আদেশ',
+      banglaMeaning: 'বাণিজ্যিক নিষেধাজ্ঞা বা পণ্য রপ্তানি বন্ধের আদেশ , আরোধ , বারণ , বাধা',
       pronunciation: '/ɪmˈbɑː.ɡəʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit13: UnitInfo = {
       id: 'u13_flank_30',
       unitId: 13,
       word: 'Flank',
-      banglaMeaning: 'সামরিক বাহিনীর পাশ বা প্রান্তভাগ',
+      banglaMeaning: 'সামরিক বাহিনীর পাশ বা প্রান্তভাগ , পাহাড় , পার্শ্বদেশ , কাঁক',
       pronunciation: '/flæŋk/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit13: UnitInfo = {
       id: 'u13_garrison_31',
       unitId: 13,
       word: 'Garrison',
-      banglaMeaning: 'সেনানিবাস বা দুর্গ পাহারা দেওয়া সৈন্যদল',
+      banglaMeaning: 'সেনানিবাস বা দুর্গ পাহারা দেওয়া সৈন্যদল , সৈন্যদল পাঠিয়ে দূর্গ',
       pronunciation: '/ˈɡær.ɪ.sən/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit13: UnitInfo = {
       id: 'u13_hegemony_32',
       unitId: 13,
       word: 'Hegemony',
-      banglaMeaning: 'সার্বভৌম ভূ-রাজনৈতিক আধিপত্য',
+      banglaMeaning: 'সার্বভৌম ভূ-রাজনৈতিক আধিপত্য , কর্তৃত্ব , নেতৃত্ব',
       pronunciation: '/hɪˈɡem.ə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit13: UnitInfo = {
       id: 'u13_insurrection_33',
       unitId: 13,
       word: 'Insurrection',
-      banglaMeaning: 'রাষ্ট্রের বিরুদ্ধে সশস্ত্র বিদ্রোহ',
+      banglaMeaning: 'রাষ্ট্রের বিরুদ্ধে সশস্ত্র বিদ্রোহ , উপপ্লব',
       pronunciation: '/ˌɪn.sərˈek.ʃən/',
       partOfSpeech: 'noun',
       examples: [

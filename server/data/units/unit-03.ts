@@ -12,7 +12,7 @@ export const unit03: UnitInfo = {
       id: 'u3_apathy_1',
       unitId: 3,
       word: 'Apathy',
-      banglaMeaning: 'উদাসীনতা , অনীহা',
+      banglaMeaning: 'উদাসীনতা , অনীহা , ঔদাসীন্য , অনাগ্রহ',
       pronunciation: '/ˈæp.ə.θi/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit03: UnitInfo = {
       id: 'u3_benevolence_2',
       unitId: 3,
       word: 'Benevolence',
-      banglaMeaning: 'পরোপকারিতা , দয়াশীলতা',
+      banglaMeaning: 'পরোপকারিতা , দয়াশীলতা , উপকার করার ইচ্ছা , কল্যাণমূলক কার্যকলাপ',
       pronunciation: '/bəˈnev.əl.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit03: UnitInfo = {
       id: 'u3_candor_3',
       unitId: 3,
       word: 'Candor',
-      banglaMeaning: 'অকপটতা , অকপট সত্যবাদিতা',
+      banglaMeaning: 'অকপটতা , অকপট সত্যবাদিতা , সারল্য , সরলতা',
       pronunciation: '/ˈkæn.dər/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit03: UnitInfo = {
       id: 'u3_disdain_4',
       unitId: 3,
       word: 'Disdain',
-      banglaMeaning: 'তাচ্ছিল্য , অবজ্ঞা',
+      banglaMeaning: 'তাচ্ছিল্য , অবজ্ঞা , অনাদর , ঘৃণা',
       pronunciation: '/dɪsˈdeɪn/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit03: UnitInfo = {
       id: 'u3_empathy_5',
       unitId: 3,
       word: 'Empathy',
-      banglaMeaning: 'সহমর্মিতা , অপরের অনুভূতি উপলব্ধি',
+      banglaMeaning: 'সহমর্মিতা , অপরের অনুভূতি উপলব্ধি , সহানুভূতি',
       pronunciation: '/ˈem.pə.θi/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit03: UnitInfo = {
       id: 'u3_fervor_6',
       unitId: 3,
       word: 'Fervor',
-      banglaMeaning: 'উদ্দাম উদ্দীপনা , ব্যাকুলতা',
+      banglaMeaning: 'উদ্দাম উদ্দীপনা , ব্যাকুলতা , উত্সাহ , তাপ',
       pronunciation: '/ˈfɜː.vər/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit03: UnitInfo = {
       id: 'u3_guile_7',
       unitId: 3,
       word: 'Guile',
-      banglaMeaning: 'ধূর্ততা , প্রতারণাপূর্ণ চাতুরী',
+      banglaMeaning: 'ধূর্ততা , প্রতারণাপূর্ণ চাতুরী , ছলনা , কপটতা',
       pronunciation: '/ɡaɪl/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit03: UnitInfo = {
       id: 'u3_hubris_8',
       unitId: 3,
       word: 'Hubris',
-      banglaMeaning: 'অহমিকা , মাত্রাতিরিক্ত দম্ভ',
+      banglaMeaning: 'অহমিকা , মাত্রাতিরিক্ত দম্ভ , অযথা গর্ব , ঔদ্ধত্য',
       pronunciation: '/ˈhjuː.brɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit03: UnitInfo = {
       id: 'u3_indignation_9',
       unitId: 3,
       word: 'Indignation',
-      banglaMeaning: 'ন্যায়সঙ্গত ক্ষোভ , অবিচারের বিরুদ্ধে ক্রোধ',
+      banglaMeaning: 'ন্যায়সঙ্গত ক্ষোভ , অবিচারের বিরুদ্ধে ক্রোধ , ঘৃণামিশ্রিত ক্রোধ , ধিক্কার',
       pronunciation: '/ˌɪn.dɪɡˈneɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit03: UnitInfo = {
       id: 'u3_jubilation_10',
       unitId: 3,
       word: 'Jubilation',
-      banglaMeaning: 'উল্লাস , আনন্দোৎসব',
+      banglaMeaning: 'উল্লাস , আনন্দোৎসব , আনন্দধ্বনি , জয়ধ্বনি',
       pronunciation: '/ˌdʒuː.bəlˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit03: UnitInfo = {
       id: 'u3_kinship_11',
       unitId: 3,
       word: 'Kinship',
-      banglaMeaning: 'আত্মীয়তা , অন্তরের গভীর বন্ধন',
+      banglaMeaning: 'আত্মীয়তা , অন্তরের গভীর বন্ধন , জ্ঞাতিত্ব , সম্পর্ক',
       pronunciation: '/ˈkɪn.ʃɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit03: UnitInfo = {
       id: 'u3_melancholy_12',
       unitId: 3,
       word: 'Melancholy',
-      banglaMeaning: 'বিষাদ , বিষাদময় উদাসীনতা',
+      banglaMeaning: 'বিষাদ , বিষাদময় উদাসীনতা , অবসাদ , হতাশ',
       pronunciation: '/ˈmel.ən.kɒl.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit03: UnitInfo = {
       id: 'u3_nostalgia_13',
       unitId: 3,
       word: 'Nostalgia',
-      banglaMeaning: 'অতীতস্মৃতিজনিত ব্যাকুলতা , ফেলে আসা দিনের স্মৃতিকাতরতা',
+      banglaMeaning: 'অতীতস্মৃতিজনিত ব্যাকুলতা , ফেলে আসা দিনের স্মৃতিকাতরতা , গৃহাকুলতা , স্মরণবেদনা',
       pronunciation: '/nɒsˈtæl.dʒə/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit03: UnitInfo = {
       id: 'u3_opulence_14',
       unitId: 3,
       word: 'Opulence',
-      banglaMeaning: 'বিলাসিতা , প্রাচুর্যপূর্ণ সম্পদ',
+      banglaMeaning: 'বিলাসিতা , প্রাচুর্যপূর্ণ সম্পদ , বিত্ত , বৈভব',
       pronunciation: '/ˈɒp.jə.ləns/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit03: UnitInfo = {
       id: 'u3_pathos_15',
       unitId: 3,
       word: 'Pathos',
-      banglaMeaning: 'বেদনাদায়ক করুণ রস , সমবেদনা উদ্রেককারী গুণ',
+      banglaMeaning: 'বেদনাদায়ক করুণ রস , সমবেদনা উদ্রেককারী গুণ , উদ্দীপনা , উদ্যম',
       pronunciation: '/ˈpeɪ.θɒs/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit03: UnitInfo = {
       id: 'u3_remorse_16',
       unitId: 3,
       word: 'Remorse',
-      banglaMeaning: 'অনুতাপ , অপরাধবোধ থেকে কষ্ট',
+      banglaMeaning: 'অনুতাপ , অপরাধবোধ থেকে কষ্ট , তীব্র অনুশোচনা , প্রবল আক্ষেপ',
       pronunciation: '/rɪˈmɔːs/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit03: UnitInfo = {
       id: 'u3_serenity_17',
       unitId: 3,
       word: 'Serenity',
-      banglaMeaning: 'প্রশান্তি , স্নিগ্ধ স্থিরতা',
+      banglaMeaning: 'প্রশান্তি , স্নিগ্ধ স্থিরতা , নির্মলতা',
       pronunciation: '/səˈren.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit03: UnitInfo = {
       id: 'u3_trepidation_18',
       unitId: 3,
       word: 'Trepidation',
-      banglaMeaning: 'ভয়মিশ্রিত উদ্বেগ , দুরুদুরু শঙ্কা',
+      banglaMeaning: 'ভয়মিশ্রিত উদ্বেগ , দুরুদুরু শঙ্কা , কম্পন , ধড়্ফড়ানি',
       pronunciation: '/ˌtrep.ɪˈdeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit03: UnitInfo = {
       id: 'u3_zeal_20',
       unitId: 3,
       word: 'Zeal',
-      banglaMeaning: 'প্রবল উৎসাহ , উদ্দীপনা ও নিষ্ঠা',
+      banglaMeaning: 'প্রবল উৎসাহ , উদ্দীপনা ও নিষ্ঠা , গভীর অনুভূতি , প্রোত্সাহ',
       pronunciation: '/ziːl/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit03: UnitInfo = {
       id: 'u3_anguish_21',
       unitId: 3,
       word: 'Anguish',
-      banglaMeaning: 'তীব্র মানসিক বা শারীরিক যন্ত্রণা',
+      banglaMeaning: 'তীব্র মানসিক বা শারীরিক যন্ত্রণা , মনোবেদনা , সন্তাপ , মনস্তাপ',
       pronunciation: '/ˈæŋ.ɡwɪʃ/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit03: UnitInfo = {
       id: 'u3_bliss_22',
       unitId: 3,
       word: 'Bliss',
-      banglaMeaning: 'পরম সুখ , স্বর্গীয় আনন্দ',
+      banglaMeaning: 'পরম সুখ , স্বর্গীয় আনন্দ , স্বর্গবাস , মঙ্গল',
       pronunciation: '/blɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit03: UnitInfo = {
       id: 'u3_compassion_23',
       unitId: 3,
       word: 'Compassion',
-      banglaMeaning: 'সহানুভূতি , অপরের প্রতি মমতা',
+      banglaMeaning: 'সহানুভূতি , অপরের প্রতি মমতা , করুণা , অনুকম্পা',
       pronunciation: '/kəmˈpæʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit03: UnitInfo = {
       id: 'u3_grief_26',
       unitId: 3,
       word: 'Grief',
-      banglaMeaning: 'গভীর শোক , স্বজন হারানোর বেদনা',
+      banglaMeaning: 'গভীর শোক , স্বজন হারানোর বেদনা , গভীর দুঃখ , প্রবল মনোবেদনা',
       pronunciation: '/ɡriːf/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit03: UnitInfo = {
       id: 'u3_humility_27',
       unitId: 3,
       word: 'Humility',
-      banglaMeaning: 'নম্রতা , বিনয়',
+      banglaMeaning: 'নম্রতা , বিনয় , নীচাবস্থা , অবমানিত অবস্থা',
       pronunciation: '/hjuːˈmɪl.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit03: UnitInfo = {
       id: 'u3_irritation_28',
       unitId: 3,
       word: 'Irritation',
-      banglaMeaning: 'বিরক্তি , ক্রোধের উদ্রেক',
+      banglaMeaning: 'বিরক্তি , ক্রোধের উদ্রেক , উপদ্রব , জালাতন',
       pronunciation: '/ˌɪr.ɪˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit03: UnitInfo = {
       id: 'u3_lethargy_29',
       unitId: 3,
       word: 'Lethargy',
-      banglaMeaning: 'নিষ্ক্রিয়তা , অবসন্নতা',
+      banglaMeaning: 'নিষ্ক্রিয়তা , অবসন্নতা , ক্লান্তি , উদ্যমহীনতা',
       pronunciation: '/ˈleθ.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit03: UnitInfo = {
       id: 'u3_morose_30',
       unitId: 3,
       word: 'Morose',
-      banglaMeaning: 'বিষণ্ণ ও খিটখিটে স্বভাবের',
+      banglaMeaning: 'বিষণ্ণ ও খিটখিটে স্বভাবের , রুক্ষ , গোমড়া মুখ',
       pronunciation: '/məˈrəʊs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit03: UnitInfo = {
       id: 'u3_pensive_31',
       unitId: 3,
       word: 'Pensive',
-      banglaMeaning: 'গভীর চিন্তামগ্ন , উদাসীন চিন্তিত',
+      banglaMeaning: 'গভীর চিন্তামগ্ন , উদাসীন চিন্তিত , চিন্তানিমগ্ন , চিন্তাশীল',
       pronunciation: '/ˈpen.sɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -570,7 +570,7 @@ export const unit03: UnitInfo = {
       id: 'u3_resentment_32',
       unitId: 3,
       word: 'Resentment',
-      banglaMeaning: 'পুঞ্জীভূত ক্ষোভ , তিক্ত অসন্তোষ',
+      banglaMeaning: 'পুঞ্জীভূত ক্ষোভ , তিক্ত অসন্তোষ , বিরক্তিভাব , তীব্র বিরক্তি',
       pronunciation: '/rɪˈzent.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit03: UnitInfo = {
       id: 'u3_solemn_33',
       unitId: 3,
       word: 'Solemn',
-      banglaMeaning: 'গম্ভীর ও ভাবগম্ভীর , মর্যাদাপূর্ণ',
+      banglaMeaning: 'গম্ভীর ও ভাবগম্ভীর , মর্যাদাপূর্ণ , আনুষ্ঠানিক , জাঁকজমকপূর্ণ',
       pronunciation: '/ˈsɒl.əm/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit03: UnitInfo = {
       id: 'u3_vexation_34',
       unitId: 3,
       word: 'Vexation',
-      banglaMeaning: 'বিরক্তি , মনস্তাপ',
+      banglaMeaning: 'বিরক্তি , মনস্তাপ , হয়রানি , দিক্',
       pronunciation: '/vekˈseɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [

@@ -30,7 +30,7 @@ export const unit36: UnitInfo = {
       id: 'u36_aphorism_2',
       unitId: 36,
       word: 'Aphorism',
-      banglaMeaning: 'বাণী, সূত্র',
+      banglaMeaning: 'বাণী, সূত্র , সূক্ত , সুভাষিত',
       pronunciation: '/ˈaphorism/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apiary_4',
       unitId: 36,
       word: 'Apiary',
-      banglaMeaning: 'মধুমক্ষিশালা, মউমাছি পালনের স্থান',
+      banglaMeaning: 'মধুমক্ষিশালা, মউমাছি পালনের স্থান , মৌমাছি সংরক্ষণাগার , মৌমাছি পালনকেন্দ্র',
       pronunciation: '/ˈapiary/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apolitical_9',
       unitId: 36,
       word: 'Apolitical',
-      banglaMeaning: 'অরাজনৈতিক, রাজনৈতিক প্রভাবমুক্ত',
+      banglaMeaning: 'অরাজনৈতিক, রাজনৈতিক প্রভাবমুক্ত , রাজনীতি-উদাসীন',
       pronunciation: '/ˈapolitical/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apothegm_14',
       unitId: 36,
       word: 'Apothegm',
-      banglaMeaning: 'পিথি, কম্প্যাক্ট কথা',
+      banglaMeaning: 'পিথি, কম্প্যাক্ট কথা , রিসালাত',
       pronunciation: '/ˈapothegm/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apotheosis_15',
       unitId: 36,
       word: 'Apotheosis',
-      banglaMeaning: 'মহিমান্বয়ন, নাটকের শেষ',
+      banglaMeaning: 'মহিমান্বয়ন, নাটকের শেষ , দেবত্ব আরোপ , চরম বিকাশ',
       pronunciation: '/ˈapotheosis/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit36: UnitInfo = {
       id: 'u36_appall_16',
       unitId: 36,
       word: 'Appall',
-      banglaMeaning: 'ভীত করা, ধমক দেত্তয়া',
+      banglaMeaning: 'ভীত করা, ধমক দেওয়া',
       pronunciation: '/ˈappall/',
       partOfSpeech: 'adverb',
       examples: [
@@ -300,7 +300,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apparent_17',
       unitId: 36,
       word: 'Apparent',
-      banglaMeaning: 'আপাত, প্রতীয়মান',
+      banglaMeaning: 'আপাত, প্রতীয়মান , দৃশ্যমান , স্পষ্ট',
       pronunciation: '/ˈapparent/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apparition_18',
       unitId: 36,
       word: 'Apparition',
-      banglaMeaning: 'আবির্ভাব, ভূত',
+      banglaMeaning: 'আবির্ভাব, ভূত , অপচ্ছায়া , পেতনী',
       pronunciation: '/ˈapparition/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit36: UnitInfo = {
       id: 'u36_appellation_20',
       unitId: 36,
       word: 'Appellation',
-      banglaMeaning: 'খেতাব, পদবি',
+      banglaMeaning: 'খেতাব, পদবি , উপনাম , উপাধি',
       pronunciation: '/ˈappellation/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit36: UnitInfo = {
       id: 'u36_append_21',
       unitId: 36,
       word: 'Append',
-      banglaMeaning: 'যুক্ত করা, নিম্নদেশে ঝুলাইয়া দেত্তয়া',
+      banglaMeaning: 'যুক্ত করা, নিম্নদেশে ঝুলাইয়া দেওয়া',
       pronunciation: '/ˈappend/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit36: UnitInfo = {
       id: 'u36_application_22',
       unitId: 36,
       word: 'Application',
-      banglaMeaning: 'আবেদন, আবেদনপত্র',
+      banglaMeaning: 'আবেদন, আবেদনপত্র , দরখাস্ত , প্রয়োগ',
       pronunciation: '/ˈapplication/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apposite_23',
       unitId: 36,
       word: 'Apposite',
-      banglaMeaning: 'যথাযথ, ক্ষম',
+      banglaMeaning: 'যথাযথ, ক্ষম , উপযুক্ত , যথাযোগ্য',
       pronunciation: '/ˈapposite/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit36: UnitInfo = {
       id: 'u36_appraise_24',
       unitId: 36,
       word: 'Appraise',
-      banglaMeaning: 'নিরূপণ, নির্ধারণ',
+      banglaMeaning: 'নিরূপণ, নির্ধারণ , দাম ধরা',
       pronunciation: '/ˈappraise/',
       partOfSpeech: 'adjective',
       examples: [
@@ -444,7 +444,7 @@ export const unit36: UnitInfo = {
       id: 'u36_appreciate_25',
       unitId: 36,
       word: 'Appreciate',
-      banglaMeaning: 'তারিফ করা, মর্ম উপলব্ধি করা',
+      banglaMeaning: 'তারিফ করা, মর্ম উপলব্ধি করা , সমাদর করা , গুণাবলী করা',
       pronunciation: '/ˈappreciate/',
       partOfSpeech: 'verb',
       examples: [
@@ -462,7 +462,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apprehend_26',
       unitId: 36,
       word: 'Apprehend',
-      banglaMeaning: 'ধরা, আশঙ্কা করা',
+      banglaMeaning: 'ধরা, আশঙ্কা করা , পাকড়ানো , বুঝিতে পারা',
       pronunciation: '/ˈapprehend/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apprehensive_27',
       unitId: 36,
       word: 'Apprehensive',
-      banglaMeaning: 'শঙ্কিত, উদ্বিগ্ন',
+      banglaMeaning: 'শঙ্কিত, উদ্বিগ্ন , শঙ্কাকুল , সন্দিগ্ধ',
       pronunciation: '/ˈapprehensive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apprise_28',
       unitId: 36,
       word: 'Apprise',
-      banglaMeaning: 'জ্ঞাপন করা, পরিচয় দেত্তয়া',
+      banglaMeaning: 'জ্ঞাপন করা, পরিচয় দেওয়া , গোচরে আনা , জানানো',
       pronunciation: '/ˈapprise/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit36: UnitInfo = {
       id: 'u36_appropriate_30',
       unitId: 36,
       word: 'Appropriate',
-      banglaMeaning: 'উপযুক্ত, উপযোগী',
+      banglaMeaning: 'উপযুক্ত, উপযোগী , জুতসই , সুসংগত',
       pronunciation: '/ˈappropriate/',
       partOfSpeech: 'verb',
       examples: [
@@ -570,7 +570,7 @@ export const unit36: UnitInfo = {
       id: 'u36_apropos_32',
       unitId: 36,
       word: 'Apropos',
-      banglaMeaning: 'প্রসঙ্গত, এতত্সম্পর্কে',
+      banglaMeaning: 'প্রসঙ্গত, এতত্সম্পর্কে , উদ্দেশ্যে , যথাযথভাবে',
       pronunciation: '/ˈapropos/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit36: UnitInfo = {
       id: 'u36_aptitude_33',
       unitId: 36,
       word: 'Aptitude',
-      banglaMeaning: 'প্রবণতা, তত্পরতা',
+      banglaMeaning: 'প্রবণতা, তত্পরতা , ঝোঁক , স্বাভাবিক ক্ষমতা',
       pronunciation: '/ˈaptitude/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit36: UnitInfo = {
       id: 'u36_aquiline_34',
       unitId: 36,
       word: 'Aquiline',
-      banglaMeaning: 'ঈগল পাখির মতো, বাঁশির মতো নাক',
+      banglaMeaning: 'ঈগল পাখির মতো, বাঁশির মতো নাক , টিকোলো নাক',
       pronunciation: '/ˈaquiline/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit36: UnitInfo = {
       id: 'u36_arable_35',
       unitId: 36,
       word: 'Arable',
-      banglaMeaning: 'আবাদী, কার্ষ',
+      banglaMeaning: 'আবাদী, কার্ষ , চাষোপযোগী , কর্ষণযোগ্য',
       pronunciation: '/ˈarable/',
       partOfSpeech: 'adjective',
       examples: [
@@ -642,7 +642,7 @@ export const unit36: UnitInfo = {
       id: 'u36_arbiter_36',
       unitId: 36,
       word: 'Arbiter',
-      banglaMeaning: 'সালিশ, বিচারক',
+      banglaMeaning: 'সালিশ, বিচারক , মধ্যস্থ , মীমাংসাকারী',
       pronunciation: '/ˈarbiter/',
       partOfSpeech: 'verb',
       examples: [
@@ -660,7 +660,7 @@ export const unit36: UnitInfo = {
       id: 'u36_arbitrary_37',
       unitId: 36,
       word: 'Arbitrary',
-      banglaMeaning: 'অবাধ, বিধিবহির্ভূত',
+      banglaMeaning: 'অবাধ, বিধিবহির্ভূত , আবেগের বশে চালিত , খেয়ালমাফিক',
       pronunciation: '/ˈarbitrary/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit36: UnitInfo = {
       id: 'u36_arbitrate_38',
       unitId: 36,
       word: 'Arbitrate',
-      banglaMeaning: 'মধ্যস্থতা করা, সালিস করা',
+      banglaMeaning: 'মধ্যস্থতা করা, সালিস করা , স্থির করা , নিষ্পত্তি করা',
       pronunciation: '/ˈarbitrate/',
       partOfSpeech: 'verb',
       examples: [
@@ -696,7 +696,7 @@ export const unit36: UnitInfo = {
       id: 'u36_arboreal_39',
       unitId: 36,
       word: 'Arboreal',
-      banglaMeaning: 'বৃক্ষবাসী, ব্রাক্ষ',
+      banglaMeaning: 'বৃক্ষবাসী, ব্রাক্ষ , বৃক্ষ সম্পর্কিত , বৃক্ষচারী',
       pronunciation: '/ˈarboreal/',
       partOfSpeech: 'adjective',
       examples: [

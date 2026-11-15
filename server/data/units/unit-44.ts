@@ -12,7 +12,7 @@ export const unit44: UnitInfo = {
       id: 'u44_buffet_1',
       unitId: 44,
       word: 'Buffet',
-      banglaMeaning: 'ঘুষা, ঘুসি',
+      banglaMeaning: 'ঘুষা, ঘুসি , স্ব-পরিবেশন কাউন্টার , ঘুষি মারা',
       pronunciation: '/ˈbuffet/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit44: UnitInfo = {
       id: 'u44_buffoon_2',
       unitId: 44,
       word: 'Buffoon',
-      banglaMeaning: 'ভাঁড়, বিদূষক',
+      banglaMeaning: 'ভাঁড়, বিদূষক , জোকার',
       pronunciation: '/ˈbuffoon/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit44: UnitInfo = {
       id: 'u44_buffoonery_3',
       unitId: 44,
       word: 'Buffoonery',
-      banglaMeaning: 'মস্করা, ভাঁড়ামি',
+      banglaMeaning: 'মস্করা, ভাঁড়ামি , ভাঁড়গিরি',
       pronunciation: '/ˈbuffoonery/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit44: UnitInfo = {
       id: 'u44_bulk_6',
       unitId: 44,
       word: 'Bulk',
-      banglaMeaning: 'আয়তন, বপু',
+      banglaMeaning: 'আয়তন, বপু , পরিসর , স্তূপ',
       pronunciation: '/ˈbulk/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit44: UnitInfo = {
       id: 'u44_bully_8',
       unitId: 44,
       word: 'Bully',
-      banglaMeaning: 'চমত্কার!, শাবাশ!',
+      banglaMeaning: 'চমত্কার!, শাবাশ! , মস্তান , সেরা',
       pronunciation: '/ˈbully/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit44: UnitInfo = {
       id: 'u44_bulwark_9',
       unitId: 44,
       word: 'Bulwark',
-      banglaMeaning: 'প্রাকার, আত্মরক্ষার উপায়',
+      banglaMeaning: 'প্রাকার, আত্মরক্ষার উপায় , বুরুজ',
       pronunciation: '/ˈbulwark/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit44: UnitInfo = {
       id: 'u44_bump_10',
       unitId: 44,
       word: 'Bump',
-      banglaMeaning: 'আচমকা, অকস্মাৎ',
+      banglaMeaning: 'আচমকা, অকস্মাৎ , ধাক্কা , সঙ্ঘাত',
       pronunciation: '/ˈbump/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit44: UnitInfo = {
       id: 'u44_bungle_11',
       unitId: 44,
       word: 'Bungle',
-      banglaMeaning: 'অকার্য, বিশৃঙ্খলা',
+      banglaMeaning: 'অকার্য, বিশৃঙ্খলা , তালগোল পাকানো , মারাত্মক ভুল',
       pronunciation: '/ˈbungle/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit44: UnitInfo = {
       id: 'u44_buoyant_12',
       unitId: 44,
       word: 'Buoyant',
-      banglaMeaning: 'প্রফুল্ল, প্রাণবন্ত',
+      banglaMeaning: 'প্রফুল্ল, প্রাণবন্ত , ভাসতে সক্ষম , প্লবমান',
       pronunciation: '/ˈbuoyant/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit44: UnitInfo = {
       id: 'u44_burgeon_13',
       unitId: 44,
       word: 'Burgeon',
-      banglaMeaning: 'কুঁড়ি, মুকুল',
+      banglaMeaning: 'কুঁড়ি, মুকুল , দ্রুত বেড়ে ওঠা',
       pronunciation: '/ˈburgeon/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit44: UnitInfo = {
       id: 'u44_burlesque_14',
       unitId: 44,
       word: 'Burlesque',
-      banglaMeaning: 'অনুকরণ বা নকল করা',
+      banglaMeaning: 'অনুকরণ বা নকল করা , ব্যঙ্গাত্মক অনুকরণ',
       pronunciation: '/ˈburlesque/',
       partOfSpeech: 'verb',
       examples: [
@@ -264,7 +264,7 @@ export const unit44: UnitInfo = {
       id: 'u44_burnish_15',
       unitId: 44,
       word: 'Burnish',
-      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের',
+      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের , পালিশ তোলা , চাকচিক্য , পালিশ করা',
       pronunciation: '/ˈburnish/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit44: UnitInfo = {
       id: 'u44_bust_16',
       unitId: 44,
       word: 'Bust',
-      banglaMeaning: 'আবক্ষ মূর্তি, বক্ষ',
+      banglaMeaning: 'আবক্ষ মূর্তি, বক্ষ , ব্যর্থতা , ঘঁসি',
       pronunciation: '/ˈbust/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit44: UnitInfo = {
       id: 'u44_cache_18',
       unitId: 44,
       word: 'Cache',
-      banglaMeaning: 'খাদ্যাদির গুপ্ত ভাণ্ডার, গুপ্ত ভাণ্ডারে লুকাইয়া রাখা',
+      banglaMeaning: 'খাদ্যাদির গুপ্ত ভাণ্ডার, গুপ্ত ভাণ্ডারে লুকাইয়া রাখা , ক্যাশে',
       pronunciation: '/ˈcache/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit44: UnitInfo = {
       id: 'u44_cadence_22',
       unitId: 44,
       word: 'Cadence',
-      banglaMeaning: 'সুরের মুর্ছনা, সুরপ্রবাহ',
+      banglaMeaning: 'সুরের মুর্ছনা, সুরপ্রবাহ , শব্দের ছন্দময় দোলা , সুরের লয়',
       pronunciation: '/ˈcadence/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit44: UnitInfo = {
       id: 'u44_cajole_23',
       unitId: 44,
       word: 'Cajole',
-      banglaMeaning: 'প্রশংসা করা বা সাধুবাদ জানানো',
+      banglaMeaning: 'প্রশংসা করা বা সাধুবাদ জানানো , চুমরান , ভুলান',
       pronunciation: '/ˈcajole/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit44: UnitInfo = {
       id: 'u44_calamity_24',
       unitId: 44,
       word: 'Calamity',
-      banglaMeaning: 'ক্লেশ, প্রমাদ',
+      banglaMeaning: 'ক্লেশ, প্রমাদ , বিরাট দুর্ভাগ্য , ব্যসন',
       pronunciation: '/ˈcalamity/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit44: UnitInfo = {
       id: 'u44_calculated_25',
       unitId: 44,
       word: 'Calculated',
-      banglaMeaning: 'গণনালব্ধ, পূর্বনির্ধারিত',
+      banglaMeaning: 'গণনালব্ধ, পূর্বনির্ধারিত , গণিত , বিবেচিত',
       pronunciation: '/ˈcalculated/',
       partOfSpeech: 'adverb',
       examples: [
@@ -462,7 +462,7 @@ export const unit44: UnitInfo = {
       id: 'u44_caliber_26',
       unitId: 44,
       word: 'Caliber',
-      banglaMeaning: 'ধীশক্তি, ক্ষমতা',
+      banglaMeaning: 'ধীশক্তি, ক্ষমতা , চারিত্রিক গুণ , গুলির ব্যাস',
       pronunciation: '/ˈcaliber/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit44: UnitInfo = {
       id: 'u44_callow_27',
       unitId: 44,
       word: 'Callow',
-      banglaMeaning: 'অনভিজ্ঞ, অজাতশ্মশ্রু',
+      banglaMeaning: 'অনভিজ্ঞ, অজাতশ্মশ্রু , অপরিণত',
       pronunciation: '/ˈcallow/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit44: UnitInfo = {
       id: 'u44_calumny_28',
       unitId: 44,
       word: 'Calumny',
-      banglaMeaning: 'অপবাদ, দুর্নাম',
+      banglaMeaning: 'অপবাদ, দুর্নাম , কলঙ্ক , বদনাম',
       pronunciation: '/ˈcalumny/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit44: UnitInfo = {
       id: 'u44_canard_30',
       unitId: 44,
       word: 'Canard',
-      banglaMeaning: 'মিথ্যা গুজব, চাঁচল্যকর গুজব',
+      banglaMeaning: 'মিথ্যা গুজব, চাঁচল্যকর গুজব , পাতিহাঁস',
       pronunciation: '/ˈcanard/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit44: UnitInfo = {
       id: 'u44_canny_31',
       unitId: 44,
       word: 'Canny',
-      banglaMeaning: 'মিতব্যয়ী, চতুর',
+      banglaMeaning: 'মিতব্যয়ী, চতুর , বিচক্ষণ , সাবধান',
       pronunciation: '/ˈcanny/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit44: UnitInfo = {
       id: 'u44_cant_32',
       unitId: 44,
       word: 'Cant',
-      banglaMeaning: 'নাকিসুরে কথা, আন্তরিকতাহীন কথা',
+      banglaMeaning: 'নাকিসুরে কথা, আন্তরিকতাহীন কথা , ভণ্ডামিপূর্ণ কথাবার্তা , ন্যাকামি',
       pronunciation: '/ˈcant/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit44: UnitInfo = {
       id: 'u44_cantankerous_33',
       unitId: 44,
       word: 'Cantankerous',
-      banglaMeaning: 'বদমেজাজী, ঝগড়াটে',
+      banglaMeaning: 'বদমেজাজী, ঝগড়াটে , কলহপরায়ণ , কুস্বভাব',
       pronunciation: '/ˈcantankerous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit44: UnitInfo = {
       id: 'u44_canvass_34',
       unitId: 44,
       word: 'Canvass',
-      banglaMeaning: 'পট, চাত্তয়া',
+      banglaMeaning: 'পট, চাওয়া , ভোট , পণ্য সরবরাহের ফরমাশ',
       pronunciation: '/ˈcanvass/',
       partOfSpeech: 'noun',
       examples: [
@@ -624,7 +624,7 @@ export const unit44: UnitInfo = {
       id: 'u44_capacious_35',
       unitId: 44,
       word: 'Capacious',
-      banglaMeaning: 'প্রশস্ত, বৃহৎ',
+      banglaMeaning: 'প্রশস্ত, বৃহৎ , সুপরিসর , ধারণক্ষম',
       pronunciation: '/ˈcapacious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -642,7 +642,7 @@ export const unit44: UnitInfo = {
       id: 'u44_capitulate_36',
       unitId: 44,
       word: 'Capitulate',
-      banglaMeaning: 'আত্মসমর্পণ করা',
+      banglaMeaning: 'আত্মসমর্পণ করা , আত্মসমপর্ণ করা',
       pronunciation: '/ˈcapitulate/',
       partOfSpeech: 'verb',
       examples: [
@@ -660,7 +660,7 @@ export const unit44: UnitInfo = {
       id: 'u44_caprice_37',
       unitId: 44,
       word: 'Caprice',
-      banglaMeaning: 'আবদার, খেয়ালখুশি',
+      banglaMeaning: 'আবদার, খেয়ালখুশি , মর্জি , অহেতুক কল্পনা',
       pronunciation: '/ˈcaprice/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit44: UnitInfo = {
       id: 'u44_carafe_39',
       unitId: 44,
       word: 'Carafe',
-      banglaMeaning: 'জার, জল রাখিবার বোতল',
+      banglaMeaning: 'জার, জল রাখিবার বোতল , জলের বোতল , মদের পাত্র',
       pronunciation: '/ˈcarafe/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit44: UnitInfo = {
       id: 'u44_cardinal_40',
       unitId: 44,
       word: 'Cardinal',
-      banglaMeaning: 'অঙ্কবাচক, প্রধান',
+      banglaMeaning: 'অঙ্কবাচক, প্রধান , মৌলিক , অপরিহার্য',
       pronunciation: '/ˈcardinal/',
       partOfSpeech: 'noun',
       examples: [

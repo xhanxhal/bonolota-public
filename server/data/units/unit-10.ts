@@ -12,7 +12,7 @@ export const unit10: UnitInfo = {
       id: 'u10_anomalous_1',
       unitId: 10,
       word: 'Anomalous',
-      banglaMeaning: 'ব্যতিক্রমী , স্বাভাবিক নিয়মের বাইরে',
+      banglaMeaning: 'ব্যতিক্রমী , স্বাভাবিক নিয়মের বাইরে , অস্বাভাবিক , অসংগতিপূর্ণ',
       pronunciation: '/əˈnɒm.ə.ləs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit10: UnitInfo = {
       id: 'u10_diffusion_3',
       unitId: 10,
       word: 'Diffusion',
-      banglaMeaning: 'ব্যাপন , ঘনত্ব কমার দিকে ছড়িয়ে পড়ার প্রক্রিয়া',
+      banglaMeaning: 'ব্যাপন , ঘনত্ব কমার দিকে ছড়িয়ে পড়ার প্রক্রিয়া , আশ্লেষ',
       pronunciation: '/dɪˈfjuː.ʒən/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit10: UnitInfo = {
       id: 'u10_empirical_4',
       unitId: 10,
       word: 'Empirical',
-      banglaMeaning: 'অভিজ্ঞতালব্ধ বা বাস্তব পরীক্ষা-নিরীক্ষা নির্ভর',
+      banglaMeaning: 'অভিজ্ঞতালব্ধ বা বাস্তব পরীক্ষা-নিরীক্ষা নির্ভর , গবেষণামূলক , প্রায়োগিক , পরীক্ষামূলক',
       pronunciation: '/ɪmˈpɪr.ɪ.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit10: UnitInfo = {
       id: 'u10_fission_5',
       unitId: 10,
       word: 'Fission',
-      banglaMeaning: 'নিউক্লীয় বিভাজন , পরমাণু ভাঙার প্রক্রিয়া',
+      banglaMeaning: 'নিউক্লীয় বিভাজন , পরমাণু ভাঙার প্রক্রিয়া , বিদারণ , বিখন্ডন',
       pronunciation: '/ˈfɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit10: UnitInfo = {
       id: 'u10_fusion_6',
       unitId: 10,
       word: 'Fusion',
-      banglaMeaning: 'সংযোজন বা নিউক্লীয় একত্রীকরণ',
+      banglaMeaning: 'সংযোজন বা নিউক্লীয় একত্রীকরণ , গলন , গলিত মিশ্রণ , একীভবন বা একীকরণ',
       pronunciation: '/ˈfjuː.ʒən/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit10: UnitInfo = {
       id: 'u10_genome_7',
       unitId: 10,
       word: 'Genome',
-      banglaMeaning: 'জীবের সমগ্র জিনোম বা বংশগতির নকশা',
+      banglaMeaning: 'জীবের সমগ্র জিনোম বা বংশগতির নকশা , জিনোমের',
       pronunciation: '/ˈdʒiː.nəʊm/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit10: UnitInfo = {
       id: 'u10_hypothesis_8',
       unitId: 10,
       word: 'Hypothesis',
-      banglaMeaning: 'অনুসিদ্ধান্ত , প্রমাণের অপেক্ষায় থাকা বৈজ্ঞানিক ধারণা',
+      banglaMeaning: 'অনুসিদ্ধান্ত , প্রমাণের অপেক্ষায় থাকা বৈজ্ঞানিক ধারণা , প্রকল্প',
       pronunciation: '/haɪˈpɒθ.ə.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit10: UnitInfo = {
       id: 'u10_kinetic_10',
       unitId: 10,
       word: 'Kinetic',
-      banglaMeaning: 'গতিশক্তি সংক্রান্ত বা গতিশীল',
+      banglaMeaning: 'গতিশক্তি সংক্রান্ত বা গতিশীল , গতিসম্পর্কিত',
       pronunciation: '/kɪˈnet.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit10: UnitInfo = {
       id: 'u10_luminescence_11',
       unitId: 10,
       word: 'Luminescence',
-      banglaMeaning: 'আলো বিকিরণকারী প্রতিপ্রভা',
+      banglaMeaning: 'আলো বিকিরণকারী প্রতিপ্রভা , আলোক বিকিরণ',
       pronunciation: '/ˌluː.mɪˈnes.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit10: UnitInfo = {
       id: 'u10_mutation_12',
       unitId: 10,
       word: 'Mutation',
-      banglaMeaning: 'জেনেটিক পরিবর্তন বা রূপান্তর',
+      banglaMeaning: 'জেনেটিক পরিবর্তন বা রূপান্তর , পরিব্যক্তি',
       pronunciation: '/mjuːˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit10: UnitInfo = {
       id: 'u10_oscillation_14',
       unitId: 10,
       word: 'Oscillation',
-      banglaMeaning: 'দোলন বা পর্যায়বৃত্ত কম্পন',
+      banglaMeaning: 'দোলন বা পর্যায়বৃত্ত কম্পন , আন্দোলন , ওঠানামা , দোলাচল',
       pronunciation: '/ˌɒs.ɪˈleɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit10: UnitInfo = {
       id: 'u10_paradigm_15',
       unitId: 10,
       word: 'Paradigm',
-      banglaMeaning: 'মৌলিক দৃষ্টিভঙ্গি বা আদর্শিক বৈজ্ঞানিক কাঠামো',
+      banglaMeaning: 'মৌলিক দৃষ্টিভঙ্গি বা আদর্শিক বৈজ্ঞানিক কাঠামো , উদাহরণ , দৃষ্টান্ত',
       pronunciation: '/ˈpær.ə.daɪm/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit10: UnitInfo = {
       id: 'u10_spectroscopy_18',
       unitId: 10,
       word: 'Spectroscopy',
-      banglaMeaning: 'বর্ণালীমিতি , আলোর বর্ণালীর বিশ্লেষণ',
+      banglaMeaning: 'বর্ণালীমিতি , আলোর বর্ণালীর বিশ্লেষণ , বর্ণালিবীক্ষণ যন্ত্র',
       pronunciation: '/spekˈtrɒs.kə.pi/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit10: UnitInfo = {
       id: 'u10_viscosity_21',
       unitId: 10,
       word: 'Viscosity',
-      banglaMeaning: 'সান্দ্রতা , তরলের অভ্যন্তরীণ ঘর্ষণ বা প্রবাহের বাধা',
+      banglaMeaning: 'সান্দ্রতা , তরলের অভ্যন্তরীণ ঘর্ষণ বা প্রবাহের বাধা , চিট',
       pronunciation: '/vɪˈskɒs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit10: UnitInfo = {
       id: 'u10_calibration_24',
       unitId: 10,
       word: 'Calibration',
-      banglaMeaning: 'পরিমাপক যন্ত্রের মান নির্ণয় ও নিখুঁত সমন্বয়',
+      banglaMeaning: 'পরিমাপক যন্ত্রের মান নির্ণয় ও নিখুঁত সমন্বয় , ক্রমাঙ্কন',
       pronunciation: '/ˌkæl.ɪˈbreɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit10: UnitInfo = {
       id: 'u10_dilution_25',
       unitId: 10,
       word: 'Dilution',
-      banglaMeaning: 'লঘুকরণ , পানিতে দ্রবণ পাতলা করা',
+      banglaMeaning: 'লঘুকরণ , পানিতে দ্রবণ পাতলা করা , ক্রম , জলবৎ তরল মেশ্র',
       pronunciation: '/daɪˈluː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit10: UnitInfo = {
       id: 'u10_electrolysis_26',
       unitId: 10,
       word: 'Electrolysis',
-      banglaMeaning: 'তড়িৎবিশ্লেষণ',
+      banglaMeaning: 'তড়িৎবিশ্লেষণ , তড়িত-বিশ্লেষণ , তড়িদ্বিশ্লেষণ',
       pronunciation: '/ɪˌlekˈtrɒl.ə.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit10: UnitInfo = {
       id: 'u10_gravitation_28',
       unitId: 10,
       word: 'Gravitation',
-      banglaMeaning: 'মহাকর্ষ বল',
+      banglaMeaning: 'মহাকর্ষ বল , মাধ্যাকর্ষণশক্তি , আকর্ষণ , আনতি',
       pronunciation: '/ˌɡræv.ɪˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit10: UnitInfo = {
       id: 'u10_homeostasis_29',
       unitId: 10,
       word: 'Homeostasis',
-      banglaMeaning: 'দেহের অভ্যন্তরীণ ভারসাম্যপূর্ণ অবস্থা',
+      banglaMeaning: 'দেহের অভ্যন্তরীণ ভারসাম্যপূর্ণ অবস্থা , হোমিওস্টয়াটিক',
       pronunciation: '/ˌhəʊ.mi.əʊˈsteɪ.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit10: UnitInfo = {
       id: 'u10_immutable_30',
       unitId: 10,
       word: 'Immutable',
-      banglaMeaning: 'অপরিবর্তনীয় ও চিরন্তন',
+      banglaMeaning: 'অপরিবর্তনীয় ও চিরন্তন , ধ্রুব , নিত্য , অবিকারী',
       pronunciation: '/ɪˈmjuː.tə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit10: UnitInfo = {
       id: 'u10_luminary_31',
       unitId: 10,
       word: 'Luminary',
-      banglaMeaning: 'স্বনামধন্য মনীষী বা আলোকবর্তিকা',
+      banglaMeaning: 'স্বনামধন্য মনীষী বা আলোকবর্তিকা , জ্যোতিষ্ক , গ্রহ বা নক্ষত্র , কৃতী সন্তান',
       pronunciation: '/ˈluː.mɪ.nər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit10: UnitInfo = {
       id: 'u10_osmosis_32',
       unitId: 10,
       word: 'Osmosis',
-      banglaMeaning: 'অভিস্রবণ প্রক্রিয়া',
+      banglaMeaning: 'অভিস্রবণ প্রক্রিয়া , অভিস্রাবণ , আত্মীকরণ , আন্তঃক্রিয়া',
       pronunciation: '/ɒzˈməʊ.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit10: UnitInfo = {
       id: 'u10_synthesis_34',
       unitId: 10,
       word: 'Synthesis',
-      banglaMeaning: 'সংশ্লেষণ বা উপাদান জোড়া দিয়ে নতুন কিছু তৈরি',
+      banglaMeaning: 'সংশ্লেষণ বা উপাদান জোড়া দিয়ে নতুন কিছু তৈরি , সমন্বয়',
       pronunciation: '/ˈsɪn.θə.sɪs/',
       partOfSpeech: 'noun',
       examples: [

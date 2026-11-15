@@ -12,7 +12,7 @@ export const unit15: UnitInfo = {
       id: 'u15_acute_1',
       unitId: 15,
       word: 'Acute',
-      banglaMeaning: 'তীব্র , আকস্মিক ও মারাত্মক রোগাবস্থা',
+      banglaMeaning: 'তীব্র , আকস্মিক ও মারাত্মক রোগাবস্থা , ধারালো , ছুঁচোলো',
       pronunciation: '/əˈkjuːt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -30,7 +30,7 @@ export const unit15: UnitInfo = {
       id: 'u15_benign_2',
       unitId: 15,
       word: 'Benign',
-      banglaMeaning: 'নিরীহ , ক্যান্সার নয় এমন নির্দোষ টিউমার',
+      banglaMeaning: 'নিরীহ , ক্যান্সার নয় এমন নির্দোষ টিউমার , অমায়িক , সদাশয়',
       pronunciation: '/bɪˈnaɪn/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit15: UnitInfo = {
       id: 'u15_chronic_3',
       unitId: 15,
       word: 'Chronic',
-      banglaMeaning: 'দীর্ঘস্থায়ী , দীর্ঘমেয়াদী রোগ',
+      banglaMeaning: 'দীর্ঘস্থায়ী , দীর্ঘমেয়াদী রোগ , দুরারোগ্য',
       pronunciation: '/ˈkrɒn.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit15: UnitInfo = {
       id: 'u15_diagnosis_4',
       unitId: 15,
       word: 'Diagnosis',
-      banglaMeaning: 'রোগ নির্ণয়',
+      banglaMeaning: 'রোগ নির্ণয় , রোগনিদান',
       pronunciation: '/ˌdaɪ.əɡˈnəʊ.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit15: UnitInfo = {
       id: 'u15_epidemic_5',
       unitId: 15,
       word: 'Epidemic',
-      banglaMeaning: 'মহামারী',
+      banglaMeaning: 'মহামারী , ব্যাপক',
       pronunciation: '/ˌep.ɪˈdem.ɪk/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit15: UnitInfo = {
       id: 'u15_immune_6',
       unitId: 15,
       word: 'Immune',
-      banglaMeaning: 'রোগপ্রতিরোধী , সুরক্ষিত',
+      banglaMeaning: 'রোগপ্রতিরোধী , সুরক্ষিত , নিরাপদ , অনাক্রমা',
       pronunciation: '/ɪˈmjuːn/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit15: UnitInfo = {
       id: 'u15_malignant_7',
       unitId: 15,
       word: 'Malignant',
-      banglaMeaning: 'মারাত্মক বা ক্ষতিকর ক্যান্সারযুক্ত',
+      banglaMeaning: 'মারাত্মক বা ক্ষতিকর ক্যান্সারযুক্ত , ঘোর বিদ্বেষপরায়ণ',
       pronunciation: '/məˈlɪɡ.nənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -138,7 +138,7 @@ export const unit15: UnitInfo = {
       id: 'u15_oncology_8',
       unitId: 15,
       word: 'Oncology',
-      banglaMeaning: 'ক্যান্সার বা টিউমার বিষয়ক চিকিৎসাবিদ্যা',
+      banglaMeaning: 'ক্যান্সার বা টিউমার বিষয়ক চিকিৎসাবিদ্যা , ওনকোলজি',
       pronunciation: '/ɒnˈkɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit15: UnitInfo = {
       id: 'u15_pathogen_9',
       unitId: 15,
       word: 'Pathogen',
-      banglaMeaning: 'রোগসৃষ্টিকারী জীবাণু',
+      banglaMeaning: 'রোগসৃষ্টিকারী জীবাণু , রোগজনক শক্তি',
       pronunciation: '/ˈpæθ.ə.dʒən/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit15: UnitInfo = {
       id: 'u15_remission_10',
       unitId: 15,
       word: 'Remission',
-      banglaMeaning: 'রোগের উপশম বা সাময়িক লক্ষণমুক্তি',
+      banglaMeaning: 'রোগের উপশম বা সাময়িক লক্ষণমুক্তি , পাপ , ব্যথা , বেদনা',
       pronunciation: '/rɪˈmɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit15: UnitInfo = {
       id: 'u15_symptom_11',
       unitId: 15,
       word: 'Symptom',
-      banglaMeaning: 'রোগের বাহ্যিক লক্ষণ',
+      banglaMeaning: 'রোগের বাহ্যিক লক্ষণ , উপসর্গ',
       pronunciation: '/ˈsɪmp.təm/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit15: UnitInfo = {
       id: 'u15_therapeutic_12',
       unitId: 15,
       word: 'Therapeutic',
-      banglaMeaning: 'উপশমকারী বা আরোগ্যমূলক',
+      banglaMeaning: 'উপশমকারী বা আরোগ্যমূলক , চিকিত্সাবিদ্যাগত , ভেষজ , ভৈষজ',
       pronunciation: '/ˌθer.əˈpjuː.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit15: UnitInfo = {
       id: 'u15_vaccine_13',
       unitId: 15,
       word: 'Vaccine',
-      banglaMeaning: 'টিকা বা প্রতিষেধক',
+      banglaMeaning: 'টিকা বা প্রতিষেধক , গো-বসন্তের বীজ',
       pronunciation: '/ˈvæk.siːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit15: UnitInfo = {
       id: 'u15_cardiovascular_16',
       unitId: 15,
       word: 'Cardiovascular',
-      banglaMeaning: 'হৃৎপিণ্ড ও রক্তনালী সংক্রান্ত',
+      banglaMeaning: 'হৃৎপিণ্ড ও রক্তনালী সংক্রান্ত , কার্ডিওভাসকুলার',
       pronunciation: '/ˌkɑː.di.əʊˈvæs.kjə.lər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit15: UnitInfo = {
       id: 'u15_dermatology_17',
       unitId: 15,
       word: 'Dermatology',
-      banglaMeaning: 'চর্মরোগবিদ্যা',
+      banglaMeaning: 'চর্মরোগবিদ্যা , ত্বক-বিজ্ঞান',
       pronunciation: '/ˌdɜː.məˈtɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit15: UnitInfo = {
       id: 'u15_fracture_19',
       unitId: 15,
       word: 'Fracture',
-      banglaMeaning: 'হাড়ের চিড় বা ভাঙন',
+      banglaMeaning: 'হাড়ের চিড় বা ভাঙন , ভাঙা , অস্থিভঙ্গ , ফাটল',
       pronunciation: '/ˈfræk.tʃər/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit15: UnitInfo = {
       id: 'u15_genetic_20',
       unitId: 15,
       word: 'Genetic',
-      banglaMeaning: 'বংশগত বা জিনঘটিত',
+      banglaMeaning: 'বংশগত বা জিনঘটিত , বংশগতিবিদ্যা-সংক্রান্ত , জীনতত্ত্ব বিষয়ক , জীন-ঘটিত অস্বাভাবিকতা',
       pronunciation: '/dʒəˈnet.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -372,7 +372,7 @@ export const unit15: UnitInfo = {
       id: 'u15_hemorrhage_21',
       unitId: 15,
       word: 'Hemorrhage',
-      banglaMeaning: 'প্রচণ্ড রক্তক্ষরণ',
+      banglaMeaning: 'প্রচণ্ড রক্তক্ষরণ , রক্তস্রাব',
       pronunciation: '/ˈhem.ər.ɪdʒ/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit15: UnitInfo = {
       id: 'u15_inoculate_22',
       unitId: 15,
       word: 'Inoculate',
-      banglaMeaning: 'টিকা দিয়ে রোগপ্রতিরোধ ক্ষমতা তৈরি করা',
+      banglaMeaning: 'টিকা দিয়ে রোগপ্রতিরোধ ক্ষমতা তৈরি করা , টিকে দেওয়া , কলম লাগানো , টিকা দেওয়া',
       pronunciation: '/ɪˈnɒk.jə.leɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -426,7 +426,7 @@ export const unit15: UnitInfo = {
       id: 'u15_lesion_24',
       unitId: 15,
       word: 'Lesion',
-      banglaMeaning: 'টিস্যুর ক্ষত বা অস্বাভাবিক পরিবর্তন',
+      banglaMeaning: 'টিস্যুর ক্ষত বা অস্বাভাবিক পরিবর্তন , আঘাত , ক্ষয়ক্ষতি',
       pronunciation: '/ˈliː.ʒən/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit15: UnitInfo = {
       id: 'u15_neurology_26',
       unitId: 15,
       word: 'Neurology',
-      banglaMeaning: 'স্নায়ুবিজ্ঞান বা স্নায়ুরোগবিদ্যা',
+      banglaMeaning: 'স্নায়ুবিজ্ঞান বা স্নায়ুরোগবিদ্যা , স্নায়ুতত্ত্ব , স্নায়ুবিদ্যা , নার্ভরোগবিদ্যা',
       pronunciation: '/njʊəˈrɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit15: UnitInfo = {
       id: 'u15_quarantine_29',
       unitId: 15,
       word: 'Quarantine',
-      banglaMeaning: 'সংক্রামক রোগ প্রতিরোধে সংগনিরোধ বা কোয়ারেন্টাইন',
+      banglaMeaning: 'সংক্রামক রোগ প্রতিরোধে সংগনিরোধ বা কোয়ারেন্টাইন , রোগ-অন্তরণ , সঙ্গরোধ , জাহাজ পৃথক্করণ',
       pronunciation: '/ˈkwɒr.ən.tiːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit15: UnitInfo = {
       id: 'u15_respiration_30',
       unitId: 15,
       word: 'Respiration',
-      banglaMeaning: 'শ্বসন প্রক্রিয়া বা শ্বাসপ্রশ্বাস',
+      banglaMeaning: 'শ্বসন প্রক্রিয়া বা শ্বাসপ্রশ্বাস , নিঃশ্বাসপ্রশ্বাস , শ্বাসক্রিয়া , দম',
       pronunciation: '/ˌres.pɪˈreɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit15: UnitInfo = {
       id: 'u15_sedative_31',
       unitId: 15,
       word: 'Sedative',
-      banglaMeaning: 'ঘুমের বা উপশমকারী ওষুধ',
+      banglaMeaning: 'ঘুমের বা উপশমকারী ওষুধ , প্রশান্তিদায়ক , ঘুমের ঔষধ , যন্ত্রণাহর বস্তু',
       pronunciation: '/ˈsed.ə.tɪv/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit15: UnitInfo = {
       id: 'u15_toxicity_32',
       unitId: 15,
       word: 'Toxicity',
-      banglaMeaning: 'বিষাক্ততা বা বিষক্রিয়ার মাত্রা',
+      banglaMeaning: 'বিষাক্ততা বা বিষক্রিয়ার মাত্রা , বিষবিদ্যা',
       pronunciation: '/tɒkˈsɪs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit15: UnitInfo = {
       id: 'u15_virulent_34',
       unitId: 15,
       word: 'Virulent',
-      banglaMeaning: 'অত্যন্ত সংক্রামক ও তীব্র প্রাণঘাতী',
+      banglaMeaning: 'অত্যন্ত সংক্রামক ও তীব্র প্রাণঘাতী , অত্যন্ত বিষাক্ত , উৎকট , উগ্র',
       pronunciation: '/ˈvɪr.jə.lənt/',
       partOfSpeech: 'adjective',
       examples: [

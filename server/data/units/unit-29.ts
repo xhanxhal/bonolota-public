@@ -12,7 +12,7 @@ export const unit29: UnitInfo = {
       id: 'u29_assiduous_1',
       unitId: 29,
       word: 'Assiduous',
-      banglaMeaning: 'অধ্যবসায়ী , একটানা অক্লান্ত পরিশ্রমকারী',
+      banglaMeaning: 'অধ্যবসায়ী , একটানা অক্লান্ত পরিশ্রমকারী , পরিশ্রমী , উদ্যোগী',
       pronunciation: '/əˈsɪdʒ.u.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -30,7 +30,7 @@ export const unit29: UnitInfo = {
       id: 'u29_bravado_2',
       unitId: 29,
       word: 'Bravado',
-      banglaMeaning: 'বীরত্ব প্রদর্শনের মিথ্যা ভান বা ফাঁপা সাহস',
+      banglaMeaning: 'বীরত্ব প্রদর্শনের মিথ্যা ভান বা ফাঁপা সাহস , বাহাদুরি , সাহসের বড়াই , কুদরত',
       pronunciation: '/brəˈvɑː.dəʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit29: UnitInfo = {
       id: 'u29_courageous_3',
       unitId: 29,
       word: 'Courageous',
-      banglaMeaning: 'সাহসী , নির্ভীক ও অকুতভয়',
+      banglaMeaning: 'সাহসী , নির্ভীক ও অকুতভয় , বিক্রমশালী , পরাক্রান্ত',
       pronunciation: '/kəˈreɪ.dʒəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit29: UnitInfo = {
       id: 'u29_dauntless_4',
       unitId: 29,
       word: 'Dauntless',
-      banglaMeaning: 'ভয়হীন , অপরাজিত ও অকুতোভয়',
+      banglaMeaning: 'ভয়হীন , অপরাজিত ও অকুতোভয় , নির্ভীক , ভয়শূন্য',
       pronunciation: '/ˈdɔːnt.ləs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit29: UnitInfo = {
       id: 'u29_endurance_5',
       unitId: 29,
       word: 'Endurance',
-      banglaMeaning: 'সহনশীলতা , দীর্ঘ সময় কষ্ট সহ্য করার মানসিক ও শারীরিক শক্তি',
+      banglaMeaning: 'সহনশীলতা , দীর্ঘ সময় কষ্ট সহ্য করার মানসিক ও শারীরিক শক্তি , সহ্যশক্তি , সহিষ্ণুতা',
       pronunciation: '/ɪnˈdʒʊə.rəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit29: UnitInfo = {
       id: 'u29_fortitude_6',
       unitId: 29,
       word: 'Fortitude',
-      banglaMeaning: 'প্রতিকূলতায় মনোবল , বিপদে অবিচল মনের সাহস',
+      banglaMeaning: 'প্রতিকূলতায় মনোবল , বিপদে অবিচল মনের সাহস , বীবত্বপূর্ণ সহিষ্ণুতা , সহ্য',
       pronunciation: '/ˈfɔː.tɪ.tʃuːd/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit29: UnitInfo = {
       id: 'u29_grit_7',
       unitId: 29,
       word: 'Grit',
-      banglaMeaning: 'অদম্য মনোবল ও জেদ , লক্ষ্য থেকে না নড়ার শক্তি',
+      banglaMeaning: 'অদম্য মনোবল ও জেদ , লক্ষ্য থেকে না নড়ার শক্তি , পাথর , কণা',
       pronunciation: '/ɡrɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit29: UnitInfo = {
       id: 'u29_hardihood_8',
       unitId: 29,
       word: 'Hardihood',
-      banglaMeaning: 'শারীরিক ও মানসিক দৃঢ়তা বা নির্ভীকতা',
+      banglaMeaning: 'শারীরিক ও মানসিক দৃঢ়তা বা নির্ভীকতা , সাহসিকতা , সহিষ্ণুতা',
       pronunciation: '/ˈhɑː.di.hʊd/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit29: UnitInfo = {
       id: 'u29_indomitable_9',
       unitId: 29,
       word: 'Indomitable',
-      banglaMeaning: 'অদম্য , যাকে কিছুতেই দমন বা পরাজিত করা যায় না',
+      banglaMeaning: 'অদম্য , যাকে কিছুতেই দমন বা পরাজিত করা যায় না , দুর্দম্য , দুর্দান্ত',
       pronunciation: '/ɪnˈdɒm.ɪ.tə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit29: UnitInfo = {
       id: 'u29_jubilant_10',
       unitId: 29,
       word: 'Jubilant',
-      banglaMeaning: 'বিজয়ের আনন্দে উল্লসিত',
+      banglaMeaning: 'বিজয়ের আনন্দে উল্লসিত , আনন্দে চিত্কার্রত , বিজয়ানন্দে গীতরত , আনন্দোত্সবরত',
       pronunciation: '/ˈdʒuː.bəl.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit29: UnitInfo = {
       id: 'u29_keenness_11',
       unitId: 29,
       word: 'Keenness',
-      banglaMeaning: 'তীব্র আগ্রহ ও মানসিক একাগ্রতা',
+      banglaMeaning: 'তীব্র আগ্রহ ও মানসিক একাগ্রতা , প্রখরত্ব , প্রখরতা , প্রখরা',
       pronunciation: '/ˈkiːn.nəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit29: UnitInfo = {
       id: 'u29_mettle_13',
       unitId: 29,
       word: 'Mettle',
-      banglaMeaning: 'সাহসিকতা ও চরিত্রবল , বিপদে টিকে থাকার শক্তি',
+      banglaMeaning: 'সাহসিকতা ও চরিত্রবল , বিপদে টিকে থাকার শক্তি , তেজস্বিতা',
       pronunciation: '/ˈmet.əl/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit29: UnitInfo = {
       id: 'u29_nerve_14',
       unitId: 29,
       word: 'Nerve',
-      banglaMeaning: 'ধৈর্য ও সাহস , আতঙ্কের মুখে মাথা ঠান্ডা রাখার ক্ষমতা',
+      banglaMeaning: 'ধৈর্য ও সাহস , আতঙ্কের মুখে মাথা ঠান্ডা রাখার ক্ষমতা , নার্ভ , স্নায়ু',
       pronunciation: '/nɜːv/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit29: UnitInfo = {
       id: 'u29_overcome_15',
       unitId: 29,
       word: 'Overcome',
-      banglaMeaning: 'প্রতিবন্ধকতা জয় করা বা বাধা অতিক্রম করা',
+      banglaMeaning: 'প্রতিবন্ধকতা জয় করা বা বাধা অতিক্রম করা , পরাজিত , পরাভূত , পরাস্ত করা',
       pronunciation: '/ˌəʊ.vəˈkʌm/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit29: UnitInfo = {
       id: 'u29_perseverance_16',
       unitId: 29,
       word: 'Perseverance',
-      banglaMeaning: 'নাছোড়বান্দা অধ্যবসায় , বিরামহীন প্রচেষ্টা',
+      banglaMeaning: 'নাছোড়বান্দা অধ্যবসায় , বিরামহীন প্রচেষ্টা , ঐকান্তিকতা , উদ্যম',
       pronunciation: '/ˌpɜː.sɪˈvɪə.rəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit29: UnitInfo = {
       id: 'u29_quest_17',
       unitId: 29,
       word: 'Quest',
-      banglaMeaning: 'মহৎ কোনো কিছু পাওয়ার সুদীর্ঘ অন্বেষণ বা সাধনা',
+      banglaMeaning: 'মহৎ কোনো কিছু পাওয়ার সুদীর্ঘ অন্বেষণ বা সাধনা , উদ্দেশ্য , অনুসন্ধান , অভীষ্ট লক্ষ্য',
       pronunciation: '/kwest/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit29: UnitInfo = {
       id: 'u29_resilience_18',
       unitId: 29,
       word: 'Resilience',
-      banglaMeaning: 'ধাক্কা সামলে ঘুরে দাঁড়ানোর মানসিক শক্তি',
+      banglaMeaning: 'ধাক্কা সামলে ঘুরে দাঁড়ানোর মানসিক শক্তি , স্থিতিস্থাপকতা , প্রাণোচ্ছলতা , প্লবতা',
       pronunciation: '/rɪˈzɪl.jəns/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit29: UnitInfo = {
       id: 'u29_stamina_19',
       unitId: 29,
       word: 'Stamina',
-      banglaMeaning: 'দীর্ঘক্ষণ কাজ চালিয়ে যাওয়ার শারীরিক ও মানসিক সহনশক্তি',
+      banglaMeaning: 'দীর্ঘক্ষণ কাজ চালিয়ে যাওয়ার শারীরিক ও মানসিক সহনশক্তি , অদম্য মানসিক শক্তি , মনোবল , টিকে থাকার ক্ষমতা',
       pronunciation: '/ˈstæm.ɪ.nə/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit29: UnitInfo = {
       id: 'u29_tenacity_20',
       unitId: 29,
       word: 'Tenacity',
-      banglaMeaning: 'নাছোড়বান্দা পণ , হার না মানার মানসিকতা',
+      banglaMeaning: 'নাছোড়বান্দা পণ , হার না মানার মানসিকতা , তানতা , জিদ',
       pronunciation: '/təˈnæs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit29: UnitInfo = {
       id: 'u29_valiant_22',
       unitId: 29,
       word: 'Valiant',
-      banglaMeaning: 'বীরত্বপূর্ণ , মহৎ সাহসিকতায় ভরা',
+      banglaMeaning: 'বীরত্বপূর্ণ , মহৎ সাহসিকতায় ভরা , শূর , শৌর্যপূর্ণ',
       pronunciation: '/ˈvæl.i.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -426,7 +426,7 @@ export const unit29: UnitInfo = {
       id: 'u29_zenith_24',
       unitId: 29,
       word: 'Zenith',
-      banglaMeaning: 'সাফল্যের চূড়া বা জীবনের সর্বোচ্চ পর্যায়',
+      banglaMeaning: 'সাফল্যের চূড়া বা জীবনের সর্বোচ্চ পর্যায় , খমধ্য , সুবিন্দু',
       pronunciation: '/ˈzen.ɪθ/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit29: UnitInfo = {
       id: 'u29_alacrity_25',
       unitId: 29,
       word: 'Alacrity',
-      banglaMeaning: 'উৎসুক ক্ষিপ্রতা , আনন্দের সাথে দ্রুত কাজ করা',
+      banglaMeaning: 'উৎসুক ক্ষিপ্রতা , আনন্দের সাথে দ্রুত কাজ করা , উত্সাহপূর্ণ , তত্পরতা',
       pronunciation: '/əˈlæk.rə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit29: UnitInfo = {
       id: 'u29_audacious_26',
       unitId: 29,
       word: 'Audacious',
-      banglaMeaning: 'দুঃসাহসী ও দুঃসাহসিক পদক্ষেপ নেওয়া',
+      banglaMeaning: 'দুঃসাহসী ও দুঃসাহসিক পদক্ষেপ নেওয়া , উদ্ধত , গোঁয়ার , হঠকারী',
       pronunciation: '/ɔːˈdeɪ.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit29: UnitInfo = {
       id: 'u29_backbone_27',
       unitId: 29,
       word: 'Backbone',
-      banglaMeaning: 'মেরুদণ্ড , দৃঢ় আত্মমর্যাদাবোধ ও অন্যায়ের বিরুদ্ধে দাঁড়ানোর ক্ষমতা',
+      banglaMeaning: 'মেরুদণ্ড , দৃঢ় আত্মমর্যাদাবোধ ও অন্যায়ের বিরুদ্ধে দাঁড়ানোর ক্ষমতা , শিরদাঁড়া , দৃঢ়তা',
       pronunciation: '/ˈbæk.bəʊn/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit29: UnitInfo = {
       id: 'u29_constancy_28',
       unitId: 29,
       word: 'Constancy',
-      banglaMeaning: 'অবিচলতা , যেকোনো পরিস্থিতিতে লক্ষ্যে স্থির থাকা',
+      banglaMeaning: 'অবিচলতা , যেকোনো পরিস্থিতিতে লক্ষ্যে স্থির থাকা , দৃঢ়তা , স্থায়িত্ব',
       pronunciation: '/ˈkɒn.stən.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit29: UnitInfo = {
       id: 'u29_intrepid_29',
       unitId: 29,
       word: 'Intrepid',
-      banglaMeaning: 'ভয়হীন , বিপজ্জনক অভিযানে নির্ভীক',
+      banglaMeaning: 'ভয়হীন , বিপজ্জনক অভিযানে নির্ভীক , নিরাতঙ্ক',
       pronunciation: '/ɪnˈtrep.ɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit29: UnitInfo = {
       id: 'u29_pertinacity_30',
       unitId: 29,
       word: 'Pertinacity',
-      banglaMeaning: 'একগুঁয়ে দৃঢ়তা , লক্ষ্য থেকে কখনোই সরে না আসা',
+      banglaMeaning: 'একগুঁয়ে দৃঢ়তা , লক্ষ্য থেকে কখনোই সরে না আসা , জেদ',
       pronunciation: '/ˌpɜː.tɪˈnæs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit29: UnitInfo = {
       id: 'u29_prowess_31',
       unitId: 29,
       word: 'Prowess',
-      banglaMeaning: 'অসাধারণ রণকৌশলগত দক্ষতা বা ক্রীড়া নৈপুণ্য',
+      banglaMeaning: 'অসাধারণ রণকৌশলগত দক্ষতা বা ক্রীড়া নৈপুণ্য , শৌর্য , পরাক্রম , পুরুষকার',
       pronunciation: '/ˈpraʊ.es/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit29: UnitInfo = {
       id: 'u29_steadfast_33',
       unitId: 29,
       word: 'Steadfast',
-      banglaMeaning: 'অটল , বিশ্বস্ত ও অবিচল প্রতিজ্ঞাবদ্ধ',
+      banglaMeaning: 'অটল , বিশ্বস্ত ও অবিচল প্রতিজ্ঞাবদ্ধ , অপলক , কায়েম',
       pronunciation: '/ˈsted.fɑːst/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit29: UnitInfo = {
       id: 'u29_valorous_34',
       unitId: 29,
       word: 'Valorous',
-      banglaMeaning: 'বীরত্বপূর্ণ ও অসম সাহসী',
+      banglaMeaning: 'বীরত্বপূর্ণ ও অসম সাহসী , নির্ভীক , বীর্যবান , শৌর্যপূর্ণ',
       pronunciation: '/ˈvæl.ər.əs/',
       partOfSpeech: 'adjective',
       examples: [

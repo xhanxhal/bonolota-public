@@ -48,7 +48,7 @@ export const unit38: UnitInfo = {
       id: 'u38_assent_3',
       unitId: 38,
       word: 'Assent',
-      banglaMeaning: 'একমত বা সম্মত হওয়া',
+      banglaMeaning: 'একমত বা সম্মত হওয়া , সম্মতি , হাঁ বলা , সায়',
       pronunciation: '/ˈassent/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit38: UnitInfo = {
       id: 'u38_assert_4',
       unitId: 38,
       word: 'Assert',
-      banglaMeaning: 'জাহির করা, দাবি করা',
+      banglaMeaning: 'জাহির করা, দাবি করা , সোজাসুজি বলা , প্রমাণ করা',
       pronunciation: '/ˈassert/',
       partOfSpeech: 'verb',
       examples: [
@@ -84,7 +84,7 @@ export const unit38: UnitInfo = {
       id: 'u38_assimilate_5',
       unitId: 38,
       word: 'Assimilate',
-      banglaMeaning: 'অঙ্গীভূত করা, হজম করা',
+      banglaMeaning: 'অঙ্গীভূত করা, হজম করা , আত্মসাত্ করা , একত্রিত করা',
       pronunciation: '/ˈassimilate/',
       partOfSpeech: 'verb',
       examples: [
@@ -102,7 +102,7 @@ export const unit38: UnitInfo = {
       id: 'u38_assuage_6',
       unitId: 38,
       word: 'Assuage',
-      banglaMeaning: 'প্রশমিত করা, শান্ত করা',
+      banglaMeaning: 'প্রশমিত করা, শান্ত করা , কমানো',
       pronunciation: '/ˈassuage/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit38: UnitInfo = {
       id: 'u38_assumption_7',
       unitId: 38,
       word: 'Assumption',
-      banglaMeaning: 'ধৃষ্টতা, পরিগ্রহ',
+      banglaMeaning: 'ধৃষ্টতা, পরিগ্রহ , ভারগ্রহণ , অধিকার',
       pronunciation: '/ˈassumption/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit38: UnitInfo = {
       id: 'u38_assurance_8',
       unitId: 38,
       word: 'Assurance',
-      banglaMeaning: 'আনুগত্য বা বিশ্বস্ততা , নিশ্চয়তা বা স্থিরবিশ্বাস',
+      banglaMeaning: 'আনুগত্য বা বিশ্বস্ততা , নিশ্চয়তা বা স্থিরবিশ্বাস , বিমা , নিশ্চয়করণ',
       pronunciation: '/ˈassurance/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit38: UnitInfo = {
       id: 'u38_astral_10',
       unitId: 38,
       word: 'Astral',
-      banglaMeaning: 'নাক্ষত্রিক, নাক্ষত্র',
+      banglaMeaning: 'নাক্ষত্রিক, নাক্ষত্র , তারাময়',
       pronunciation: '/ˈastral/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit38: UnitInfo = {
       id: 'u38_astringent_11',
       unitId: 38,
       word: 'Astringent',
-      banglaMeaning: 'কঠোর বা তীব্র রূঢ়',
+      banglaMeaning: 'কঠোর বা তীব্র রূঢ় , সংকোচক , স্তম্ভক , নির্মম',
       pronunciation: '/ˈastringent/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit38: UnitInfo = {
       id: 'u38_astronomical_12',
       unitId: 38,
       word: 'Astronomical',
-      banglaMeaning: 'জ্যোতির্বিদ্যা-সংক্রান্ত, জ্যোতির্বিজ্ঞানসংক্রান্ত',
+      banglaMeaning: 'জ্যোতির্বিদ্যা-সংক্রান্ত, জ্যোতির্বিজ্ঞানসংক্রান্ত , মহাকাশীয়',
       pronunciation: '/ˈastronomical/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit38: UnitInfo = {
       id: 'u38_asylum_14',
       unitId: 38,
       word: 'Asylum',
-      banglaMeaning: 'আশ্রয়, আশ্রম',
+      banglaMeaning: 'আশ্রয়, আশ্রম , উন্মাদাগার , অনাথাশ্রম',
       pronunciation: '/ˈasylum/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit38: UnitInfo = {
       id: 'u38_atheistic_17',
       unitId: 38,
       word: 'Atheistic',
-      banglaMeaning: 'নিরীশ্বরবাদী, অনীশ্বর',
+      banglaMeaning: 'নিরীশ্বরবাদী, অনীশ্বর , নাস্তিকভাবাপন্ন , নাস্তিকসুলভ',
       pronunciation: '/ˈatheistic/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit38: UnitInfo = {
       id: 'u38_atrocity_19',
       unitId: 38,
       word: 'Atrocity',
-      banglaMeaning: 'নির্মমতা, পাশবিকতা',
+      banglaMeaning: 'নির্মমতা, পাশবিকতা , নিদারুণ নিষ্ঠুরতা , বেয়াড়াপনা',
       pronunciation: '/ˈatrocity/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit38: UnitInfo = {
       id: 'u38_atrophy_20',
       unitId: 38,
       word: 'Atrophy',
-      banglaMeaning: 'ক্ষয়িষ্ণুতা, পুষ্টির অভাবে ক্ষয়',
+      banglaMeaning: 'ক্ষয়িষ্ণুতা, পুষ্টির অভাবে ক্ষয় , ক্রমিক ক্ষয়প্রাপ্তি , অবনতি',
       pronunciation: '/ˈatrophy/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit38: UnitInfo = {
       id: 'u38_attentive_21',
       unitId: 38,
       word: 'Attentive',
-      banglaMeaning: 'অতন্দ্র, অবহিত',
+      banglaMeaning: 'অতন্দ্র, অবহিত , একাগ্রচিত্ত , সজাগ',
       pronunciation: '/ˈattentive/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit38: UnitInfo = {
       id: 'u38_attenuate_22',
       unitId: 38,
       word: 'Attenuate',
-      banglaMeaning: 'কৃশ, কাহিল',
+      banglaMeaning: 'কৃশ, কাহিল , শীর্ণ করা , ঘনত্ব হ্রাস করা',
       pronunciation: '/ˈattenuate/',
       partOfSpeech: 'verb',
       examples: [
@@ -408,7 +408,7 @@ export const unit38: UnitInfo = {
       id: 'u38_attest_23',
       unitId: 38,
       word: 'Attest',
-      banglaMeaning: 'প্রত্যায়ন করা, সত্য বলিয়া বর্ণনা করা',
+      banglaMeaning: 'প্রত্যায়ন করা, সত্য বলিয়া বর্ণনা করা , শপথ গ্রহণ করানো',
       pronunciation: '/ˈattest/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit38: UnitInfo = {
       id: 'u38_attire_24',
       unitId: 38,
       word: 'Attire',
-      banglaMeaning: 'বেশভূষা, কাপড়',
+      banglaMeaning: 'বেশভূষা, কাপড় , পোশাক , সাজান',
       pronunciation: '/ˈattire/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit38: UnitInfo = {
       id: 'u38_attribute_25',
       unitId: 38,
       word: 'Attribute',
-      banglaMeaning: 'গুণ, চিহ্ন',
+      banglaMeaning: 'গুণ, চিহ্ন , বিশেষণ , লক্ষণ',
       pronunciation: '/ˈattribute/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit38: UnitInfo = {
       id: 'u38_attrition_26',
       unitId: 38,
       word: 'Attrition',
-      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের',
+      banglaMeaning: 'ঘর্ষণকারী বা কর্কশ স্বভাবের , ঘর্ষণজনিত ক্ষয়',
       pronunciation: '/ˈattrition/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit38: UnitInfo = {
       id: 'u38_audit_28',
       unitId: 38,
       word: 'Audit',
-      banglaMeaning: 'নিরীক্ষা, হিসাবপরীক্ষা',
+      banglaMeaning: 'নিরীক্ষা, হিসাবপরীক্ষা , আয়ব্যয়ের বিবরণ , হিসাবনিকাশ',
       pronunciation: '/ˈaudit/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit38: UnitInfo = {
       id: 'u38_august_31',
       unitId: 38,
       word: 'August',
-      banglaMeaning: 'অগাস্ট, ইংরেজি সনের অষ্টম মাস',
+      banglaMeaning: 'অগাস্ট, ইংরেজি সনের অষ্টম মাস , মহিমান্বিত , শ্রদ্ধেয়',
       pronunciation: '/ˈaugust/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit38: UnitInfo = {
       id: 'u38_aureole_32',
       unitId: 38,
       word: 'Aureole',
-      banglaMeaning: 'আলোকমণ্ডল বা প্রভামণ্ডল',
+      banglaMeaning: 'আলোকমণ্ডল বা প্রভামণ্ডল , জ্যোতিশ্চক্র , দ্যুতিমন্ডল , অংশুমালা',
       pronunciation: '/ˈaureole/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit38: UnitInfo = {
       id: 'u38_auspicious_34',
       unitId: 38,
       word: 'Auspicious',
-      banglaMeaning: 'সুপ্রসন্ন, অনুকূল',
+      banglaMeaning: 'সুপ্রসন্ন, অনুকূল , শুভ , মঙ্গলজনক',
       pronunciation: '/ˈauspicious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -624,7 +624,7 @@ export const unit38: UnitInfo = {
       id: 'u38_austere_35',
       unitId: 38,
       word: 'Austere',
-      banglaMeaning: 'উগ্র, কৃচ্ছ্র',
+      banglaMeaning: 'উগ্র, কৃচ্ছ্র , কঠিন , কঠোরভাবাপন্ন',
       pronunciation: '/ˈaustere/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit38: UnitInfo = {
       id: 'u38_authenticate_36',
       unitId: 38,
       word: 'Authenticate',
-      banglaMeaning: 'বিশুদ্ধতা প্রমাণ করা, সত্য বা খাঁটি বলে প্রমাণ করা',
+      banglaMeaning: 'বিশুদ্ধতা প্রমাণ করা, সত্য বা খাঁটি বলে প্রমাণ করা , প্রমাণীকরণ',
       pronunciation: '/ˈauthenticate/',
       partOfSpeech: 'verb',
       examples: [
@@ -660,7 +660,7 @@ export const unit38: UnitInfo = {
       id: 'u38_authoritarian_37',
       unitId: 38,
       word: 'Authoritarian',
-      banglaMeaning: 'স্বৈরাচারী, কর্তৃত্বপূর্ণ',
+      banglaMeaning: 'স্বৈরাচারী, কর্তৃত্বপূর্ণ , কর্তৃত্বপ্রিয় , প্রভুত্বব্যঞ্জক',
       pronunciation: '/ˈauthoritarian/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit38: UnitInfo = {
       id: 'u38_authoritative_38',
       unitId: 38,
       word: 'Authoritative',
-      banglaMeaning: 'প্রামাণিক, কর্তৃত্বপূর্ণ',
+      banglaMeaning: 'প্রামাণিক, কর্তৃত্বপূর্ণ , রাশভারি , কর্তৃত্বব্যঞ্জক',
       pronunciation: '/ˈauthoritative/',
       partOfSpeech: 'adjective',
       examples: [
@@ -696,7 +696,7 @@ export const unit38: UnitInfo = {
       id: 'u38_autocratic_39',
       unitId: 38,
       word: 'Autocratic',
-      banglaMeaning: 'স্বৈরাচারী, স্বৈরতন্ত্রী',
+      banglaMeaning: 'স্বৈরাচারী, স্বৈরতন্ত্রী , স্বেচ্ছাচারী',
       pronunciation: '/ˈautocratic/',
       partOfSpeech: 'adjective',
       examples: [

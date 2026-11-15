@@ -30,7 +30,7 @@ export const unit48: UnitInfo = {
       id: 'u48_consternation_2',
       unitId: 48,
       word: 'Consternation',
-      banglaMeaning: 'চরম আতঙ্ক বা বিভ্রান্তি',
+      banglaMeaning: 'চরম আতঙ্ক বা বিভ্রান্তি , ভয়জনিত হতাশা , হতবুদ্ধি অবস্থা , বিহ্বলতা',
       pronunciation: '/ˈconsternation/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit48: UnitInfo = {
       id: 'u48_constituent_3',
       unitId: 48,
       word: 'Constituent',
-      banglaMeaning: 'সমর্থক বা অনুসারী',
+      banglaMeaning: 'সমর্থক বা অনুসারী , সংগঠক , সমবায়ী , উপাদানভূত',
       pronunciation: '/ˈconstituent/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit48: UnitInfo = {
       id: 'u48_constraint_4',
       unitId: 48,
       word: 'Constraint',
-      banglaMeaning: 'আত্মনিয়ন্ত্রণ বা সংযম',
+      banglaMeaning: 'আত্মনিয়ন্ত্রণ বা সংযম , বাধ্যবাধকতা , সংকোচ , কুণ্ঠা',
       pronunciation: '/ˈconstraint/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit48: UnitInfo = {
       id: 'u48_construe_5',
       unitId: 48,
       word: 'Construe',
-      banglaMeaning: 'ব্যাখ্যা করা বা অর্থ নির্ণয় করা',
+      banglaMeaning: 'ব্যাখ্যা করা বা অর্থ নির্ণয় করা , বিশেষভাবে বোঝা',
       pronunciation: '/ˈconstrue/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit48: UnitInfo = {
       id: 'u48_consummate_6',
       unitId: 48,
       word: 'Consummate',
-      banglaMeaning: 'পরিপূর্ণ বা নিখুঁত করা',
+      banglaMeaning: 'পরিপূর্ণ বা নিখুঁত করা , সুসম্পূর্ণ , সর্বাঙ্গসুন্দর , অনিন্দ্য',
       pronunciation: '/ˈconsummate/',
       partOfSpeech: 'verb',
       examples: [
@@ -120,7 +120,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contagion_7',
       unitId: 48,
       word: 'Contagion',
-      banglaMeaning: 'ছোঁয়াচে রোগ বা সংক্রমণ',
+      banglaMeaning: 'ছোঁয়াচে রোগ বা সংক্রমণ , কলুষ-প্রভাব , নৈতিক অধঃপতন',
       pronunciation: '/ˈcontagion/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contaminate_8',
       unitId: 48,
       word: 'Contaminate',
-      banglaMeaning: 'দূষিত বা কলুষিত করা',
+      banglaMeaning: 'দূষিত বা কলুষিত করা , দূষিত করা , নোংরা করা',
       pronunciation: '/ˈcontaminate/',
       partOfSpeech: 'verb',
       examples: [
@@ -156,7 +156,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contempt_9',
       unitId: 48,
       word: 'Contempt',
-      banglaMeaning: 'অবজ্ঞা বা তীব্র ঘৃণা',
+      banglaMeaning: 'অবজ্ঞা বা তীব্র ঘৃণা , হেনস্থা , অবমাননা',
       pronunciation: '/ˈcontempt/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contend_10',
       unitId: 48,
       word: 'Contend',
-      banglaMeaning: 'প্রতিদ্বন্দ্বিতা করা বা লড়াই করা',
+      banglaMeaning: 'প্রতিদ্বন্দ্বিতা করা বা লড়াই করা , দ্বন্দ্বে নামা',
       pronunciation: '/ˈcontend/',
       partOfSpeech: 'adverb',
       examples: [
@@ -192,7 +192,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contentious_11',
       unitId: 48,
       word: 'Contentious',
-      banglaMeaning: 'ঝগড়াটে বা কলহপ্রিয়',
+      banglaMeaning: 'ঝগড়াটে বা কলহপ্রিয় , কলহপরায়ণ , কুঁদুলে , বিতর্কমূলক',
       pronunciation: '/ˈcontentious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -210,7 +210,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contiguous_12',
       unitId: 48,
       word: 'Contiguous',
-      banglaMeaning: 'সংলগ্ন বা স্পর্শী (লাগোয়া)',
+      banglaMeaning: 'সংলগ্ন বা স্পর্শী (লাগোয়া) , সন্নিহিত , পাশাপাশি',
       pronunciation: '/ˈcontiguous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contingent_13',
       unitId: 48,
       word: 'Contingent',
-      banglaMeaning: 'শর্তাধীন বা আকস্মিক',
+      banglaMeaning: 'শর্তাধীন বা আকস্মিক , অনিশ্চিত , অনিয়ত , শর্তসাপেক্ষ',
       pronunciation: '/ˈcontingent/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contortions_14',
       unitId: 48,
       word: 'Contortions',
-      banglaMeaning: 'অঙ্গবিকৃতি বা মোচড়',
+      banglaMeaning: 'অঙ্গবিকৃতি বা মোচড় , আকুঁচন',
       pronunciation: '/ˈcontortions/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contraband_15',
       unitId: 48,
       word: 'Contraband',
-      banglaMeaning: 'চোরাচালানকৃত নিষিদ্ধ পণ্য',
+      banglaMeaning: 'চোরাচালানকৃত নিষিদ্ধ পণ্য , বেআইনী কারবার',
       pronunciation: '/ˈcontraband/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit48: UnitInfo = {
       id: 'u48_contrive_17',
       unitId: 48,
       word: 'Contrive',
-      banglaMeaning: 'চাতুর্যের সাথে উদ্ভাবন করা',
+      banglaMeaning: 'চাতুর্যের সাথে উদ্ভাবন করা , গৃহস্থালির কাজ চালানো',
       pronunciation: '/ˈcontrive/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit48: UnitInfo = {
       id: 'u48_conventional_19',
       unitId: 48,
       word: 'Conventional',
-      banglaMeaning: 'প্রচলিত বা গতানুগতিক',
+      banglaMeaning: 'প্রচলিত বা গতানুগতিক , দস্তুরমাফিক , প্রয়োগসিদ্ধ , ব্যবহারসিদ্ধ',
       pronunciation: '/ˈconventional/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit48: UnitInfo = {
       id: 'u48_conversant_21',
       unitId: 48,
       word: 'Conversant',
-      banglaMeaning: 'সুপরিচিত বা অভিজ্ঞ',
+      banglaMeaning: 'সুপরিচিত বা অভিজ্ঞ , ভালোরকম পরিচিতি , সু-অবহিত , ওয়াকিবহাল',
       pronunciation: '/ˈconversant/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit48: UnitInfo = {
       id: 'u48_converse_22',
       unitId: 48,
       word: 'Converse',
-      banglaMeaning: 'বিপরীত বা উল্টো ধারণা',
+      banglaMeaning: 'বিপরীত বা উল্টো ধারণা , কথাবার্তা বলা',
       pronunciation: '/ˈconverse/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit48: UnitInfo = {
       id: 'u48_conviction_24',
       unitId: 48,
       word: 'Conviction',
-      banglaMeaning: 'দৃঢ় বিশ্বাস বা দোষী সাব্যস্তকরণ',
+      banglaMeaning: 'দৃঢ় বিশ্বাস বা দোষী সাব্যস্তকরণ , দণ্ডাজ্ঞা',
       pronunciation: '/ˈconviction/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit48: UnitInfo = {
       id: 'u48_convivial_25',
       unitId: 48,
       word: 'Convivial',
-      banglaMeaning: 'উৎসবমুখর ও প্রফুল্ল',
+      banglaMeaning: 'উৎসবমুখর ও প্রফুল্ল , পার্বণ',
       pronunciation: '/ˈconvivial/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit48: UnitInfo = {
       id: 'u48_convoluted_26',
       unitId: 48,
       word: 'Convoluted',
-      banglaMeaning: 'জটিল ও প্যাঁচানো',
+      banglaMeaning: 'জটিল ও প্যাঁচানো , বাঁকানো , ছড়ানো , কুণ্ডলিত',
       pronunciation: '/ˈconvoluted/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit48: UnitInfo = {
       id: 'u48_copious_27',
       unitId: 48,
       word: 'Copious',
-      banglaMeaning: 'প্রচুর বা পর্যাপ্ত',
+      banglaMeaning: 'প্রচুর বা পর্যাপ্ত , অঢেল , তথ্যবহুল',
       pronunciation: '/ˈcopious/',
       partOfSpeech: 'adjective',
       examples: [
@@ -498,7 +498,7 @@ export const unit48: UnitInfo = {
       id: 'u48_cordial_28',
       unitId: 48,
       word: 'Cordial',
-      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন',
+      banglaMeaning: 'সদালাপী বা বন্ধুভাবাপন্ন , আন্তরিক , বন্ধুত্বপূর্ণ , উত্তেজক',
       pronunciation: '/ˈcordial/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit48: UnitInfo = {
       id: 'u48_corroborate_29',
       unitId: 48,
       word: 'Corroborate',
-      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা',
+      banglaMeaning: 'সমর্থন বা পৃষ্ঠপোষকতা করা , অনুমোদন করা , সমর্থন করা , সুনিশ্চিত করা',
       pronunciation: '/ˈcorroborate/',
       partOfSpeech: 'verb',
       examples: [
@@ -660,7 +660,7 @@ export const unit48: UnitInfo = {
       id: 'u48_counterpart_37',
       unitId: 48,
       word: 'Counterpart',
-      banglaMeaning: 'সমপদস্থ ব্যক্তি বা প্রতিরূপ',
+      banglaMeaning: 'সমপদস্থ ব্যক্তি বা প্রতিরূপ , পরিপূরক অংশ',
       pronunciation: '/ˈcounterpart/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit48: UnitInfo = {
       id: 'u48_covert_38',
       unitId: 48,
       word: 'Covert',
-      banglaMeaning: 'গোপন বা লুকানো',
+      banglaMeaning: 'গোপন বা লুকানো , গুপ্ত , ছদ্ম',
       pronunciation: '/ˈcovert/',
       partOfSpeech: 'noun',
       examples: [
@@ -696,7 +696,7 @@ export const unit48: UnitInfo = {
       id: 'u48_covetous_39',
       unitId: 48,
       word: 'Covetous',
-      banglaMeaning: 'লোভী বা অর্থলোলুপ',
+      banglaMeaning: 'লোভী বা অর্থলোলুপ , লিপ্সু , লালায়িত',
       pronunciation: '/ˈcovetous/',
       partOfSpeech: 'adjective',
       examples: [
@@ -714,7 +714,7 @@ export const unit48: UnitInfo = {
       id: 'u48_cow_40',
       unitId: 48,
       word: 'Cow',
-      banglaMeaning: 'ভয় দেখানো বা আতঙ্কিত করা',
+      banglaMeaning: 'ভয় দেখানো বা আতঙ্কিত করা , গাভী , অমার্জিত স্ত্রীলোক',
       pronunciation: '/ˈcow/',
       partOfSpeech: 'noun',
       examples: [

@@ -12,7 +12,7 @@ export const unit05: UnitInfo = {
       id: 'u5_axiom_1',
       unitId: 5,
       word: 'Axiom',
-      banglaMeaning: 'স্বতঃসিদ্ধ সত্য , স্বতঃপ্রমাণিত মূলনীতি',
+      banglaMeaning: 'স্বতঃসিদ্ধ সত্য , স্বতঃপ্রমাণিত মূলনীতি , সবর্জনবিদিত নীতি , স্বয়ংপ্রমাণিত সত্য',
       pronunciation: '/ˈæk.si.əm/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit05: UnitInfo = {
       id: 'u5_cogent_2',
       unitId: 5,
       word: 'Cogent',
-      banglaMeaning: 'অকাট্য ও যুক্তিযুক্ত , জোরালো',
+      banglaMeaning: 'অকাট্য ও যুক্তিযুক্ত , জোরালো , প্রবল',
       pronunciation: '/ˈkəʊ.dʒənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit05: UnitInfo = {
       id: 'u5_dichotomy_3',
       unitId: 5,
       word: 'Dichotomy',
-      banglaMeaning: 'দ্বিবিভাজন , সম্পূর্ণ বিপরীত দুই ধারায় বিভক্তি',
+      banglaMeaning: 'দ্বিবিভাজন , সম্পূর্ণ বিপরীত দুই ধারায় বিভক্তি , বৈপরীত্য , দ্বি-অগ্র শাখা-উদগম',
       pronunciation: '/daɪˈkɒt.ə.mi/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit05: UnitInfo = {
       id: 'u5_empirical_4',
       unitId: 5,
       word: 'Empirical',
-      banglaMeaning: 'অভিজ্ঞতালব্ধ বা পর্যবেক্ষণভিত্তিক',
+      banglaMeaning: 'অভিজ্ঞতালব্ধ বা পর্যবেক্ষণভিত্তিক , গবেষণামূলক , প্রায়োগিক , পরীক্ষামূলক',
       pronunciation: '/ɪmˈpɪr.ɪ.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit05: UnitInfo = {
       id: 'u5_fallacy_5',
       unitId: 5,
       word: 'Fallacy',
-      banglaMeaning: 'যুক্তির ভ্রান্তি , মিথ্যা ধারণা',
+      banglaMeaning: 'যুক্তির ভ্রান্তি , মিথ্যা ধারণা , ভ্রান্ত ধারণা , ভুয়ো যুক্তি',
       pronunciation: '/ˈfæl.ə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit05: UnitInfo = {
       id: 'u5_heuristic_6',
       unitId: 5,
       word: 'Heuristic',
-      banglaMeaning: 'অভিজ্ঞতাভিত্তিক বা অন্বেষণমূলক সহজ পদ্ধতি',
+      banglaMeaning: 'অভিজ্ঞতাভিত্তিক বা অন্বেষণমূলক সহজ পদ্ধতি , অনুসন্ধানমূলক , আবিষ্কারমূলক',
       pronunciation: '/hjuəˈrɪs.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit05: UnitInfo = {
       id: 'u5_inference_7',
       unitId: 5,
       word: 'Inference',
-      banglaMeaning: 'অনুমান , তথ্যের ভিত্তিতে সিদ্ধান্ত টানা',
+      banglaMeaning: 'অনুমান , তথ্যের ভিত্তিতে সিদ্ধান্ত টানা , অবধারণ , অনুমিতি',
       pronunciation: '/ˈɪn.fər.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit05: UnitInfo = {
       id: 'u5_lucid_9',
       unitId: 5,
       word: 'Lucid',
-      banglaMeaning: 'সহজে বোধগম্য , স্বচ্ছ ও প্রাঞ্জল',
+      banglaMeaning: 'সহজে বোধগম্য , স্বচ্ছ ও প্রাঞ্জল , স্পষ্ট , সুবোধ্য',
       pronunciation: '/ˈluː.sɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit05: UnitInfo = {
       id: 'u5_nonchalant_10',
       unitId: 5,
       word: 'Nonchalant',
-      banglaMeaning: 'উদাসীন , ভাবলেশহীন শান্ত',
+      banglaMeaning: 'উদাসীন , ভাবলেশহীন শান্ত , অনুত্তেজিত , প্রশান্ত',
       pronunciation: '/ˌnɒn.ʃəlˈɒnt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit05: UnitInfo = {
       id: 'u5_paradox_11',
       unitId: 5,
       word: 'Paradox',
-      banglaMeaning: 'আপাতবিরোধী সত্য , স্ববিরোধী উক্তি',
+      banglaMeaning: 'আপাতবিরোধী সত্য , স্ববিরোধী উক্তি , আপাতবৈপরীত্য , কূটাভাস',
       pronunciation: '/ˈpær.ə.dɒks/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit05: UnitInfo = {
       id: 'u5_rationale_12',
       unitId: 5,
       word: 'Rationale',
-      banglaMeaning: 'যুক্তিসঙ্গত কারণ , মূল ভিত্তি',
+      banglaMeaning: 'যুক্তিসঙ্গত কারণ , মূল ভিত্তি , মূল নীতি , যুক্তিপূর্ণ বর্ণনা',
       pronunciation: '/ˌræʃ.əˈnɑːl/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit05: UnitInfo = {
       id: 'u5_skepticism_13',
       unitId: 5,
       word: 'Skepticism',
-      banglaMeaning: 'সংশয়বাদ , সন্দেহপ্রবণতা',
+      banglaMeaning: 'সংশয়বাদ , সন্দেহপ্রবণতা , অবিশ্বাসপ্রবণতা , নাস্তিক্য',
       pronunciation: '/ˈskep.tɪ.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit05: UnitInfo = {
       id: 'u5_tenet_14',
       unitId: 5,
       word: 'Tenet',
-      banglaMeaning: 'মৌলিক নীতি বা মতবাদ',
+      banglaMeaning: 'মৌলিক নীতি বা মতবাদ , বিশ্বাস',
       pronunciation: '/ˈten.ɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit05: UnitInfo = {
       id: 'u5_unequivocal_15',
       unitId: 5,
       word: 'Unequivocal',
-      banglaMeaning: 'সুস্পষ্ট , যার একাধিক অর্থ নেই',
+      banglaMeaning: 'সুস্পষ্ট , যার একাধিক অর্থ নেই , দ্ব্যর্থহীন',
       pronunciation: '/ˌʌn.ɪˈkwɪv.ə.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit05: UnitInfo = {
       id: 'u5_veracity_16',
       unitId: 5,
       word: 'Veracity',
-      banglaMeaning: 'সত্যবাদিতা , তথ্যের যথার্থতা',
+      banglaMeaning: 'সত্যবাদিতা , তথ্যের যথার্থতা , সত্যপরায়ণতা , অবিতথ',
       pronunciation: '/vəˈræs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit05: UnitInfo = {
       id: 'u5_wisdom_17',
       unitId: 5,
       word: 'Wisdom',
-      banglaMeaning: 'প্রজ্ঞা , দূরদর্শিতাপূর্ণ জ্ঞান',
+      banglaMeaning: 'প্রজ্ঞা , দূরদর্শিতাপূর্ণ জ্ঞান , বিজ্ঞতা , বিদ্যা',
       pronunciation: '/ˈwɪz.dəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit05: UnitInfo = {
       id: 'u5_pedantic_18',
       unitId: 5,
       word: 'Pedantic',
-      banglaMeaning: 'পাণ্ডিত্য প্রদর্শনকারী , নিয়মের খুঁটিনাটিতে অতিরিক্ত নিমগ্ন',
+      banglaMeaning: 'পাণ্ডিত্য প্রদর্শনকারী , নিয়মের খুঁটিনাটিতে অতিরিক্ত নিমগ্ন , আচারসর্বস্ব , গোঁড়া',
       pronunciation: '/pɪˈdæn.tɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit05: UnitInfo = {
       id: 'u5_dialectic_19',
       unitId: 5,
       word: 'Dialectic',
-      banglaMeaning: 'দ্বান্দ্বিক পদ্ধতি , যুক্তি-তর্কের মাধ্যমে সত্য উন্মোচন',
+      banglaMeaning: 'দ্বান্দ্বিক পদ্ধতি , যুক্তি-তর্কের মাধ্যমে সত্য উন্মোচন , দ্বন্দ্ব',
       pronunciation: '/ˌdaɪ.əˈlek.tɪk/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit05: UnitInfo = {
       id: 'u5_deduction_20',
       unitId: 5,
       word: 'Deduction',
-      banglaMeaning: 'অবরোহী যুক্তি , সাধারণ নিয়ম থেকে নির্দিষ্ট সত্য বের করা',
+      banglaMeaning: 'অবরোহী যুক্তি , সাধারণ নিয়ম থেকে নির্দিষ্ট সত্য বের করা , বাদ , কর্তন',
       pronunciation: '/dɪˈdʌk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit05: UnitInfo = {
       id: 'u5_induction_21',
       unitId: 5,
       word: 'Induction',
-      banglaMeaning: 'আরোহী যুক্তি , নির্দিষ্ট উদাহরণ থেকে সাধারণ সিদ্ধান্তে পৌঁছানো',
+      banglaMeaning: 'আরোহী যুক্তি , নির্দিষ্ট উদাহরণ থেকে সাধারণ সিদ্ধান্তে পৌঁছানো , আনয়ন , ভূমিকা',
       pronunciation: '/ɪnˈdʌk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit05: UnitInfo = {
       id: 'u5_nuanced_22',
       unitId: 5,
       word: 'Nuanced',
-      banglaMeaning: 'সূক্ষ্ম তারতম্যপূর্ণ , বহুমুখী বোধসম্পন্ন',
+      banglaMeaning: 'সূক্ষ্ম তারতম্যপূর্ণ , বহুমুখী বোধসম্পন্ন , সূক্ষ্ম পার্থক্যযুক্ত , সূক্ষ্মতাপূর্ণ',
       pronunciation: '/ˈnjuː.ɑːnst/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit05: UnitInfo = {
       id: 'u5_premise_23',
       unitId: 5,
       word: 'Premise',
-      banglaMeaning: 'যুক্তির মূল প্রস্তাবনা বা ভিত্তি',
+      banglaMeaning: 'যুক্তির মূল প্রস্তাবনা বা ভিত্তি , প্রতিজ্ঞা , তর্কশাস্ত্রের প্রস্তাব , উদাহরণ',
       pronunciation: '/ˈprem.ɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit05: UnitInfo = {
       id: 'u5_refutation_24',
       unitId: 5,
       word: 'Refutation',
-      banglaMeaning: 'যুক্তির খণ্ডন বা মিথ্যা প্রমাণ',
+      banglaMeaning: 'যুক্তির খণ্ডন বা মিথ্যা প্রমাণ , যুক্তিখণ্ডন , প্রত্যাখ্যান',
       pronunciation: '/ˌref.juˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit05: UnitInfo = {
       id: 'u5_solipsism_25',
       unitId: 5,
       word: 'Solipsism',
-      banglaMeaning: 'অহংসর্বস্ব মতবাদ , কেবল নিজের মনের অস্তিত্বে বিশ্বাস',
+      banglaMeaning: 'অহংসর্বস্ব মতবাদ , কেবল নিজের মনের অস্তিত্বে বিশ্বাস , আত্মজ্ঞানবাদ',
       pronunciation: '/ˈsɒl.ɪp.sɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit05: UnitInfo = {
       id: 'u5_tautology_26',
       unitId: 5,
       word: 'Tautology',
-      banglaMeaning: 'একই কথার অপ্রয়োজনীয় পুনরাবৃত্তি',
+      banglaMeaning: 'একই কথার অপ্রয়োজনীয় পুনরাবৃত্তি , পুনরুক্তি , শব্দবাহুল্য , অনুলাপ',
       pronunciation: '/tɔːˈtɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit05: UnitInfo = {
       id: 'u5_validity_27',
       unitId: 5,
       word: 'Validity',
-      banglaMeaning: 'যুক্তির বৈধতা , প্রামাণিকতা',
+      banglaMeaning: 'যুক্তির বৈধতা , প্রামাণিকতা , যথাযথতা , সঠিকতা',
       pronunciation: '/vəˈlɪd.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit05: UnitInfo = {
       id: 'u5_ambiguity_28',
       unitId: 5,
       word: 'Ambiguity',
-      banglaMeaning: 'দ্ব্যর্থকতা , অস্পষ্টতা',
+      banglaMeaning: 'দ্ব্যর্থকতা , অস্পষ্টতা , রহস্যময়তা , দ্ব্যর্থতা',
       pronunciation: '/ˌæm.bɪˈɡjuː.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit05: UnitInfo = {
       id: 'u5_elucidate_29',
       unitId: 5,
       word: 'Elucidate',
-      banglaMeaning: 'ব্যাখ্যা করে পরিষ্কার করা , বিশদভাবে বুঝিয়ে দেওয়া',
+      banglaMeaning: 'ব্যাখ্যা করে পরিষ্কার করা , বিশদভাবে বুঝিয়ে দেওয়া , বিশদ করা , স্পষ্ট করা',
       pronunciation: '/iˈluː.sɪ.deɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -534,7 +534,7 @@ export const unit05: UnitInfo = {
       id: 'u5_disabuse_30',
       unitId: 5,
       word: 'Disabuse',
-      banglaMeaning: 'ভুল ধারণা ভেঙে সঠিকটা জানানো',
+      banglaMeaning: 'ভুল ধারণা ভেঙে সঠিকটা জানানো , মোহভঙ্গ করা , ভ্রম দূর করা',
       pronunciation: '/ˌdɪs.əˈbjuːz/',
       partOfSpeech: 'verb',
       examples: [
@@ -552,7 +552,7 @@ export const unit05: UnitInfo = {
       id: 'u5_intelligible_31',
       unitId: 5,
       word: 'Intelligible',
-      banglaMeaning: 'সহজে বোধগম্য বা বোধসাধ্য',
+      banglaMeaning: 'সহজে বোধগম্য বা বোধসাধ্য , বুদ্ধিগম্য',
       pronunciation: '/ɪnˈtel.ɪ.dʒə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -570,7 +570,7 @@ export const unit05: UnitInfo = {
       id: 'u5_plausible_32',
       unitId: 5,
       word: 'Plausible',
-      banglaMeaning: 'সম্ভাব্য , যুক্তিসঙ্গত মনে হয় এমন',
+      banglaMeaning: 'সম্ভাব্য , যুক্তিসঙ্গত মনে হয় এমন , বিশ্বাসযোগ্য , সম্ভাবনীয়',
       pronunciation: '/ˈplɔː.zə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit05: UnitInfo = {
       id: 'u5_spurious_33',
       unitId: 5,
       word: 'Spurious',
-      banglaMeaning: 'নকল , ভুয়া বা ভিত্তিহীন যুক্তি',
+      banglaMeaning: 'নকল , ভুয়া বা ভিত্তিহীন যুক্তি , কৃত্রিম , ভেজাল',
       pronunciation: '/ˈspjʊə.ri.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -606,7 +606,7 @@ export const unit05: UnitInfo = {
       id: 'u5_sophistry_34',
       unitId: 5,
       word: 'Sophistry',
-      banglaMeaning: 'কুতর্ক , বিভ্রান্তিকর কূটযুক্তি',
+      banglaMeaning: 'কুতর্ক , বিভ্রান্তিকর কূটযুক্তি , কূটতর্ক',
       pronunciation: '/ˈsɒf.ɪ.stri/',
       partOfSpeech: 'noun',
       examples: [

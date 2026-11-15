@@ -12,7 +12,7 @@ export const unit07: UnitInfo = {
       id: 'u7_autocracy_1',
       unitId: 7,
       word: 'Autocracy',
-      banglaMeaning: 'একনায়কতন্ত্র , স্বৈরাচারী শাসন',
+      banglaMeaning: 'একনায়কতন্ত্র , স্বৈরাচারী শাসন , স্বৈরতন্ত্র , স্বৈরশাসন',
       pronunciation: '/ɔːˈtɒk.rə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit07: UnitInfo = {
       id: 'u7_coalition_2',
       unitId: 7,
       word: 'Coalition',
-      banglaMeaning: 'জোট বা সম্মিলিত ফ্রন্ট',
+      banglaMeaning: 'জোট বা সম্মিলিত ফ্রন্ট , সংযুক্তি , মোর্চা',
       pronunciation: '/ˌkəʊ.əˈlɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit07: UnitInfo = {
       id: 'u7_demagogue_3',
       unitId: 7,
       word: 'Demagogue',
-      banglaMeaning: 'জনতোষণকারী উসকানিদাতা নেতা',
+      banglaMeaning: 'জনতোষণকারী উসকানিদাতা নেতা , বক্তৃতাবাজ , জনপ্রিয় নেতা , জননেতা',
       pronunciation: '/ˈdem.ə.ɡɒɡ/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit07: UnitInfo = {
       id: 'u7_enfranchise_4',
       unitId: 7,
       word: 'Enfranchise',
-      banglaMeaning: 'ভোটাধিকার বা রাজনৈতিক স্বাধীনতা প্রদান করা',
+      banglaMeaning: 'ভোটাধিকার বা রাজনৈতিক স্বাধীনতা প্রদান করা , মুক্ত করা , স্বাধীনতা দেওয়া',
       pronunciation: '/ɪnˈfræn.tʃaɪz/',
       partOfSpeech: 'verb',
       examples: [
@@ -84,7 +84,7 @@ export const unit07: UnitInfo = {
       id: 'u7_faction_5',
       unitId: 7,
       word: 'Faction',
-      banglaMeaning: 'দলাদলি , অন্তর্বর্তী উপদল',
+      banglaMeaning: 'দলাদলি , অন্তর্বর্তী উপদল , দলবিরোধ , বিরোধী দল',
       pronunciation: '/ˈfæk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit07: UnitInfo = {
       id: 'u7_gerrymander_6',
       unitId: 7,
       word: 'Gerrymander',
-      banglaMeaning: 'নির্বাচনী এলাকার সীমানা নিজের দলের স্বার্থে কারচুপি করা',
+      banglaMeaning: 'নির্বাচনী এলাকার সীমানা নিজের দলের স্বার্থে কারচুপি করা , কূটকৌশল , জাল করা , ষড়্যন্ত্র',
       pronunciation: '/ˈdʒer.iˌmæn.dər/',
       partOfSpeech: 'verb',
       examples: [
@@ -120,7 +120,7 @@ export const unit07: UnitInfo = {
       id: 'u7_hegemony_7',
       unitId: 7,
       word: 'Hegemony',
-      banglaMeaning: 'সার্বভৌম আধিপত্য',
+      banglaMeaning: 'সার্বভৌম আধিপত্য , কর্তৃত্ব , নেতৃত্ব',
       pronunciation: '/hɪˈɡem.ə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit07: UnitInfo = {
       id: 'u7_imperialism_8',
       unitId: 7,
       word: 'Imperialism',
-      banglaMeaning: 'সাম্রাজ্যবাদ',
+      banglaMeaning: 'সাম্রাজ্যবাদ , সম্রাটতন্ত্র , সাম্রাজ্যতন্ত্র',
       pronunciation: '/ɪmˈpɪə.ri.ə.lɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit07: UnitInfo = {
       id: 'u7_jurisdiction_9',
       unitId: 7,
       word: 'Jurisdiction',
-      banglaMeaning: 'এখতিয়ার বা বিচারিক ক্ষমতা',
+      banglaMeaning: 'এখতিয়ার বা বিচারিক ক্ষমতা , অধিক্ষেত্র , বিচারব্যবস্থা , আইনগত অধিকার',
       pronunciation: '/ˌdʒʊə.rɪsˈdɪk.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit07: UnitInfo = {
       id: 'u7_mandate_11',
       unitId: 7,
       word: 'Mandate',
-      banglaMeaning: 'জনগণের রায় বা শাসন করার আনুষ্ঠানিক কর্তৃত্ব',
+      banglaMeaning: 'জনগণের রায় বা শাসন করার আনুষ্ঠানিক কর্তৃত্ব , হুকুম , আদেশ , পোপের অনুশাসন',
       pronunciation: '/ˈmæn.deɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit07: UnitInfo = {
       id: 'u7_oligarchy_12',
       unitId: 7,
       word: 'Oligarchy',
-      banglaMeaning: 'স্বল্পসংখ্যক প্রভাবশালী ব্যক্তির শাসনব্যবস্থা',
+      banglaMeaning: 'স্বল্পসংখ্যক প্রভাবশালী ব্যক্তির শাসনব্যবস্থা , রাজ্যশাসন',
       pronunciation: '/ˈɒl.ɪ.ɡɑː.ki/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit07: UnitInfo = {
       id: 'u7_plutocracy_13',
       unitId: 7,
       word: 'Plutocracy',
-      banglaMeaning: 'ধনকুবেরদের শাসনব্যবস্থা',
+      banglaMeaning: 'ধনকুবেরদের শাসনব্যবস্থা , ধনতন্ত্র , ধনবান শাসকগোষ্ঠী',
       pronunciation: '/pluːˈtɒk.rə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit07: UnitInfo = {
       id: 'u7_sedation_15',
       unitId: 7,
       word: 'Sedation',
-      banglaMeaning: 'শান্তাবস্থা , বিদ্রোহ দমনের অবস্থা',
+      banglaMeaning: 'শান্তাবস্থা , বিদ্রোহ দমনের অবস্থা , অনুত্তেজিত',
       pronunciation: '/sɪˈdeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit07: UnitInfo = {
       id: 'u7_tyranny_16',
       unitId: 7,
       word: 'Tyranny',
-      banglaMeaning: 'নৃশংস স্বৈরাচার',
+      banglaMeaning: 'নৃশংস স্বৈরাচার , অত্যাচার , স্বৈরশাসন , দৌরাত্ম্য',
       pronunciation: '/ˈtɪr.ən.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit07: UnitInfo = {
       id: 'u7_usurp_17',
       unitId: 7,
       word: 'Usurp',
-      banglaMeaning: 'জোরপূর্বক অন্যের অধিকার বা সিংহাসন দখল করা',
+      banglaMeaning: 'জোরপূর্বক অন্যের অধিকার বা সিংহাসন দখল করা , অন্যায়রূপে অধিকার করা',
       pronunciation: '/juːˈzɜːp/',
       partOfSpeech: 'verb',
       examples: [
@@ -318,7 +318,7 @@ export const unit07: UnitInfo = {
       id: 'u7_veto_18',
       unitId: 7,
       word: 'Veto',
-      banglaMeaning: 'প্রস্তাব বাতিলের চূড়ান্ত ক্ষমতা',
+      banglaMeaning: 'প্রস্তাব বাতিলের চূড়ান্ত ক্ষমতা , প্রতিষেধ , কর্তৃত্ববলে নিযেধাজ্ঞা , পদাধিকারবলে নিষেধাজ্ঞা',
       pronunciation: '/ˈviː.təʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit07: UnitInfo = {
       id: 'u7_anarchy_19',
       unitId: 7,
       word: 'Anarchy',
-      banglaMeaning: 'নৈরাজ্য , সরকারহীন বিশৃঙ্খলা',
+      banglaMeaning: 'নৈরাজ্য , সরকারহীন বিশৃঙ্খলা , অরাজকতা , মাংস্যন্যায়',
       pronunciation: '/ˈæn.ə.ki/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit07: UnitInfo = {
       id: 'u7_cabal_20',
       unitId: 7,
       word: 'Cabal',
-      banglaMeaning: 'গোপন চক্রান্তকারী উপদল',
+      banglaMeaning: 'গোপন চক্রান্তকারী উপদল , পুঙ্খানুপুঙ্খ',
       pronunciation: '/kəˈbæl/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit07: UnitInfo = {
       id: 'u7_despot_21',
       unitId: 7,
       word: 'Despot',
-      banglaMeaning: 'স্বৈরাচারী শাসক , অত্যাচারী রাজা',
+      banglaMeaning: 'স্বৈরাচারী শাসক , অত্যাচারী রাজা , উত্পীড়ক , সার্বভৌম শাসক',
       pronunciation: '/ˈdes.pɒt/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit07: UnitInfo = {
       id: 'u7_insurrection_22',
       unitId: 7,
       word: 'Insurrection',
-      banglaMeaning: 'রাষ্ট্রের বিরুদ্ধে সশস্ত্র বিদ্রোহ বা অভ্যুত্থান',
+      banglaMeaning: 'রাষ্ট্রের বিরুদ্ধে সশস্ত্র বিদ্রোহ বা অভ্যুত্থান , উপপ্লব',
       pronunciation: '/ˌɪn.sərˈek.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit07: UnitInfo = {
       id: 'u7_junto_23',
       unitId: 7,
       word: 'Junto',
-      banglaMeaning: 'সামরিক জান্তা বা চক্রান্তকারী পরিষদ',
+      banglaMeaning: 'সামরিক জান্তা বা চক্রান্তকারী পরিষদ , গুপ্তসভা',
       pronunciation: '/ˈdʒʌn.təʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit07: UnitInfo = {
       id: 'u7_plenipotentiary_25',
       unitId: 7,
       word: 'Plenipotentiary',
-      banglaMeaning: 'পূর্ণ ক্ষমতাপ্রাপ্ত কূটনীতিক বা দূত',
+      banglaMeaning: 'পূর্ণ ক্ষমতাপ্রাপ্ত কূটনীতিক বা দূত , রাজদূত',
       pronunciation: '/ˌplen.ɪ.pəˈten.ʃər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit07: UnitInfo = {
       id: 'u7_regime_26',
       unitId: 7,
       word: 'Regime',
-      banglaMeaning: 'শাসনব্যবস্থা বা সরকার',
+      banglaMeaning: 'শাসনব্যবস্থা বা সরকার , আমল , রাজ্যশাসনপ্রণালী , প্রচলিত ব্যবস্থা',
       pronunciation: '/reɪˈʒiːm/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit07: UnitInfo = {
       id: 'u7_subversion_27',
       unitId: 7,
       word: 'Subversion',
-      banglaMeaning: 'রাষ্ট্রের ভিত ধসিয়ে দেওয়ার অপতৎপরতা',
+      banglaMeaning: 'রাষ্ট্রের ভিত ধসিয়ে দেওয়ার অপতৎপরতা , ধ্বংস , পরাভব',
       pronunciation: '/səbˈvɜː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit07: UnitInfo = {
       id: 'u7_theocracy_28',
       unitId: 7,
       word: 'Theocracy',
-      banglaMeaning: 'ধর্মীয় অনুশাসন দ্বারা পরিচালিত রাষ্ট্রব্যবস্থা',
+      banglaMeaning: 'ধর্মীয় অনুশাসন দ্বারা পরিচালিত রাষ্ট্রব্যবস্থা , দিব্যতন্ত্র , ধর্মশাসন',
       pronunciation: '/θiˈɒk.rə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit07: UnitInfo = {
       id: 'u7_abdicate_29',
       unitId: 7,
       word: 'Abdicate',
-      banglaMeaning: 'স্বেচ্ছায় সিংহাসন বা পদমর্যাদা ত্যাগ করা',
+      banglaMeaning: 'স্বেচ্ছায় সিংহাসন বা পদমর্যাদা ত্যাগ করা , সিংহাসন ত্যাগ করা , প্রত্যাখ্যান করা , অস্বীকার করা',
       pronunciation: '/ˈæb.dɪ.keɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -534,7 +534,7 @@ export const unit07: UnitInfo = {
       id: 'u7_demarcation_30',
       unitId: 7,
       word: 'Demarcation',
-      banglaMeaning: 'সীমানা নির্ধারণ , পার্থক্য টানা',
+      banglaMeaning: 'সীমানা নির্ধারণ , পার্থক্য টানা , প্রভেদ',
       pronunciation: '/ˌdiː.mɑːˈkeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit07: UnitInfo = {
       id: 'u7_inaugurate_31',
       unitId: 7,
       word: 'Inaugurate',
-      banglaMeaning: 'আনুষ্ঠানিকভাবে উদ্বোধন করা বা দায়িত্বভার গ্রহণ করানো',
+      banglaMeaning: 'আনুষ্ঠানিকভাবে উদ্বোধন করা বা দায়িত্বভার গ্রহণ করানো , অভিষেক করা , অভিষিক্ত করা , প্রবর্তন করা',
       pronunciation: '/ɪˈnɔː.ɡjə.reɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -570,7 +570,7 @@ export const unit07: UnitInfo = {
       id: 'u7_partisan_32',
       unitId: 7,
       word: 'Partisan',
-      banglaMeaning: 'অন্ধভাবে দলকানা , পক্ষপাতদুষ্ট',
+      banglaMeaning: 'অন্ধভাবে দলকানা , পক্ষপাতদুষ্ট , তরফদার , পক্ষাবলম্বী',
       pronunciation: '/ˌpɑː.tɪˈzæn/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit07: UnitInfo = {
       id: 'u7_sedition_33',
       unitId: 7,
       word: 'Sedition',
-      banglaMeaning: 'রাষ্ট্রদ্রোহমূলক উসকানি',
+      banglaMeaning: 'রাষ্ট্রদ্রোহমূলক উসকানি , রাজদ্রোহ',
       pronunciation: '/sɪˈdɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [

@@ -12,7 +12,7 @@ export const unit14: UnitInfo = {
       id: 'u14_asteroid_1',
       unitId: 14,
       word: 'Asteroid',
-      banglaMeaning: 'গ্রহাণু , মহাশূন্যের পাথুরে খণ্ড',
+      banglaMeaning: 'গ্রহাণু , মহাশূন্যের পাথুরে খণ্ড , তারকাকার , উপগ্রহ',
       pronunciation: '/ˈæs.tər.ɔɪd/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit14: UnitInfo = {
       id: 'u14_blackhole_2',
       unitId: 14,
       word: 'Blackhole',
-      banglaMeaning: 'কৃষ্ণগহ্বর , তীব্র মহাকর্ষের মহাজাগতিক স্থান',
+      banglaMeaning: 'কৃষ্ণগহ্বর , তীব্র মহাকর্ষের মহাজাগতিক স্থান , ব্ল্যাকহোল',
       pronunciation: '/ˈblæk.həʊl/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit14: UnitInfo = {
       id: 'u14_celestial_3',
       unitId: 14,
       word: 'Celestial',
-      banglaMeaning: 'মহাজাগতিক বা আকাশীয়',
+      banglaMeaning: 'মহাজাগতিক বা আকাশীয় , আকাশসংক্রান্ত , স্বর্গীয়',
       pronunciation: '/sɪˈles.ti.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit14: UnitInfo = {
       id: 'u14_constellation_4',
       unitId: 14,
       word: 'Constellation',
-      banglaMeaning: 'নক্ষত্রমণ্ডল , তারার রূপরেখা',
+      banglaMeaning: 'নক্ষত্রমণ্ডল , তারার রূপরেখা , তারার ঝাঁক , নক্ষত্রসমাবেশ',
       pronunciation: '/ˌkɒn.stəˈleɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit14: UnitInfo = {
       id: 'u14_eclipse_5',
       unitId: 14,
       word: 'Eclipse',
-      banglaMeaning: 'গ্রহণ , সূর্য বা চাঁদের আড়াল হওয়া',
+      banglaMeaning: 'গ্রহণ , সূর্য বা চাঁদের আড়াল হওয়া , চন্দ্রসূর্যাদির গ্রহন , অন্ধকার',
       pronunciation: '/ɪˈklɪps/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit14: UnitInfo = {
       id: 'u14_galaxy_6',
       unitId: 14,
       word: 'Galaxy',
-      banglaMeaning: 'ছায়াপথ বা গ্যালাক্সি',
+      banglaMeaning: 'ছায়াপথ বা গ্যালাক্সি , আকাশগঙ্গা , সম্মেলন , স্বর্গঙ্গা',
       pronunciation: '/ˈɡæl.ək.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit14: UnitInfo = {
       id: 'u14_gravity_7',
       unitId: 14,
       word: 'Gravity',
-      banglaMeaning: 'মহাকর্ষ বল বা মাধ্যাকর্ষণ',
+      banglaMeaning: 'মহাকর্ষ বল বা মাধ্যাকর্ষণ , গাম্ভীর্য , গুরুত্ব , ভার',
       pronunciation: '/ˈɡræv.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit14: UnitInfo = {
       id: 'u14_interstellar_8',
       unitId: 14,
       word: 'Interstellar',
-      banglaMeaning: 'আন্তঃনাক্ষত্রিক , নক্ষত্রগুলোর মধ্যবর্তী',
+      banglaMeaning: 'আন্তঃনাক্ষত্রিক , নক্ষত্রগুলোর মধ্যবর্তী , নক্ষত্রমণ্ডলগত , সৌরজগত্ - বহির্ভূত',
       pronunciation: '/ˌɪn.təˈstel.ər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit14: UnitInfo = {
       id: 'u14_meteorite_10',
       unitId: 14,
       word: 'Meteorite',
-      banglaMeaning: 'উল্কাপিণ্ড , যা বায়ুমণ্ডল পেরিয়ে ভূমিতে পতিত হয়',
+      banglaMeaning: 'উল্কাপিণ্ড , যা বায়ুমণ্ডল পেরিয়ে ভূমিতে পতিত হয় , ভূপতিত উল্কা , উল্কাপিন্ড',
       pronunciation: '/ˈmiː.ti.ər.aɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit14: UnitInfo = {
       id: 'u14_orbit_12',
       unitId: 14,
       word: 'Orbit',
-      banglaMeaning: 'কক্ষপথ বা প্রদক্ষিণ করা',
+      banglaMeaning: 'কক্ষপথ বা প্রদক্ষিণ করা , গ্রহ , ধূমকেতু , ইলেক্ট্রন-কক্ষপথ',
       pronunciation: '/ˈɔː.bɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit14: UnitInfo = {
       id: 'u14_pulsar_13',
       unitId: 14,
       word: 'Pulsar',
-      banglaMeaning: 'পালসার , দ্রুত ঘূর্ণায়মান নিউট্রন তারা',
+      banglaMeaning: 'পালসার , দ্রুত ঘূর্ণায়মান নিউট্রন তারা , প্রেস',
       pronunciation: '/ˈpʌl.sɑːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit14: UnitInfo = {
       id: 'u14_quasar_14',
       unitId: 14,
       word: 'Quasar',
-      banglaMeaning: 'কোয়াসার , দূরবর্তী গ্যালাক্সির উজ্জ্বলতম কেন্দ্র',
+      banglaMeaning: 'কোয়াসার , দূরবর্তী গ্যালাক্সির উজ্জ্বলতম কেন্দ্র , কোয়েসার',
       pronunciation: '/ˈkweɪ.zɑːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit14: UnitInfo = {
       id: 'u14_radiation_15',
       unitId: 14,
       word: 'Radiation',
-      banglaMeaning: 'তেজস্ক্রিয় বিকিরণ বা রশ্মি',
+      banglaMeaning: 'তেজস্ক্রিয় বিকিরণ বা রশ্মি , বিচ্ছুরণ , রশ্মিবিচছুরণ , দীপন',
       pronunciation: '/ˌreɪ.diˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit14: UnitInfo = {
       id: 'u14_telescope_17',
       unitId: 14,
       word: 'Telescope',
-      banglaMeaning: 'দূরবীক্ষণ যন্ত্র বা টেলিস্কোপ',
+      banglaMeaning: 'দূরবীক্ষণ যন্ত্র বা টেলিস্কোপ , দূরবীন',
       pronunciation: '/ˈtel.ɪ.skəʊp/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit14: UnitInfo = {
       id: 'u14_universe_18',
       unitId: 14,
       word: 'Universe',
-      banglaMeaning: 'মহাবিশ্ব , বিশ্বব্রহ্মাণ্ড',
+      banglaMeaning: 'মহাবিশ্ব , বিশ্বব্রহ্মাণ্ড , জগত , নিখিল সৃষ্টি',
       pronunciation: '/ˈjuː.nɪ.vɜːs/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit14: UnitInfo = {
       id: 'u14_zenith_19',
       unitId: 14,
       word: 'Zenith',
-      banglaMeaning: 'খ-মধ্যবিন্দু , মাথার ঠিক ওপরে আকাশের সর্বোচ্চ বিন্দু',
+      banglaMeaning: 'খ-মধ্যবিন্দু , মাথার ঠিক ওপরে আকাশের সর্বোচ্চ বিন্দু , সুবিন্দু',
       pronunciation: '/ˈzen.ɪθ/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit14: UnitInfo = {
       id: 'u14_nadir_20',
       unitId: 14,
       word: 'Nadir',
-      banglaMeaning: 'পাদবিন্দু , খ-মধ্যবিন্দুর ঠিক বিপরীত সর্বনিম্ন বিন্দু',
+      banglaMeaning: 'পাদবিন্দু , খ-মধ্যবিন্দুর ঠিক বিপরীত সর্বনিম্ন বিন্দু , নিম্নতম বিন্দু , কুবিন্দু',
       pronunciation: '/ˈneɪ.dɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit14: UnitInfo = {
       id: 'u14_perigee_22',
       unitId: 14,
       word: 'Perigee',
-      banglaMeaning: 'উপগ্রহের কক্ষপথের পৃথিবীর নিকটতম বিন্দু',
+      banglaMeaning: 'উপগ্রহের কক্ষপথের পৃথিবীর নিকটতম বিন্দু , মাথার খুলি , করোটি , বুদ্ধি',
       pronunciation: '/ˈper.ɪ.dʒiː/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit14: UnitInfo = {
       id: 'u14_cosmology_23',
       unitId: 14,
       word: 'Cosmology',
-      banglaMeaning: 'মহাবিশ্ববিদ্যা বা সৃষ্টিতত্ত্ব',
+      banglaMeaning: 'মহাবিশ্ববিদ্যা বা সৃষ্টিতত্ত্ব , সৃষ্টিতত্ব',
       pronunciation: '/kɒzˈmɒl.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit14: UnitInfo = {
       id: 'u14_exoplanet_24',
       unitId: 14,
       word: 'Exoplanet',
-      banglaMeaning: 'সৌরজগতের বাইরের কোনো নক্ষত্রকে প্রদক্ষিণকারী গ্রহ',
+      banglaMeaning: 'সৌরজগতের বাইরের কোনো নক্ষত্রকে প্রদক্ষিণকারী গ্রহ , বহির্গ্রহ',
       pronunciation: '/ˈek.səʊˌplæn.ɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit14: UnitInfo = {
       id: 'u14_magnetosphere_26',
       unitId: 14,
       word: 'Magnetosphere',
-      banglaMeaning: 'চৌম্বকমণ্ডল , গ্রহের চৌম্বকীয় ক্ষেত্রযুক্ত অঞ্চল',
+      banglaMeaning: 'চৌম্বকমণ্ডল , গ্রহের চৌম্বকীয় ক্ষেত্রযুক্ত অঞ্চল , ম্যাগনেটোস্ফিয়ার',
       pronunciation: '/mæɡˈniː.tə.sfɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit14: UnitInfo = {
       id: 'u14_singularity_29',
       unitId: 14,
       word: 'Singularity',
-      banglaMeaning: 'সিঙ্গুলারিটি , কৃষ্ণগহ্বরের অসীম ঘনত্বের কেন্দ্রবিন্দু',
+      banglaMeaning: 'সিঙ্গুলারিটি , কৃষ্ণগহ্বরের অসীম ঘনত্বের কেন্দ্রবিন্দু , একতা',
       pronunciation: '/ˌsɪŋ.ɡjəˈlær.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit14: UnitInfo = {
       id: 'u14_solstice_30',
       unitId: 14,
       word: 'Solstice',
-      banglaMeaning: 'আয়নান্ত দিবস , কর্কট বা মকর সংক্রান্তি',
+      banglaMeaning: 'আয়নান্ত দিবস , কর্কট বা মকর সংক্রান্তি , অয়তান্ত - বিন্দু',
       pronunciation: '/ˈsɒl.stɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit14: UnitInfo = {
       id: 'u14_supercluster_32',
       unitId: 14,
       word: 'Supercluster',
-      banglaMeaning: 'মহাজাগতিক গ্যালাক্সিগুচ্ছের বিশাল সমষ্টি',
+      banglaMeaning: 'মহাজাগতিক গ্যালাক্সিগুচ্ছের বিশাল সমষ্টি , সুপারক্লাস্টার',
       pronunciation: '/ˈsuː.pəˌklʌs.tər/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit14: UnitInfo = {
       id: 'u14_void_34',
       unitId: 14,
       word: 'Void',
-      banglaMeaning: 'মহাশূন্যের বিশালাকার ফাঁকা অঞ্চল',
+      banglaMeaning: 'মহাশূন্যের বিশালাকার ফাঁকা অঞ্চল , খালি , বাতিল , অনধিকৃত',
       pronunciation: '/vɔɪd/',
       partOfSpeech: 'noun',
       examples: [

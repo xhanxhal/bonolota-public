@@ -12,7 +12,7 @@ export const unit28: UnitInfo = {
       id: 'u28_affection_1',
       unitId: 28,
       word: 'Affection',
-      banglaMeaning: 'স্নেহ , মমতা ও অন্তরের ভালোবাসা',
+      banglaMeaning: 'স্নেহ , মমতা ও অন্তরের ভালোবাসা , প্রীতি , আবেগ',
       pronunciation: '/əˈfek.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit28: UnitInfo = {
       id: 'u28_bond_2',
       unitId: 28,
       word: 'Bond',
-      banglaMeaning: 'গভীর মানসিক বন্ধন বা আত্মিক টান',
+      banglaMeaning: 'গভীর মানসিক বন্ধন বা আত্মিক টান , বন্ধনী , অঙ্গীকার , তমসুক',
       pronunciation: '/bɒnd/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit28: UnitInfo = {
       id: 'u28_camaraderie_3',
       unitId: 28,
       word: 'Camaraderie',
-      banglaMeaning: 'সহমর্মিতাপূর্ণ আন্তরিক বন্ধুত্ব',
+      banglaMeaning: 'সহমর্মিতাপূর্ণ আন্তরিক বন্ধুত্ব , পারস্পরিক আস্থা',
       pronunciation: '/ˌkæm.əˈrɑː.dər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit28: UnitInfo = {
       id: 'u28_devotion_4',
       unitId: 28,
       word: 'Devotion',
-      banglaMeaning: 'অনাবিল নিষ্ঠা ও গভীর অনুরাগ',
+      banglaMeaning: 'অনাবিল নিষ্ঠা ও গভীর অনুরাগ , ধর্মানুরাগ , উপাসনা , ভক্তি',
       pronunciation: '/dɪˈvəʊ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit28: UnitInfo = {
       id: 'u28_empathy_5',
       unitId: 28,
       word: 'Empathy',
-      banglaMeaning: 'সহমর্মিতা , অন্যের অনুভূতি নিজের ভেতর উপলব্ধি করা',
+      banglaMeaning: 'সহমর্মিতা , অন্যের অনুভূতি নিজের ভেতর উপলব্ধি করা , সহানুভূতি',
       pronunciation: '/ˈem.pə.θi/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit28: UnitInfo = {
       id: 'u28_fidelity_6',
       unitId: 28,
       word: 'Fidelity',
-      banglaMeaning: 'বিশ্বস্ততা ও প্রতিশ্রুতির প্রতি অটল থাকা',
+      banglaMeaning: 'বিশ্বস্ততা ও প্রতিশ্রুতির প্রতি অটল থাকা , সততা , আনুগত্য , অনুরক্তি',
       pronunciation: '/fɪˈdel.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit28: UnitInfo = {
       id: 'u28_generosity_7',
       unitId: 28,
       word: 'Generosity',
-      banglaMeaning: 'উদারতা বা পরোপকারী মন',
+      banglaMeaning: 'উদারতা বা পরোপকারী মন , বদ্যনতা , দানশীলতা , দাক্ষিণ্য',
       pronunciation: '/ˌdʒen.ərˈɒs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit28: UnitInfo = {
       id: 'u28_harmony_8',
       unitId: 28,
       word: 'Harmony',
-      banglaMeaning: 'পারিবারিক সম্প্রীতি বা শান্তিপূর্ণ সহাবস্থান',
+      banglaMeaning: 'পারিবারিক সম্প্রীতি বা শান্তিপূর্ণ সহাবস্থান , সাদৃশ্য , সঙ্গতি , ঐকতান',
       pronunciation: '/ˈhɑː.mə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit28: UnitInfo = {
       id: 'u28_intimacy_9',
       unitId: 28,
       word: 'Intimacy',
-      banglaMeaning: 'আন্তরিক ঘনিষ্ঠতা বা গভীর নৈকট্য',
+      banglaMeaning: 'আন্তরিক ঘনিষ্ঠতা বা গভীর নৈকট্য , অন্তরঙ্গতা , যৌন সম্পর্ক , খাতির',
       pronunciation: '/ˈɪn.tɪ.mə.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit28: UnitInfo = {
       id: 'u28_jovial_10',
       unitId: 28,
       word: 'Jovial',
-      banglaMeaning: 'হাসিখুশি , অমায়িক ও প্রাণোচ্ছ্বল',
+      banglaMeaning: 'হাসিখুশি , অমায়িক ও প্রাণোচ্ছ্বল , প্রফুল্ল , আমুদে',
       pronunciation: '/ˈdʒəʊ.vi.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit28: UnitInfo = {
       id: 'u28_kinship_11',
       unitId: 28,
       word: 'Kinship',
-      banglaMeaning: 'রক্তের সম্পর্ক বা অন্তরের গভীর আত্মীয়তা',
+      banglaMeaning: 'রক্তের সম্পর্ক বা অন্তরের গভীর আত্মীয়তা , জ্ঞাতিত্ব , কুটুম্বিতা , সম্বন্ধ',
       pronunciation: '/ˈkɪn.ʃɪp/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit28: UnitInfo = {
       id: 'u28_nurture_14',
       unitId: 28,
       word: 'Nurture',
-      banglaMeaning: 'স্নেহ-যত্নে লালন-পালন করা ও পরিচর্যা',
+      banglaMeaning: 'স্নেহ-যত্নে লালন-পালন করা ও পরিচর্যা , সযত্নে লালন , প্রশিক্ষণ , খাদ্য',
       pronunciation: '/ˈnɜː.tʃər/',
       partOfSpeech: 'verb',
       examples: [
@@ -264,7 +264,7 @@ export const unit28: UnitInfo = {
       id: 'u28_offspring_15',
       unitId: 28,
       word: 'Offspring',
-      banglaMeaning: 'সন্তানসন্ততি বা বংশধর',
+      banglaMeaning: 'সন্তানসন্ততি বা বংশধর , বাচ্চা , শাবক , বংশাবলী',
       pronunciation: '/ˈɒf.sprɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit28: UnitInfo = {
       id: 'u28_patriarch_16',
       unitId: 28,
       word: 'Patriarch',
-      banglaMeaning: 'পরিবারের বয়োজ্যেষ্ঠ প্রধান পুরুষ',
+      banglaMeaning: 'পরিবারের বয়োজ্যেষ্ঠ প্রধান পুরুষ , কুলপতি , প্রতিষ্ঠাতা , প্রবীণতম বাসিন্দা',
       pronunciation: '/ˈpeɪ.tri.ɑːk/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit28: UnitInfo = {
       id: 'u28_rapport_17',
       unitId: 28,
       word: 'Rapport',
-      banglaMeaning: 'পারস্পরিক চমৎকার বোঝাপড়া ও সুসম্পর্ক',
+      banglaMeaning: 'পারস্পরিক চমৎকার বোঝাপড়া ও সুসম্পর্ক , আত্মিক সহযোগ , সম্বন্ধ , যোগাযোগ',
       pronunciation: '/ræpˈɔːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit28: UnitInfo = {
       id: 'u28_trust_19',
       unitId: 28,
       word: 'Trust',
-      banglaMeaning: 'বিশ্বাস ও নির্ভরতা',
+      banglaMeaning: 'বিশ্বাস ও নির্ভরতা , আস্থা , ন্যাস , প্রত্যয়',
       pronunciation: '/trʌst/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit28: UnitInfo = {
       id: 'u28_unconditional_20',
       unitId: 28,
       word: 'Unconditional',
-      banglaMeaning: 'শর্তহীন , কোনো দাবিহীন (ভালোবাসা)',
+      banglaMeaning: 'শর্তহীন , কোনো দাবিহীন (ভালোবাসা) , সার্বভৌম',
       pronunciation: '/ˌʌn.kənˈdɪʃ.ən.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -372,7 +372,7 @@ export const unit28: UnitInfo = {
       id: 'u28_vow_21',
       unitId: 28,
       word: 'Vow',
-      banglaMeaning: 'প্রতিজ্ঞা , শপথ বা আজীবন অঙ্গীকার',
+      banglaMeaning: 'প্রতিজ্ঞা , শপথ বা আজীবন অঙ্গীকার , ব্রত , শপথপূর্বক বলা',
       pronunciation: '/vaʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit28: UnitInfo = {
       id: 'u28_youth_23',
       unitId: 28,
       word: 'Youth',
-      banglaMeaning: 'যৌবন বা শৈশব-কৈশোরের দিনগুলো',
+      banglaMeaning: 'যৌবন বা শৈশব-কৈশোরের দিনগুলো , যৌবনকাল , নবীন যৌবন , প্রথম বয়স',
       pronunciation: '/juːθ/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit28: UnitInfo = {
       id: 'u28_zeal_24',
       unitId: 28,
       word: 'Zeal',
-      banglaMeaning: 'পরিবারের কল্যাণে কাজ করার গভীর উদ্যম',
+      banglaMeaning: 'পরিবারের কল্যাণে কাজ করার গভীর উদ্যম , গভীর অনুভূতি , প্রোত্সাহ , গভীর ভাবাবেগ',
       pronunciation: '/ziːl/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit28: UnitInfo = {
       id: 'u28_affinity_25',
       unitId: 28,
       word: 'Affinity',
-      banglaMeaning: 'আত্মিক মিল বা আন্তরিক আকর্ষণ',
+      banglaMeaning: 'আত্মিক মিল বা আন্তরিক আকর্ষণ , ঝোঁক , প্রবণতা , প্রীতি',
       pronunciation: '/əˈfɪn.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit28: UnitInfo = {
       id: 'u28_benevolence_26',
       unitId: 28,
       word: 'Benevolence',
-      banglaMeaning: 'পরোপকারী মানসিকতা ও দয়াশীলতা',
+      banglaMeaning: 'পরোপকারী মানসিকতা ও দয়াশীলতা , উপকার করার ইচ্ছা , কল্যাণমূলক কার্যকলাপ , বদান্যতা',
       pronunciation: '/bəˈnev.əl.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit28: UnitInfo = {
       id: 'u28_domesticity_28',
       unitId: 28,
       word: 'Domesticity',
-      banglaMeaning: 'শান্তিপূর্ণ পারিবারিক ও গৃহস্থালি জীবন',
+      banglaMeaning: 'শান্তিপূর্ণ পারিবারিক ও গৃহস্থালি জীবন , পারিবারিক জীবন , গৃহজীবন',
       pronunciation: '/ˌdəʊ.meˈstɪs.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit28: UnitInfo = {
       id: 'u28_filial_29',
       unitId: 28,
       word: 'Filial',
-      banglaMeaning: 'সন্তানের পিতা-মাতার প্রতি দায়িত্ব ও ভালোবাসাপূর্ণ',
+      banglaMeaning: 'সন্তানের পিতা-মাতার প্রতি দায়িত্ব ও ভালোবাসাপূর্ণ , সন্তানসংক্রান্ত',
       pronunciation: '/ˈfɪl.i.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit28: UnitInfo = {
       id: 'u28_fraternity_30',
       unitId: 28,
       word: 'Fraternity',
-      banglaMeaning: 'ভ্রাতৃত্ববোধ বা ভ্রাতৃসুলভ সংগঠন',
+      banglaMeaning: 'ভ্রাতৃত্ববোধ বা ভ্রাতৃসুলভ সংগঠন , সৌভ্রাত্র , সংঘ , সমিতি',
       pronunciation: '/frəˈtɜː.nə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit28: UnitInfo = {
       id: 'u28_hearth_31',
       unitId: 28,
       word: 'Hearth',
-      banglaMeaning: 'ঘরের উনুন বা উষ্ণ পারিবারিক মিলনস্থল',
+      banglaMeaning: 'ঘরের উনুন বা উষ্ণ পারিবারিক মিলনস্থল , আখা',
       pronunciation: '/hɑːθ/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit28: UnitInfo = {
       id: 'u28_magnanimity_32',
       unitId: 28,
       word: 'Magnanimity',
-      banglaMeaning: 'মহানুভবতা , ক্ষমাশীল উদার মন',
+      banglaMeaning: 'মহানুভবতা , ক্ষমাশীল উদার মন , উদরতা',
       pronunciation: '/ˌmæɡ.nəˈnɪm.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit28: UnitInfo = {
       id: 'u28_progeny_33',
       unitId: 28,
       word: 'Progeny',
-      banglaMeaning: 'বংশধর বা ভবিষ্যৎ বংশধরেরা',
+      banglaMeaning: 'বংশধর বা ভবিষ্যৎ বংশধরেরা , সন্তান , বংশধরগণ , কুল',
       pronunciation: '/ˈprɒdʒ.ə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit28: UnitInfo = {
       id: 'u28_reconciliation_34',
       unitId: 28,
       word: 'Reconciliation',
-      banglaMeaning: 'পুনর্মিলন বা বিরোধ মিটিয়ে বন্ধুত্ব ফিরিয়ে আনা',
+      banglaMeaning: 'পুনর্মিলন বা বিরোধ মিটিয়ে বন্ধুত্ব ফিরিয়ে আনা , মিটমাট , সমন্বয়সাধন , পুনরায় মিলন',
       pronunciation: '/ˌrek.ənˌsɪl.iˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [

@@ -12,7 +12,7 @@ export const unit08: UnitInfo = {
       id: 'u8_biodegradable_1',
       unitId: 8,
       word: 'Biodegradable',
-      banglaMeaning: 'প্রাকৃতিকভাবে পচনশীল',
+      banglaMeaning: 'প্রাকৃতিকভাবে পচনশীল , জীবাণুবিয়োজ্য',
       pronunciation: '/ˌbaɪ.əʊ.dɪˈɡreɪ.də.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -48,7 +48,7 @@ export const unit08: UnitInfo = {
       id: 'u8_canopy_3',
       unitId: 8,
       word: 'Canopy',
-      banglaMeaning: 'বনের শীর্ষ আচ্ছাদন বা চাঁদোয়া',
+      banglaMeaning: 'বনের শীর্ষ আচ্ছাদন বা চাঁদোয়া , শামিয়ানা , চাঁদনী , চন্দ্রাতপ',
       pronunciation: '/ˈkæn.ə.pi/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit08: UnitInfo = {
       id: 'u8_deforestation_4',
       unitId: 8,
       word: 'Deforestation',
-      banglaMeaning: 'বন উজাড়করণ , বৃক্ষনিধন',
+      banglaMeaning: 'বন উজাড়করণ , বৃক্ষনিধন , অরণ্যবিনাশ , অরণ্য ছেদন',
       pronunciation: '/diːˌfɒr.ɪˈsteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit08: UnitInfo = {
       id: 'u8_ecosystem_5',
       unitId: 8,
       word: 'Ecosystem',
-      banglaMeaning: 'বাস্তুসংস্থান , পরিবেশীয় প্রণালী',
+      banglaMeaning: 'বাস্তুসংস্থান , পরিবেশীয় প্রণালী , বাস্তুতন্ত্র',
       pronunciation: '/ˈiː.kəʊˌsɪs.təm/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit08: UnitInfo = {
       id: 'u8_habitat_8',
       unitId: 8,
       word: 'Habitat',
-      banglaMeaning: 'প্রাকৃতিক আবাসস্থল',
+      banglaMeaning: 'প্রাকৃতিক আবাসস্থল , ডিপো , আড্ডা',
       pronunciation: '/ˈhæb.ɪ.tæt/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit08: UnitInfo = {
       id: 'u8_invasive_9',
       unitId: 8,
       word: 'Invasive',
-      banglaMeaning: 'অনধিকারপ্রবেশকারী ক্ষতিকর প্রজাতি',
+      banglaMeaning: 'অনধিকারপ্রবেশকারী ক্ষতিকর প্রজাতি , আক্রমণাত্মক , আক্রমণকারী , আক্রমণকর',
       pronunciation: '/ɪnˈveɪ.sɪv/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit08: UnitInfo = {
       id: 'u8_luminescence_10',
       unitId: 8,
       word: 'Luminescence',
-      banglaMeaning: 'তাপহীন আলো বিকিরণ বা প্রতিপ্রভা',
+      banglaMeaning: 'তাপহীন আলো বিকিরণ বা প্রতিপ্রভা , আলোক বিকিরণ',
       pronunciation: '/ˌluː.mɪˈnes.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit08: UnitInfo = {
       id: 'u8_nocturnal_12',
       unitId: 8,
       word: 'Nocturnal',
-      banglaMeaning: 'নিশাচর , রাতে সক্রিয়',
+      banglaMeaning: 'নিশাচর , রাতে সক্রিয় , রাত্রিসংক্রান্ত , রাত্রের',
       pronunciation: '/nɒkˈtɜː.nəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit08: UnitInfo = {
       id: 'u8_parasite_14',
       unitId: 8,
       word: 'Parasite',
-      banglaMeaning: 'পরজীবী',
+      banglaMeaning: 'পরজীবী , পরগাছা , পরান্নভোজী , পরের গলগ্রহ',
       pronunciation: '/ˈpær.ə.saɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit08: UnitInfo = {
       id: 'u8_quarry_15',
       unitId: 8,
       word: 'Quarry',
-      banglaMeaning: 'পাথরের খনি বা শিকার',
+      banglaMeaning: 'পাথরের খনি বা শিকার , আকর , খাদ , বধ্য প্রাণী',
       pronunciation: '/ˈkwɒr.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit08: UnitInfo = {
       id: 'u8_riparian_16',
       unitId: 8,
       word: 'Riparian',
-      banglaMeaning: 'নদীতীরবর্তী',
+      banglaMeaning: 'নদীতীরবর্তী , তীরে অবস্থিত , তীরস্থ , তীরবাসী',
       pronunciation: '/rɪˈpeə.ri.ən/',
       partOfSpeech: 'adjective',
       examples: [
@@ -300,7 +300,7 @@ export const unit08: UnitInfo = {
       id: 'u8_symbiosis_17',
       unitId: 8,
       word: 'Symbiosis',
-      banglaMeaning: 'সহযোগিতামূলক সহাবস্থান বা মিথোজীবিতা',
+      banglaMeaning: 'সহযোগিতামূলক সহাবস্থান বা মিথোজীবিতা , অন্যোন্যজীবিতা',
       pronunciation: '/ˌsɪm.baɪˈəʊ.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit08: UnitInfo = {
       id: 'u8_topography_18',
       unitId: 8,
       word: 'Topography',
-      banglaMeaning: 'ভূসংস্থান , অঞ্চলের ভূমিরূপের বিবরণ',
+      banglaMeaning: 'ভূসংস্থান , অঞ্চলের ভূমিরূপের বিবরণ , স্থানবিবরণ',
       pronunciation: '/təˈpɒɡ.rə.fi/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit08: UnitInfo = {
       id: 'u8_understory_19',
       unitId: 8,
       word: 'Understory',
-      banglaMeaning: 'বনের নিচুতলার ছোট গাছপালার স্তর',
+      banglaMeaning: 'বনের নিচুতলার ছোট গাছপালার স্তর , দেখা যায় প্রকাশ্যে',
       pronunciation: '/ˈʌn.dəˌstɔː.ri/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit08: UnitInfo = {
       id: 'u8_afforestation_22',
       unitId: 8,
       word: 'Afforestation',
-      banglaMeaning: 'নতুন বন সৃজন , পরিকল্পিত বৃক্ষরোপণ',
+      banglaMeaning: 'নতুন বন সৃজন , পরিকল্পিত বৃক্ষরোপণ , অরণ্যায়ন',
       pronunciation: '/əˌfɒr.ɪˈsteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit08: UnitInfo = {
       id: 'u8_biomass_23',
       unitId: 8,
       word: 'Biomass',
-      banglaMeaning: 'জৈবভর , মোট জৈব পদার্থের পরিমাণ',
+      banglaMeaning: 'জৈবভর , মোট জৈব পদার্থের পরিমাণ , জৈববস্তুপুঞ্জ',
       pronunciation: '/ˈbaɪ.əʊˌmæs/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit08: UnitInfo = {
       id: 'u8_deciduous_25',
       unitId: 8,
       word: 'Deciduous',
-      banglaMeaning: 'পর্ণমোচী , মৌসুমে পাতা ঝরে যায় এমন গাছ',
+      banglaMeaning: 'পর্ণমোচী , মৌসুমে পাতা ঝরে যায় এমন গাছ , অপম্রিয়মান , ক্ষণস্থায়ী',
       pronunciation: '/dɪˈsɪdʒ.u.əs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -462,7 +462,7 @@ export const unit08: UnitInfo = {
       id: 'u8_endangered_26',
       unitId: 8,
       word: 'Endangered',
-      banglaMeaning: 'বিপন্ন , বিলুপ্তির ঝুঁকিতে থাকা',
+      banglaMeaning: 'বিপন্ন , বিলুপ্তির ঝুঁকিতে থাকা , আপন্ন , আপদ্গ্রস্ত',
       pronunciation: '/ɪnˈdeɪn.dʒəd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -480,7 +480,7 @@ export const unit08: UnitInfo = {
       id: 'u8_feral_27',
       unitId: 8,
       word: 'Feral',
-      banglaMeaning: 'বুনো হয়ে যাওয়া , পোষ মানার পর ফের বন্য স্বভাবের',
+      banglaMeaning: 'বুনো হয়ে যাওয়া , পোষ মানার পর ফের বন্য স্বভাবের , বন্যা , দুর্দান্ত',
       pronunciation: '/ˈfer.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -552,7 +552,7 @@ export const unit08: UnitInfo = {
       id: 'u8_niche_31',
       unitId: 8,
       word: 'Niche',
-      banglaMeaning: 'বাস্তুসংস্থানে নির্দিষ্ট প্রজাতি বা জীবের বিশেষ অবস্থান',
+      banglaMeaning: 'বাস্তুসংস্থানে নির্দিষ্ট প্রজাতি বা জীবের বিশেষ অবস্থান , কুলুঙ্গি , উপযুক্ত , প্রকৃত',
       pronunciation: '/niːʃ/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit08: UnitInfo = {
       id: 'u8_pristine_32',
       unitId: 8,
       word: 'Pristine',
-      banglaMeaning: 'অনাবিল , মানুষের ছোঁয়ায় বিনষ্ট হয়নি এমন নিখুঁত',
+      banglaMeaning: 'অনাবিল , মানুষের ছোঁয়ায় বিনষ্ট হয়নি এমন নিখুঁত , পূর্বকালীন , প্রথমযুগীয়',
       pronunciation: '/ˈprɪs.tiːn/',
       partOfSpeech: 'adjective',
       examples: [
@@ -588,7 +588,7 @@ export const unit08: UnitInfo = {
       id: 'u8_sedimentation_33',
       unitId: 8,
       word: 'Sedimentation',
-      banglaMeaning: 'পলি জমা , তলানি পড়া',
+      banglaMeaning: 'পলি জমা , তলানি পড়া , থিতানো',
       pronunciation: '/ˌsed.ɪ.mənˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [

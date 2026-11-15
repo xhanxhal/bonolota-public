@@ -12,7 +12,7 @@ export const unit09: UnitInfo = {
       id: 'u9_amortization_1',
       unitId: 9,
       word: 'Amortization',
-      banglaMeaning: 'ধারাবাহিক কিস্তিতে ঋণ বা অবচয় পরিশোধ',
+      banglaMeaning: 'ধারাবাহিক কিস্তিতে ঋণ বা অবচয় পরিশোধ , ঘাত - শোষণ',
       pronunciation: '/əˌmɔː.tɪˈzeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit09: UnitInfo = {
       id: 'u9_bankruptcy_2',
       unitId: 9,
       word: 'Bankruptcy',
-      banglaMeaning: 'দেউলিয়াত্ব , ঋণ পরিশোধে অক্ষমতা',
+      banglaMeaning: 'দেউলিয়াত্ব , ঋণ পরিশোধে অক্ষমতা , দেউলিয়ার অবস্থা , সম্পূর্ণ বিনাশ',
       pronunciation: '/ˈbæŋ.krəpt.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit09: UnitInfo = {
       id: 'u9_commodity_3',
       unitId: 9,
       word: 'Commodity',
-      banglaMeaning: 'বাণিজ্যিক কাঁচামাল বা পণ্য',
+      banglaMeaning: 'বাণিজ্যিক কাঁচামাল বা পণ্য , প্রয়োজনীয় জিনিস',
       pronunciation: '/kəˈmɒd.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit09: UnitInfo = {
       id: 'u9_deficit_4',
       unitId: 9,
       word: 'Deficit',
-      banglaMeaning: 'ঘাটতি , ব্যয়ের তুলনায় আয়ের স্বল্পতা',
+      banglaMeaning: 'ঘাটতি , ব্যয়ের তুলনায় আয়ের স্বল্পতা , অভাব , অকুলান',
       pronunciation: '/ˈdef.ɪ.sɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit09: UnitInfo = {
       id: 'u9_equity_5',
       unitId: 9,
       word: 'Equity',
-      banglaMeaning: 'মালিকানাস্বত্ব বা শেয়ার',
+      banglaMeaning: 'মালিকানাস্বত্ব বা শেয়ার , ইকুইটি , সমদর্শিতা , ন্যায়বিচার',
       pronunciation: '/ˈek.wɪ.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit09: UnitInfo = {
       id: 'u9_fiscal_6',
       unitId: 9,
       word: 'Fiscal',
-      banglaMeaning: 'সরকারি রাজস্ব ও আর্থিক নীতিমালা সংক্রান্ত',
+      banglaMeaning: 'সরকারি রাজস্ব ও আর্থিক নীতিমালা সংক্রান্ত , সরকারি রাজস্বসংক্রান্ত , রাজকোষ , রাজস্বঘটিত',
       pronunciation: '/ˈfɪs.kəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit09: UnitInfo = {
       id: 'u9_gross_7',
       unitId: 9,
       word: 'Gross',
-      banglaMeaning: 'মোট বা সামগ্রিক (কর বা ব্যয়ের পূর্বে)',
+      banglaMeaning: 'মোট বা সামগ্রিক (কর বা ব্যয়ের পূর্বে) , বারো ডজন , একগ্রোস , স্থূল',
       pronunciation: '/ɡrəʊs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -138,7 +138,7 @@ export const unit09: UnitInfo = {
       id: 'u9_hedge_8',
       unitId: 9,
       word: 'Hedge',
-      banglaMeaning: 'আর্থিক ঝুঁকি হ্রাসের আগাম কৌশল',
+      banglaMeaning: 'আর্থিক ঝুঁকি হ্রাসের আগাম কৌশল , প্রতিবন্ধক , রক্ষা করা , ঘেরাও করা',
       pronunciation: '/hedʒ/',
       partOfSpeech: 'verb',
       examples: [
@@ -156,7 +156,7 @@ export const unit09: UnitInfo = {
       id: 'u9_inflation_9',
       unitId: 9,
       word: 'Inflation',
-      banglaMeaning: 'মুদ্রাস্ফীতি , দ্রব্যমূল্যের সার্বিক বৃদ্ধি',
+      banglaMeaning: 'মুদ্রাস্ফীতি , দ্রব্যমূল্যের সার্বিক বৃদ্ধি , ফাঁপ',
       pronunciation: '/ɪnˈfleɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit09: UnitInfo = {
       id: 'u9_liquidity_11',
       unitId: 9,
       word: 'Liquidity',
-      banglaMeaning: 'তারল্য , দ্রুত নগদে রূপান্তরের ক্ষমতা',
+      banglaMeaning: 'তারল্য , দ্রুত নগদে রূপান্তরের ক্ষমতা , তরল অবস্থা',
       pronunciation: '/lɪˈkwɪd.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit09: UnitInfo = {
       id: 'u9_monopoly_12',
       unitId: 9,
       word: 'Monopoly',
-      banglaMeaning: 'একচেটিয়া আধিপত্য , বাজারের একক নিয়ন্ত্রণ',
+      banglaMeaning: 'একচেটিয়া আধিপত্য , বাজারের একক নিয়ন্ত্রণ , একাধিকার , একচেটিয়া অধিকার',
       pronunciation: '/məˈnɒp.əl.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit09: UnitInfo = {
       id: 'u9_net_13',
       unitId: 9,
       word: 'Net',
-      banglaMeaning: 'নিট বা প্রকৃত (সকল ব্যয় বা কর বাদ দেওয়ার পর)',
+      banglaMeaning: 'নিট বা প্রকৃত (সকল ব্যয় বা কর বাদ দেওয়ার পর) , অবশিষ্ট , নেট , জালে আটকান',
       pronunciation: '/net/',
       partOfSpeech: 'adjective',
       examples: [
@@ -246,7 +246,7 @@ export const unit09: UnitInfo = {
       id: 'u9_overhead_14',
       unitId: 9,
       word: 'Overhead',
-      banglaMeaning: 'কারখানা বা ব্যবসার সার্বিক পরিচালনা ব্যয়',
+      banglaMeaning: 'কারখানা বা ব্যবসার সার্বিক পরিচালনা ব্যয় , মাথার ওপরে , আকাশে , ওপরতলায়',
       pronunciation: '/ˈəʊ.və.hed/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit09: UnitInfo = {
       id: 'u9_portfolio_15',
       unitId: 9,
       word: 'Portfolio',
-      banglaMeaning: 'বিনিয়োগের সামগ্রিক সম্ভার বা খাতপত্র',
+      banglaMeaning: 'বিনিয়োগের সামগ্রিক সম্ভার বা খাতপত্র , মন্ত্রীর কার্যভার , দফতর , মন্ত্রীর দপ্তর',
       pronunciation: '/pɔːtˈfəʊ.li.əʊ/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit09: UnitInfo = {
       id: 'u9_quota_16',
       unitId: 9,
       word: 'Quota',
-      banglaMeaning: 'নির্দিষ্ট কোটা বা আমদানির নির্ধারিত সীমা',
+      banglaMeaning: 'নির্দিষ্ট কোটা বা আমদানির নির্ধারিত সীমা , ভাগ , অংশ , খণ্ড',
       pronunciation: '/ˈkwəʊ.tə/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit09: UnitInfo = {
       id: 'u9_recession_17',
       unitId: 9,
       word: 'Recession',
-      banglaMeaning: 'অর্থনৈতিক মন্দা',
+      banglaMeaning: 'অর্থনৈতিক মন্দা , পিছু হটা , পশ্চাদপসরণ , মন্দার',
       pronunciation: '/rɪˈseʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit09: UnitInfo = {
       id: 'u9_solvency_18',
       unitId: 9,
       word: 'Solvency',
-      banglaMeaning: 'ঋণ পরিশোধের আর্থিক সামর্থ্য',
+      banglaMeaning: 'ঋণ পরিশোধের আর্থিক সামর্থ্য , সচ্ছলতা , দ্রবণ , শোধাক্ষমতা',
       pronunciation: '/ˈsɒl.vən.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit09: UnitInfo = {
       id: 'u9_tariff_19',
       unitId: 9,
       word: 'Tariff',
-      banglaMeaning: 'আমদানি বা রপ্তানি শুল্ক',
+      banglaMeaning: 'আমদানি বা রপ্তানি শুল্ক , মাসুল , শুল্কের তালিকা',
       pronunciation: '/ˈtær.ɪf/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit09: UnitInfo = {
       id: 'u9_underwrite_20',
       unitId: 9,
       word: 'Underwrite',
-      banglaMeaning: 'আর্থিক ঝুঁকি বহন বা দায় গ্রহণ করা',
+      banglaMeaning: 'আর্থিক ঝুঁকি বহন বা দায় গ্রহণ করা , নিম্নদেশে লেখা , স্বাক্ষর করা , মত দেওয়া',
       pronunciation: '/ˌʌn.dəˈraɪt/',
       partOfSpeech: 'verb',
       examples: [
@@ -372,7 +372,7 @@ export const unit09: UnitInfo = {
       id: 'u9_venture_21',
       unitId: 9,
       word: 'Venture',
-      banglaMeaning: 'ঝুঁকিপূর্ণ বাণিজ্যিক উদ্যোগ',
+      banglaMeaning: 'ঝুঁকিপূর্ণ বাণিজ্যিক উদ্যোগ , পাশাখেলাবিশেষ , বিপদ্ , অনিশ্চিত ভাগ্য',
       pronunciation: '/ˈven.tʃər/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit09: UnitInfo = {
       id: 'u9_yield_22',
       unitId: 9,
       word: 'Yield',
-      banglaMeaning: 'বিনিয়োগের লাভ বা উৎপাদন',
+      banglaMeaning: 'বিনিয়োগের লাভ বা উৎপাদন , উত্পাদ , হার মানা , জোগান',
       pronunciation: '/jiːld/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit09: UnitInfo = {
       id: 'u9_arbitrage_23',
       unitId: 9,
       word: 'Arbitrage',
-      banglaMeaning: 'বিভিন্ন বাজারের মূল্যের পার্থক্যের সুযোগে মুনাফা লাভ',
+      banglaMeaning: 'বিভিন্ন বাজারের মূল্যের পার্থক্যের সুযোগে মুনাফা লাভ , সালিসি',
       pronunciation: '/ˈɑː.bɪ.trɑːʒ/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit09: UnitInfo = {
       id: 'u9_bailout_24',
       unitId: 9,
       word: 'Bailout',
-      banglaMeaning: 'আর্থিক সংকট থেকে উদ্ধারকালীন জরুরি সরকারি সহায়তা',
+      banglaMeaning: 'আর্থিক সংকট থেকে উদ্ধারকালীন জরুরি সরকারি সহায়তা , বেলআউট',
       pronunciation: '/ˈbeɪl.aʊt/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit09: UnitInfo = {
       id: 'u9_capitalism_25',
       unitId: 9,
       word: 'Capitalism',
-      banglaMeaning: 'পুঁজিবাদ বা ধনতন্ত্র',
+      banglaMeaning: 'পুঁজিবাদ বা ধনতন্ত্র , ধনতন্ত্রবাদ , ধনিকতন্ত্র',
       pronunciation: '/ˈkæp.ɪ.təl.ɪ.zəm/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit09: UnitInfo = {
       id: 'u9_depreciation_26',
       unitId: 9,
       word: 'Depreciation',
-      banglaMeaning: 'স্থাবর সম্পদের মূল্যহ্রাস বা অবচয়',
+      banglaMeaning: 'স্থাবর সম্পদের মূল্যহ্রাস বা অবচয় , অবমূল্যায়ন , গুণাপকর্ষ , উপক্ষয়',
       pronunciation: '/dɪˌpriː.ʃiˈeɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit09: UnitInfo = {
       id: 'u9_embezzlement_27',
       unitId: 9,
       word: 'Embezzlement',
-      banglaMeaning: 'তহবিল তছরুপ , অর্থ আত্মসাৎ',
+      banglaMeaning: 'তহবিল তছরুপ , অর্থ আত্মসাৎ , গচ্ছিত ধন অপহরণ , তসরূফ',
       pronunciation: '/ɪmˈbez.əl.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit09: UnitInfo = {
       id: 'u9_fiduciary_28',
       unitId: 9,
       word: 'Fiduciary',
-      banglaMeaning: 'বিশ্বস্ত প্রতিনিধি সংক্রান্ত বা আমানতদারিত্বমূলক দায়িত্ব',
+      banglaMeaning: 'বিশ্বস্ত প্রতিনিধি সংক্রান্ত বা আমানতদারিত্বমূলক দায়িত্ব , জিম্মাদার',
       pronunciation: '/fɪˈdjuː.ʃər.i/',
       partOfSpeech: 'adjective',
       examples: [
@@ -534,7 +534,7 @@ export const unit09: UnitInfo = {
       id: 'u9_hyperinflation_30',
       unitId: 9,
       word: 'Hyperinflation',
-      banglaMeaning: 'অনিয়ন্ত্রিত চরম মুদ্রাস্ফীতি',
+      banglaMeaning: 'অনিয়ন্ত্রিত চরম মুদ্রাস্ফীতি , অতি-মুদ্রাস্ফীতি , অস্বাভাবিক মূল্যবৃদ্ধি',
       pronunciation: '/ˌhaɪ.pər.ɪnˈfleɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit09: UnitInfo = {
       id: 'u9_insolvency_31',
       unitId: 9,
       word: 'Insolvency',
-      banglaMeaning: 'ঋণ পরিশোধের অক্ষমতা বা আর্থিক দেউলিয়াত্ব',
+      banglaMeaning: 'ঋণ পরিশোধের অক্ষমতা বা আর্থিক দেউলিয়াত্ব , শোধাক্ষমতা , দেউলে দশা , দেউলেপনা',
       pronunciation: '/ɪnˈsɒl.vən.si/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit09: UnitInfo = {
       id: 'u9_laissezfaire_32',
       unitId: 9,
       word: 'Laissez-faire',
-      banglaMeaning: 'অবাধ বা নিয়ন্ত্রণহীন বাণিজ্য নীতি',
+      banglaMeaning: 'অবাধ বা নিয়ন্ত্রণহীন বাণিজ্য নীতি , অবাধ অর্থনীতি , হস্তক্ষেপহীন নীতি',
       pronunciation: '/ˌleɪ.seɪˈfeər/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit09: UnitInfo = {
       id: 'u9_parity_33',
       unitId: 9,
       word: 'Parity',
-      banglaMeaning: 'সমতা বা বিনিময় মূল্যের সমতুল্যতা',
+      banglaMeaning: 'সমতা বা বিনিময় মূল্যের সমতুল্যতা , সমমর্যাদা , সমমূল্যতা',
       pronunciation: '/ˈpær.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit09: UnitInfo = {
       id: 'u9_speculation_34',
       unitId: 9,
       word: 'Speculation',
-      banglaMeaning: 'ফটকাবাজি , বেশি লাভের আশায় ঝুঁকিপূর্ণ বিনিয়োগ',
+      banglaMeaning: 'ফটকাবাজি , বেশি লাভের আশায় ঝুঁকিপূর্ণ বিনিয়োগ , জল্পন , ভাবনাচিন্তা',
       pronunciation: '/ˌspek.jəˈleɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [

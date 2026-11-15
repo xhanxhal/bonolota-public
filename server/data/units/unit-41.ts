@@ -12,7 +12,7 @@ export const unit41: UnitInfo = {
       id: 'u41_benefit_1',
       unitId: 41,
       word: 'Benefit',
-      banglaMeaning: 'সুবিধা, উপকার',
+      banglaMeaning: 'সুবিধা, উপকার , ফয়দা , লাভ',
       pronunciation: '/ˈbenefit/',
       partOfSpeech: 'adverb',
       examples: [
@@ -30,7 +30,7 @@ export const unit41: UnitInfo = {
       id: 'u41_benevolent_2',
       unitId: 41,
       word: 'Benevolent',
-      banglaMeaning: 'উদার বা পরোপকারী',
+      banglaMeaning: 'উদার বা পরোপকারী , হিতৈষী , সদাশয় , কল্যাণময়',
       pronunciation: '/ˈbenevolent/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bent_4',
       unitId: 41,
       word: 'Bent',
-      banglaMeaning: 'নমিত, ন্যুব্জ',
+      banglaMeaning: 'নমিত, ন্যুব্জ , প্রবণতা , বক্রতা',
       pronunciation: '/ˈbent/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit41: UnitInfo = {
       id: 'u41_berserk_10',
       unitId: 41,
       word: 'Berserk',
-      banglaMeaning: 'পাগল, ক্ষিপ্ত',
+      banglaMeaning: 'পাগল, ক্ষিপ্ত , খেপা',
       pronunciation: '/ˈberserk/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit41: UnitInfo = {
       id: 'u41_beset_12',
       unitId: 41,
       word: 'Beset',
-      banglaMeaning: 'বেষ্টন করা, বিজড়িত করা',
+      banglaMeaning: 'বেষ্টন করা, বিজড়িত করা , ছাঁকিয়া ধরা',
       pronunciation: '/ˈbeset/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bestial_15',
       unitId: 41,
       word: 'Bestial',
-      banglaMeaning: 'পাশব, পশুবৎ',
+      banglaMeaning: 'পাশব, পশুবৎ , পশুতুল্য , অশালীন',
       pronunciation: '/ˈbestial/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bestow_16',
       unitId: 41,
       word: 'Bestow',
-      banglaMeaning: 'দান করা, প্রদান করা',
+      banglaMeaning: 'দান করা, প্রদান করা , বাসস্থান জোগান , রাখা',
       pronunciation: '/ˈbestow/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit41: UnitInfo = {
       id: 'u41_betray_18',
       unitId: 41,
       word: 'Betray',
-      banglaMeaning: 'বিশ্বাসঘাতকতা করা, ফাঁস করিয়া দেত্তয়া',
+      banglaMeaning: 'বিশ্বাসঘাতকতা করা, ফাঁস করিয়া দেওয়া',
       pronunciation: '/ˈbetray/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit41: UnitInfo = {
       id: 'u41_beware_21',
       unitId: 41,
       word: 'Beware',
-      banglaMeaning: 'সতর্ক বা দ্বিধান্বিত',
+      banglaMeaning: 'সতর্ক বা দ্বিধান্বিত , হুঁশিয়ার',
       pronunciation: '/ˈbeware/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bicker_24',
       unitId: 41,
       word: 'Bicker',
-      banglaMeaning: 'কলহ বা মতবিরোধ',
+      banglaMeaning: 'কলহ বা মতবিরোধ , বকাবকি , ঝগড়া , গালাগালি',
       pronunciation: '/ˈbicker/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bid_25',
       unitId: 41,
       word: 'Bid',
-      banglaMeaning: 'বিদার প্রস্তাব, প্রস্তাবিত মূল্য',
+      banglaMeaning: 'বিদার প্রস্তাব, প্রস্তাবিত মূল্য , নিলাম ডাকা , ডাক',
       pronunciation: '/ˈbid/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit41: UnitInfo = {
       id: 'u41_biennial_26',
       unitId: 41,
       word: 'Biennial',
-      banglaMeaning: 'দ্বিবার্ষিক, দ্বিবর্ষজীবী',
+      banglaMeaning: 'দ্বিবার্ষিক, দ্বিবর্ষজীবী , দ্বৈবার্ষিক',
       pronunciation: '/ˈbiennial/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit41: UnitInfo = {
       id: 'u41_billow_32',
       unitId: 41,
       word: 'Billow',
-      banglaMeaning: 'উত্তাল তরঙ্গ, ঢেউ',
+      banglaMeaning: 'উত্তাল তরঙ্গ, ঢেউ , মহাতরঙ্গ , সমুদ্র',
       pronunciation: '/ˈbillow/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit41: UnitInfo = {
       id: 'u41_billowing_33',
       unitId: 41,
       word: 'Billowing',
-      banglaMeaning: 'মহাতরঙ্গায়িত হত্তয়া, ঢেউয়ে ফুলে উঠছে',
+      banglaMeaning: 'মহাতরঙ্গায়িত হওয়া, ঢেউয়ে ফুলে উঠছে',
       pronunciation: '/ˈbillowing/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit41: UnitInfo = {
       id: 'u41_biting_34',
       unitId: 41,
       word: 'Biting',
-      banglaMeaning: 'ঝাল, ব্যঙ্গাত্মক',
+      banglaMeaning: 'ঝাল, ব্যঙ্গাত্মক , অসহ্য , কন্কনে',
       pronunciation: '/ˈbiting/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bizarre_36',
       unitId: 41,
       word: 'Bizarre',
-      banglaMeaning: 'উদ্ভট, অদ্ভুত',
+      banglaMeaning: 'উদ্ভট, অদ্ভুত , অবাস্তব , অনাসৃষ্টি',
       pronunciation: '/ˈbizarre/',
       partOfSpeech: 'adjective',
       examples: [
@@ -660,7 +660,7 @@ export const unit41: UnitInfo = {
       id: 'u41_blackball_37',
       unitId: 41,
       word: 'Blackball',
-      banglaMeaning: 'বিরুদ্ধে ভোট',
+      banglaMeaning: 'বিরুদ্ধে ভোট , লেখায়',
       pronunciation: '/ˈblackball/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit41: UnitInfo = {
       id: 'u41_blanch_38',
       unitId: 41,
       word: 'Blanch',
-      banglaMeaning: 'সাদা করা, পাণ্ডুবর্ণ করা',
+      banglaMeaning: 'সাদা করা, পাণ্ডুবর্ণ করা , সাদা হওয়া , পাণ্ডুবর্ণ হওয়া',
       pronunciation: '/ˈblanch/',
       partOfSpeech: 'verb',
       examples: [
@@ -696,7 +696,7 @@ export const unit41: UnitInfo = {
       id: 'u41_bland_39',
       unitId: 41,
       word: 'Bland',
-      banglaMeaning: 'মসৃণ, স্নিগ্ধ',
+      banglaMeaning: 'মসৃণ, স্নিগ্ধ , আচরণে নম্র , সহজপাচ্য',
       pronunciation: '/ˈbland/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit41: UnitInfo = {
       id: 'u41_blandishment_40',
       unitId: 41,
       word: 'Blandishment',
-      banglaMeaning: 'চাটুকারিতা বা তোষামোদ',
+      banglaMeaning: 'চাটুকারিতা বা তোষামোদ , চাটুবাক্য , খোশামোদ',
       pronunciation: '/ˈblandishment/',
       partOfSpeech: 'noun',
       examples: [

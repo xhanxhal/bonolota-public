@@ -12,7 +12,7 @@ export const unit24: UnitInfo = {
       id: 'u24_allegory_1',
       unitId: 24,
       word: 'Allegory',
-      banglaMeaning: 'রূপক কাহিনী , যার ভেতরে গভীর অর্থ লুকিয়ে থাকে',
+      banglaMeaning: 'রূপক কাহিনী , যার ভেতরে গভীর অর্থ লুকিয়ে থাকে , রূপকধর্মী রচনা , অর্থালংকার',
       pronunciation: '/ˈæl.ə.ɡər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit24: UnitInfo = {
       id: 'u24_ballad_2',
       unitId: 24,
       word: 'Ballad',
-      banglaMeaning: 'গাথা কবিতা , লোকসঙ্গীতের মতো সুরেলা কবিতা',
+      banglaMeaning: 'গাথা কবিতা , লোকসঙ্গীতের মতো সুরেলা কবিতা , চারনগীতি , গীতিকা',
       pronunciation: '/ˈbæl.əd/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit24: UnitInfo = {
       id: 'u24_catharsis_3',
       unitId: 24,
       word: 'Catharsis',
-      banglaMeaning: 'নাটকে আবেগ মুক্তি , করুণ রসের মাধ্যমে আত্মশুদ্ধি',
+      banglaMeaning: 'নাটকে আবেগ মুক্তি , করুণ রসের মাধ্যমে আত্মশুদ্ধি , রেচন',
       pronunciation: '/kəˈθɑː.sɪs/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit24: UnitInfo = {
       id: 'u24_denouement_4',
       unitId: 24,
       word: 'Denouement',
-      banglaMeaning: 'নাটক বা উপন্যাসের চূড়ান্ত জটমোচন ও সমাধান',
+      banglaMeaning: 'নাটক বা উপন্যাসের চূড়ান্ত জটমোচন ও সমাধান , চূড়ান্ত পরিণতি , সমাপ্তি',
       pronunciation: '/deɪˈnuː.mɒ̃/',
       partOfSpeech: 'noun',
       examples: [
@@ -84,7 +84,7 @@ export const unit24: UnitInfo = {
       id: 'u24_epic_5',
       unitId: 24,
       word: 'Epic',
-      banglaMeaning: 'মহাকাব্য বা বীরত্বপূর্ণ সুদীর্ঘ কাহিনী',
+      banglaMeaning: 'মহাকাব্য বা বীরত্বপূর্ণ সুদীর্ঘ কাহিনী , মহাকা্ব্যীয় , মহাকাব্যের নিয়মে রচিত , মহাকাব্যোচিত',
       pronunciation: '/ˈep.ɪk/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit24: UnitInfo = {
       id: 'u24_fable_6',
       unitId: 24,
       word: 'Fable',
-      banglaMeaning: 'নীতিকথামূলক রূপকথা , যেখানে পশুরা কথা বলে',
+      banglaMeaning: 'নীতিকথামূলক রূপকথা , যেখানে পশুরা কথা বলে , অবাস্তব , আখ্যায়িকা',
       pronunciation: '/ˈfeɪ.bəl/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit24: UnitInfo = {
       id: 'u24_genre_7',
       unitId: 24,
       word: 'Genre',
-      banglaMeaning: 'সাহিত্যের বিশেষ ধরণ বা রূপ',
+      banglaMeaning: 'সাহিত্যের বিশেষ ধরণ বা রূপ , শৈলী , গোত্র , ঘরানা',
       pronunciation: '/ˈʒɑ̃ː.rə/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit24: UnitInfo = {
       id: 'u24_imagery_9',
       unitId: 24,
       word: 'Imagery',
-      banglaMeaning: 'চিত্রকল্প , শব্দ দিয়ে মনের ভেতর চিত্র আঁকার কৌশল',
+      banglaMeaning: 'চিত্রকল্প , শব্দ দিয়ে মনের ভেতর চিত্র আঁকার কৌশল , চিত্রাবলী , মানসপ্রতিমাসমূহ',
       pronunciation: '/ˈɪm.ɪ.dʒər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -174,7 +174,7 @@ export const unit24: UnitInfo = {
       id: 'u24_juxtaposition_10',
       unitId: 24,
       word: 'Juxtaposition',
-      banglaMeaning: 'সাহিত্যে দুই বিপরীত চরিত্র বা ধারণার পাশাপাশি স্থাপন',
+      banglaMeaning: 'সাহিত্যে দুই বিপরীত চরিত্র বা ধারণার পাশাপাশি স্থাপন , সন্নিধি , পাশাপাশি অবস্থান',
       pronunciation: '/ˌdʒʌk.stə.pəˈzɪʃ.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit24: UnitInfo = {
       id: 'u24_keen_11',
       unitId: 24,
       word: 'Keen',
-      banglaMeaning: 'শোকার্ত বিলাপগাথা বা মাতম',
+      banglaMeaning: 'শোকার্ত বিলাপগাথা বা মাতম , প্রখর , তীক্ষ্ণ , শাণিত',
       pronunciation: '/kiːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit24: UnitInfo = {
       id: 'u24_lyric_12',
       unitId: 24,
       word: 'Lyric',
-      banglaMeaning: 'গীতিময় বা গীতি কবিতার চরণ',
+      banglaMeaning: 'গীতিময় বা গীতি কবিতার চরণ , গীতিধর্মী',
       pronunciation: '/ˈlɪr.ɪk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -228,7 +228,7 @@ export const unit24: UnitInfo = {
       id: 'u24_metaphor_13',
       unitId: 24,
       word: 'Metaphor',
-      banglaMeaning: 'রূপক , প্রত্যক্ষ তুলনা ছাড়া এক বস্তুর ওপর অন্য বস্তুর গুণ আরোপ',
+      banglaMeaning: 'রূপক , প্রত্যক্ষ তুলনা ছাড়া এক বস্তুর ওপর অন্য বস্তুর গুণ আরোপ , উপমা , অলংকারবিশেষ',
       pronunciation: '/ˈmet.ə.fɔːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit24: UnitInfo = {
       id: 'u24_narrative_14',
       unitId: 24,
       word: 'Narrative',
-      banglaMeaning: 'আখ্যান , ধারাবাহিক গল্প বলার ধারা',
+      banglaMeaning: 'আখ্যান , ধারাবাহিক গল্প বলার ধারা , বর্ণনামূলক , গল্পে',
       pronunciation: '/ˈnær.ə.tɪv/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit24: UnitInfo = {
       id: 'u24_onomatopoeia_15',
       unitId: 24,
       word: 'Onomatopoeia',
-      banglaMeaning: 'অনুকৃতি শব্দ , যা ধ্বনি অনুকরণে গঠিত হয়',
+      banglaMeaning: 'অনুকৃতি শব্দ , যা ধ্বনি অনুকরণে গঠিত হয় , শব্দানুকৃতি , অনুকারাত্মক শব্দ',
       pronunciation: '/ˌɒn.əˌmæt.əˈpiː.ə/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit24: UnitInfo = {
       id: 'u24_protagonist_16',
       unitId: 24,
       word: 'Protagonist',
-      banglaMeaning: 'উপন্যাস বা নাটকের প্রধান চরিত্র',
+      banglaMeaning: 'উপন্যাস বা নাটকের প্রধান চরিত্র , নায়ক , অধিবক্তা বা সমর্থক , প্রধান অভিনেতা',
       pronunciation: '/prəˈtæɡ.ən.ɪst/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit24: UnitInfo = {
       id: 'u24_quatrain_17',
       unitId: 24,
       word: 'Quatrain',
-      banglaMeaning: 'চার চরণের স্তবক বা চার লাইনের কবিতাংশ',
+      banglaMeaning: 'চার চরণের স্তবক বা চার লাইনের কবিতাংশ , চতুষ্পদী শ্লোক',
       pronunciation: '/ˈkwɒt.reɪn/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit24: UnitInfo = {
       id: 'u24_rhyme_18',
       unitId: 24,
       word: 'Rhyme',
-      banglaMeaning: 'অন্ত্যমিল বা পদ্যের চরণের মিল',
+      banglaMeaning: 'অন্ত্যমিল বা পদ্যের চরণের মিল , কবিতার অস্ত্যমিল , মিত্রাক্ষর - কবিতা , মিলা',
       pronunciation: '/raɪm/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit24: UnitInfo = {
       id: 'u24_sonnet_19',
       unitId: 24,
       word: 'Sonnet',
-      banglaMeaning: 'চৌদ্দ চরণের সনেট বা চতুর্দশপদী কবিতা',
+      banglaMeaning: 'চৌদ্দ চরণের সনেট বা চতুর্দশপদী কবিতা , ক্ষুদ্র গীতিকবিতা , সনেট্',
       pronunciation: '/ˈsɒn.ɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit24: UnitInfo = {
       id: 'u24_tragedy_20',
       unitId: 24,
       word: 'Tragedy',
-      banglaMeaning: 'বিয়োগান্তক নাটক , যার পরিণতিতে করুণ মৃত্যু ঘটে',
+      banglaMeaning: 'বিয়োগান্তক নাটক , যার পরিণতিতে করুণ মৃত্যু ঘটে , মৃত্যুঘটিত ব্যাপার , শোকাবহ ব্যাপার',
       pronunciation: '/ˈtrædʒ.ə.di/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit24: UnitInfo = {
       id: 'u24_understatement_21',
       unitId: 24,
       word: 'Understatement',
-      banglaMeaning: 'গুরুতর বিষয়কে লঘু বা খাটো করে প্রকাশ',
+      banglaMeaning: 'গুরুতর বিষয়কে লঘু বা খাটো করে প্রকাশ , ন্যূনোক্তি',
       pronunciation: '/ˌʌn.dəˈsteɪt.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit24: UnitInfo = {
       id: 'u24_verse_22',
       unitId: 24,
       word: 'Verse',
-      banglaMeaning: 'কবিতার পঙ্‌ক্তি বা পদ্য রচনা',
+      banglaMeaning: 'কবিতার পঙ্‌ক্তি বা পদ্য রচনা , প্রদর্শন , কবিতার স্তবক , গাথা',
       pronunciation: '/vɜːs/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit24: UnitInfo = {
       id: 'u24_wit_23',
       unitId: 24,
       word: 'Wit',
-      banglaMeaning: 'তীক্ষ্ণ রসবোধ ও তাৎক্ষণিক উপস্থিত বুদ্ধি',
+      banglaMeaning: 'তীক্ষ্ণ রসবোধ ও তাৎক্ষণিক উপস্থিত বুদ্ধি , রসিকতা',
       pronunciation: '/wɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit24: UnitInfo = {
       id: 'u24_antagonist_25',
       unitId: 24,
       word: 'Antagonist',
-      banglaMeaning: 'খলনায়ক বা প্রধান চরিত্রের প্রতিদ্বন্দ্বী',
+      banglaMeaning: 'খলনায়ক বা প্রধান চরিত্রের প্রতিদ্বন্দ্বী , বিরোধী , শত্রু , বিপক্ষ',
       pronunciation: '/ænˈtæɡ.ən.ɪst/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit24: UnitInfo = {
       id: 'u24_bildungsroman_26',
       unitId: 24,
       word: 'Bildungsroman',
-      banglaMeaning: 'নায়কের শৈশব থেকে পরিণত মানুষ হওয়ার বিকাশমূলক উপন্যাস',
+      banglaMeaning: 'নায়কের শৈশব থেকে পরিণত মানুষ হওয়ার বিকাশমূলক উপন্যাস , চিরন্তন',
       pronunciation: '/ˈbɪl.dʊŋz.rəʊˌmɑːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit24: UnitInfo = {
       id: 'u24_diatribe_28',
       unitId: 24,
       word: 'Diatribe',
-      banglaMeaning: 'তীব্র আক্রমণাত্মক সাহিত্যিক সমালোচনা বা আক্রমণ',
+      banglaMeaning: 'তীব্র আক্রমণাত্মক সাহিত্যিক সমালোচনা বা আক্রমণ , তীব্র সমালোচনা , গালিগালাজ',
       pronunciation: '/ˈdaɪ.ə.traɪb/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit24: UnitInfo = {
       id: 'u24_elegy_29',
       unitId: 24,
       word: 'Elegy',
-      banglaMeaning: 'শোকগাথা কবিতা , কোনো মৃত ব্যক্তির স্মরণে রচিত',
+      banglaMeaning: 'শোকগাথা কবিতা , কোনো মৃত ব্যক্তির স্মরণে রচিত , শোকসঙ্গীত , অন্ত্যোষ্টিকালীন গান',
       pronunciation: '/ˈel.ə.dʒi/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit24: UnitInfo = {
       id: 'u24_irony_30',
       unitId: 24,
       word: 'Irony',
-      banglaMeaning: 'শ্লেষ বা ব্যঙ্গ , যেখানে কথার অর্থ বাস্তবতার বিপরীত হয়',
+      banglaMeaning: 'শ্লেষ বা ব্যঙ্গ , যেখানে কথার অর্থ বাস্তবতার বিপরীত হয় , বিদ্রূপ , অতি কঠিন',
       pronunciation: '/ˈaɪ.rə.ni/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit24: UnitInfo = {
       id: 'u24_parody_32',
       unitId: 24,
       word: 'Parody',
-      banglaMeaning: 'হাস্যরস সৃষ্টির জন্য কোনো বিখ্যাত রচনার প্যারোডি বা অনুকরণ',
+      banglaMeaning: 'হাস্যরস সৃষ্টির জন্য কোনো বিখ্যাত রচনার প্যারোডি বা অনুকরণ , লালিকা , প্যারডি , মিথ্যা অভিনয়',
       pronunciation: '/ˈpær.ə.di/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit24: UnitInfo = {
       id: 'u24_soliloquy_33',
       unitId: 24,
       word: 'Soliloquy',
-      banglaMeaning: 'একাকী স্বগতোক্তি , নাটকে মনের কথা নিজে নিজে বলা',
+      banglaMeaning: 'একাকী স্বগতোক্তি , নাটকে মনের কথা নিজে নিজে বলা , আপনা-আপনি কথা',
       pronunciation: '/səˈlɪl.ə.kwi/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit24: UnitInfo = {
       id: 'u24_zeugma_34',
       unitId: 24,
       word: 'Zeugma',
-      banglaMeaning: 'একটি ক্রিয়াপদের সাথে ভিন্নার্থক দুটি শব্দের অপ্রত্যাশিত সমন্বয়',
+      banglaMeaning: 'একটি ক্রিয়াপদের সাথে ভিন্নার্থক দুটি শব্দের অপ্রত্যাশিত সমন্বয় , যুগ্মালংকার',
       pronunciation: '/ˈzjuːɡ.mə/',
       partOfSpeech: 'noun',
       examples: [

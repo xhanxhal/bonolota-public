@@ -30,7 +30,7 @@ export const unit26: UnitInfo = {
       id: 'u26_barometer_2',
       unitId: 26,
       word: 'Barometer',
-      banglaMeaning: 'বায়ুচাপমান যন্ত্র',
+      banglaMeaning: 'বায়ুচাপমান যন্ত্র , আবহমানযন্ত্র',
       pronunciation: '/bəˈrɒm.ɪ.tər/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit26: UnitInfo = {
       id: 'u26_cyclone_3',
       unitId: 26,
       word: 'Cyclone',
-      banglaMeaning: 'ঘূর্ণিঝড় বা নিম্নচাপজনিত প্রবল সামুদ্রিক ঝড়',
+      banglaMeaning: 'ঘূর্ণিঝড় বা নিম্নচাপজনিত প্রবল সামুদ্রিক ঝড় , ঘূর্ণিবাত্যা , সাইক্লোন , হারিকেন',
       pronunciation: '/ˈsaɪ.kləʊn/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit26: UnitInfo = {
       id: 'u26_downpour_4',
       unitId: 26,
       word: 'Downpour',
-      banglaMeaning: 'ভারী মুষলধারে বৃষ্টি',
+      banglaMeaning: 'ভারী মুষলধারে বৃষ্টি , প্রবল বর্ষণ',
       pronunciation: '/ˈdaʊn.pɔːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit26: UnitInfo = {
       id: 'u26_forecast_6',
       unitId: 26,
       word: 'Forecast',
-      banglaMeaning: 'আবহাওয়ার পূর্বাভাস',
+      banglaMeaning: 'আবহাওয়ার পূর্বাভাস , ভবিষ্যদ্বাণী , পূর্বানুমান , পূর্বেই বলা',
       pronunciation: '/ˈfɔː.kɑːst/',
       partOfSpeech: 'noun',
       examples: [
@@ -120,7 +120,7 @@ export const unit26: UnitInfo = {
       id: 'u26_gust_7',
       unitId: 26,
       word: 'Gust',
-      banglaMeaning: 'দমকা হাওয়া',
+      banglaMeaning: 'দমকা হাওয়া , বাত্যা , আচমকা ঝড় , বৃষ্টি আগুন',
       pronunciation: '/ɡʌst/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit26: UnitInfo = {
       id: 'u26_hailstone_8',
       unitId: 26,
       word: 'Hailstone',
-      banglaMeaning: 'শিলাবৃষ্টির বরফের দানা',
+      banglaMeaning: 'শিলাবৃষ্টির বরফের দানা , করকা , শিলাপিনু , বর্ষোপল',
       pronunciation: '/ˈheɪl.stəʊn/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit26: UnitInfo = {
       id: 'u26_inversion_9',
       unitId: 26,
       word: 'Inversion',
-      banglaMeaning: 'তাপমাত্রার বৈপরীত্য , উপরে উষ্ণ বাতাস জমে থাকা',
+      banglaMeaning: 'তাপমাত্রার বৈপরীত্য , উপরে উষ্ণ বাতাস জমে থাকা , বিপর্যয় , উত্ক্রমণ',
       pronunciation: '/ɪnˈvɜː.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit26: UnitInfo = {
       id: 'u26_lightning_12',
       unitId: 26,
       word: 'Lightning',
-      banglaMeaning: 'বজ্রপাত বা আকাশে বিদ্যুতের চমক',
+      banglaMeaning: 'বজ্রপাত বা আকাশে বিদ্যুতের চমক , বিদ্যুতের ঝলক , বজ্রবিদ্যুত , বাজ',
       pronunciation: '/ˈlaɪt.nɪŋ/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit26: UnitInfo = {
       id: 'u26_monsoon_13',
       unitId: 26,
       word: 'Monsoon',
-      banglaMeaning: 'মৌসুমী বায়ু বা বর্ষাকাল',
+      banglaMeaning: 'মৌসুমী বায়ু বা বর্ষাকাল , বর্ষাকালের আরম্ভ',
       pronunciation: '/mɒnˈsuːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit26: UnitInfo = {
       id: 'u26_nimbus_14',
       unitId: 26,
       word: 'Nimbus',
-      banglaMeaning: 'ঘন ও অন্ধকার বৃষ্টিবাহী মেঘ',
+      banglaMeaning: 'ঘন ও অন্ধকার বৃষ্টিবাহী মেঘ , মেঘময় জ্যোতিশ্চক্র , বাদলমেঘ , পর্জন্য',
       pronunciation: '/ˈnɪm.bəs/',
       partOfSpeech: 'noun',
       examples: [
@@ -264,7 +264,7 @@ export const unit26: UnitInfo = {
       id: 'u26_ozone_15',
       unitId: 26,
       word: 'Ozone',
-      banglaMeaning: 'ওজোন গ্যাস বা ওজোন স্তর',
+      banglaMeaning: 'ওজোন গ্যাস বা ওজোন স্তর , ঘনীভূত অম্লজান',
       pronunciation: '/ˈəʊ.zəʊn/',
       partOfSpeech: 'noun',
       examples: [
@@ -282,7 +282,7 @@ export const unit26: UnitInfo = {
       id: 'u26_precipitation_16',
       unitId: 26,
       word: 'Precipitation',
-      banglaMeaning: 'বৃষ্টিপাত বা তুষারপাত',
+      banglaMeaning: 'বৃষ্টিপাত বা তুষারপাত , হঠকারিতাপূর্ণ ত্বরা , আবেগোচ্ছল কার্য , শিশির',
       pronunciation: '/prɪˌsɪp.ɪˈteɪ.ʃən/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit26: UnitInfo = {
       id: 'u26_radiance_18',
       unitId: 26,
       word: 'Radiance',
-      banglaMeaning: 'উজ্জ্বল কিরণ বা দীপ্তি',
+      banglaMeaning: 'উজ্জ্বল কিরণ বা দীপ্তি , ভা , ঔজ্জ্বল্য , রশ্মি বিকিরণ',
       pronunciation: '/ˈreɪ.di.əns/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit26: UnitInfo = {
       id: 'u26_stratosphere_19',
       unitId: 26,
       word: 'Stratosphere',
-      banglaMeaning: 'স্ট্র্যাটোস্ফিয়ার , বায়ুমণ্ডলের দ্বিতীয় স্তর',
+      banglaMeaning: 'স্ট্র্যাটোস্ফিয়ার , বায়ুমণ্ডলের দ্বিতীয় স্তর , আন্তর-আকাশ',
       pronunciation: '/ˈstræt.ə.sfɪər/',
       partOfSpeech: 'noun',
       examples: [
@@ -354,7 +354,7 @@ export const unit26: UnitInfo = {
       id: 'u26_typhoon_20',
       unitId: 26,
       word: 'Typhoon',
-      banglaMeaning: 'টাইফুন , প্রশান্ত মহাসাগরের তীব্র ঘূর্ণিঝড়',
+      banglaMeaning: 'টাইফুন , প্রশান্ত মহাসাগরের তীব্র ঘূর্ণিঝড় , ঘূর্ণিবাত্যা',
       pronunciation: '/taɪˈfuːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -372,7 +372,7 @@ export const unit26: UnitInfo = {
       id: 'u26_unsettled_21',
       unitId: 26,
       word: 'Unsettled',
-      banglaMeaning: 'অস্থির বা ঝড়ো আবহাওয়া',
+      banglaMeaning: 'অস্থির বা ঝড়ো আবহাওয়া , অস্থিরীকৃত , অতিষ্ঠ , অনির্ধারিত',
       pronunciation: '/ʌnˈset.əld/',
       partOfSpeech: 'adjective',
       examples: [
@@ -390,7 +390,7 @@ export const unit26: UnitInfo = {
       id: 'u26_vortex_22',
       unitId: 26,
       word: 'Vortex',
-      banglaMeaning: 'ঘূর্ণিপাক বা বায়ুর প্রবল ঘূর্ণি',
+      banglaMeaning: 'ঘূর্ণিপাক বা বায়ুর প্রবল ঘূর্ণি , জলের ঘূর্ণি , আবর্ত , ঘূর্ণি বাতাস',
       pronunciation: '/ˈvɔː.teks/',
       partOfSpeech: 'noun',
       examples: [
@@ -408,7 +408,7 @@ export const unit26: UnitInfo = {
       id: 'u26_weathercock_23',
       unitId: 26,
       word: 'Weathercock',
-      banglaMeaning: 'বাতাসের দিক নির্দেশক ঘূর্ণায়মান ধাতব মুরগির প্রতিকৃতি',
+      banglaMeaning: 'বাতাসের দিক নির্দেশক ঘূর্ণায়মান ধাতব মুরগির প্রতিকৃতি , বায়ুনির্দেশক',
       pronunciation: '/ˈweð.ə.kɒk/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit26: UnitInfo = {
       id: 'u26_xerophyte_24',
       unitId: 26,
       word: 'Xerophyte',
-      banglaMeaning: 'মরুভূমির চরম শুষ্কতা সহ্য করতে পারা উদ্ভিদ',
+      banglaMeaning: 'মরুভূমির চরম শুষ্কতা সহ্য করতে পারা উদ্ভিদ , মরু-উদ্ভিদ , শুষ্কতা-সহিষ্ণু উদ্ভিদ',
       pronunciation: '/ˈzɪər.ə.faɪt/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit26: UnitInfo = {
       id: 'u26_blizzard_26',
       unitId: 26,
       word: 'Blizzard',
-      banglaMeaning: 'তুষারঝড় , তীব্র বাতাস ও বরফের ভয়ঙ্কর ঝড়',
+      banglaMeaning: 'তুষারঝড় , তীব্র বাতাস ও বরফের ভয়ঙ্কর ঝড় , প্রবল হিমঝঁঝা , তুষারঝটিকা',
       pronunciation: '/ˈblɪz.əd/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit26: UnitInfo = {
       id: 'u26_cirrus_27',
       unitId: 26,
       word: 'Cirrus',
-      banglaMeaning: 'আকাশের অতি উঁচুতে পালকের মতো সাদা পাতলা মেঘ',
+      banglaMeaning: 'আকাশের অতি উঁচুতে পালকের মতো সাদা পাতলা মেঘ , আকর্ষী , শুঙ্গ',
       pronunciation: '/ˈsɪr.əs/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit26: UnitInfo = {
       id: 'u26_drizzle_28',
       unitId: 26,
       word: 'Drizzle',
-      banglaMeaning: 'ঝিরিঝিরি গুঁড়িগুঁড়ি বৃষ্টি',
+      banglaMeaning: 'ঝিরিঝিরি গুঁড়িগুঁড়ি বৃষ্টি , ঝিরঝিরে হালকা বৃষ্টি , গুঁড়ি গুঁড়ি ব্রষ্টি',
       pronunciation: '/ˈdrɪz.əl/',
       partOfSpeech: 'noun',
       examples: [
@@ -534,7 +534,7 @@ export const unit26: UnitInfo = {
       id: 'u26_front_30',
       unitId: 26,
       word: 'Front',
-      banglaMeaning: 'আবহাওয়ার সীমানা রেখা (উষ্ণ বা শীতল ফ্রন্ট)',
+      banglaMeaning: 'আবহাওয়ার সীমানা রেখা (উষ্ণ বা শীতল ফ্রন্ট) , সন্মুখভাগ , সন্মুখাংশ , সামনের দিক',
       pronunciation: '/frʌnt/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit26: UnitInfo = {
       id: 'u26_humidity_31',
       unitId: 26,
       word: 'Humidity',
-      banglaMeaning: 'বাতাসে আর্দ্রতা বা জলীয় বাষ্পের পরিমাণ',
+      banglaMeaning: 'বাতাসে আর্দ্রতা বা জলীয় বাষ্পের পরিমাণ , শৈত্য',
       pronunciation: '/hjuːˈmɪd.ə.ti/',
       partOfSpeech: 'noun',
       examples: [
@@ -570,7 +570,7 @@ export const unit26: UnitInfo = {
       id: 'u26_isobar_32',
       unitId: 26,
       word: 'Isobar',
-      banglaMeaning: 'সমচাপ রেখা , মানচিত্রে সমান বায়ুচাপের স্থান সংযোগকারী রেখা',
+      banglaMeaning: 'সমচাপ রেখা , মানচিত্রে সমান বায়ুচাপের স্থান সংযোগকারী রেখা , আইসোবার',
       pronunciation: '/ˈaɪ.sə.bɑːr/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit26: UnitInfo = {
       id: 'u26_squall_34',
       unitId: 26,
       word: 'Squall',
-      banglaMeaning: 'হঠাৎ বয়ে যাওয়া তীব্র দমকা বাতাস ও বৃষ্টি',
+      banglaMeaning: 'হঠাৎ বয়ে যাওয়া তীব্র দমকা বাতাস ও বৃষ্টি , তারস্বরে চিতকার',
       pronunciation: '/skwɔːl/',
       partOfSpeech: 'noun',
       examples: [

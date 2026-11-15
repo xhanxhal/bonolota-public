@@ -12,7 +12,7 @@ export const unit27: UnitInfo = {
       id: 'u27_accessories_1',
       unitId: 27,
       word: 'Accessories',
-      banglaMeaning: 'পোশাকের সাথে পরার অলঙ্কার বা অনুষঙ্গ',
+      banglaMeaning: 'পোশাকের সাথে পরার অলঙ্কার বা অনুষঙ্গ , জিনিসপত্র , আনুষঙ্গিক উপকরণ , মালপত্র',
       pronunciation: '/əkˈses.ər.iz/',
       partOfSpeech: 'noun',
       examples: [
@@ -30,7 +30,7 @@ export const unit27: UnitInfo = {
       id: 'u27_bespoke_2',
       unitId: 27,
       word: 'Bespoke',
-      banglaMeaning: 'ফরমায়েশ দিয়ে বিশেষ মাপে তৈরি পোশাক',
+      banglaMeaning: 'ফরমায়েশ দিয়ে বিশেষ মাপে তৈরি পোশাক , ফরমাশী',
       pronunciation: '/bɪˈspəʊk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -66,7 +66,7 @@ export const unit27: UnitInfo = {
       id: 'u27_dapper_4',
       unitId: 27,
       word: 'Dapper',
-      banglaMeaning: 'পরিপাটি ও আকর্ষণীয় পোশাক পরা',
+      banglaMeaning: 'পরিপাটি ও আকর্ষণীয় পোশাক পরা , ফিটফাট , ছিমছাম , কেতাদুরস্ত',
       pronunciation: '/ˈdæp.ər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -84,7 +84,7 @@ export const unit27: UnitInfo = {
       id: 'u27_ensemble_5',
       unitId: 27,
       word: 'Ensemble',
-      banglaMeaning: 'মাথা থেকে পা পর্যন্ত পরিহিত সম্পূর্ণ পোশাকের সেট',
+      banglaMeaning: 'মাথা থেকে পা পর্যন্ত পরিহিত সম্পূর্ণ পোশাকের সেট , আঁসাঁব্ল , মোট ফল , ঐকতান-সঙ্গীত',
       pronunciation: '/ɒnˈsɒm.bəl/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit27: UnitInfo = {
       id: 'u27_flamboyant_6',
       unitId: 27,
       word: 'Flamboyant',
-      banglaMeaning: 'উজ্জ্বল , চমকপ্রদ ও দৃষ্টি-আকর্ষণকারী পোশাকরীতি',
+      banglaMeaning: 'উজ্জ্বল , চমকপ্রদ ও দৃষ্টি-আকর্ষণকারী পোশাকরীতি , বর্ণোজ্জ্বল , জাঁকালো',
       pronunciation: '/flæmˈbɔɪ.ənt/',
       partOfSpeech: 'adjective',
       examples: [
@@ -120,7 +120,7 @@ export const unit27: UnitInfo = {
       id: 'u27_garment_7',
       unitId: 27,
       word: 'Garment',
-      banglaMeaning: 'পোশাক বা পরনের বস্ত্র',
+      banglaMeaning: 'পোশাক বা পরনের বস্ত্র , জামাকাপড় , পরিচ্ছদ , দৃশ্যমান বহিরাবরণ',
       pronunciation: '/ˈɡɑː.mənt/',
       partOfSpeech: 'noun',
       examples: [
@@ -156,7 +156,7 @@ export const unit27: UnitInfo = {
       id: 'u27_impeccable_9',
       unitId: 27,
       word: 'Impeccable',
-      banglaMeaning: 'ত্রুটিহীন ও নিখুঁত পরিপাটি',
+      banglaMeaning: 'ত্রুটিহীন ও নিখুঁত পরিপাটি , নিষ্পাপ , অপাপবিদ্ধ , পাপস্পর্শহীন',
       pronunciation: '/ɪmˈpek.ə.bəl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -174,7 +174,7 @@ export const unit27: UnitInfo = {
       id: 'u27_jaunty_10',
       unitId: 27,
       word: 'Jaunty',
-      banglaMeaning: 'ফুরফুরে মেজাজের ও চটপটে ভঙ্গিতে পরা',
+      banglaMeaning: 'ফুরফুরে মেজাজের ও চটপটে ভঙ্গিতে পরা , লঘুচেতা , স্ফুর্তিবাজ , উপেক্ষিত',
       pronunciation: '/ˈdʒɔːn.ti/',
       partOfSpeech: 'adjective',
       examples: [
@@ -192,7 +192,7 @@ export const unit27: UnitInfo = {
       id: 'u27_knitwear_11',
       unitId: 27,
       word: 'Knitwear',
-      banglaMeaning: 'পশমি বা সুতা দিয়ে বোনা পোশাক',
+      banglaMeaning: 'পশমি বা সুতা দিয়ে বোনা পোশাক , নীটওয়্যার',
       pronunciation: '/ˈnɪt.weər/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit27: UnitInfo = {
       id: 'u27_loom_12',
       unitId: 27,
       word: 'Loom',
-      banglaMeaning: 'তাঁত বা কাপড় বোনার যন্ত্র',
+      banglaMeaning: 'তাঁত বা কাপড় বোনার যন্ত্র , বয়নযন্ত্র , তাঁতকল',
       pronunciation: '/luːm/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit27: UnitInfo = {
       id: 'u27_nouveau_14',
       unitId: 27,
       word: 'Nouveau',
-      banglaMeaning: 'নবীন , আধুনিক ফ্যাশনের নতুন ধারা',
+      banglaMeaning: 'নবীন , আধুনিক ফ্যাশনের নতুন ধারা , হঠাৎ',
       pronunciation: '/nuːˈvəʊ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -264,7 +264,7 @@ export const unit27: UnitInfo = {
       id: 'u27_ostentatious_15',
       unitId: 27,
       word: 'Ostentatious',
-      banglaMeaning: 'লোকদেখানো ও আড়ম্বরপূর্ণ জাঁকজমক',
+      banglaMeaning: 'লোকদেখানো ও আড়ম্বরপূর্ণ জাঁকজমক , জাঁকজমকপ্রিয় , জাঁকালো , সাড়ম্বর',
       pronunciation: '/ˌɒs.tenˈteɪ.ʃəs/',
       partOfSpeech: 'adjective',
       examples: [
@@ -282,7 +282,7 @@ export const unit27: UnitInfo = {
       id: 'u27_pattern_16',
       unitId: 27,
       word: 'Pattern',
-      banglaMeaning: 'কাপড়ের নকশা বা প্রিন্ট',
+      banglaMeaning: 'কাপড়ের নকশা বা প্রিন্ট , আদর্শ , নমুনা , প্যাটার্ন',
       pronunciation: '/ˈpæt.ən/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit27: UnitInfo = {
       id: 'u27_quilted_17',
       unitId: 27,
       word: 'Quilted',
-      banglaMeaning: 'তুলা বা ফোম ভেতরে দিয়ে সেলাই করা কাঁথাসদৃশ পোশাক',
+      banglaMeaning: 'তুলা বা ফোম ভেতরে দিয়ে সেলাই করা কাঁথাসদৃশ পোশাক , গদি আঁটা',
       pronunciation: '/ˈkwɪl.tɪd/',
       partOfSpeech: 'adjective',
       examples: [
@@ -318,7 +318,7 @@ export const unit27: UnitInfo = {
       id: 'u27_readytowear_18',
       unitId: 27,
       word: 'Ready-to-wear',
-      banglaMeaning: 'রেডিমেড বা তৈরি পোশাক',
+      banglaMeaning: 'রেডিমেড বা তৈরি পোশাক , তৈয়ারি',
       pronunciation: '/ˌred.i.təˈweər/',
       partOfSpeech: 'adjective',
       examples: [
@@ -336,7 +336,7 @@ export const unit27: UnitInfo = {
       id: 'u27_sartorial_19',
       unitId: 27,
       word: 'Sartorial',
-      banglaMeaning: 'দর্জিশিল্প বা পোশাক পরিধানের রুচি সংক্রান্ত',
+      banglaMeaning: 'দর্জিশিল্প বা পোশাক পরিধানের রুচি সংক্রান্ত , দর্জিসংক্রান্ত , পোশাকনির্মান বিষয়ক',
       pronunciation: '/sɑːˈtɔː.ri.əl/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit27: UnitInfo = {
       id: 'u27_textile_20',
       unitId: 27,
       word: 'Textile',
-      banglaMeaning: 'বস্ত্র বা কাপড় তৈরির সামগ্রিক শিল্প',
+      banglaMeaning: 'বস্ত্র বা কাপড় তৈরির সামগ্রিক শিল্প , বোনা কাপড় , টেক্সটাইল , বয়নসংক্রান্ত',
       pronunciation: '/ˈteks.taɪl/',
       partOfSpeech: 'noun',
       examples: [
@@ -390,7 +390,7 @@ export const unit27: UnitInfo = {
       id: 'u27_vintage_22',
       unitId: 27,
       word: 'Vintage',
-      banglaMeaning: 'ঐতিহ্যবাহী পুরানো যুগের বিখ্যাত ফ্যাশন',
+      banglaMeaning: 'ঐতিহ্যবাহী পুরানো যুগের বিখ্যাত ফ্যাশন , অতীত কালের , মদ',
       pronunciation: '/ˈvɪn.tɪdʒ/',
       partOfSpeech: 'adjective',
       examples: [
@@ -408,7 +408,7 @@ export const unit27: UnitInfo = {
       id: 'u27_wardrobe_23',
       unitId: 27,
       word: 'Wardrobe',
-      banglaMeaning: 'পোশাকের আলমারি বা কোনো ব্যক্তির পোশাকের সমগ্র সম্ভার',
+      banglaMeaning: 'পোশাকের আলমারি বা কোনো ব্যক্তির পোশাকের সমগ্র সম্ভার , তোষাখানা',
       pronunciation: '/ˈwɔː.drəʊb/',
       partOfSpeech: 'noun',
       examples: [
@@ -426,7 +426,7 @@ export const unit27: UnitInfo = {
       id: 'u27_yarn_24',
       unitId: 27,
       word: 'Yarn',
-      banglaMeaning: 'সুতা বা উলের তার',
+      banglaMeaning: 'সুতা বা উলের তার , তন্তু , গল্প , সুতো',
       pronunciation: '/jɑːn/',
       partOfSpeech: 'noun',
       examples: [
@@ -444,7 +444,7 @@ export const unit27: UnitInfo = {
       id: 'u27_apparel_25',
       unitId: 27,
       word: 'Apparel',
-      banglaMeaning: 'পোশাক বা পোশাক-পরিচ্ছদ',
+      banglaMeaning: 'পোশাক বা পোশাক-পরিচ্ছদ , বেশ , পরিধান , সাজান',
       pronunciation: '/əˈpær.əl/',
       partOfSpeech: 'noun',
       examples: [
@@ -480,7 +480,7 @@ export const unit27: UnitInfo = {
       id: 'u27_chic_27',
       unitId: 27,
       word: 'Chic',
-      banglaMeaning: 'মার্জিত ও আধুনিক ফ্যাশনদুরস্ত',
+      banglaMeaning: 'মার্জিত ও আধুনিক ফ্যাশনদুরস্ত , ভঙ্গিমা',
       pronunciation: '/ʃiːk/',
       partOfSpeech: 'adjective',
       examples: [
@@ -516,7 +516,7 @@ export const unit27: UnitInfo = {
       id: 'u27_embroidery_29',
       unitId: 27,
       word: 'Embroidery',
-      banglaMeaning: 'সূঁচের নকশা বা সূচিশিল্প',
+      banglaMeaning: 'সূঁচের নকশা বা সূচিশিল্প , সূচিকর্ম , অলঙ্কার , কারচুপি',
       pronunciation: '/ɪmˈbrɔɪ.dər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit27: UnitInfo = {
       id: 'u27_haberdashery_31',
       unitId: 27,
       word: 'Haberdashery',
-      banglaMeaning: 'দর্জি সামগ্রী বা বোতাম ও ফিতার দোকান',
+      banglaMeaning: 'দর্জি সামগ্রী বা বোতাম ও ফিতার দোকান , সামান্য সজ্জদ্রব্য',
       pronunciation: '/ˈhæb.əˌdæʃ.ər.i/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit27: UnitInfo = {
       id: 'u27_silhouette_34',
       unitId: 27,
       word: 'Silhouette',
-      banglaMeaning: 'পোশাকের সামগ্রিক রূপরেখা বা গড়ন',
+      banglaMeaning: 'পোশাকের সামগ্রিক রূপরেখা বা গড়ন , মসীবর্ণ ছায়া-পরিলেখ , সিলুয়েট',
       pronunciation: '/ˌsɪl.uˈet/',
       partOfSpeech: 'noun',
       examples: [

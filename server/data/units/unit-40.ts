@@ -30,7 +30,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bar_2',
       unitId: 40,
       word: 'Bar',
-      banglaMeaning: 'বার, বাধা',
+      banglaMeaning: 'বার, বাধা , কাঠ , লোহ',
       pronunciation: '/ˈbar/',
       partOfSpeech: 'noun',
       examples: [
@@ -48,7 +48,7 @@ export const unit40: UnitInfo = {
       id: 'u40_barb_3',
       unitId: 40,
       word: 'Barb',
-      banglaMeaning: 'বাক্যবাণ, কথার হুল',
+      banglaMeaning: 'বাক্যবাণ, কথার হুল , তীর , বঁড়শি',
       pronunciation: '/ˈbarb/',
       partOfSpeech: 'noun',
       examples: [
@@ -66,7 +66,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bard_4',
       unitId: 40,
       word: 'Bard',
-      banglaMeaning: 'কবি, চারণ',
+      banglaMeaning: 'কবি, চারণ , ভ্রাম্যমাণ গায়ক-কবি',
       pronunciation: '/ˈbard/',
       partOfSpeech: 'noun',
       examples: [
@@ -102,7 +102,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bargain_6',
       unitId: 40,
       word: 'Bargain',
-      banglaMeaning: 'চুক্তি, দর-কষাকষি',
+      banglaMeaning: 'চুক্তি, দর-কষাকষি , ক্রয়বিক্রয় , লাভজনক সত্তদা',
       pronunciation: '/ˈbargain/',
       partOfSpeech: 'noun',
       examples: [
@@ -138,7 +138,7 @@ export const unit40: UnitInfo = {
       id: 'u40_barrage_8',
       unitId: 40,
       word: 'Barrage',
-      banglaMeaning: 'প্রতিবন্ধক, বাঁধ',
+      banglaMeaning: 'প্রতিবন্ধক, বাঁধ , গোলাগুলির বেড়াজাল , আত্মরক্ষা',
       pronunciation: '/ˈbarrage/',
       partOfSpeech: 'noun',
       examples: [
@@ -192,7 +192,7 @@ export const unit40: UnitInfo = {
       id: 'u40_base_11',
       unitId: 40,
       word: 'Base',
-      banglaMeaning: 'ভিত্তি, ভিত',
+      banglaMeaning: 'ভিত্তি, ভিত , ঘাঁটি , প্রধান উপাদান',
       pronunciation: '/ˈbase/',
       partOfSpeech: 'noun',
       examples: [
@@ -210,7 +210,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bask_12',
       unitId: 40,
       word: 'Bask',
-      banglaMeaning: 'উপভোগ করা, আগুন বা রোদ পোহানো',
+      banglaMeaning: 'উপভোগ করা, আগুন বা রোদ পোহানো , পোয়ানো',
       pronunciation: '/ˈbask/',
       partOfSpeech: 'noun',
       examples: [
@@ -228,7 +228,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bastard_13',
       unitId: 40,
       word: 'Bastard',
-      banglaMeaning: 'জারজ, অজাত',
+      banglaMeaning: 'জারজ, অজাত , গর্ভস্রাব , খচ্চর',
       pronunciation: '/ˈbastard/',
       partOfSpeech: 'noun',
       examples: [
@@ -246,7 +246,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bate_14',
       unitId: 40,
       word: 'Bate',
-      banglaMeaning: 'সংযত বা প্রশমিত করা',
+      banglaMeaning: 'সংযত বা প্রশমিত করা , সংযত করা',
       pronunciation: '/ˈbate/',
       partOfSpeech: 'verb',
       examples: [
@@ -282,7 +282,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bauble_16',
       unitId: 40,
       word: 'Bauble',
-      banglaMeaning: 'খেলনা, তুচ্ছ বিষয়',
+      banglaMeaning: 'খেলনা, তুচ্ছ বিষয় , নকল গয়না , মূল্যহীন জিনিস',
       pronunciation: '/ˈbauble/',
       partOfSpeech: 'noun',
       examples: [
@@ -300,7 +300,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bawdy_17',
       unitId: 40,
       word: 'Bawdy',
-      banglaMeaning: 'অশ্লীল, অসচ্চরিত্র',
+      banglaMeaning: 'অশ্লীল, অসচ্চরিত্র , বকাবকি , বকুনি',
       pronunciation: '/ˈbawdy/',
       partOfSpeech: 'noun',
       examples: [
@@ -318,7 +318,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bearing_18',
       unitId: 40,
       word: 'Bearing',
-      banglaMeaning: 'জন্মদান, সহন',
+      banglaMeaning: 'জন্মদান, সহন , আদবকায়দা , সম্পর্ক',
       pronunciation: '/ˈbearing/',
       partOfSpeech: 'noun',
       examples: [
@@ -336,7 +336,7 @@ export const unit40: UnitInfo = {
       id: 'u40_beatific_19',
       unitId: 40,
       word: 'Beatific',
-      banglaMeaning: 'আনন্দময়, অতিশয় সুখদ',
+      banglaMeaning: 'আনন্দময়, অতিশয় সুখদ , গভীর আনন্দদায়ক',
       pronunciation: '/ˈbeatific/',
       partOfSpeech: 'adjective',
       examples: [
@@ -354,7 +354,7 @@ export const unit40: UnitInfo = {
       id: 'u40_beatitude_20',
       unitId: 40,
       word: 'Beatitude',
-      banglaMeaning: 'স্বর্গসুখ, চরম সুখ',
+      banglaMeaning: 'স্বর্গসুখ, চরম সুখ , স্বর্গীয় সুখ',
       pronunciation: '/ˈbeatitude/',
       partOfSpeech: 'noun',
       examples: [
@@ -462,7 +462,7 @@ export const unit40: UnitInfo = {
       id: 'u40_begrudge_26',
       unitId: 40,
       word: 'Begrudge',
-      banglaMeaning: 'রূষ্ট হত্তয়া, বিক্ষুব্ধ হত্তয়া',
+      banglaMeaning: 'রূষ্ট হওয়া, বিক্ষুব্ধ হওয়া',
       pronunciation: '/ˈbegrudge/',
       partOfSpeech: 'noun',
       examples: [
@@ -498,7 +498,7 @@ export const unit40: UnitInfo = {
       id: 'u40_beholden_28',
       unitId: 40,
       word: 'Beholden',
-      banglaMeaning: 'বাধিত, কৃতজ্ঞতাদিপাশে আবদ্ধ',
+      banglaMeaning: 'বাধিত, কৃতজ্ঞতাদিপাশে আবদ্ধ , কৃতজ্ঞতাপাশে আবদ্ধ',
       pronunciation: '/ˈbeholden/',
       partOfSpeech: 'noun',
       examples: [
@@ -516,7 +516,7 @@ export const unit40: UnitInfo = {
       id: 'u40_behoove_29',
       unitId: 40,
       word: 'Behoove',
-      banglaMeaning: 'উচিত হত্তয়া, উপযুক্ত হত্তয়া',
+      banglaMeaning: 'উচিত হওয়া, উপযুক্ত হওয়া',
       pronunciation: '/ˈbehoove/',
       partOfSpeech: 'noun',
       examples: [
@@ -552,7 +552,7 @@ export const unit40: UnitInfo = {
       id: 'u40_belated_31',
       unitId: 40,
       word: 'Belated',
-      banglaMeaning: 'বিলম্বিত, অন্ধকারে-পড়া',
+      banglaMeaning: 'বিলম্বিত, অন্ধকারে-পড়া , অন্ধকারের মুখে পতিত , অতি বিলংবে আগত',
       pronunciation: '/ˈbelated/',
       partOfSpeech: 'noun',
       examples: [
@@ -588,7 +588,7 @@ export const unit40: UnitInfo = {
       id: 'u40_belie_33',
       unitId: 40,
       word: 'Belie',
-      banglaMeaning: 'মিথ্যা ধারণা জন্মান, মিথ্যা বর্ণনা প্রদান করা',
+      banglaMeaning: 'মিথ্যা ধারণা জন্মান, মিথ্যা বর্ণনা প্রদান করা , আশানুরূপ',
       pronunciation: '/ˈbelie/',
       partOfSpeech: 'noun',
       examples: [
@@ -606,7 +606,7 @@ export const unit40: UnitInfo = {
       id: 'u40_belittle_34',
       unitId: 40,
       word: 'Belittle',
-      banglaMeaning: 'তুচ্ছতাচ্ছিল্য করা, খর্ব করা',
+      banglaMeaning: 'তুচ্ছতাচ্ছিল্য করা, খর্ব করা , ছোটো করে দেখানো , অপ্রশংসা বলা',
       pronunciation: '/ˈbelittle/',
       partOfSpeech: 'noun',
       examples: [
@@ -642,7 +642,7 @@ export const unit40: UnitInfo = {
       id: 'u40_bemused_36',
       unitId: 40,
       word: 'Bemused',
-      banglaMeaning: 'হতবুদ্ধি বা বিভ্রান্ত করা',
+      banglaMeaning: 'হতবুদ্ধি বা বিভ্রান্ত করা , বিমূঢ় , বিহ্বল',
       pronunciation: '/ˈbemused/',
       partOfSpeech: 'noun',
       examples: [
@@ -660,7 +660,7 @@ export const unit40: UnitInfo = {
       id: 'u40_benediction_37',
       unitId: 40,
       word: 'Benediction',
-      banglaMeaning: 'আশীর্বচন, আশীর্বাদ',
+      banglaMeaning: 'আশীর্বচন, আশীর্বাদ , বর , স্বস্তিবচন',
       pronunciation: '/ˈbenediction/',
       partOfSpeech: 'noun',
       examples: [
@@ -678,7 +678,7 @@ export const unit40: UnitInfo = {
       id: 'u40_benefactor_38',
       unitId: 40,
       word: 'Benefactor',
-      banglaMeaning: 'হিতকারী, দাতা',
+      banglaMeaning: 'হিতকারী, দাতা , উপকারী ব্যক্তি , পৃষ্ঠপোষক',
       pronunciation: '/ˈbenefactor/',
       partOfSpeech: 'noun',
       examples: [
@@ -714,7 +714,7 @@ export const unit40: UnitInfo = {
       id: 'u40_beneficial_40',
       unitId: 40,
       word: 'Beneficial',
-      banglaMeaning: 'উপকারী, লাভজনক',
+      banglaMeaning: 'উপকারী, লাভজনক , সুবিধাজনক , হিতকর',
       pronunciation: '/ˈbeneficial/',
       partOfSpeech: 'adjective',
       examples: [
