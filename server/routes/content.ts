@@ -1,9 +1,32 @@
 import { Router, Request, Response } from 'express';
 import { requireCustomerAuth, AuthenticatedUserRequest } from '../auth';
 import { allUnits, getUnitById } from '../data/units';
+import { lookupEnglishWord } from '../dictionary';
 
 export const contentRouter = Router();
 
+/**
+ * Beginner Mode Dictionary Lookup
+ * GET /api/content/word-lookup?word=...&context=...
+ * Requires active, verified customer session
+ */
+contentRouter.get('/word-lookup', requireCustomerAuth, async (req: AuthenticatedUserRequest, res: Response): Promise<void> => {
+  const rawWord = String(req.query.word || '').trim();
+  const context = typeof req.query.context === 'string' ? req.query.context.trim().slice(0, 300) : undefined;
+
+  if (!rawWord || rawWord.length > 60) {
+    res.status(400).json({ ok: false, error: 'INVALID_WORD' });
+    return;
+  }
+
+  try {
+    const entry = await lookupEnglishWord(rawWord, context);
+    res.json({ ok: true, entry });
+  } catch (err) {
+    console.error('[WordLookup Error]:', err);
+    res.status(500).json({ ok: false, error: 'LOOKUP_FAILED' });
+  }
+});
 
 /**
  * Protected Content: All 50 Units

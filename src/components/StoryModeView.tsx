@@ -17,9 +17,21 @@ import {
   Eye,
   EyeOff,
   GripVertical,
+  Sparkles,
+  Loader2,
 } from 'lucide-react';
 import { STORY_UNITS, StoryUnit, StoryVocabItem } from '../data/storyUnitsData';
+import { getAllWords } from '../data/units';
+import { VocabWord } from '../data/types';
+import { getClientDeviceId } from '../utils/deviceFingerprint';
 import { haptics } from '../utils/haptics';
+
+interface StoryWordDetail extends StoryVocabItem {
+  phonetic?: string;
+  synonyms?: string[];
+  antonyms?: string[];
+  isDictionaryLookup?: boolean;
+}
 
 interface StoryModeViewProps {
   onBackToHome?: () => void;
@@ -41,13 +53,21 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
   const [fontSize, setFontSize] = useState<FontSize>('base');
   const [isTtsPlaying, setIsTtsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [selectedWord, setSelectedWord] = useState<StoryVocabItem | null>(null);
+  const [selectedWord, setSelectedWord] = useState<StoryWordDetail | null>(null);
+  const [isWordLookupLoading, setIsWordLookupLoading] = useState(false);
   const [isUnitDrawerOpen, setIsUnitDrawerOpen] = useState(false);
   const [hoveredWordKey, setHoveredWordKey] = useState<string | null>(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isBanglaBlurred, setIsBanglaBlurred] = useState<boolean>(() => {
     try {
       return localStorage.getItem('bonolota_story_bn_blur') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [isBeginnerMode, setIsBeginnerMode] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('bonolota_story_beginner_mode') === 'true';
     } catch {
       return false;
     }
@@ -65,6 +85,8 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
 
   const fullScreenContainerRef = useRef<HTMLDivElement>(null);
   const splitContainerRef = useRef<HTMLDivElement>(null);
+  const lookupAbortRef = useRef<AbortController | null>(null);
+  const wordCacheRef = useRef<Map<string, StoryWordDetail> | null>(null);
 
   // Filter units by category and search
   const filteredUnits = useMemo(() => {
@@ -104,6 +126,209 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     return map;
   }, [currentUnit]);
 
+  // Global curriculum & story vocab maps for instant local resolution
+  const globalCurriculumMap = useMemo(() => {
+    const map = new Map<string, VocabWord>();
+    for (const w of getAllWords()) {
+      map.set(w.word.toLowerCase(), w);
+    }
+    return map;
+  }, []);
+
+  const globalStoryVocabMap = useMemo(() => {
+    const map = new Map<string, StoryVocabItem>();
+    for (const unit of STORY_UNITS) {
+      for (const item of unit.vocab_table) {
+        const key = item.word.toLowerCase();
+        if (!map.has(key)) {
+          map.set(key, item);
+        }
+      }
+    }
+    return map;
+  }, []);
+
+  const enrichWithCurriculum = useCallback((item: StoryVocabItem): StoryWordDetail => {
+    const curr = globalCurriculumMap.get(item.word.toLowerCase());
+    if (!curr) return item;
+    return {
+      ...item,
+      phonetic: curr.pronunciation || undefined,
+      synonyms: curr.synonyms && curr.synonyms.length > 0 ? curr.synonyms : undefined,
+      antonyms: curr.antonyms && curr.antonyms.length > 0 ? curr.antonyms : undefined,
+      definition: item.definition || (curr.examples?.[0]?.english ? `Example: "${curr.examples[0].english}"` : undefined),
+    };
+  }, [globalCurriculumMap]);
+
+  const getWordCache = useCallback((): Map<string, StoryWordDetail> => {
+    if (wordCacheRef.current) return wordCacheRef.current;
+    const map = new Map<string, StoryWordDetail>();
+    try {
+      const raw = localStorage.getItem('bonolota_beginner_word_cache_v1');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          Object.entries(parsed).forEach(([k, v]) => {
+            if (v && typeof v === 'object') {
+              map.set(k, v as StoryWordDetail);
+            }
+          });
+        }
+      }
+    } catch {
+      // ignore
+    }
+    wordCacheRef.current = map;
+    return map;
+  }, []);
+
+  const saveWordToCache = useCallback((key: string, detail: StoryWordDetail) => {
+    const cache = getWordCache();
+    if (cache.size >= 500) {
+      const oldestKey = cache.keys().next().value;
+      if (oldestKey) cache.delete(oldestKey);
+    }
+    cache.set(key, detail);
+    try {
+      const obj: Record<string, StoryWordDetail> = {};
+      cache.forEach((v, k) => {
+        obj[k] = v;
+      });
+      localStorage.setItem('bonolota_beginner_word_cache_v1', JSON.stringify(obj));
+    } catch {
+      // ignore storage quota errors
+    }
+  }, [getWordCache]);
+
+  const closeWordModal = useCallback(() => {
+    lookupAbortRef.current?.abort();
+    setIsWordLookupLoading(false);
+    setSelectedWord(null);
+  }, []);
+
+  const handleBeginnerWordClick = useCallback(async (rawToken: string, paragraphContext?: string) => {
+    haptics.tap();
+    const cleanWord = rawToken.trim().replace(/[’']/g, "'").replace(/'s$/i, '');
+    if (!cleanWord) return;
+    const lower = cleanWord.toLowerCase();
+
+    // 1. Check current unit vocab table
+    const unitVocab = vocabMap.get(lower);
+    if (unitVocab) {
+      setIsWordLookupLoading(false);
+      setSelectedWord(enrichWithCurriculum(unitVocab));
+      return;
+    }
+
+    // 2. Check global 50-unit story vocab table
+    const globalStoryVocab = globalStoryVocabMap.get(lower);
+    if (globalStoryVocab) {
+      setIsWordLookupLoading(false);
+      setSelectedWord(enrichWithCurriculum(globalStoryVocab));
+      return;
+    }
+
+    // 3. Check 50-unit main curriculum words
+    const currWord = globalCurriculumMap.get(lower);
+    if (currWord) {
+      setIsWordLookupLoading(false);
+      setSelectedWord({
+        word: cleanWord,
+        pos: currWord.partOfSpeech || 'word',
+        meaning: currWord.banglaMeaning,
+        phonetic: currWord.pronunciation || undefined,
+        definition: currWord.examples?.[0]?.english ? `Example: "${currWord.examples[0].english}"` : undefined,
+        synonyms: currWord.synonyms,
+        antonyms: currWord.antonyms,
+      });
+      return;
+    }
+
+    // 4. Check local browser dictionary cache
+    const cache = getWordCache();
+    const cached = cache.get(lower);
+    if (cached) {
+      setIsWordLookupLoading(false);
+      setSelectedWord({ ...cached, word: cleanWord });
+      return;
+    }
+
+    // 5. Fetch from server dictionary lookup API
+    lookupAbortRef.current?.abort();
+    const controller = new AbortController();
+    lookupAbortRef.current = controller;
+
+    setSelectedWord({
+      word: cleanWord,
+      pos: 'loading',
+      meaning: '',
+      definition: '',
+      isDictionaryLookup: true,
+    });
+    setIsWordLookupLoading(true);
+
+    try {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('bonolota_user_token') : null;
+      const deviceId = getClientDeviceId();
+      const params = new URLSearchParams({ word: cleanWord });
+      if (paragraphContext) {
+        params.set('context', paragraphContext.replace(/\*\*/g, '').slice(0, 240));
+      }
+
+      const res = await fetch(`/api/content/word-lookup?${params.toString()}`, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          'x-device-id': deviceId,
+        },
+        credentials: 'include',
+        signal: controller.signal,
+      });
+
+      if (controller.signal.aborted) return;
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.ok && data?.entry) {
+          const entry: StoryWordDetail = {
+            word: cleanWord,
+            pos: data.entry.pos || 'word',
+            phonetic: data.entry.phonetic || undefined,
+            meaning: data.entry.meaning || 'বাংলা অর্থ পাওয়া যায়নি',
+            definition: data.entry.definition || '',
+            synonyms: Array.isArray(data.entry.synonyms) ? data.entry.synonyms : [],
+            antonyms: Array.isArray(data.entry.antonyms) ? data.entry.antonyms : [],
+            isDictionaryLookup: true,
+          };
+          saveWordToCache(lower, entry);
+          setSelectedWord(entry);
+          setIsWordLookupLoading(false);
+          return;
+        }
+      }
+
+      setSelectedWord({
+        word: cleanWord,
+        pos: 'word',
+        meaning: 'অর্থ এই মুহূর্তে লোড করা যায়নি',
+        definition: 'Please check your connection and try clicking the word again.',
+        isDictionaryLookup: true,
+      });
+    } catch (err: any) {
+      if (err?.name === 'AbortError' || controller.signal.aborted) return;
+      setSelectedWord({
+        word: cleanWord,
+        pos: 'word',
+        meaning: 'অর্থ এই মুহূর্তে লোড করা যায়নি',
+        definition: 'Please check your connection and try clicking the word again.',
+        isDictionaryLookup: true,
+      });
+    } finally {
+      if (!controller.signal.aborted) {
+        setIsWordLookupLoading(false);
+      }
+    }
+  }, [vocabMap, globalStoryVocabMap, globalCurriculumMap, enrichWithCurriculum, getWordCache, saveWordToCache]);
+
   // Reset speech and hover on unit change
   useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -113,9 +338,10 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     setHoveredWordKey(null);
   }, [activeUnitNumber]);
 
-  // Cleanup speech synthesis on unmount
+  // Cleanup speech synthesis and active lookup on unmount
   useEffect(() => {
     return () => {
+      lookupAbortRef.current?.abort();
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
@@ -131,6 +357,15 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     }
   }, [isBanglaBlurred]);
 
+  // Persist Beginner Mode preference
+  useEffect(() => {
+    try {
+      localStorage.setItem('bonolota_story_beginner_mode', String(isBeginnerMode));
+    } catch {
+      // ignore
+    }
+  }, [isBeginnerMode]);
+
   // Persist split percentage
   useEffect(() => {
     try {
@@ -145,7 +380,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       if (selectedWord) {
-        setSelectedWord(null);
+        closeWordModal();
       } else if (isUnitDrawerOpen) {
         setIsUnitDrawerOpen(false);
       } else if (isFullScreen) {
@@ -154,7 +389,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedWord, isUnitDrawerOpen, isFullScreen]);
+  }, [selectedWord, isUnitDrawerOpen, isFullScreen, closeWordModal]);
 
   // Handle dragging middle split divider in Dual View
   useEffect(() => {
@@ -276,15 +511,16 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                   onMouseLeave={() => setHoveredWordKey(null)}
                   onClick={() => {
                     haptics.tap();
+                    setIsWordLookupLoading(false);
                     if (vocab) {
-                      setSelectedWord(vocab);
+                      setSelectedWord(enrichWithCurriculum(vocab));
                     } else {
-                      setSelectedWord({
+                      setSelectedWord(enrichWithCurriculum({
                         word: trimmed,
                         pos: 'word',
                         meaning: 'ইউনিট শব্দ',
                         definition: 'Vocabulary word from unit narrative'
-                      });
+                      }));
                     }
                   }}
                   className={`inline font-bold cursor-pointer align-baseline transition-all underline underline-offset-4 decoration-2 ${
@@ -298,7 +534,36 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 </button>
               );
             }
-            return <span key={index}>{part}</span>;
+            if (!isBeginnerMode) {
+              return <span key={index}>{part}</span>;
+            }
+            const tokens = part.split(/([A-Za-z]+(?:[’'][A-Za-z]+)*)/g);
+            return (
+              <React.Fragment key={index}>
+                {tokens.map((token, tIdx) => {
+                  if (tIdx % 2 === 1) {
+                    return (
+                      <span
+                        key={tIdx}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => handleBeginnerWordClick(token, para)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleBeginnerWordClick(token, para);
+                          }
+                        }}
+                        className="cursor-pointer"
+                      >
+                        {token}
+                      </span>
+                    );
+                  }
+                  return <React.Fragment key={tIdx}>{token}</React.Fragment>;
+                })}
+              </React.Fragment>
+            );
           })}
         </p>
       );
@@ -904,7 +1169,7 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 </button>
               </div>
 
-              {/* Utility Tools: Bangla Blur, TTS Play & Copy */}
+              {/* Utility Tools: Bangla Blur, Beginner Mode, TTS Play & Copy */}
               <div className="flex flex-wrap items-center gap-2">
                 {viewMode !== 'en' && (
                   <button
@@ -924,6 +1189,27 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                     <span>{isBanglaBlurred ? 'বাংলা দেখুন' : 'বাংলা ব্লার'}</span>
                   </button>
                 )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptics.selection();
+                    setIsBeginnerMode(prev => !prev);
+                  }}
+                  aria-pressed={isBeginnerMode}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-2xs ${
+                    isBeginnerMode
+                      ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
+                      : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-transparent'
+                  }`}
+                  title={isBeginnerMode ? 'Beginner Mode চালু আছে — গল্পের যেকোনো শব্দে ক্লিক করে অর্থ দেখুন' : 'Beginner Mode চালু করুন — গল্পের প্রতিটি শব্দে ক্লিক করে অর্থ, সংজ্ঞা, Synonym ও Antonym দেখুন'}
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Beginner Mode</span>
+                  {isBeginnerMode && (
+                    <span className="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px] font-black uppercase">ON</span>
+                  )}
+                </button>
 
                 <button
                   type="button"
@@ -1148,53 +1434,119 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
       {selectedWord && (
         <div 
           className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150"
-          onClick={() => setSelectedWord(null)}
+          onClick={closeWordModal}
         >
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full shadow-2xl border border-slate-200/90 dark:border-slate-800 overflow-hidden p-5 sm:p-6 space-y-4 animate-in zoom-in-95 duration-150"
+            className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full max-h-[88vh] overflow-y-auto shadow-2xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 space-y-4 animate-in zoom-in-95 duration-150"
           >
             {/* Header */}
-            <div className="flex items-start justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-sans">
-                  {selectedWord.pos || 'Vocabulary'}
-                </span>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1 font-sans">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-sans">
+                    {isWordLookupLoading ? 'Looking up...' : (selectedWord.pos || 'Vocabulary')}
+                  </span>
+                  {selectedWord.phonetic && !isWordLookupLoading && (
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                      {selectedWord.phonetic}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1 font-sans break-words">
                   {selectedWord.word}
                 </h3>
               </div>
               <button
                 type="button"
-                onClick={() => setSelectedWord(null)}
-                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                onClick={closeWordModal}
+                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Meaning card */}
-            <div className="space-y-3">
-              <div className="bg-emerald-50/70 dark:bg-emerald-950/40 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/60">
-                <span className="text-[11px] font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
-                  বাংলা অর্থ (Bangla Meaning)
-                </span>
-                <p className="text-lg font-bold text-emerald-900 dark:text-emerald-200 font-bangla">
-                  {selectedWord.meaning}
-                </p>
-              </div>
-
-              {selectedWord.definition && (
-                <div className="bg-amber-50/80 dark:bg-amber-950/40 p-3.5 rounded-2xl border border-amber-200/70 dark:border-amber-900/60">
-                  <span className="text-[11px] font-bold text-amber-800 dark:text-amber-400 block mb-1">
-                    Barron Core Definition
+            {isWordLookupLoading ? (
+              <div className="space-y-3">
+                <div className="bg-emerald-50/70 dark:bg-emerald-950/40 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/60 flex items-center gap-2.5 text-emerald-800 dark:text-emerald-300">
+                  <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+                  <span className="text-xs font-bold font-bangla">
+                    বাংলা অর্থ, ইংরেজি সংজ্ঞা ও Synonym/Antonym খোঁজা হচ্ছে...
                   </span>
-                  <p className="text-xs text-amber-950 dark:text-amber-200 font-sans leading-relaxed">
-                    {selectedWord.definition}
+                </div>
+                <div className="h-16 rounded-2xl bg-slate-100 dark:bg-slate-800/70 animate-pulse" />
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {/* Meaning card */}
+                <div className="bg-emerald-50/70 dark:bg-emerald-950/40 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/60">
+                  <span className="text-[11px] font-bold text-emerald-800 dark:text-emerald-400 block mb-1">
+                    বাংলা অর্থ (Bangla Meaning)
+                  </span>
+                  <p className="text-lg font-bold text-emerald-900 dark:text-emerald-200 font-bangla">
+                    {selectedWord.meaning}
                   </p>
                 </div>
-              )}
-            </div>
+
+                {/* English Definition card */}
+                {selectedWord.definition && (
+                  <div className="bg-amber-50/80 dark:bg-amber-950/40 p-3.5 rounded-2xl border border-amber-200/70 dark:border-amber-900/60">
+                    <span className="text-[11px] font-bold text-amber-800 dark:text-amber-400 block mb-1">
+                      {selectedWord.isDictionaryLookup
+                        ? 'English Definition'
+                        : isBarronUnit
+                        ? 'Barron Core Definition'
+                        : 'English Definition'}
+                    </span>
+                    <p className="text-xs text-amber-950 dark:text-amber-200 font-sans leading-relaxed">
+                      {selectedWord.definition}
+                    </p>
+                  </div>
+                )}
+
+                {/* Synonyms & Antonyms when available */}
+                {((selectedWord.synonyms && selectedWord.synonyms.length > 0) ||
+                  (selectedWord.antonyms && selectedWord.antonyms.length > 0)) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {selectedWord.synonyms && selectedWord.synonyms.length > 0 && (
+                      <div className="bg-slate-50 dark:bg-slate-800/70 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
+                        <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 block mb-1.5">
+                          Synonyms (সমার্থক)
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {selectedWord.synonyms.map((syn, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-0.5 rounded-lg bg-emerald-100/80 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 text-xs font-semibold font-sans border border-emerald-200/70 dark:border-emerald-800/60"
+                            >
+                              {syn}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedWord.antonyms && selectedWord.antonyms.length > 0 && (
+                      <div className="bg-slate-50 dark:bg-slate-800/70 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
+                        <span className="text-[11px] font-bold text-rose-700 dark:text-rose-400 block mb-1.5">
+                          Antonyms (বিপরীত)
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {selectedWord.antonyms.map((ant, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-0.5 rounded-lg bg-rose-100/80 dark:bg-rose-950/70 text-rose-900 dark:text-rose-200 text-xs font-semibold font-sans border border-rose-200/70 dark:border-rose-800/60"
+                            >
+                              {ant}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Action buttons */}
             <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
@@ -1207,12 +1559,12 @@ export const StoryModeView: React.FC<StoryModeViewProps> = ({
                 <span>উচ্চারণ শুনুন</span>
               </button>
 
-              {onOpenWordDetailByName && (
+              {onOpenWordDetailByName && globalCurriculumMap.has(selectedWord.word.toLowerCase()) && (
                 <button
                   type="button"
                   onClick={() => {
                     const word = selectedWord.word;
-                    setSelectedWord(null);
+                    closeWordModal();
                     onOpenWordDetailByName(word);
                   }}
                   className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-colors cursor-pointer shadow-2xs"
