@@ -20,7 +20,13 @@ import { VocabWord } from '../data/types';
 import { getAllWords } from '../data/units';
 import { getWordEnrichment } from '../data/wordEnrichments';
 import { CardTheme } from '../utils/cardCanvasExport';
-import { exportCardElementToJpeg, CardExportResult } from '../utils/cardDomExport';
+import {
+  exportCardElementToJpeg,
+  CardExportResult,
+  FIXED_CARD_EXPORT_WIDTH,
+  FIXED_CARD_EXPORT_PIXEL_RATIO,
+  DEFAULT_CARD_JPEG_QUALITY,
+} from '../utils/cardDomExport';
 
 interface CardGeneratorViewProps {
   initialWord?: VocabWord | null;
@@ -38,6 +44,7 @@ export const CardGeneratorView: React.FC<CardGeneratorViewProps> = ({
   const [isDownloading, setIsDownloading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const cardRef = useRef<HTMLDivElement>(null);
+  const exportCardRef = useRef<HTMLDivElement>(null);
   const [previewModalData, setPreviewModalData] = useState<CardExportResult | null>(null);
 
   const enrichment = useMemo(() => getWordEnrichment(selectedWord), [selectedWord]);
@@ -47,6 +54,10 @@ export const CardGeneratorView: React.FC<CardGeneratorViewProps> = ({
       setSelectedWord(initialWord);
     }
   }, [initialWord]);
+
+  useEffect(() => {
+    setPreviewModalData(null);
+  }, [selectedWord, cardTheme]);
 
   const handlePickRandomWord = () => {
     const randomIndex = Math.floor(Math.random() * allWords.length);
@@ -91,14 +102,27 @@ Synonyms: ${selectedWord.synonyms.join(', ')}
     }
   };
 
+  const isDarkCard = cardTheme === 'midnight' || cardTheme === 'indigo';
+  const exportBgColor =
+    cardTheme === 'midnight'
+      ? '#05140e'
+      : cardTheme === 'indigo'
+      ? '#08111e'
+      : cardTheme === 'sunset'
+      ? '#fffdfa'
+      : '#ffffff';
+
   const handleDownloadJpeg = async () => {
-    if (isDownloading || !cardRef.current) return;
+    const targetElement = exportCardRef.current ?? cardRef.current;
+    if (isDownloading || !targetElement) return;
     setIsDownloading(true);
     try {
-      // Export directly from the live DOM card element using browser's native rendering
-      const result = await exportCardElementToJpeg(cardRef.current, {
-        quality: 0.98,
-        pixelRatio: 2.5,
+      // Export using fixed device-independent layout, width, and pixel scale
+      const result = await exportCardElementToJpeg(targetElement, {
+        width: FIXED_CARD_EXPORT_WIDTH,
+        pixelRatio: FIXED_CARD_EXPORT_PIXEL_RATIO,
+        quality: DEFAULT_CARD_JPEG_QUALITY,
+        backgroundColor: exportBgColor,
       });
       
       setPreviewModalData(result);
@@ -130,11 +154,17 @@ Synonyms: ${selectedWord.synonyms.join(', ')}
   };
 
   const handleNativeSharePhoto = async () => {
-    if (!cardRef.current) return;
+    const targetElement = exportCardRef.current ?? cardRef.current;
+    if (!targetElement) return;
     try {
       let currentResult = previewModalData;
       if (!currentResult) {
-        currentResult = await exportCardElementToJpeg(cardRef.current);
+        currentResult = await exportCardElementToJpeg(targetElement, {
+          width: FIXED_CARD_EXPORT_WIDTH,
+          pixelRatio: FIXED_CARD_EXPORT_PIXEL_RATIO,
+          quality: DEFAULT_CARD_JPEG_QUALITY,
+          backgroundColor: exportBgColor,
+        });
         setPreviewModalData(currentResult);
       }
 
@@ -336,149 +366,181 @@ Synonyms: ${selectedWord.synonyms.join(', ')}
         </div>
       </div>
 
-      {/* The Aesthetic Botanical Card Display - Fully Adaptive Layout */}
-      <div className="flex justify-center px-1">
-        <div
-          ref={cardRef}
-          className={`w-full max-w-md sm:max-w-lg mx-auto p-5 sm:p-7 rounded-2xl sm:rounded-3xl border transition-all flex flex-col justify-between min-h-[500px] sm:min-h-[540px] relative overflow-hidden select-none shadow-md ${currentStyle.container}`}
-        >
-          {/* Subtle Organic Texture Pattern */}
+      {/* Shared card renderer: responsive on-screen preview vs fixed-width device-independent export */}
+      {(() => {
+        const renderVocabularyCard = (isExportLayout: boolean) => (
           <div
-            className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05]"
-            style={{
-              backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
-              backgroundSize: '16px 16px'
-            }}
-          />
-
-          {/* Botanical Leaf Silhouette - Top Right Vine Tendril */}
-          <svg
-            className={`absolute -top-1 -right-1 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none transition-all duration-300 ${currentStyle.leafColor}`}
-            viewBox="0 0 120 120"
-            fill="currentColor"
+            ref={isExportLayout ? exportCardRef : cardRef}
+            style={
+              isExportLayout
+                ? { width: `${FIXED_CARD_EXPORT_WIDTH}px`, minHeight: '580px', boxSizing: 'border-box' }
+                : undefined
+            }
+            className={`${
+              isExportLayout
+                ? 'p-7 rounded-3xl flex flex-col justify-between relative overflow-hidden select-none border'
+                : 'w-full max-w-md sm:max-w-lg p-5 sm:p-7 rounded-2xl sm:rounded-3xl border transition-all flex flex-col justify-between min-h-[500px] sm:min-h-[540px] relative overflow-hidden select-none shadow-md'
+            } ${currentStyle.container}`}
           >
-            <path d="M120 0 Q80 20 40 80" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <path d="M105 12 C115 5 120 15 112 25 C102 24 98 18 105 12 Z" />
-            <path d="M90 24 C78 18 74 30 85 36 C92 34 94 28 90 24 Z" />
-            <path d="M80 40 C92 32 100 44 90 52 C82 48 78 44 80 40 Z" />
-            <path d="M68 55 C56 50 52 62 64 68 C70 65 72 58 68 55 Z" />
-            <path d="M55 70 C68 62 74 74 64 82 C56 78 54 72 55 70 Z" />
-            <path d="M40 80 C30 84 28 94 36 98 C44 94 43 85 40 80 Z" />
-          </svg>
+            {/* Subtle Organic Texture Pattern */}
+            <div
+              className={`absolute inset-0 pointer-events-none ${isDarkCard ? 'opacity-[0.05]' : 'opacity-[0.03]'}`}
+              style={{
+                backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                backgroundSize: '16px 16px'
+              }}
+            />
 
-          {/* Botanical Leaf Silhouette - Bottom Left Fern Frond */}
-          <svg
-            className={`absolute -bottom-1 -left-1 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none transition-all duration-300 ${currentStyle.leafColor}`}
-            viewBox="0 0 120 120"
-            fill="currentColor"
-          >
-            <path d="M0 120 Q40 100 80 40" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <path d="M22 105 C10 100 8 88 20 86 C26 92 26 100 22 105 Z" />
-            <path d="M35 90 C24 84 22 72 34 74 C40 78 40 86 35 90 Z" />
-            <path d="M50 75 C38 68 38 56 50 58 C56 62 55 70 50 75 Z" />
-            <path d="M65 60 C55 52 56 42 66 44 C72 48 70 56 65 60 Z" />
-            <path d="M30 100 C38 92 48 97 45 106 C36 106 31 102 30 100 Z" />
-            <path d="M45 84 C53 76 63 81 60 90 C52 90 47 86 45 84 Z" />
-            <path d="M60 68 C68 60 78 65 75 74 C67 74 62 70 60 68 Z" />
-            <path d="M80 40 C88 30 100 32 98 44 C88 47 82 44 80 40 Z" />
-          </svg>
+            {/* Botanical Leaf Silhouette - Top Right Vine Tendril */}
+            <svg
+              className={`absolute -top-1 -right-1 pointer-events-none ${
+                isExportLayout ? 'w-32 h-32' : 'w-24 h-24 sm:w-32 sm:h-32 transition-all duration-300'
+              } ${currentStyle.leafColor}`}
+              viewBox="0 0 120 120"
+              fill="currentColor"
+            >
+              <path d="M120 0 Q80 20 40 80" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
+              <path d="M105 12 C115 5 120 15 112 25 C102 24 98 18 105 12 Z" />
+              <path d="M90 24 C78 18 74 30 85 36 C92 34 94 28 90 24 Z" />
+              <path d="M80 40 C92 32 100 44 90 52 C82 48 78 44 80 40 Z" />
+              <path d="M68 55 C56 50 52 62 64 68 C70 65 72 58 68 55 Z" />
+              <path d="M55 70 C68 62 74 74 64 82 C56 78 54 72 55 70 Z" />
+              <path d="M40 80 C30 84 28 94 36 98 C44 94 43 85 40 80 Z" />
+            </svg>
 
-          {/* Ambient Lighting Accents */}
-          <div className="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-teal-400/10 blur-2xl pointer-events-none" />
+            {/* Botanical Leaf Silhouette - Bottom Left Fern Frond */}
+            <svg
+              className={`absolute -bottom-1 -left-1 pointer-events-none ${
+                isExportLayout ? 'w-32 h-32' : 'w-24 h-24 sm:w-32 sm:h-32 transition-all duration-300'
+              } ${currentStyle.leafColor}`}
+              viewBox="0 0 120 120"
+              fill="currentColor"
+            >
+              <path d="M0 120 Q40 100 80 40" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
+              <path d="M22 105 C10 100 8 88 20 86 C26 92 26 100 22 105 Z" />
+              <path d="M35 90 C24 84 22 72 34 74 C40 78 40 86 35 90 Z" />
+              <path d="M50 75 C38 68 38 56 50 58 C56 62 55 70 50 75 Z" />
+              <path d="M65 60 C55 52 56 42 66 44 C72 48 70 56 65 60 Z" />
+              <path d="M30 100 C38 92 48 97 45 106 C36 106 31 102 30 100 Z" />
+              <path d="M45 84 C53 76 63 81 60 90 C52 90 47 86 45 84 Z" />
+              <path d="M60 68 C68 60 78 65 75 74 C67 74 62 70 60 68 Z" />
+              <path d="M80 40 C88 30 100 32 98 44 C88 47 82 44 80 40 Z" />
+            </svg>
 
-          {/* 1. Card Top Brand & Badge */}
-          <div className="relative z-10 flex items-center justify-between gap-3 pb-3 border-b border-black/10 dark:border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden bg-white dark:bg-slate-900 border border-black/10 p-0.5 shadow-2xs shrink-0">
-                <img
-                  src="/assets/aistudio/Botanical_Book_B_Emblem_8fbb1e88.png"
-                  alt="Bonolota"
-                  crossOrigin="anonymous"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="font-extrabold text-sm sm:text-base tracking-tight font-sans text-slate-900 dark:text-white leading-tight">
-                  Bonolota Vocabulary
-                </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-bangla leading-tight mt-1">
-                  শব্দ ভাণ্ডার · Unit {selectedWord.unitId}
-                </span>
-              </div>
-            </div>
+            {/* Ambient Lighting Accents */}
+            <div className="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
+            <div className="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-teal-400/10 blur-2xl pointer-events-none" />
 
-            <div className="shrink-0">
-              <span className={`text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider flex items-center gap-1 shadow-2xs ${currentStyle.badge}`}>
-                <Leaf className="w-3 h-3 opacity-80" />
-                <span>{selectedWord.partOfSpeech}</span>
-              </span>
-            </div>
-          </div>
-
-          {/* 2. Middle Body: The Vocabulary Showcase - Natural Flow with Ample Breathing Room */}
-          <div className="relative z-10 space-y-4 text-center my-auto py-2">
-            {/* Word Heading & Pronunciation */}
-            <div className="space-y-1 py-1">
-              <h3 className={`text-3xl sm:text-4xl md:text-5xl font-black font-sans tracking-tight leading-normal ${currentStyle.wordText}`}>
-                {selectedWord.word}
-              </h3>
-              <p className="text-xs sm:text-sm font-mono opacity-70 tracking-wider font-medium leading-normal">
-                {selectedWord.pronunciation}
-              </p>
-            </div>
-
-            {/* Primary Bangla Meaning */}
-            <div className={`p-4 sm:p-5 rounded-2xl border text-center shadow-2xs backdrop-blur-xs space-y-1.5 ${currentStyle.meaningBg}`}>
-              <span className="text-[11px] font-bold uppercase tracking-widest opacity-60 block leading-normal">
-                বাংলা অর্থ
-              </span>
-              <p className={`text-lg sm:text-xl md:text-2xl font-black font-bangla leading-normal ${currentStyle.meaningText}`}>
-                {selectedWord.banglaMeaning}
-              </p>
-            </div>
-
-            {/* Example Sentence with Bengali Translation */}
-            {selectedWord.examples[0] && (
-              <div className="p-3.5 sm:p-4 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 space-y-1.5 text-center">
-                <p className="text-xs sm:text-sm font-sans italic font-medium opacity-90 leading-relaxed">
-                  "{selectedWord.examples[0].english}"
-                </p>
-                {selectedWord.examples[0].bangla && (
-                  <p className="text-xs sm:text-sm font-bangla opacity-85 leading-normal">
-                    {selectedWord.examples[0].bangla}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {/* Synonyms */}
-            {selectedWord.synonyms.length > 0 && (
-              <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap pt-1">
-                <span className="text-[11px] sm:text-xs uppercase font-bold opacity-60">SYNONYMS:</span>
-                {selectedWord.synonyms.slice(0, 4).map((s, idx) => (
-                  <span
-                    key={idx}
-                    className={`text-xs font-semibold px-2.5 py-1 rounded-lg border font-sans shadow-2xs ${currentStyle.tagBg}`}
-                  >
-                    {s}
+            {/* 1. Card Top Brand & Badge */}
+            <div className={`relative z-10 flex items-center justify-between gap-3 pb-3 border-b ${isDarkCard ? 'border-white/15' : 'border-black/10'}`}>
+              <div className="flex items-center gap-2.5">
+                <div className={`${isExportLayout ? 'w-9 h-9' : 'w-8 h-8 sm:w-9 sm:h-9'} rounded-xl overflow-hidden border p-0.5 shadow-2xs shrink-0 ${isDarkCard ? 'bg-slate-900 border-white/15' : 'bg-white border-black/10'}`}>
+                  <img
+                    src="/assets/aistudio/Botanical_Book_B_Emblem_8fbb1e88.png"
+                    alt="Bonolota"
+                    crossOrigin="anonymous"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <span className={`font-extrabold ${isExportLayout ? 'text-base' : 'text-sm sm:text-base'} tracking-tight font-sans leading-tight ${isDarkCard ? 'text-white' : 'text-slate-900'}`}>
+                    Bonolota Vocabulary
                   </span>
-                ))}
+                  <span className={`text-xs font-bangla leading-tight mt-1 ${isDarkCard ? 'text-slate-300' : 'text-slate-500'}`}>
+                    শব্দ ভাণ্ডার · Unit {selectedWord.unitId}
+                  </span>
+                </div>
               </div>
-            )}
-          </div>
 
-          {/* 3. Card Footer Credit: bonolota.online and Made with ❤️ by Chanchal */}
-          <div className="relative z-10 pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between gap-2 text-xs opacity-85 font-sans">
-            <span className="font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
-              bonolota.online
-            </span>
-            <span className="font-bangla font-semibold text-right whitespace-nowrap">
-              Made with ❤️ by Chanchal
-            </span>
+              <div className="shrink-0">
+                <span className={`${isExportLayout ? 'text-xs' : 'text-[10px] sm:text-xs'} font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider flex items-center gap-1 shadow-2xs ${currentStyle.badge}`}>
+                  <Leaf className="w-3 h-3 opacity-80" />
+                  <span>{selectedWord.partOfSpeech}</span>
+                </span>
+              </div>
+            </div>
+
+            {/* 2. Middle Body: The Vocabulary Showcase - Natural Flow with Ample Breathing Room */}
+            <div className="relative z-10 space-y-4 text-center my-auto py-2">
+              {/* Word Heading & Pronunciation */}
+              <div className="space-y-1 py-1">
+                <h3 className={`${isExportLayout ? 'text-[44px]' : 'text-3xl sm:text-4xl md:text-5xl'} font-black font-sans tracking-tight leading-normal break-words ${currentStyle.wordText}`}>
+                  {selectedWord.word}
+                </h3>
+                <p className={`${isExportLayout ? 'text-sm' : 'text-xs sm:text-sm'} font-mono opacity-70 tracking-wider font-medium leading-normal`}>
+                  {selectedWord.pronunciation}
+                </p>
+              </div>
+
+              {/* Primary Bangla Meaning */}
+              <div className={`${isExportLayout ? 'p-5' : 'p-4 sm:p-5'} rounded-2xl border text-center shadow-2xs backdrop-blur-xs space-y-1.5 ${currentStyle.meaningBg}`}>
+                <span className="text-[11px] font-bold uppercase tracking-widest opacity-60 block leading-normal">
+                  বাংলা অর্থ
+                </span>
+                <p className={`${isExportLayout ? 'text-2xl' : 'text-lg sm:text-xl md:text-2xl'} font-black font-bangla leading-normal break-words ${currentStyle.meaningText}`}>
+                  {selectedWord.banglaMeaning}
+                </p>
+              </div>
+
+              {/* Example Sentence with Bengali Translation */}
+              {selectedWord.examples[0] && (
+                <div className={`${isExportLayout ? 'p-4' : 'p-3.5 sm:p-4'} rounded-xl border space-y-1.5 text-center ${isDarkCard ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'}`}>
+                  <p className={`${isExportLayout ? 'text-sm' : 'text-xs sm:text-sm'} font-sans italic font-medium opacity-90 leading-relaxed break-words`}>
+                    "{selectedWord.examples[0].english}"
+                  </p>
+                  {selectedWord.examples[0].bangla && (
+                    <p className={`${isExportLayout ? 'text-sm' : 'text-xs sm:text-sm'} font-bangla opacity-85 leading-normal break-words`}>
+                      {selectedWord.examples[0].bangla}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Synonyms */}
+              {selectedWord.synonyms.length > 0 && (
+                <div className={`flex items-center justify-center ${isExportLayout ? 'gap-2' : 'gap-1.5 sm:gap-2'} flex-wrap pt-1`}>
+                  <span className={`${isExportLayout ? 'text-xs' : 'text-[11px] sm:text-xs'} uppercase font-bold opacity-60`}>SYNONYMS:</span>
+                  {selectedWord.synonyms.slice(0, 4).map((s, idx) => (
+                    <span
+                      key={idx}
+                      className={`text-xs font-semibold px-2.5 py-1 rounded-lg border font-sans shadow-2xs ${currentStyle.tagBg}`}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 3. Card Footer Credit: bonolota.online and Made with ❤️ by Chanchal */}
+            <div className={`relative z-10 pt-3 border-t flex items-center justify-between gap-2 text-xs opacity-85 font-sans ${isDarkCard ? 'border-white/15' : 'border-black/10'}`}>
+              <span className={`font-bold shrink-0 ${currentStyle.accent}`}>
+                bonolota.online
+              </span>
+              <span className="font-bangla font-semibold text-right whitespace-nowrap">
+                Made with ❤️ by Chanchal
+              </span>
+            </div>
           </div>
-        </div>
-      </div>
+        );
+
+        return (
+          <>
+            {/* Responsive On-Screen Preview */}
+            <div className="flex justify-center px-1">
+              {renderVocabularyCard(false)}
+            </div>
+
+            {/* Hidden Off-Screen Fixed-Layout Export Node (Device-Independent 540px Layout) */}
+            <div
+              aria-hidden="true"
+              className="fixed -left-[10000px] top-0 pointer-events-none -z-10"
+            >
+              {renderVocabularyCard(true)}
+            </div>
+          </>
+        );
+      })()}
 
       {/* Action Buttons: JPEG Download, Format Text Copy, Print */}
       <div className="flex items-center justify-center gap-2 pt-1 flex-wrap">
