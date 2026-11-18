@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   BookOpen, 
   Star, 
@@ -22,6 +22,7 @@ import {
 import { VocabWord, UnitInfo } from '../data/types';
 import { getAllWords, getAllUnits } from '../data/units';
 import { storage } from '../utils/storage';
+import { haptics } from '../utils/haptics';
 import { searchUnitsAndWords, isFuzzyWordMatch } from '../utils/searchUtils';
 import { NavTab } from './Navbar';
 
@@ -46,8 +47,22 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 }) => {
   const allWords = getAllWords();
   const allUnits = getAllUnits();
+  const [progressTick, setProgressTick] = useState(0);
   const stats = storage.getLearningStats();
   const progressMap = storage.getProgress();
+
+  useEffect(() => {
+    const handleSync = () => setProgressTick((t) => t + 1);
+    window.addEventListener('bonolota_progress_updated', handleSync);
+    return () => window.removeEventListener('bonolota_progress_updated', handleSync);
+  }, []);
+
+  const handleToggleSearchFavorite = (e: React.MouseEvent, wordId: string) => {
+    e.stopPropagation();
+    haptics.toggle();
+    storage.toggleFavorite(wordId);
+    setProgressTick((t) => t + 1);
+  };
 
   const [searchUnitQuery, setSearchUnitQuery] = useState('');
   const [viewMode, setViewMode] = useState<'detailed' | 'compact'>(() => {
@@ -84,7 +99,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       map[unit.id] = { studied, mastered, total, percent };
     }
     return map;
-  }, [allUnits, progressMap]);
+  }, [allUnits, progressMap, progressTick]);
 
   // Find the current active unit in strict sequence (1 to 50):
   // Shows the unit currently being studied. Once ALL words in that unit are studied (100%), advances to the next unit.
@@ -354,11 +369,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {matchedWords.slice(0, 6).map((word) => {
               const isFuzzy = isFuzzyWordMatch(word, searchUnitQuery);
+              const isFav = Boolean(progressMap[word.id]?.isFavorite);
               return (
                 <div
                   key={word.id}
                   onClick={() => onOpenWordDetail(word)}
-                  className="group flex items-start justify-between gap-2.5 p-2.5 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 hover:border-emerald-400 dark:hover:border-emerald-500 hover:shadow-xs transition-all cursor-pointer"
+                  className="group flex items-start justify-between gap-2 p-2.5 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 hover:border-emerald-400 dark:hover:border-emerald-500 hover:shadow-xs transition-all cursor-pointer"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -378,20 +394,35 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       {word.banglaMeaning}
                     </p>
                   </div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onStartLesson(word.unitId);
-                  }}
-                  className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition-colors"
-                  title={`ইউনিট ${word.unitId}-এ যান`}
-                >
-                  ইউনিট {word.unitId} →
-                </button>
-              </div>
-            );
-          })}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      type="button"
+                      onClick={(e) => handleToggleSearchFavorite(e, word.id)}
+                      aria-label={isFav ? 'প্রিয় থেকে সরান' : 'প্রিয়তে যোগ করুন'}
+                      title={isFav ? 'প্রিয় থেকে সরান' : 'প্রিয় শব্দ হিসেবে সংরক্ষণ করুন'}
+                      className={`p-1 rounded-lg border transition-all cursor-pointer ${
+                        isFav
+                          ? 'bg-amber-50 dark:bg-amber-950/70 border-amber-300 dark:border-amber-700/80 text-amber-500 shadow-2xs'
+                          : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-700 text-slate-400 hover:text-amber-500 hover:border-amber-300 hover:bg-amber-50/60 dark:hover:bg-amber-950/40'
+                      }`}
+                    >
+                      <Star className={`w-3.5 h-3.5 ${isFav ? 'fill-amber-400 text-amber-500' : ''}`} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onStartLesson(word.unitId);
+                      }}
+                      className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition-colors cursor-pointer"
+                      title={`ইউনিট ${word.unitId}-এ যান`}
+                    >
+                      ইউনিট {word.unitId} →
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

@@ -243,6 +243,9 @@ export const storage = {
     current.isFavorite = newFav;
     all[wordId] = current;
     safeSetItem(STORAGE_KEYS.PROGRESS, all);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('bonolota_progress_updated'));
+    }
     return newFav;
   },
 
