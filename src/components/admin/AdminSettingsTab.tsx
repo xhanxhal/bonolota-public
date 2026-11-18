@@ -12,10 +12,14 @@ import {
   Radio,
   Palette,
   Leaf,
-  Sparkles
+  Sparkles,
+  Volume2,
+  VolumeX,
+  Play
 } from 'lucide-react';
 import { haptics } from '../../utils/haptics';
-import { SITE_PALETTES, SiteColorPalette, applySitePalette, getCachedSitePalette } from '../../utils/sitePalette';
+import { SITE_PALETTES, SiteColorPalette, applySitePalette, getCachedSitePalette, getPaletteInfo, normalizeSitePalette } from '../../utils/sitePalette';
+import { UI_SOUND_PROFILES, UiSoundTheme, applyUiSoundTheme, getCachedUiSoundTheme, normalizeUiSoundTheme, previewUiSoundTheme } from '../../utils/soundEngine';
 
 export const AdminSettingsTab: React.FC = () => {
   // Telegram Settings State
@@ -43,7 +47,12 @@ export const AdminSettingsTab: React.FC = () => {
   const [isSavingPalette, setIsSavingPalette] = useState(false);
   const [paletteStatusMsg, setPaletteStatusMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
-  // Load existing Telegram & Palette configuration on mount
+  // Global Site UI Sound Theme State
+  const [selectedSoundTheme, setSelectedSoundTheme] = useState<UiSoundTheme>(() => getCachedUiSoundTheme());
+  const [isSavingSound, setIsSavingSound] = useState(false);
+  const [soundStatusMsg, setSoundStatusMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  // Load existing Telegram, Palette & UI Sound configuration on mount
   useEffect(() => {
     fetch('/api/admin/telegram/config', { credentials: 'include' })
       .then(res => res.json())
@@ -59,9 +68,21 @@ export const AdminSettingsTab: React.FC = () => {
     fetch('/api/admin/site-palette', { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
-        if (data.ok && (data.palette === 'botanical' || data.palette === 'sunset')) {
-          setSelectedPalette(data.palette);
-          applySitePalette(data.palette);
+        if (data.ok && data.palette) {
+          const normalized = normalizeSitePalette(data.palette);
+          setSelectedPalette(normalized);
+          applySitePalette(normalized);
+        }
+      })
+      .catch(() => {});
+
+    fetch('/api/admin/ui-sound', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok && data.soundTheme) {
+          const normalized = normalizeUiSoundTheme(data.soundTheme);
+          setSelectedSoundTheme(normalized);
+          applyUiSoundTheme(normalized);
         }
       })
       .catch(() => {});
@@ -85,7 +106,9 @@ export const AdminSettingsTab: React.FC = () => {
 
       const data = await res.json();
       if (res.ok && data.ok) {
-        applySitePalette(data.palette === 'sunset' ? 'sunset' : 'botanical');
+        const normalized = normalizeSitePalette(data.palette);
+        setSelectedPalette(normalized);
+        applySitePalette(normalized);
         setPaletteStatusMsg({ ok: true, text: data.message || 'ওয়েবসাইটের কালার প্যালেট সফলভাবে আপডেট হয়েছে!' });
       } else {
         setPaletteStatusMsg({ ok: false, text: data.message || 'কালার প্যালেট সংরক্ষণ ব্যর্থ।' });
@@ -94,6 +117,40 @@ export const AdminSettingsTab: React.FC = () => {
       setPaletteStatusMsg({ ok: false, text: 'সার্ভারের সাথে যোগাযোগে ত্রুটি।' });
     } finally {
       setIsSavingPalette(false);
+    }
+  };
+
+  // Save Global Website UI Sound Theme
+  const handleSelectAndSaveSoundTheme = async (soundTheme: UiSoundTheme) => {
+    setSelectedSoundTheme(soundTheme);
+    applyUiSoundTheme(soundTheme);
+    if (soundTheme !== 'silent') {
+      previewUiSoundTheme(soundTheme);
+    }
+    setIsSavingSound(true);
+    setSoundStatusMsg(null);
+
+    try {
+      const res = await fetch('/api/admin/ui-sound', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ soundTheme }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        const normalized = normalizeUiSoundTheme(data.soundTheme);
+        setSelectedSoundTheme(normalized);
+        applyUiSoundTheme(normalized);
+        setSoundStatusMsg({ ok: true, text: data.message || 'UI সাউন্ড থিম সফলভাবে আপডেট হয়েছে!' });
+      } else {
+        setSoundStatusMsg({ ok: false, text: data.message || 'UI সাউন্ড থিম সংরক্ষণ ব্যর্থ।' });
+      }
+    } catch {
+      setSoundStatusMsg({ ok: false, text: 'সার্ভারের সাথে যোগাযোগে ত্রুটি।' });
+    } finally {
+      setIsSavingSound(false);
     }
   };
 
@@ -281,7 +338,7 @@ export const AdminSettingsTab: React.FC = () => {
               <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap">
                 <span>ওয়েবসাইট গ্লোবাল কালার প্যালেট</span>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                  {selectedPalette === 'sunset' ? 'Golden Sunset সক্রিয়' : 'Botanical Emerald (Default)'}
+                  {getPaletteInfo(selectedPalette).nameEn}{selectedPalette === 'botanical' ? ' (Default)' : ' সক্রিয়'}
                 </span>
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -313,7 +370,7 @@ export const AdminSettingsTab: React.FC = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {SITE_PALETTES.map((palette) => {
             const isActive = selectedPalette === palette.id;
             return (
@@ -336,7 +393,7 @@ export const AdminSettingsTab: React.FC = () => {
                     </div>
                     <div className="min-w-0">
                       <div className={`text-xs font-extrabold truncate ${palette.previewText}`}>
-                        Bonolota · {palette.nameEn}
+                        {palette.nameEn}
                       </div>
                       <div className="flex items-center gap-1 mt-1">
                         {palette.swatches.map((hex) => (
@@ -372,13 +429,144 @@ export const AdminSettingsTab: React.FC = () => {
                       </span>
                     )}
                   </h4>
-                  <span className="text-[11px] font-mono text-slate-400">{palette.nameEn}</span>
                 </div>
 
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   {palette.descriptionBn}
                 </p>
               </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* SECTION 0.5: Global Website UI Sound Theme */}
+      <div className="bg-white dark:bg-[#0f172a] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200/80 dark:border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-center shrink-0">
+              {selectedSoundTheme === 'silent' ? (
+                <VolumeX className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+              ) : (
+                <Volume2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              )}
+            </div>
+            <div>
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap">
+                <span>ওয়েবসাইট গ্লোবাল UI সাউন্ড থিম</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  {UI_SOUND_PROFILES.find((s) => s.id === selectedSoundTheme)?.nameEn || 'Soft Marimba'}
+                </span>
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                বাটন ট্যাপ, ফ্ল্যাশকার্ড ফ্লিপ, টগল এবং কুইজের জন্য আধুনিক সাউন্ড প্রোফাইল বেছে নিন (টেস্ট করতে &ldquo;শুনুন&rdquo; চাপুন)
+              </p>
+            </div>
+          </div>
+
+          {isSavingSound && (
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+              <span>সংরক্ষণ হচ্ছে...</span>
+            </div>
+          )}
+        </div>
+
+        {soundStatusMsg && (
+          <div className={`mb-4 p-3 rounded-xl border text-xs flex items-center gap-2 ${
+            soundStatusMsg.ok
+              ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
+              : 'bg-rose-50 dark:bg-rose-950/70 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300'
+          }`}>
+            {soundStatusMsg.ok ? (
+              <Check className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
+            )}
+            <span>{soundStatusMsg.text}</span>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {UI_SOUND_PROFILES.map((profile) => {
+            const isActive = selectedSoundTheme === profile.id;
+            return (
+              <div
+                key={profile.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => handleSelectAndSaveSoundTheme(profile.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSelectAndSaveSoundTheme(profile.id);
+                  }
+                }}
+                className={`text-left rounded-2xl p-4 border-2 transition-all cursor-pointer flex flex-col justify-between gap-3 ${
+                  isActive
+                    ? 'border-emerald-600 dark:border-emerald-400 bg-emerald-50/40 dark:bg-emerald-950/30 shadow-sm'
+                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-[#080d1a] hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span
+                        className="w-3 h-3 rounded-full shrink-0"
+                        style={{ backgroundColor: profile.accentColor }}
+                      />
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                        {profile.nameBn}
+                      </h4>
+                    </div>
+
+                    {isActive && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white flex items-center gap-1 shrink-0">
+                        <Check className="w-3 h-3" />
+                        <span>সক্রিয়</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="text-[11px] font-mono text-slate-400">{profile.nameEn}</span>
+                    {profile.isDefault && (
+                      <span className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                        ডিফল্ট
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {profile.descriptionBn}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-200/60 dark:border-slate-800">
+                  {profile.id !== 'silent' ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        previewUiSoundTheme(profile.id);
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-[11px] font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                    >
+                      <Play className="w-3 h-3 fill-current" />
+                      <span>শুনুন (Test)</span>
+                    </button>
+                  ) : (
+                    <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                      <VolumeX className="w-3.5 h-3.5" />
+                      <span>কোনো সাউন্ড নেই</span>
+                    </span>
+                  )}
+
+                  <span className={`text-[11px] font-bold ${isActive ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                    {isActive ? 'নির্বাচিত' : 'সিলেক্ট করুন →'}
+                  </span>
+                </div>
+              </div>
             );
           })}
         </div>

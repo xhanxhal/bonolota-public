@@ -69,6 +69,7 @@ class InMemoryStorage {
     ipBlacklist: [],
     honeypotCount: 0,
     siteColorPalette: 'botanical',
+    uiSoundTheme: 'soft-marimba',
     telegram: {
       enabled: true,
       botToken: '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE',
@@ -692,6 +693,7 @@ class UpstashStorage {
         ipBlacklist: [],
         honeypotCount: 0,
         siteColorPalette: 'botanical',
+        uiSoundTheme: 'soft-marimba',
         telegram: {
           enabled: true,
           botToken: '9095057691:AAF0QUtiS1JCtpzETygCbqno-PgMdThPoiE',
@@ -703,6 +705,7 @@ class UpstashStorage {
     return {
       ...parsed,
       siteColorPalette: parsed.siteColorPalette || 'botanical',
+      uiSoundTheme: parsed.uiSoundTheme || 'soft-marimba',
     };
   }
 

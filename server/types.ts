@@ -136,13 +136,15 @@ export interface SystemHealthMetrics {
   honeypotTriggeredCount: number;
 }
 
-export type SiteColorPalette = 'botanical' | 'sunset';
+export type SiteColorPalette = 'botanical' | 'sunset' | 'ocean' | 'royal' | 'rose' | 'sage';
+export type UiSoundTheme = 'soft-marimba' | 'crystal-glass' | 'warm-wood' | 'classic' | 'silent';
 
 export interface SecurityConfig {
   antiCopyEnabled: boolean;
   ipBlacklist: string[];
   honeypotCount: number;
   siteColorPalette?: SiteColorPalette;
+  uiSoundTheme?: UiSoundTheme;
   telegram: {
     enabled: boolean;
     botToken: string;
@@ -184,7 +186,7 @@ export interface BroadcastAnnouncement {
 export interface AuditLogEntry {
   id: string;
   timestamp: number;
-  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'update_customer_name' | 'admin_login' | 'admin_failed_login' | 'delete_support_chat' | 'reply_support_chat' | 'update_site_palette';
+  action: 'create_license' | 'activate_license' | 'reset_binding' | 'suspend_license' | 'reactivate_license' | 'revoke_license' | 'extend_license' | 'delete_license' | 'make_lifetime' | 'create_broadcast' | 'delete_broadcast' | 'update_customer_name' | 'admin_login' | 'admin_failed_login' | 'delete_support_chat' | 'reply_support_chat' | 'update_site_palette' | 'update_ui_sound';
   licenseId?: string;
   details: string;
   ip?: string;

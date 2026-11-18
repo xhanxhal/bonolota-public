@@ -42,7 +42,8 @@ import { BroadcastDrawer } from './components/BroadcastDrawer';
 import { BroadcastModal } from './components/BroadcastModal';
 import { StudentSupportModal } from './components/StudentSupportModal';
 import { AdminPortal } from './components/admin/AdminPortal';
-import { applySitePalette, getCachedSitePalette, SiteColorPalette } from './utils/sitePalette';
+import { applySitePalette, getCachedSitePalette, normalizeSitePalette } from './utils/sitePalette';
+import { applyUiSoundTheme, getCachedUiSoundTheme, normalizeUiSoundTheme } from './utils/soundEngine';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -228,8 +229,11 @@ function MainApp() {
         const res = await fetch('/api/system/security-config');
         if (res.ok) {
           const d = await res.json();
-          if (active && (d.siteColorPalette === 'botanical' || d.siteColorPalette === 'sunset')) {
-            applySitePalette(d.siteColorPalette as SiteColorPalette);
+          if (active && d.siteColorPalette) {
+            applySitePalette(normalizeSitePalette(d.siteColorPalette));
+          }
+          if (active && d.uiSoundTheme) {
+            applyUiSoundTheme(normalizeUiSoundTheme(d.uiSoundTheme));
           }
           if (active && d.antiCopyEnabled) {
             document.body.classList.add('select-none');
@@ -747,14 +751,20 @@ export default function App() {
   });
 
   useEffect(() => {
-    // Apply cached palette immediately, then verify authoritative setting from server
+    // Apply cached palette & UI sound theme immediately, then verify authoritative settings from server
     applySitePalette(getCachedSitePalette());
+    applyUiSoundTheme(getCachedUiSoundTheme());
     let active = true;
     fetch('/api/system/security-config')
       .then((res) => (res.ok ? res.json() : null))
       .then((d) => {
-        if (active && d && (d.siteColorPalette === 'botanical' || d.siteColorPalette === 'sunset')) {
-          applySitePalette(d.siteColorPalette as SiteColorPalette);
+        if (active && d) {
+          if (d.siteColorPalette) {
+            applySitePalette(normalizeSitePalette(d.siteColorPalette));
+          }
+          if (d.uiSoundTheme) {
+            applyUiSoundTheme(normalizeUiSoundTheme(d.uiSoundTheme));
+          }
         }
       })
       .catch(() => {});

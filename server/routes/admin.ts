@@ -1340,12 +1340,34 @@ adminRouter.post('/licenses/:id/send-renewal', requireAdminAuth, async (req: Aut
  * GET /api/admin/site-palette
  * POST /api/admin/site-palette
  */
+const ADMIN_VALID_PALETTES = new Set(['botanical', 'sunset', 'ocean', 'royal', 'rose', 'sage']);
+const PALETTE_LABELS: Record<string, string> = {
+  botanical: 'Botanical Emerald (Default)',
+  sunset: 'Golden Sunset (Warm Amber)',
+  ocean: 'Ocean Azure (Deep Sky)',
+  royal: 'Royal Violet (Indigo Plum)',
+  rose: 'Sakura Rose (Blush Crimson)',
+  sage: 'Nordic Sage (Olive Pine)',
+};
+
+const ADMIN_VALID_SOUNDS = new Set(['soft-marimba', 'crystal-glass', 'warm-wood', 'classic', 'silent']);
+const SOUND_LABELS: Record<string, string> = {
+  'soft-marimba': 'Soft Marimba (সফট মারিম্বা ও বাবল)',
+  'crystal-glass': 'Crystal Glass (ক্রিস্টাল গ্লাস ও চাইম)',
+  'warm-wood': 'Warm Wood & Kalimba (উড ও ক্যালিম্বা)',
+  'classic': 'Classic Synth (পূর্বের ক্লাসিক সাউন্ড)',
+  'silent': 'Silent UI (UI সাউন্ড বন্ধ)',
+};
+
 adminRouter.get('/site-palette', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
     const config = await storage.getSecurityConfig();
+    const palette = config.siteColorPalette && ADMIN_VALID_PALETTES.has(config.siteColorPalette)
+      ? config.siteColorPalette
+      : 'botanical';
     res.json({
       ok: true,
-      palette: config.siteColorPalette === 'sunset' ? 'sunset' : 'botanical',
+      palette,
     });
   } catch {
     res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
@@ -1355,17 +1377,18 @@ adminRouter.get('/site-palette', requireAdminAuth, async (_req: AuthenticatedAdm
 adminRouter.post('/site-palette', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
   try {
     const { palette } = req.body || {};
-    if (palette !== 'botanical' && palette !== 'sunset') {
+    if (typeof palette !== 'string' || !ADMIN_VALID_PALETTES.has(palette)) {
       res.status(400).json({ ok: false, message: 'অবৈধ কালার প্যালেট নির্বাচন করা হয়েছে।' });
       return;
     }
 
-    const updated = await storage.updateSecurityConfig({ siteColorPalette: palette });
+    const updated = await storage.updateSecurityConfig({ siteColorPalette: palette as any });
+    const label = PALETTE_LABELS[palette] || palette;
 
     await storage.addSecurityEvent({
       level: 'info',
       source: 'SYSTEM',
-      message: `ওয়েবসাইট গ্লোবাল কালার প্যালেট পরিবর্তন করা হয়েছে: ${palette === 'sunset' ? 'Golden Sunset (Amber)' : 'Botanical Emerald (Default)'}`,
+      message: `ওয়েবসাইট গ্লোবাল কালার প্যালেট পরিবর্তন করা হয়েছে: ${label}`,
     });
 
     await storage.addAuditLog({
@@ -1378,14 +1401,67 @@ adminRouter.post('/site-palette', requireAdminAuth, async (req: AuthenticatedAdm
     res.json({
       ok: true,
       palette: updated.siteColorPalette || 'botanical',
-      message:
-        palette === 'sunset'
-          ? 'গোল্ডেন সানসেট (Warm Amber) কালার প্যালেট সফলভাবে পুরো ওয়েবসাইটে চালু হয়েছে!'
-          : 'বোটানিক্যাল এমারেল্ড (Default) কালার প্যালেট সফলভাবে চালু হয়েছে!',
+      message: `${label} কালার প্যালেট সফলভাবে পুরো ওয়েবসাইটে চালু হয়েছে!`,
     });
   } catch (error) {
     console.error('[admin/site-palette] Error:', error);
     res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'কালার প্যালেট সংরক্ষণে ব্যর্থ।' });
   }
 });
+
+/**
+ * Global Website UI Sound Theme Configuration
+ * GET /api/admin/ui-sound
+ * POST /api/admin/ui-sound
+ */
+adminRouter.get('/ui-sound', requireAdminAuth, async (_req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const config = await storage.getSecurityConfig();
+    const soundTheme = config.uiSoundTheme && ADMIN_VALID_SOUNDS.has(config.uiSoundTheme)
+      ? config.uiSoundTheme
+      : 'soft-marimba';
+    res.json({
+      ok: true,
+      soundTheme,
+    });
+  } catch {
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR' });
+  }
+});
+
+adminRouter.post('/ui-sound', requireAdminAuth, async (req: AuthenticatedAdminRequest, res: Response): Promise<void> => {
+  try {
+    const { soundTheme } = req.body || {};
+    if (typeof soundTheme !== 'string' || !ADMIN_VALID_SOUNDS.has(soundTheme)) {
+      res.status(400).json({ ok: false, message: 'অবৈধ UI সাউন্ড থিম নির্বাচন করা হয়েছে।' });
+      return;
+    }
+
+    const updated = await storage.updateSecurityConfig({ uiSoundTheme: soundTheme as any });
+    const label = SOUND_LABELS[soundTheme] || soundTheme;
+
+    await storage.addSecurityEvent({
+      level: 'info',
+      source: 'SYSTEM',
+      message: `ওয়েবসাইট UI সাউন্ড থিম পরিবর্তন করা হয়েছে: ${label}`,
+    });
+
+    await storage.addAuditLog({
+      id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: Date.now(),
+      action: 'update_ui_sound',
+      details: `Updated global UI sound theme to "${soundTheme}".`,
+    });
+
+    res.json({
+      ok: true,
+      soundTheme: updated.uiSoundTheme || 'soft-marimba',
+      message: `${label} সফলভাবে চালু হয়েছে!`,
+    });
+  } catch (error) {
+    console.error('[admin/ui-sound] Error:', error);
+    res.status(500).json({ ok: false, error: 'SERVER_ERROR', message: 'UI সাউন্ড থিম সংরক্ষণে ব্যর্থ।' });
+  }
+});
+
 

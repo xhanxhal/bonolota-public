@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   LESSON_PROGRESS: 'bonolota_lesson_v1',
   STREAK_DATES: 'bonolota_streak_dates_v1',
   USER_NOTES: 'bonolota_user_notes_v1',
+  RECENT_SEARCHES: 'bonolota_recent_searches_v1',
 };
 
 const DEFAULT_SETTINGS: UserSettings = {
@@ -498,6 +499,39 @@ export const storage = {
     } catch (e) {
       console.error('Import failed', e);
       return false;
+    }
+  },
+
+  getRecentSearchWordIds(): string[] {
+    const raw = safeGetItem<unknown>(STORAGE_KEYS.RECENT_SEARCHES, []);
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((id): id is string => typeof id === 'string' && id.length > 0).slice(0, 5);
+  },
+
+  addRecentSearchWord(wordId: string): string[] {
+    if (!wordId) return this.getRecentSearchWordIds();
+    const current = this.getRecentSearchWordIds();
+    const updated = [wordId, ...current.filter(id => id !== wordId)].slice(0, 5);
+    safeSetItem(STORAGE_KEYS.RECENT_SEARCHES, updated);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('bonolota_recent_searches_updated'));
+    }
+    return updated;
+  },
+
+  removeRecentSearchWord(wordId: string): string[] {
+    const updated = this.getRecentSearchWordIds().filter(id => id !== wordId);
+    safeSetItem(STORAGE_KEYS.RECENT_SEARCHES, updated);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('bonolota_recent_searches_updated'));
+    }
+    return updated;
+  },
+
+  clearRecentSearchWords(): void {
+    safeSetItem(STORAGE_KEYS.RECENT_SEARCHES, []);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('bonolota_recent_searches_updated'));
     }
   },
 

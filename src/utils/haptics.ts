@@ -12,6 +12,7 @@
  * and respects user preference from app settings.
  */
 import { storage } from './storage';
+import { playSoundTap, playSoundToggle } from './soundEngine';
 
 export const isHapticsSupported = (): boolean => {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') {
@@ -40,14 +41,20 @@ export function triggerHaptic(pattern: number | number[]): boolean {
 
 export const haptics = {
   /**
-   * Subtle light tap (10ms) - for standard buttons, tabs, quiz option select, close modal
+   * Subtle light tap (10ms) + crisp micro-tap sound
    */
-  tap: () => triggerHaptic(10),
+  tap: () => {
+    playSoundTap();
+    return triggerHaptic(10);
+  },
 
   /**
-   * Micro-tick (8ms) - for filter chips, tags, fast scrolling taps
+   * Micro-tick (8ms) + crisp micro-tap sound
    */
-  selection: () => triggerHaptic(8),
+  selection: () => {
+    playSoundTap();
+    return triggerHaptic(8);
+  },
 
   /**
    * Flashcard Flip sensation ([14, 28, 14]) - simulates the tactile physical turn of a flashcard
@@ -65,9 +72,12 @@ export const haptics = {
   error: () => triggerHaptic([45, 60, 45]),
 
   /**
-   * Toggle / Favorite Star / Bookmark (18ms) - tactile switch snap
+   * Toggle / Favorite Star / Bookmark (18ms) + soft dual toggle sound
    */
-  toggle: () => triggerHaptic(18),
+  toggle: () => {
+    playSoundToggle();
+    return triggerHaptic(18);
+  },
 
   /**
    * Celebration / Perfect score / Deck completed ([30, 60, 30, 60, 45])

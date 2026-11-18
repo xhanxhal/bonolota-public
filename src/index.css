@@ -59,8 +59,116 @@
   --color-teal-950: #431407;
 }
 
+/* Global Site Palette: Ocean Cobalt Override */
+:root[data-palette="ocean"] {
+  --color-emerald-50: #f0f9ff;
+  --color-emerald-100: #e0f2fe;
+  --color-emerald-200: #bae6fd;
+  --color-emerald-300: #7dd3fc;
+  --color-emerald-400: #38bdf8;
+  --color-emerald-500: #0ea5e9;
+  --color-emerald-600: #0369a1;
+  --color-emerald-700: #075985;
+  --color-emerald-800: #0c4a6e;
+  --color-emerald-900: #082f49;
+  --color-emerald-950: #041d2f;
+
+  --color-teal-50: #ecfeff;
+  --color-teal-100: #cffafe;
+  --color-teal-200: #a5f3fc;
+  --color-teal-300: #67e8f9;
+  --color-teal-400: #22d3ee;
+  --color-teal-500: #06b6d4;
+  --color-teal-600: #0891b2;
+  --color-teal-700: #0e7490;
+  --color-teal-800: #155e75;
+  --color-teal-900: #164e63;
+  --color-teal-950: #083344;
+}
+
+/* Global Site Palette: Royal Violet Override */
+:root[data-palette="royal"] {
+  --color-emerald-50: #f5f3ff;
+  --color-emerald-100: #ede9fe;
+  --color-emerald-200: #ddd6fe;
+  --color-emerald-300: #c4b5fd;
+  --color-emerald-400: #a78bfa;
+  --color-emerald-500: #7c3aed;
+  --color-emerald-600: #6d28d9;
+  --color-emerald-700: #5b21b6;
+  --color-emerald-800: #4c1d95;
+  --color-emerald-900: #3b0764;
+  --color-emerald-950: #2e1065;
+
+  --color-teal-50: #eef2ff;
+  --color-teal-100: #e0e7ff;
+  --color-teal-200: #c7d2fe;
+  --color-teal-300: #a5b4fc;
+  --color-teal-400: #818cf8;
+  --color-teal-500: #6366f1;
+  --color-teal-600: #4f46e5;
+  --color-teal-700: #4338ca;
+  --color-teal-800: #3730a3;
+  --color-teal-900: #312e81;
+  --color-teal-950: #1e1b4b;
+}
+
+/* Global Site Palette: Velvet Rose Override */
+:root[data-palette="rose"] {
+  --color-emerald-50: #fff1f2;
+  --color-emerald-100: #ffe4e6;
+  --color-emerald-200: #fecdd3;
+  --color-emerald-300: #fda4af;
+  --color-emerald-400: #fb7185;
+  --color-emerald-500: #e11d48;
+  --color-emerald-600: #be123c;
+  --color-emerald-700: #9f1239;
+  --color-emerald-800: #881337;
+  --color-emerald-900: #6b0f2b;
+  --color-emerald-950: #4c0519;
+
+  --color-teal-50: #fdf2f8;
+  --color-teal-100: #fce7f3;
+  --color-teal-200: #fbcfe8;
+  --color-teal-300: #f9a8d4;
+  --color-teal-400: #f472b6;
+  --color-teal-500: #db2777;
+  --color-teal-600: #be185d;
+  --color-teal-700: #9d174d;
+  --color-teal-800: #831843;
+  --color-teal-900: #701a3c;
+  --color-teal-950: #500724;
+}
+
+/* Global Site Palette: Nordic Sage Override */
+:root[data-palette="sage"] {
+  --color-emerald-50: #f7fee7;
+  --color-emerald-100: #ecfccb;
+  --color-emerald-200: #d9f99d;
+  --color-emerald-300: #bef264;
+  --color-emerald-400: #a3e635;
+  --color-emerald-500: #4d7c0f;
+  --color-emerald-600: #3f6212;
+  --color-emerald-700: #365314;
+  --color-emerald-800: #2b4410;
+  --color-emerald-900: #21350c;
+  --color-emerald-950: #1a2e05;
+
+  --color-teal-50: #f0fdf4;
+  --color-teal-100: #dcfce7;
+  --color-teal-200: #bbf7d0;
+  --color-teal-300: #86efac;
+  --color-teal-400: #4ade80;
+  --color-teal-500: #15803d;
+  --color-teal-600: #166534;
+  --color-teal-700: #14532d;
+  --color-teal-800: #134e2a;
+  --color-teal-900: #0f3f22;
+  --color-teal-950: #052e16;
+}
+
 /* Preserve literal emerald/botanical colors for Card Maker's explicit Emerald/Botanical presets */
-:root[data-palette="sunset"] [data-card-preserve="botanical"] {
+:root[data-palette]:not([data-palette="botanical"]) [data-card-preserve="botanical"] {
   --color-emerald-50: #ecfdf5;
   --color-emerald-100: #d1fae5;
   --color-emerald-200: #a7f3d0;
@@ -86,29 +194,57 @@
   --color-teal-950: #042f2e;
 }
 
-:root[data-palette="sunset"] body {
-  background-color: #fffdf8;
-}
+:root[data-palette="sunset"] body { background-color: #fffdf8; }
+:root[data-palette="ocean"] body { background-color: #f8fbff; }
+:root[data-palette="royal"] body { background-color: #fbfaff; }
+:root[data-palette="rose"] body { background-color: #fffafb; }
+:root[data-palette="sage"] body { background-color: #fbfdf7; }
 
-:root[data-palette="sunset"].dark body {
+:root[data-palette="sunset"].dark body,
+:root[data-palette="ocean"].dark body,
+:root[data-palette="royal"].dark body,
+:root[data-palette="rose"].dark body,
+:root[data-palette="sage"].dark body {
   background-color: #0b1120;
 }
 
-/* Greenish Gradient & Minimalist Theme Utilities */
+/* Gradient & Minimalist Theme Utilities */
 .bg-emerald-gradient {
   background: linear-gradient(135deg, #059669 0%, #10b981 50%, #0d9488 100%);
 }
-
 :root[data-palette="sunset"] .bg-emerald-gradient {
   background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #c2410c 100%);
+}
+:root[data-palette="ocean"] .bg-emerald-gradient {
+  background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #0891b2 100%);
+}
+:root[data-palette="royal"] .bg-emerald-gradient {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 50%, #4f46e5 100%);
+}
+:root[data-palette="rose"] .bg-emerald-gradient {
+  background: linear-gradient(135deg, #be123c 0%, #e11d48 50%, #be185d 100%);
+}
+:root[data-palette="sage"] .bg-emerald-gradient {
+  background: linear-gradient(135deg, #3f6212 0%, #4d7c0f 50%, #166534 100%);
 }
 
 .bg-emerald-soft-gradient {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 148, 136, 0.04) 50%, #ffffff 100%);
 }
-
 :root[data-palette="sunset"] .bg-emerald-soft-gradient {
   background: linear-gradient(135deg, rgba(217, 119, 6, 0.09) 0%, rgba(234, 88, 12, 0.05) 50%, #fffdfa 100%);
+}
+:root[data-palette="ocean"] .bg-emerald-soft-gradient {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.09) 0%, rgba(6, 182, 212, 0.05) 50%, #f8fbff 100%);
+}
+:root[data-palette="royal"] .bg-emerald-soft-gradient {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.09) 0%, rgba(99, 102, 241, 0.05) 50%, #fbfaff 100%);
+}
+:root[data-palette="rose"] .bg-emerald-soft-gradient {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.08) 0%, rgba(219, 39, 119, 0.05) 50%, #fffafb 100%);
+}
+:root[data-palette="sage"] .bg-emerald-soft-gradient {
+  background: linear-gradient(135deg, rgba(77, 124, 15, 0.09) 0%, rgba(21, 128, 61, 0.05) 50%, #fbfdf7 100%);
 }
 
 .bg-hero-mesh {
@@ -117,12 +253,35 @@
                     radial-gradient(at 100% 0%, rgba(20, 184, 166, 0.08) 0px, transparent 50%),
                     radial-gradient(at 100% 100%, rgba(52, 211, 153, 0.05) 0px, transparent 50%);
 }
-
 :root[data-palette="sunset"] .bg-hero-mesh {
   background-color: #fffdfa;
   background-image: radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.11) 0px, transparent 50%),
                     radial-gradient(at 100% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 50%),
                     radial-gradient(at 100% 100%, rgba(251, 191, 36, 0.07) 0px, transparent 50%);
+}
+:root[data-palette="ocean"] .bg-hero-mesh {
+  background-color: #f8fbff;
+  background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.11) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.07) 0px, transparent 50%);
+}
+:root[data-palette="royal"] .bg-hero-mesh {
+  background-color: #fbfaff;
+  background-image: radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.10) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(167, 139, 250, 0.07) 0px, transparent 50%);
+}
+:root[data-palette="rose"] .bg-hero-mesh {
+  background-color: #fffafb;
+  background-image: radial-gradient(at 0% 0%, rgba(225, 29, 72, 0.09) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(219, 39, 119, 0.07) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(251, 113, 133, 0.06) 0px, transparent 50%);
+}
+:root[data-palette="sage"] .bg-hero-mesh {
+  background-color: #fbfdf7;
+  background-image: radial-gradient(at 0% 0%, rgba(77, 124, 15, 0.10) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(21, 128, 61, 0.07) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(132, 204, 22, 0.06) 0px, transparent 50%);
 }
 
 .dark .bg-hero-mesh {
@@ -130,11 +289,30 @@
   background-image: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
                     radial-gradient(at 100% 0%, rgba(20, 184, 166, 0.12) 0px, transparent 50%);
 }
-
 :root[data-palette="sunset"].dark .bg-hero-mesh {
   background-color: #0b1120;
   background-image: radial-gradient(at 0% 0%, rgba(217, 119, 6, 0.16) 0px, transparent 50%),
                     radial-gradient(at 100% 0%, rgba(234, 88, 12, 0.12) 0px, transparent 50%);
+}
+:root[data-palette="ocean"].dark .bg-hero-mesh {
+  background-color: #0b1120;
+  background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.16) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+}
+:root[data-palette="royal"].dark .bg-hero-mesh {
+  background-color: #0b1120;
+  background-image: radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.17) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.13) 0px, transparent 50%);
+}
+:root[data-palette="rose"].dark .bg-hero-mesh {
+  background-color: #0b1120;
+  background-image: radial-gradient(at 0% 0%, rgba(225, 29, 72, 0.16) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(219, 39, 119, 0.12) 0px, transparent 50%);
+}
+:root[data-palette="sage"].dark .bg-hero-mesh {
+  background-color: #0b1120;
+  background-image: radial-gradient(at 0% 0%, rgba(101, 163, 13, 0.16) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(21, 128, 61, 0.12) 0px, transparent 50%);
 }
 
 /* Sleek Minimal Button */
@@ -145,10 +323,25 @@
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 2px 8px -2px rgba(16, 185, 129, 0.4);
 }
-
 :root[data-palette="sunset"] .btn-emerald {
   background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
   box-shadow: 0 2px 8px -2px rgba(180, 83, 9, 0.4);
+}
+:root[data-palette="ocean"] .btn-emerald {
+  background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
+  box-shadow: 0 2px 8px -2px rgba(3, 105, 161, 0.4);
+}
+:root[data-palette="royal"] .btn-emerald {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+  box-shadow: 0 2px 8px -2px rgba(109, 40, 217, 0.4);
+}
+:root[data-palette="rose"] .btn-emerald {
+  background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
+  box-shadow: 0 2px 8px -2px rgba(190, 18, 60, 0.4);
+}
+:root[data-palette="sage"] .btn-emerald {
+  background: linear-gradient(135deg, #3f6212 0%, #4d7c0f 100%);
+  box-shadow: 0 2px 8px -2px rgba(63, 98, 18, 0.4);
 }
 
 .btn-emerald:hover:not(:disabled) {
@@ -156,10 +349,25 @@
   box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.5);
   transform: translateY(-1px);
 }
-
 :root[data-palette="sunset"] .btn-emerald:hover:not(:disabled) {
   background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
   box-shadow: 0 4px 14px -2px rgba(180, 83, 9, 0.5);
+}
+:root[data-palette="ocean"] .btn-emerald:hover:not(:disabled) {
+  background: linear-gradient(135deg, #075985 0%, #0369a1 100%);
+  box-shadow: 0 4px 14px -2px rgba(3, 105, 161, 0.5);
+}
+:root[data-palette="royal"] .btn-emerald:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
+  box-shadow: 0 4px 14px -2px rgba(109, 40, 217, 0.5);
+}
+:root[data-palette="rose"] .btn-emerald:hover:not(:disabled) {
+  background: linear-gradient(135deg, #9f1239 0%, #be123c 100%);
+  box-shadow: 0 4px 14px -2px rgba(190, 18, 60, 0.5);
+}
+:root[data-palette="sage"] .btn-emerald:hover:not(:disabled) {
+  background: linear-gradient(135deg, #365314 0%, #3f6212 100%);
+  box-shadow: 0 4px 14px -2px rgba(63, 98, 18, 0.5);
 }
 
 .btn-emerald:active:not(:disabled) {
@@ -184,10 +392,25 @@
   border-color: #a7f3d0;
   box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
 }
-
 :root[data-palette="sunset"] .card-minimal:hover {
   border-color: #fde68a;
   box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+:root[data-palette="ocean"] .card-minimal:hover {
+  border-color: #bae6fd;
+  box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+:root[data-palette="royal"] .card-minimal:hover {
+  border-color: #ddd6fe;
+  box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+:root[data-palette="rose"] .card-minimal:hover {
+  border-color: #fecdd3;
+  box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+}
+:root[data-palette="sage"] .card-minimal:hover {
+  border-color: #d9f99d;
+  box-shadow: 0 10px 25px -5px rgba(77, 124, 15, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
 }
 
 .dark .card-minimal {
@@ -199,10 +422,25 @@
   border-color: #065f46;
   box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.12);
 }
-
 :root[data-palette="sunset"].dark .card-minimal:hover {
   border-color: #92400e;
   box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.15);
+}
+:root[data-palette="ocean"].dark .card-minimal:hover {
+  border-color: #075985;
+  box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.15);
+}
+:root[data-palette="royal"].dark .card-minimal:hover {
+  border-color: #5b21b6;
+  box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.15);
+}
+:root[data-palette="rose"].dark .card-minimal:hover {
+  border-color: #9f1239;
+  box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.15);
+}
+:root[data-palette="sage"].dark .card-minimal:hover {
+  border-color: #365314;
+  box-shadow: 0 10px 25px -5px rgba(101, 163, 13, 0.15);
 }
 
 /* 3D Flashcard flip styles */

@@ -17,7 +17,9 @@ import {
   Check,
   TrendingUp,
   GraduationCap,
-  Lightbulb
+  Lightbulb,
+  Clock,
+  X
 } from 'lucide-react';
 import { VocabWord, UnitInfo } from '../data/types';
 import { getAllWords, getAllUnits } from '../data/units';
@@ -32,7 +34,7 @@ interface DashboardViewProps {
   onStartQuiz: (unitId?: number) => void;
   onOpenRevision: () => void;
   onOpenArchive: () => void;
-  onOpenWordDetail: (word: VocabWord) => void;
+  onOpenWordDetail: (word: VocabWord, customList?: VocabWord[]) => void;
   onNavigateTab?: (tab: NavTab) => void;
 }
 
@@ -48,13 +50,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const allWords = getAllWords();
   const allUnits = getAllUnits();
   const [progressTick, setProgressTick] = useState(0);
+  const [recentSearchIds, setRecentSearchIds] = useState<string[]>(() => storage.getRecentSearchWordIds());
   const stats = storage.getLearningStats();
   const progressMap = storage.getProgress();
 
   useEffect(() => {
     const handleSync = () => setProgressTick((t) => t + 1);
+    const handleRecentSync = () => setRecentSearchIds(storage.getRecentSearchWordIds());
     window.addEventListener('bonolota_progress_updated', handleSync);
-    return () => window.removeEventListener('bonolota_progress_updated', handleSync);
+    window.addEventListener('bonolota_recent_searches_updated', handleRecentSync);
+    return () => {
+      window.removeEventListener('bonolota_progress_updated', handleSync);
+      window.removeEventListener('bonolota_recent_searches_updated', handleRecentSync);
+    };
   }, []);
 
   const handleToggleSearchFavorite = (e: React.MouseEvent, wordId: string) => {
@@ -124,6 +132,24 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   }, [allUnits, allWords, searchUnitQuery]);
 
   const { filteredUnits, matchedWords, wordsByUnit, exactUnitNumber } = searchResult;
+
+  const recentSearchedWords = useMemo(() => {
+    if (recentSearchIds.length === 0) return [];
+    const wordMap = new Map(allWords.map((w) => [w.id, w]));
+    return recentSearchIds
+      .map((id) => wordMap.get(id))
+      .filter((w): w is VocabWord => Boolean(w));
+  }, [allWords, recentSearchIds]);
+
+  // Automatically record top matched word after a brief idle pause when user searches by word
+  useEffect(() => {
+    const trimmed = searchUnitQuery.trim();
+    if (trimmed.length < 3 || exactUnitNumber !== null || matchedWords.length === 0) return;
+    const timer = setTimeout(() => {
+      setRecentSearchIds(storage.addRecentSearchWord(matchedWords[0].id));
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [searchUnitQuery, exactUnitNumber, matchedWords]);
 
   const displayedUnits = filteredUnits;
 
@@ -328,6 +354,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             type="text"
             value={searchUnitQuery}
             onChange={(e) => setSearchUnitQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && searchUnitQuery.trim() && matchedWords.length > 0) {
+                setRecentSearchIds(storage.addRecentSearchWord(matchedWords[0].id));
+              }
+            }}
             placeholder="শব্দ বা ইউনিট খুঁজুন (যেমন: Unit 1, abandon, ইত্যাদি)..."
             className="w-full pl-10 pr-8 py-2.5 rounded-2xl text-xs font-medium border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1.5 focus:ring-emerald-500 shadow-2xs"
           />
@@ -341,6 +372,73 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </button>
           )}
         </div>
+
+        {/* Recent Searches (Last 5 searched words for instant re-access) */}
+        {!searchUnitQuery.trim() && recentSearchedWords.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 px-1 pt-0.5 animate-in fade-in duration-150">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400 shrink-0">
+              <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>Recent Searches:</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
+              {recentSearchedWords.map((word) => {
+                const shortMeaning = word.banglaMeaning.split(/[,/।]/)[0]?.trim();
+                return (
+                  <div
+                    key={word.id}
+                    className="group inline-flex items-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-600 shadow-2xs transition-all overflow-hidden"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => {
+                        haptics.tap();
+                        setRecentSearchIds(storage.addRecentSearchWord(word.id));
+                        onOpenWordDetail(word, recentSearchedWords);
+                      }}
+                      className="px-2.5 py-1 text-left flex items-center gap-1.5 cursor-pointer hover:bg-emerald-50/70 dark:hover:bg-emerald-950/40 transition-colors"
+                      title={`${word.word} (${word.banglaMeaning})`}
+                    >
+                      <span className="font-sans font-bold text-xs text-slate-800 dark:text-slate-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+                        {word.word}
+                      </span>
+                      {shortMeaning && (
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-bangla truncate max-w-[105px] hidden sm:inline">
+                          · {shortMeaning}
+                        </span>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        haptics.tap();
+                        setRecentSearchIds(storage.removeRecentSearchWord(word.id));
+                      }}
+                      aria-label={`Remove ${word.word} from recent searches`}
+                      title="তালিকা থেকে সরান"
+                      className="pr-2 pl-0.5 py-1 text-slate-400 hover:text-rose-500 transition-colors cursor-pointer"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tap();
+                storage.clearRecentSearchWords();
+                setRecentSearchIds([]);
+              }}
+              className="text-[11px] font-semibold text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition-colors cursor-pointer shrink-0 ml-auto"
+            >
+              সব মুছুন
+            </button>
+          </div>
+        )}
       </div>
 
       {/* MATCHED WORDS DIRECT ACCESS PREVIEW */}
@@ -373,7 +471,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               return (
                 <div
                   key={word.id}
-                  onClick={() => onOpenWordDetail(word)}
+                  onClick={() => {
+                    setRecentSearchIds(storage.addRecentSearchWord(word.id));
+                    onOpenWordDetail(word, matchedWords);
+                  }}
                   className="group flex items-start justify-between gap-2 p-2.5 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 hover:border-emerald-400 dark:hover:border-emerald-500 hover:shadow-xs transition-all cursor-pointer"
                 >
                   <div className="min-w-0 flex-1">
@@ -397,7 +498,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       type="button"
-                      onClick={(e) => handleToggleSearchFavorite(e, word.id)}
+                      onClick={(e) => {
+                        setRecentSearchIds(storage.addRecentSearchWord(word.id));
+                        handleToggleSearchFavorite(e, word.id);
+                      }}
                       aria-label={isFav ? 'প্রিয় থেকে সরান' : 'প্রিয়তে যোগ করুন'}
                       title={isFav ? 'প্রিয় থেকে সরান' : 'প্রিয় শব্দ হিসেবে সংরক্ষণ করুন'}
                       className={`p-1 rounded-lg border transition-all cursor-pointer ${
@@ -412,6 +516,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
+                        setRecentSearchIds(storage.addRecentSearchWord(word.id));
                         onStartLesson(word.unitId);
                       }}
                       className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition-colors cursor-pointer"

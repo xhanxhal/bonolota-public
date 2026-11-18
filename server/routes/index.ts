@@ -107,17 +107,27 @@ apiRouter.get('/system/env-check', (_req: Request, res: Response): void => {
   res.json(report);
 });
 
-// Feature 42 & Global Palette: Public System Config endpoint
+const VALID_PALETTES = new Set(['botanical', 'sunset', 'ocean', 'royal', 'rose', 'sage']);
+const VALID_SOUNDS = new Set(['soft-marimba', 'crystal-glass', 'warm-wood', 'classic', 'silent']);
+
+// Feature 42, Global Palette & UI Sound: Public System Config endpoint
 apiRouter.get('/system/security-config', async (_req: Request, res: Response): Promise<void> => {
   try {
     const config = await storage.getSecurityConfig();
+    const palette = config.siteColorPalette && VALID_PALETTES.has(config.siteColorPalette)
+      ? config.siteColorPalette
+      : 'botanical';
+    const soundTheme = config.uiSoundTheme && VALID_SOUNDS.has(config.uiSoundTheme)
+      ? config.uiSoundTheme
+      : 'soft-marimba';
     res.json({
       ok: true,
       antiCopyEnabled: Boolean(config.antiCopyEnabled),
-      siteColorPalette: config.siteColorPalette === 'sunset' ? 'sunset' : 'botanical',
+      siteColorPalette: palette,
+      uiSoundTheme: soundTheme,
     });
   } catch {
-    res.json({ ok: true, antiCopyEnabled: false, siteColorPalette: 'botanical' });
+    res.json({ ok: true, antiCopyEnabled: false, siteColorPalette: 'botanical', uiSoundTheme: 'soft-marimba' });
   }
 });
 

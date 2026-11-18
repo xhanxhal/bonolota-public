@@ -19,11 +19,14 @@ import {
   ArrowRight, 
   ExternalLink,
   GraduationCap,
-  Volume2
+  Volume2,
+  Clock,
+  X
 } from 'lucide-react';
 import { VocabWord, UnitInfo, PartOfSpeech } from '../data/types';
 import { getAllUnits, getUnitById, getAllWords } from '../data/units';
 import { storage } from '../utils/storage';
+import { haptics } from '../utils/haptics';
 import { soundManager } from '../utils/sound';
 import { filterAndRankWords, isFuzzyWordMatch } from '../utils/searchUtils';
 import { AudioButton } from './AudioButton';
@@ -76,6 +79,21 @@ export const LessonView: React.FC<LessonViewProps> = ({
 
   // Trigger state update when progress changes
   const [progressTick, setProgressTick] = useState(0);
+  const [recentSearchIds, setRecentSearchIds] = useState<string[]>(() => storage.getRecentSearchWordIds());
+
+  useEffect(() => {
+    const handleRecentSync = () => setRecentSearchIds(storage.getRecentSearchWordIds());
+    window.addEventListener('bonolota_recent_searches_updated', handleRecentSync);
+    return () => window.removeEventListener('bonolota_recent_searches_updated', handleRecentSync);
+  }, []);
+
+  const recentSearchedWords = useMemo(() => {
+    if (recentSearchIds.length === 0) return [];
+    const wordMap = new Map(allWords.map(w => [w.id, w]));
+    return recentSearchIds
+      .map(id => wordMap.get(id))
+      .filter((w): w is VocabWord => Boolean(w));
+  }, [allWords, recentSearchIds]);
 
   useEffect(() => {
     // Reset filters on unit change
@@ -165,6 +183,25 @@ export const LessonView: React.FC<LessonViewProps> = ({
       return true;
     });
   }, [currentUnit.words, searchQuery, searchScope, currentUnitMatches, allWordsMatches, selectedPos, statusFilter, progressMap, progressTick]);
+
+  // Record top match after idle pause when user searches in LessonView
+  useEffect(() => {
+    const trimmed = searchQuery.trim();
+    if (trimmed.length < 3 || filteredWords.length === 0) return;
+    const timer = setTimeout(() => {
+      setRecentSearchIds(storage.addRecentSearchWord(filteredWords[0].id));
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [searchQuery, filteredWords]);
+
+  const handleOpenLessonWordDetail = (word: VocabWord, list: VocabWord[]) => {
+    if (searchQuery.trim()) {
+      setRecentSearchIds(storage.addRecentSearchWord(word.id));
+    }
+    if (onOpenWordDetail) {
+      onOpenWordDetail(word, list);
+    }
+  };
 
   // Toggle favorite on word
   const handleToggleFavorite = (e: React.MouseEvent, wordId: string) => {
@@ -326,6 +363,11 @@ export const LessonView: React.FC<LessonViewProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && searchQuery.trim() && filteredWords.length > 0) {
+                    setRecentSearchIds(storage.addRecentSearchWord(filteredWords[0].id));
+                  }
+                }}
                 placeholder="শব্দ বা বাংলা অর্থ খুঁজুন..."
                 className="w-full pl-8.5 pr-7 py-1.5 rounded-xl text-xs font-medium border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors font-bangla"
               />
@@ -412,6 +454,60 @@ export const LessonView: React.FC<LessonViewProps> = ({
                 <span className="font-sans font-bold underline">{allWordsMatches[0].word}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Recent Searches (Last 5 searched words) */}
+        {!searchQuery.trim() && recentSearchedWords.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-100 dark:border-slate-800/80 font-bangla">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400 shrink-0">
+              <Clock className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+              <span>Recent Searches:</span>
+            </span>
+
+            {recentSearchedWords.map((word) => (
+              <div
+                key={word.id}
+                className="inline-flex items-center rounded-lg bg-slate-50 dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-600 transition-all overflow-hidden"
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptics.tap();
+                    setRecentSearchIds(storage.addRecentSearchWord(word.id));
+                    onOpenWordDetail && onOpenWordDetail(word, recentSearchedWords);
+                  }}
+                  className="px-2 py-0.5 text-[11px] font-sans font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 cursor-pointer"
+                  title={`${word.word} (${word.banglaMeaning})`}
+                >
+                  {word.word}
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    haptics.tap();
+                    setRecentSearchIds(storage.removeRecentSearchWord(word.id));
+                  }}
+                  aria-label={`Remove ${word.word} from recent searches`}
+                  className="pr-1.5 pl-0.5 py-0.5 text-slate-400 hover:text-rose-500 cursor-pointer"
+                >
+                  <X className="w-2.5 h-2.5" />
+                </button>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tap();
+                storage.clearRecentSearchWords();
+                setRecentSearchIds([]);
+              }}
+              className="text-[10px] font-semibold text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 cursor-pointer ml-auto"
+            >
+              সব মুছুন
+            </button>
           </div>
         )}
 
@@ -522,7 +618,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
             return (
               <div
                 key={word.id}
-                onClick={() => onOpenWordDetail && onOpenWordDetail(word, searchScope === 'all' ? filteredWords : currentUnit.words)}
+                onClick={() => handleOpenLessonWordDetail(word, searchScope === 'all' ? filteredWords : currentUnit.words)}
                 className={`group rounded-2xl border bg-white dark:bg-slate-900 p-4 sm:p-5 transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-md relative flex flex-col justify-between h-full shadow-2xs ${
                   isQuizMastered
                     ? 'border-amber-300 dark:border-amber-600/70 bg-gradient-to-b from-amber-50/25 via-white to-white dark:from-amber-950/20 dark:via-slate-900 dark:to-slate-900 ring-1 ring-amber-300/40 dark:ring-amber-700/40'
@@ -695,7 +791,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => onOpenWordDetail && onOpenWordDetail(word, searchScope === 'all' ? filteredWords : currentUnit.words)}
+                    onClick={() => handleOpenLessonWordDetail(word, searchScope === 'all' ? filteredWords : currentUnit.words)}
                     className="text-[#00875a] dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-bold text-xs flex items-center gap-1 font-bangla cursor-pointer group-hover:translate-x-0.5 transition-transform"
                   >
                     <span>বিস্তারিত দেখুন</span>
@@ -719,7 +815,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
             return (
               <div
                 key={word.id}
-                onClick={() => onOpenWordDetail && onOpenWordDetail(word, searchScope === 'all' ? filteredWords : currentUnit.words)}
+                onClick={() => handleOpenLessonWordDetail(word, searchScope === 'all' ? filteredWords : currentUnit.words)}
                 className={`group rounded-2xl border p-3 sm:p-4 transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-md relative flex flex-col justify-between ${
                   isQuizMastered
                     ? 'border-amber-300 dark:border-amber-700/80 bg-gradient-to-br from-amber-50/45 via-amber-50/20 to-white dark:from-amber-950/25 dark:via-slate-900 dark:to-slate-900 ring-1 ring-amber-300/40 dark:ring-amber-700/40 shadow-xs'
